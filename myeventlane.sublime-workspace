@@ -1,0 +1,310 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bac",
+				"background-image"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"box-s",
+				"box-sizing"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"r",
+				"right"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"gr",
+				"grey"
+			],
+			[
+				"col",
+				"color"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"view",
+				"View In Browser"
+			],
+			[
+				"vie",
+				"View In Browser"
+			],
+			[
+				"Snippet: ",
+				"Snippet: html"
+			],
+			[
+				"vi",
+				"View In Browser"
+			],
+			[
+				"package control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"pakage br",
+				"Preferences: Browse Packages"
+			],
+			[
+				"Snippet: emm",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/anna/myeventlane"
+	],
+	"file_history":
+	[
+		"/Users/anna/sites/drupal/web/sites/default/settings.php",
+		"/Users/anna/Documents/WCF Mobile Menu/js/mobile_menu.js",
+		"/Users/anna/Documents/WCF Mobile Menu/css/mobile_menu.css",
+		"/Users/anna/Documents/WCF Mobile Menu/mobile_menu.info",
+		"/Users/anna/Documents/WCF Mobile Menu/mobile_menu.module.php",
+		"/Users/anna/Downloads/RSVP_redirect/tribe-rsvp-redirect.js",
+		"/Users/anna/Downloads/RSVP_redirect/tribe-rsvp-redirect.php",
+		"/Users/anna/Documents/EventPulse/functions.php",
+		"/Users/anna/Documents/EventPulse/style.css",
+		"/Users/anna/sites/drupal/web/sites/default/default.services.yml",
+		"/Users/anna/Downloads/WCF/backup-winningcoloursfarm.com.au-4-1-2024/public_html/sites/all/modules/product/templates/front/product.tpl_last.php",
+		"/Users/anna/Downloads/WCF/backup-winningcoloursfarm.com.au-4-1-2024/public_html/sites/all/modules/nomination/templates/form/nomination_form.tpl.php_072814",
+		"/Users/anna/Downloads/WCF/backup-winningcoloursfarm.com.au-4-1-2024/public_html/sites/all/modules/product/templates/front/product.tpl_3-11-14.php",
+		"/Users/anna/Downloads/WCF/backup-winningcoloursfarm.com.au-4-1-2024/public_html/sites/all/modules/product/templates/form/product_add_form.tpl.php",
+		"/Users/anna/Downloads/WCF/backup-winningcoloursfarm.com.au-4-1-2024/public_html/sites/all/modules/product/templates/front/product.tpl.php",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture41/js/script.js",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture41/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture40/js/script.js",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture40/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture39/after/single-category.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture37/after/menu-categories.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture39/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture33/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture36/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture31/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture31/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture30/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture29/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture29/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture38/after/single-category.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture38/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture37/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture37/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture36/after/css/styles.css",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture35/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture34/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture33/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture32/after/index.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture26/grid-before.html",
+		"/Users/anna/Library/Application Support/Sublime Text 3/Packages/View In Browser/View In Browser.sublime-settings",
+		"/Users/anna/Library/Application Support/Sublime Text 3/Packages/User/View In Browser.sublime-settings",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture24/responsive-before.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture23/media-queries-before.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture22/positioning-before.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture21/two-column-before.html",
+		"/Users/anna/Downloads/fullstack-course4-master/examples/Lecture20/background-before.html",
+		"/Users/anna/Downloads/styling-text-before.html",
+		"/Users/anna/Downloads/links-external.html",
+		"/Users/anna/Downloads/font-size-before.html",
+		"/Users/anna/Downloads/box-model-before.html",
+		"/Users/anna/Downloads/style-placement.html",
+		"/Users/anna/Downloads/style.css",
+		"/Users/anna/Downloads/inheritance.html",
+		"/Users/anna/Downloads/specificity.html",
+		"/Users/anna/Downloads/simple-selectors-before.html",
+		"/Users/anna/Downloads/element-with-class-before.html",
+		"/Users/anna/Downloads/child-selector-before.html",
+		"/Users/anna/Downloads/descendant-selector-before.html",
+		"/Users/anna/Downloads/pseudo-selectors-before.html",
+		"/Users/anna/Downloads/links-internal.html",
+		"/Users/anna/Downloads/ordered-lists-before.html",
+		"/Users/anna/Downloads/unordered-lists-before.html",
+		"/Users/anna/Downloads/ordered-lists-after.html",
+		"/Users/anna/Downloads/semantic-elements.html",
+		"/Users/anna/Downloads/headings.html",
+		"/Users/anna/coursera-test/site/untitledq2.html",
+		"/Users/anna/coursera-test/site/test.html",
+		"/Users/anna/coursera-test/site/index.html",
+		"/Users/anna/test_site/index.html"
+	],
+	"find":
+	{
+		"height": 42.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 42.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"pinned_build_system": "",
+	"project": "myeventlane.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 118.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

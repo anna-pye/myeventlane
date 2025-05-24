@@ -1,0 +1,11 @@
+/* MyEventLane Global Styles */
+:root {
+  --color-primary: #FF4E50;
+  --color-secondary: #2E1F47;
+  --color-accent: #FFC857;
+  --color-background: #FFF0ED;
+
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-tagline: 'DM Sans', sans-serif;
+}
