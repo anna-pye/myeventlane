@@ -1,0 +1,13 @@
+name: MyEventLane
+type: theme
+description: 'Custom theme for MyEventLane based on Bootstrap 5.'
+core_version_requirement: ^10
+base theme: stable9
+libraries:
+  - myeventlane/global-styling
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  content: Content
+  sidebar_first: 'Sidebar first'
+  footer: Footer

@@ -1,0 +1,21 @@
+# Composer
+/vendor/
+/composer.lock
+
+# Drupal files
+/web/sites/*/files/
+/web/sites/*/private/
+/web/sites/default/settings.php
+/web/sites/default/services.yml
+
+# DDEV
+.ddev/
+.gitpod.yml
+
+# IDE / OS
+*.DS_Store
+.idea/
+.vscode/
+
+# Logs
+*.log
