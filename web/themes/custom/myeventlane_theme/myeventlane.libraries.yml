@@ -2,7 +2,10 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+      https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter&display=swap: { type: external }
+
   js:
     js/script.js: {}
   dependencies:
     - core/jquery
+

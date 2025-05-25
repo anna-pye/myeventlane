@@ -16,15 +16,36 @@
     ],
     "require": {
         "composer/installers": "^2.3",
+        "drupal/admin_toolbar": "^3.6",
+        "drupal/commerce": "^3.0",
+        "drupal/commerce_cart": "^3.0",
+        "drupal/commerce_checkout": "^3.0",
+        "drupal/commerce_order": "^3.0",
+        "drupal/commerce_payment": "^3.0",
+        "drupal/commerce_price": "^3.0",
+        "drupal/commerce_product": "^3.0",
+        "drupal/commerce_stripe": "^2.0",
         "drupal/core-composer-scaffold": "^11.1",
         "drupal/core-project-message": "^11.1",
         "drupal/core-recommended": "^11.1",
+        "drupal/devel": "^5.3",
+        "drupal/field_group": "^4.0",
+        "drupal/gin": "^4.0",
+        "drupal/inline_entity_form": "^3.0",
+        "drupal/lb_styles_conditions": "^2.0",
+        "drupal/libraries": "^4.0",
+        "drupal/mailchimp": "^3.0",
+        "drupal/paragraphs": "^1.19",
+        "drupal/pathauto": "^1.13",
+        "drupal/redirect": "^1.11",
+        "drupal/rules": "^4.0",
+        "drupal/token": "^1.15",
         "drush/drush": "^13.6"
     },
     "conflict": {
         "drupal/drupal": "*"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "rc",
     "prefer-stable": true,
     "config": {
         "allow-plugins": {

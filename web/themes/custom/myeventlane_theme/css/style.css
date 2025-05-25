@@ -9,3 +9,227 @@
   --font-body: 'Inter', sans-serif;
   --font-tagline: 'DM Sans', sans-serif;
 }
+/* Hero Section */
+.layout__region--hero {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* Featured Events */
+.layout__region--featured {
+  background-color: var(--color-background);
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* CTA Section */
+.layout__region--cta {
+  background-color: var(--color-accent);
+  color: var(--color-secondary);
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.2rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-secondary);
+  background: var(--color-background);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-primary);
+}
+
+
+/* Event Header */
+.layout__region--header {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Event Details */
+.layout__region--main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 30px;
+}
+
+/* RSVP/Ticket Section */
+.layout__region--tickets {
+  background-color: var(--color-accent);
+  padding: 20px;
+  border-radius: 10px;
+  font-family: var(--font-heading);
+}
+
+/* Accessibility */
+.layout__region--extras {
+  display: flex;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+:root {
+  --color-primary: #FF4E50;
+  --color-secondary: #2E1F47;
+  --color-accent: #FFC857;
+  --color-background: #FFF0ED;
+
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+
+/* Links */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.button,
+button,
+input[type="submit"] {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: var(--color-accent);
+  color: var(--color-secondary);
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+}
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fade-in {
+  animation: fadeIn ease 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.event-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+.event-card:hover {
+  transform: scale(1.01);
+}
+
+
+.ticket-option {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+/* RSVP Form Container */
+.block-rsvp-form {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: var(--font-body);
+}
+
+/* Form Labels */
+.block-rsvp-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-secondary);
+}
+
+/* Form Inputs */
+.block-rsvp-form input[type="text"],
+.block-rsvp-form input[type="email"],
+.block-rsvp-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Submit Button */
+.block-rsvp-form input[type="submit"] {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-family: var(--font-heading);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.block-rsvp-form input[type="submit"]:hover {
+  background-color: var(--color-accent);
+  color: var(--color-secondary);
+}
+
+
+
