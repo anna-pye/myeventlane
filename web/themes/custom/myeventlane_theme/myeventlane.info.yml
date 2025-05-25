@@ -1,7 +1,7 @@
 name: MyEventLane
 type: theme
 description: 'Custom theme for MyEventLane based on Bootstrap 5.'
-core_version_requirement: ^10
+core_version_requirement: ^11 || ^10
 base theme: stable9
 libraries:
   - myeventlane/global-styling
@@ -11,3 +11,9 @@ regions:
   content: Content
   sidebar_first: 'Sidebar first'
   footer: Footer
+
+global-styling:
+  css:
+    theme:
+      css/style.css: {}
+      https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter&display=swap: { type: external }
