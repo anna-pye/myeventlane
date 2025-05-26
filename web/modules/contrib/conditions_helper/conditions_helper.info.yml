@@ -1,0 +1,14 @@
+name: 'Conditions Helper'
+type: module
+description: 'Provides API services and base classes to help other modules integrate with Drupal Core Conditions API more easily.'
+core_version_requirement: ^10 || ^11
+
+# This module is API-only and does not have its own configuration UIs or direct
+# user-facing features beyond what it enables for other modules.
+# No specific dependencies are listed here, as it primarily builds upon Drupal
+# Core APIs. Consuming modules will declare their own dependencies if needed.
+
+# Information added by Drupal.org packaging script on 2025-05-16
+version: '1.0.0'
+project: 'conditions_helper'
+datestamp: 1747437998

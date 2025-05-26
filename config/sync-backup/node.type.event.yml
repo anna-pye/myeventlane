@@ -1,0 +1,13 @@
+
+langcode: en
+status: true
+dependencies: {}
+id: event
+label: 'Event'
+uuid: 90984812-96ac-487d-8999-0ca8319c151e
+description: 'Clean event content type.'
+new_revision: false
+preview_mode: 1
+display_submitted: true
+translatable: false
+third_party_settings: {}

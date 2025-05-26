@@ -1,0 +1,11 @@
+_core:
+  default_config_hash: B-qrrA7oRcyy2W-a4OjHSgOhpMNFBK4dP9yb2KHC6v4
+api_key: null
+api_timeout: 10
+domain: ''
+use_oauth: false
+cron: false
+batch_limit: 100
+api_classname: Mailchimp\Mailchimp
+test_mode: false
+optin_check_email_msg: 'Please check your email to confirm your subscription.'

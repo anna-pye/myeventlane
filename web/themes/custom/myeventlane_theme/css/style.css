@@ -231,5 +231,142 @@ select {
   color: var(--color-secondary);
 }
 
+.btn-rsvp {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #FD6B5E; /* Coral from your mockup */
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-rsvp:hover {
+  background-color: #f95244;
+  transform: scale(1.04);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+.views-exposed-form .form-item-field-category {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.views-exposed-form .form-item-field-category input[type="checkbox"] + label,
+.views-exposed-form .form-item-field-category select {
+  display: inline-block;
+  background-color: #E4E4E4;
+  color: #1E1E1E;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.views-exposed-form .form-item-field-category input[type="checkbox"]:checked + label,
+.views-exposed-form .form-item-field-category select:focus {
+  background-color: #FD6B5E;
+  color: #fff;
+}
+
+/* Search bar wrapper */
+.views-exposed-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.views-exposed-form .form-item-title {
+  flex: 1;
+  position: relative;
+}
+
+.views-exposed-form input[type="text"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #eee;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+.views-exposed-form input[type="text"]:focus {
+  border-color: #FD6B5E;
+  outline: none;
+}
+
+.views-exposed-form input[type="submit"] {
+  padding: 0.8rem 1.5rem;
+  background-color: #FD6B5E;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.views-exposed-form input[type="submit"]:hover {
+  background-color: #f95244;
+}
+
+/* Event Card Styling */
+.event-card {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease;
+}
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+.event-card h2,
+.event-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.event-card .event-date {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #777;
+}
+.node--type-event.is-featured .event-card {
+  border: 2px solid #FD6B5E;
+  background-color: #FFF2EF;
+  position: relative;
+}
+
+.node--type-event.is-featured .event-card::before {
+  content: "⭐ Featured";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #FD6B5E;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+
+
+
 
 

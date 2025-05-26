@@ -1,0 +1,15 @@
+condition.plugin.test_condition:
+  type: condition.plugin
+  label: 'Test condition'
+  mapping:
+    condition_met:
+      type: boolean
+      label: 'Condition met'
+
+condition.plugin.test_condition_two:
+  type: condition.plugin
+  label: 'Test condition two' # Corrected label from original file
+  mapping:
+    condition_met:
+      type: boolean
+      label: 'Condition met'

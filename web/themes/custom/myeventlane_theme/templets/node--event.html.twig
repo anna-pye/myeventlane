@@ -1,0 +1,9 @@
+node--event.html.twig
+
+{% if node.field_rsvp_enabled.value %}
+  <a href="/rsvp/{{ node.id }}/form" class="btn btn-primary">RSVP Now</a>
+{% endif %}
+
+<article class="event-card {{ node.field_featured.value ? 'is-featured' : '' }}">
+  ...
+</article>

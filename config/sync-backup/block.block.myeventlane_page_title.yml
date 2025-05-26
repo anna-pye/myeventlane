@@ -1,0 +1,20 @@
+uuid: 1ddc56b9-8205-4bf3-b391-426157bf57f1
+langcode: en
+status: true
+dependencies:
+  theme:
+    - myeventlane
+_core:
+  default_config_hash: 6aOgWsNTXjqrDm98TXSAjP6qd2nCijD1xw45MrnbK-Y
+id: myeventlane_page_title
+theme: myeventlane
+region: header
+weight: -5
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

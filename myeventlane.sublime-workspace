@@ -39,6 +39,393 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "web/themes/custom/myeventlane_theme/css/style.css",
+			"settings":
+			{
+				"buffer_size": 7270,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAEMRAAAAAAAARBEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAQxEAAAAAAABDEQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					4,
+					1,
+					"paste",
+					null,
+					"AQAAAEQRAAAAAAAA+xIAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARBEAAAAAAABEEQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					9,
+					1,
+					"paste",
+					null,
+					"AQAAAEQRAAAAAAAA6xIAAAAAAAC2AQAALmJ0bi1yc3ZwIHsKICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7CiAgcGFkZGluZzogMC43NXJlbSAxLjI1cmVtOwogIGZvbnQtc2l6ZTogMS4xcmVtOwogIGZvbnQtd2VpZ2h0OiA2MDA7CiAgdGV4dC1hbGlnbjogY2VudGVyOwogIGJvcmRlci1yYWRpdXM6IDJyZW07CiAgdGV4dC1kZWNvcmF0aW9uOiBub25lOwogIGNvbG9yOiB3aGl0ZTsKICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCAjNTVDREZDLCAjRjdBOEI4KTsKICBib3gtc2hhZG93OiAwIDNweCA4cHggcmdiYSgwLDAsMCwwLjE1KTsKICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4ycyBlYXNlLCBib3gtc2hhZG93IDAuM3MgZWFzZTsKfQoKLmJ0bi1yc3ZwOmhvdmVyIHsKICB0cmFuc2Zvcm06IHNjYWxlKDEuMDUpOwogIGJveC1zaGFkb3c6IDAgNXB4IDEycHggcmdiYSgwLDAsMCwwLjIpOwp9",
+					"AQAAAAAAAAABAAAARBEAAAAAAAD6EgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					12,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAOsSAAAAAAAA7BIAAAAAAAAAAAAA7BIAAAAAAADtEgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6xIAAAAAAADrEgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					13,
+					1,
+					"paste",
+					null,
+					"AQAAAO0SAAAAAAAAkRUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA7RIAAAAAAADtEgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					16,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAJAVAAAAAAAAkRUAAAAAAAAAAAAAkRUAAAAAAACSFQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkBUAAAAAAACQFQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					17,
+					1,
+					"paste",
+					null,
+					"AQAAAJIVAAAAAAAA+xgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkhUAAAAAAACSFQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					18,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAPsYAAAAAAAA/BgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA+xgAAAAAAAD7GAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					19,
+					1,
+					"paste",
+					null,
+					"AQAAAPwYAAAAAAAA3xoAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA/BgAAAAAAAD8GAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					20,
+					1,
+					"paste",
+					null,
+					"AQAAAN8aAAAAAAAAYRwAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA3xoAAAAAAADfGgAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "web/themes/custom/myeventlane_theme/templets/node--event.html.twig",
+			"settings":
+			{
+				"buffer_size": 248,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"paste",
+					null,
+					"AQAAAJQAAAAAAAAA9wAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlAAAAAAAAACUAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAJMAAAAAAAAAlAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkwAAAAAAAACTAAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "web/themes/custom/myeventlane_theme/css/myeventlane_ui_kit.css",
+			"settings":
+			{
+				"buffer_size": 2238,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "/* UI Kit for MyEventLane – Matching Visual Style"
+			},
+			"undo_stack":
+			[
+				[
+					1,
+					1,
+					"paste",
+					null,
+					"AQAAAAAAAAAAAAAAvggAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "web/themes/custom/myeventlane_theme/myeventlane.info.yml",
+			"settings":
+			{
+				"buffer_size": 523,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					5,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAOoBAAAAAAAA6wEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6gEAAAAAAADqAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"paste",
+					null,
+					"AQAAAOsBAAAAAAAAEQIAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6wEAAAAAAADrAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					9,
+					1,
+					"left_delete",
+					null,
+					"AQAAAOsBAAAAAAAA6wEAAAAAAAAlAAAAbGlicmFyaWVzOgogIC0gbXl0aGVtZS9nbG9iYWwtc3R5bGluZw",
+					"AQAAAAAAAAABAAAA6wEAAAAAAAAQAgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					12,
+					1,
+					"paste",
+					null,
+					"AQAAAOoBAAAAAAAASgIAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6gEAAAAAAADqAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					16,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAOoBAAAAAAAA6wEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6gEAAAAAAADqAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					19,
+					1,
+					"left_delete",
+					null,
+					"AQAAAOsBAAAAAAAA6wEAAAAAAABhAAAAY2FsZW5kYXItc3R5bGVzOgogIHZlcnNpb246IDEueAogIGNzczoKICAgIHRoZW1lOgogICAgICBjc3MvbXlldmVudGxhbmVfY2FsZW5kYXJfc3R5bGVzLmNzczoge30KCg",
+					"AQAAAAAAAAABAAAA6wEAAAAAAABMAgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					24,
+					1,
+					"paste",
+					null,
+					"AQAAAJkAAAAAAAAA4gAAAAAAAAApAAAAbGlicmFyaWVzOgogIC0gbXlldmVudGxhbmUvZ2xvYmFsLXN0eWxpbmc",
+					"AQAAAAAAAAABAAAAmQAAAAAAAADCAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					25,
+					1,
+					"left_delete",
+					null,
+					"AQAAAOEAAAAAAAAA4QAAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAA4gAAAAAAAADiAAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "web/themes/custom/myeventlane_theme/myeventlane.libraries.yml",
+			"settings":
+			{
+				"buffer_size": 359,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					5,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAADkAAAAAAAAAQAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAOQAAAAAAAAA5AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "v"
+					},
+					"AQAAAEAAAAAAAAAAQQAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					7,
+					1,
+					"left_delete",
+					null,
+					"AQAAAEAAAAAAAAAAQAAAAAAAAAABAAAAdg",
+					"AQAAAAAAAAABAAAAQQAAAAAAAABBAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					8,
+					1,
+					"paste",
+					null,
+					"AQAAAEAAAAAAAAAAVgAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					13,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAFYAAAAAAAAAVwAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAVgAAAAAAAABWAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					14,
+					1,
+					"paste",
+					null,
+					"AQAAAFcAAAAAAAAAWQAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAVwAAAAAAAABXAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					21,
+					5,
+					"left_delete",
+					null,
+					"BQAAAEAAAAAAAAAAQAAAAAAAAAAZAAAAbXlldmVudGxhbmVfdWlfa2l0LmNzcyB7fT4AAAAAAAAAPgAAAAAAAAACAAAAICA8AAAAAAAAADwAAAAAAAAAAgAAACAgOgAAAAAAAAA6AAAAAAAAAAIAAAAgIDkAAAAAAAAAOQAAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAQAAAAAAAAABZAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					24,
+					1,
+					"paste",
+					null,
+					"AQAAAOcAAAAAAAAAMAEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA5wAAAAAAAADnAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					29,
+					1,
+					"paste",
+					null,
+					"AQAAAOgAAAAAAAAARwEAAAAAAABIAAAAaWJyYXJpZXM6CiAgLSBteWV2ZW50bGFuZS9nbG9iYWwtc3R5bGVzCiAgLSBteWV2ZW50bGFuZS9jYWxlbmRhci1zdHlsZXMK",
+					"AQAAAAAAAAABAAAA6AAAAAAAAAAwAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					32,
+					1,
+					"left_delete",
+					null,
+					"AQAAAOcAAAAAAAAA5wAAAAAAAAABAAAAbA",
+					"AQAAAAAAAAABAAAA6AAAAAAAAADoAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					33,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAOcAAAAAAAAA6QAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA5wAAAAAAAADnAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					36,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAPsAAAAAAAAA/AAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA+wAAAAAAAAD7AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					39,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAAsBAAAAAAAADAEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAACwEAAAAAAAALAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					42,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAABUBAAAAAAAAFgEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAFQEAAAAAAAAVAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					45,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAACMBAAAAAAAAJAEAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAIwEAAAAAAAAjAQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					50,
+					1,
+					"paste",
+					null,
+					"AQAAAAAAAAAAAAAAVAAAAAAAAAA5AAAAZ2xvYmFsLXN0eWxpbmc6CiAgY3NzOgogICAgdGhlbWU6CiAgICAgIGNzcy9zdHlsZS5jc3M6IHt9",
+					"AQAAAAAAAAABAAAAAAAAAAAAAAA5AAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -108,10 +495,29 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/anna/myeventlane"
+		"/Users/anna/myeventlane",
+		"/Users/anna/myeventlane/config",
+		"/Users/anna/myeventlane/web",
+		"/Users/anna/myeventlane/web/sites",
+		"/Users/anna/myeventlane/web/themes",
+		"/Users/anna/myeventlane/web/themes/custom",
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme",
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme/css",
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme/templets"
 	],
 	"file_history":
 	[
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme/templets/node--event.html.twig",
+		"/Users/anna/myeventlane/config/sync-backup/node.type.rsvp_submission.yml",
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme/myeventlane.info.yml",
+		"/Users/anna/myeventlane/web/sites/default/settings.php",
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme/css/style.css",
+		"/Users/anna/myeventlane/config/sync/views.view.more_events.yml",
+		"/Users/anna/myeventlane/composer.json",
+		"/Users/anna/myeventlane/config/sync/views.view.rsvp_form.yml",
+		"/Users/anna/myeventlane/web/themes/custom/myeventlane_theme/myeventlane.libraries.yml",
+		"/Users/anna/myeventlane/config/sync/node.type.rsvp_submission.yml",
+		"/Users/anna/myeventlane/.gitignore",
 		"/Users/anna/sites/drupal/web/sites/default/settings.php",
 		"/Users/anna/Documents/WCF Mobile Menu/js/mobile_menu.js",
 		"/Users/anna/Documents/WCF Mobile Menu/css/mobile_menu.css",
@@ -184,7 +590,7 @@
 	],
 	"find":
 	{
-		"height": 42.0
+		"height": 30.0
 	},
 	"find_in_files":
 	{
@@ -198,6 +604,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"display"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -219,6 +626,163 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "web/themes/custom/myeventlane_theme/css/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7270,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7265,
+								7265
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6867.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "web/themes/custom/myeventlane_theme/templets/node--event.html.twig",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 248,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								148,
+								148
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "web/themes/custom/myeventlane_theme/css/myeventlane_ui_kit.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2238,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2238,
+								2238
+							]
+						],
+						"settings":
+						{
+							"auto_name": "/* UI Kit for MyEventLane – Matching Visual Style",
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "web/themes/custom/myeventlane_theme/myeventlane.info.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 523,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								225,
+								225
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "web/themes/custom/myeventlane_theme/myeventlane.libraries.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								359,
+								359
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -302,7 +866,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 118.0,
+	"side_bar_width": 421.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

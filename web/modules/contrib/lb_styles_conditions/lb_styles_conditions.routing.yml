@@ -1,0 +1,7 @@
+lb_styles_conditions.settings:
+  path: '/admin/config/user-interface/lb-styles-conditions'
+  defaults:
+    _form: '\Drupal\lb_styles_conditions\Form\SettingsForm'
+    _title: 'Layout Builder Styles Conditions settings'
+  requirements:
+    _permission: 'administer lb_styles_conditions'

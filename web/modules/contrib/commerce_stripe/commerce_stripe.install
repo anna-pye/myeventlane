@@ -1,0 +1,212 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Commerce Stripe.
+ */
+
+use Drupal\commerce_payment\Plugin\Commerce\CheckoutPane\PaymentProcess;
+use Drupal\commerce_stripe\Plugin\Commerce\PaymentGateway\StripePaymentElementInterface;
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_requirements().
+ */
+function commerce_stripe_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'install') {
+    if (!class_exists('\Stripe\Stripe')) {
+      $requirements['commerce_stripe_library'] = [
+        'description' => t('Commerce Stripe requires the stripe/stripe-php library.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Disables credit card icon settings on existing payment gateways.
+ */
+function commerce_stripe_update_8101() {
+  $payment_gateways = \Drupal::entityTypeManager()
+    ->getStorage('commerce_payment_gateway')
+    ->loadMultiple();
+
+  foreach ($payment_gateways as $payment_gateway) {
+    if ($payment_gateway->getPluginId() !== 'stripe') {
+      continue;
+    }
+    $configuration = $payment_gateway->getPluginConfiguration();
+    $configuration['enable_credit_card_icons'] = FALSE;
+    $payment_gateway->setPluginConfiguration($configuration);
+    $payment_gateway->save();
+  }
+}
+
+/**
+ * Install the new payment method type fields.
+ */
+function commerce_stripe_update_8102() {
+  $entity_type = \Drupal::entityTypeManager()
+    ->getDefinition('commerce_payment_method');
+  \Drupal::service('entity.bundle_plugin_installer')
+    ->installBundles($entity_type, ['commerce_stripe']);
+}
+
+/**
+ * Migrate the payment method type fields.
+ */
+function commerce_stripe_update_8103() {
+  /** @var \Drupal\commerce_payment\Entity\PaymentGatewayInterface[] $payment_gateways */
+  $payment_gateways = \Drupal::entityTypeManager()
+    ->getStorage('commerce_payment_gateway')
+    ->loadMultiple();
+
+  $payment_gateway_ids = [];
+  foreach ($payment_gateways as $payment_gateway) {
+    if ($payment_gateway->getPluginId() === 'stripe_payment_element') {
+      $configuration = $payment_gateway->getPluginConfiguration();
+      if (count($configuration['payment_method_types']) === 1 && ($configuration['payment_method_types'][0] === 'credit_card')) {
+        $configuration['payment_method_types'] = ['stripe_card'];
+        $payment_gateway->setPluginConfiguration($configuration);
+        $payment_gateway->save();
+      }
+      $payment_gateway_ids[] = $payment_gateway->id();
+    }
+  }
+  if (!empty($payment_gateway_ids)) {
+    $database = \Drupal::database();
+    $database->update('commerce_payment_method')
+      ->fields(['type' => 'stripe_card'])
+      ->condition('payment_gateway', $payment_gateway_ids, 'IN')
+      ->condition('type', 'credit_card')
+      ->execute();
+
+    if (!Settings::get('commerce_stripe_skip_update_8103', FALSE)) {
+      $database->query("INSERT INTO {commerce_payment_method__stripe_card_exp_month} SELECT * FROM {commerce_payment_method__card_exp_month} cem WHERE cem.bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} pm WHERE cem.entity_id = pm.method_id and pm.type = 'stripe_card') and NOT EXISTS (SELECT * FROM {commerce_payment_method__stripe_card_exp_month} scem2 WHERE cem.entity_id = scem2.entity_id);");
+      $database->query("UPDATE {commerce_payment_method__stripe_card_exp_month} SET bundle = 'stripe_card' WHERE bundle <> 'stripe_card';");
+      $database->query("DELETE FROM {commerce_payment_method__card_exp_month} WHERE bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} WHERE {commerce_payment_method__card_exp_month}.entity_id = {commerce_payment_method}.method_id and {commerce_payment_method}.type = 'stripe_card');");
+
+      $database->query("INSERT INTO {commerce_payment_method__stripe_card_exp_year} SELECT * FROM {commerce_payment_method__card_exp_year} cey WHERE cey.bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} pm WHERE cey.entity_id = pm.method_id and pm.type = 'stripe_card') and NOT EXISTS (SELECT * FROM {commerce_payment_method__stripe_card_exp_year} scey2 WHERE cey.entity_id = scey2.entity_id);");
+      $database->query("UPDATE {commerce_payment_method__stripe_card_exp_year} SET bundle = 'stripe_card' WHERE bundle <> 'stripe_card';");
+      $database->query("DELETE FROM {commerce_payment_method__card_exp_year} WHERE bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} WHERE {commerce_payment_method__card_exp_year}.entity_id = {commerce_payment_method}.method_id and {commerce_payment_method}.type = 'stripe_card');");
+
+      $database->query("INSERT INTO {commerce_payment_method__stripe_card_number} SELECT * FROM {commerce_payment_method__card_number} cn WHERE bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} pm WHERE cn.entity_id = pm.method_id and pm.type = 'stripe_card') and NOT EXISTS (SELECT * FROM {commerce_payment_method__stripe_card_number} scn2 WHERE cn.entity_id = scn2.entity_id);");
+      $database->query("UPDATE {commerce_payment_method__stripe_card_number} SET bundle = 'stripe_card' WHERE bundle <> 'stripe_card';");
+      $database->query("DELETE FROM {commerce_payment_method__card_number} WHERE bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} WHERE {commerce_payment_method__card_number}.entity_id = {commerce_payment_method}.method_id and {commerce_payment_method}.type = 'stripe_card');");
+
+      $database->query("INSERT INTO {commerce_payment_method__stripe_card_type} SELECT * FROM {commerce_payment_method__card_type} ct WHERE bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} pm WHERE ct.entity_id = pm.method_id and pm.type = 'stripe_card') and NOT EXISTS (SELECT * FROM {commerce_payment_method__stripe_card_type} sct2 WHERE ct.entity_id = sct2.entity_id);");
+      $database->query("UPDATE {commerce_payment_method__stripe_card_type} SET bundle = 'stripe_card' WHERE bundle <> 'stripe_card';");
+      $database->query("DELETE FROM {commerce_payment_method__card_type} WHERE bundle = 'credit_card' and EXISTS (SELECT * FROM {commerce_payment_method} WHERE {commerce_payment_method__card_type}.entity_id = {commerce_payment_method}.method_id and {commerce_payment_method}.type = 'stripe_card');");
+    }
+  }
+}
+
+/**
+ * Install the new payment method type fields.
+ */
+function commerce_stripe_update_8104() {
+  $entity_type = \Drupal::entityTypeManager()
+    ->getDefinition('commerce_payment_method');
+  \Drupal::service('entity.bundle_plugin_installer')
+    ->installBundles($entity_type, ['commerce_stripe']);
+}
+
+/**
+ * Detect capture, if possible.
+ */
+function commerce_stripe_update_8105() {
+  if (!\Drupal::moduleHandler()->moduleExists('commerce_checkout')) {
+    return t('Skipped update commerce_stripe_update_8105() because the commerce_checkout module is not installed. Please note: Stripe "Capture Method" is now set on the Stripe payment element gateway, rather than inferred from the payment pane in the checkout flow.');
+  }
+  $capture_options = [
+    0 => 0,
+    1 => 0,
+  ];
+  $pane_manager = \Drupal::service('plugin.manager.commerce_checkout_pane');
+  $logger = \Drupal::service('commerce.logger');
+
+  /** @var \Drupal\commerce_checkout\Entity\CheckoutFlowInterface[] $checkout_flows */
+  $checkout_flows = \Drupal::entityTypeManager()
+    ->getStorage('commerce_checkout_flow')
+    ->loadMultiple();
+  foreach ($checkout_flows as $checkout_flow) {
+    $checkout_flow_plugin = $checkout_flow->getPlugin();
+    $configuration = $checkout_flow_plugin->getConfiguration();
+    $panes = $configuration['panes'] ?? [];
+    foreach ($panes as $pane_key => $pane) {
+      if ($pane['step'] === '_disabled') {
+        continue;
+      }
+      if (!$pane_manager->hasDefinition($pane_key)) {
+        $logger->warning('The checkout flow <em>@checkout_flow</em> includes an unrecognized checkout pane <em>@checkout_pane</em>. You should review this checkout flow.', [
+          '@checkout_flow' => $checkout_flow->label(),
+          '@checkout_pane' => $pane_key,
+        ]);
+        continue;
+      }
+      $pane_instance = $pane_manager->createInstance($pane_key, $pane, $checkout_flow_plugin);
+      if ($pane_instance instanceof PaymentProcess) {
+        $capture_options[(int) ($pane['capture'] ?? TRUE)]++;
+        continue 2;
+      }
+    }
+  }
+  $capture_options = array_filter($capture_options);
+  $message = t('Stripe "Capture Method" is now set on the Stripe payment element gateway, rather than inferred from the payment pane in the checkout flow.');
+  switch (count($capture_options)) {
+    case 0:
+      $message .= t('You do not have any checkout flows with a payment process pane configured.');
+      // No checkout flows are currently defined. Nothing for us to do.
+      break;
+
+    case 1:
+      // One checkout flow is defined. Get the value and set it on
+      // the payment gateways.
+      $capture_method = (array_key_first($capture_options) === 1) ? 'automatic' : 'manual';
+      /** @var \Drupal\commerce_payment\Entity\PaymentGatewayInterface[] $payment_gateways */
+      $payment_gateways = \Drupal::entityTypeManager()
+        ->getStorage('commerce_payment_gateway')
+        ->loadMultiple();
+      if (count($payment_gateways) === 0) {
+        $message .= t('You do not have any Stripe payment element gateways configured.');
+      }
+      else {
+        $updated_payment_gateways = [];
+        foreach ($payment_gateways as $payment_gateway) {
+          if ($payment_gateway->getPlugin() instanceof StripePaymentElementInterface) {
+            $configuration = $payment_gateway->getPluginConfiguration();
+            if (!array_key_exists('capture_method', $configuration)) {
+              $configuration['capture_method'] = $capture_method;
+              $payment_gateway->setPluginConfiguration($configuration);
+              $payment_gateway->save();
+              $updated_payment_gateways[] = $payment_gateway->id();
+            }
+          }
+        }
+        if (count($updated_payment_gateways) === 0) {
+          $message .= t('Your Stripe payment element gateways already have "Capture Method" specified.');
+        }
+        else {
+          $message .= \Drupal::translation()
+            ->formatPlural(
+              count($updated_payment_gateways),
+              '1 Stripe payment element gateway(@updated_gateways) was updated to add the "Capture Method" property with a value of "@capture_method".',
+              '@count Stripe payment element gateways(@updated_gateways) were updated to add the "Capture Method" property with a value of "@capture_method".',
+              [
+                '@updated_gateways' => implode(',', $updated_payment_gateways),
+                '@capture_method' => $capture_method,
+              ],
+            );
+        }
+      }
+      break;
+
+    default:
+      $message .= t('You have multiple checkout flows, with different "Capture" values on the Payment Process pane. You will need to edit your Stripe Payment Element gateways and specify the appropriate "Capture Method" option. If you do not do this, the default value of "automatic" will be used.');
+      break;
+  }
+  return $message;
+}

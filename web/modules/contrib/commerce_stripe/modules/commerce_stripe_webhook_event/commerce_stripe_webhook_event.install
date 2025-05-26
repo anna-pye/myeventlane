@@ -1,0 +1,162 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the sg_stripe module.
+ */
+
+use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Config\InstallStorage;
+
+/**
+ * Implements hook_schema().
+ */
+function commerce_stripe_webhook_event_schema() {
+  $schema['commerce_stripe_webhook_event'] = [
+    'description' => 'Table that contains stripe webhook events.',
+    'fields' => [
+      'webhook_event_id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique webhook event ID.',
+      ],
+      'stripe_event_id' => [
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The stripe event id.',
+      ],
+      'type' => [
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Type of stripe event.',
+      ],
+      'status' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'The status of the event.',
+      ],
+      'payload' => [
+        'type' => 'blob',
+        'not null' => TRUE,
+        'size' => 'big',
+        'description' => 'Json payload of the stripe webhook.',
+      ],
+      'signature' => [
+        'type' => 'varchar_ascii',
+        'length' => 256,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Stripe webhook event signature.',
+      ],
+      'stripe_object_type' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The stripe object type.',
+      ],
+      'stripe_object_id' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The stripe object id.',
+      ],
+      'entity_type' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The entity type.',
+      ],
+      'entity_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'The entity id.',
+      ],
+      'reason' => [
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Reason for the webhook event status.',
+      ],
+      'ip' => [
+        'type' => 'varchar_ascii',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'IP of the server that sent the webhook event.',
+      ],
+      'processed' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp of when event was processed.',
+      ],
+      'received' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp of when event was received.',
+      ],
+    ],
+    'primary key' => ['webhook_event_id'],
+    'unique keys' => [
+      'stripe_event_id' => ['stripe_event_id'],
+    ],
+    'indexes' => [
+      'type' => ['type'],
+      'processed' => ['processed'],
+      'stripe_object_id' => ['stripe_object_id'],
+      'entity_id' => ['entity_id'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function commerce_stripe_webhook_event_modules_installed($modules, $is_syncing) {
+  if (!$is_syncing && in_array('advancedqueue', $modules, TRUE)) {
+    commerce_stripe_webhook_event_install_queue_config();
+  }
+}
+
+/**
+ * Install the advanced queue, if possible.
+ */
+function commerce_stripe_webhook_event_update_9101() {
+  if (\Drupal::moduleHandler()->moduleExists('advancedqueue')) {
+    commerce_stripe_webhook_event_install_queue_config();
+  }
+}
+
+/**
+ * Installs the advanced queue config.
+ */
+function commerce_stripe_webhook_event_install_queue_config(): void {
+  $name = 'advancedqueue.advancedqueue_queue.commerce_stripe_webhook_event';
+  $queue_config = \Drupal::configFactory()->get($name);
+
+  // If the queue does not exist yet, we create it.
+  if ($queue_config->isNew()) {
+    // Get the storage for optional extension configuration.
+    $optional_dir = \Drupal::service('extension.list.module')->getPath('commerce_stripe_webhook_event') . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
+    $optional_storage = new FileStorage($optional_dir);
+    // Read the data from the YAML file and save it to the view.
+    $data = $optional_storage->read($name);
+    $queue_storage = \Drupal::entityTypeManager()->getStorage('advancedqueue_queue');
+    $queue_storage->create($data)->save();
+  }
+}

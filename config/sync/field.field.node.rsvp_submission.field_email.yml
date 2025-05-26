@@ -1,0 +1,19 @@
+uuid: b70bd0f8-1ebb-4752-a7fa-85ba6187d63f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email
+    - node.type.rsvp_submission
+id: node.rsvp_submission.field_email
+field_name: field_email
+entity_type: node
+bundle: rsvp_submission
+label: Email
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

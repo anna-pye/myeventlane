@@ -1,0 +1,38 @@
+uuid: cce1db12-d1e0-4119-a2c3-5be9e115eceb
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+  module:
+    - comment
+    - commerce_checkout
+    - commerce_order
+    - commerce_payment
+    - commerce_product
+    - contact
+    - file
+    - filter
+    - search
+    - shortcut
+    - system
+_core:
+  default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access checkout'
+  - 'access comments'
+  - 'access content'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'delete own files'
+  - 'manage own commerce_payment_method'
+  - 'post comments'
+  - 'search content'
+  - 'skip comment approval'
+  - 'use text format basic_html'
+  - 'view commerce_product'
+  - 'view own commerce_order'

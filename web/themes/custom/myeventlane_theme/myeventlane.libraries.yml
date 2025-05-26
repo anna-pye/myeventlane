@@ -1,7 +1,8 @@
-global-styling:
+global-styles:
+  version: 1.x
   css:
     theme:
-      css/style.css: {}
+      css/myeventlane_ui_kit.css: {}
       https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter&display=swap: { type: external }
 
   js:
@@ -9,3 +10,8 @@ global-styling:
   dependencies:
     - core/jquery
 
+  calendar-styles:
+   version: 1.x
+   css:
+     theme:
+       css/myeventlane_calendar_styles.css: {}

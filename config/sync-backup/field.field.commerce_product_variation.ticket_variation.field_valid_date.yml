@@ -1,0 +1,21 @@
+uuid: a6d04424-97d5-44be-a6eb-7f5627a6dd17
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.ticket_variation
+    - field.storage.commerce_product_variation.field_valid_date
+  module:
+    - datetime
+id: commerce_product_variation.ticket_variation.field_valid_date
+field_name: field_valid_date
+entity_type: commerce_product_variation
+bundle: ticket_variation
+label: 'Valid Date'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

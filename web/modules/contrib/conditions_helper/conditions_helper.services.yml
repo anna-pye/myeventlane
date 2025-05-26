@@ -1,0 +1,15 @@
+services:
+  # Service to build FAPI elements for selecting available condition plugins.
+  conditions_helper.condition_selector_form_builder:
+    class: Drupal\conditions_helper\Form\ConditionSelectorFormBuilder
+    arguments: ['@plugin.manager.condition', '@string_translation', '@module_handler']
+
+  # Service to build the configuration forms for selected condition plugins.
+  conditions_helper.form_builder:
+    class: Drupal\conditions_helper\Form\ConditionsFormBuilder
+    arguments: ['@plugin.manager.condition', '@context.handler', '@config.factory', '@string_translation']
+
+  # Service to evaluate a set of configured conditions.
+  conditions_helper.evaluator:
+    class: Drupal\conditions_helper\ConditionsEvaluator
+    arguments: ['@plugin.manager.condition', '@context.repository', '@context.handler']

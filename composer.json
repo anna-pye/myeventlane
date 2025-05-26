@@ -17,6 +17,7 @@
     "require": {
         "composer/installers": "^2.3",
         "drupal/admin_toolbar": "^3.6",
+        "drupal/calendar_view": "^2.1",
         "drupal/commerce": "^3.0",
         "drupal/commerce_cart": "^3.0",
         "drupal/commerce_checkout": "^3.0",

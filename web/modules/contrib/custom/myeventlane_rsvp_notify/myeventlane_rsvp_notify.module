@@ -1,0 +1,29 @@
+<?php
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_entity_insert().
+ */
+function myeventlane_rsvp_notify_entity_insert(\Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'rsvp_submission') {
+    $name = $entity->get('field_name')->value;
+    $email = $entity->get('field_email')->value;
+    $event = $entity->get('field_event')->entity;
+
+    if ($event instanceof Node) {
+      $event_title = $event->label();
+      $event_url = $event->toUrl('canonical', ['absolute' => TRUE])->toString();
+      $creator_email = $event->getOwner()->getEmail();
+
+      $to = $creator_email ?: 'admin@myeventlane.com';
+      $subject = "New RSVP for " . $event_title;
+      $body = "Hi,\n\n$name has RSVP'd to your event \"$event_title\".\n\nEmail: $email\nView the event: $event_url\n\n— MyEventLane";
+
+      \Drupal::service('plugin.manager.mail')->mail('system', 'mail', $to, \Drupal::currentUser()->getPreferredLangcode(), [
+        'subject' => $subject,
+        'body' => $body,
+      ]);
+    }
+  }
+}

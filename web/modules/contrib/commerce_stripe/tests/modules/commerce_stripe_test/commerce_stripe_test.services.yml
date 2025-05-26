@@ -1,0 +1,9 @@
+services:
+  commerce_stripe_test.payment_intent_update_subscriber:
+    class: Drupal\commerce_stripe_test\EventSubscriber\PaymentIntentUpdateSubscriber
+    tags:
+      - { name: event_subscriber }
+  commerce_stripe_test.decorated_order_payment_intent_subscriber:
+    class: Drupal\commerce_stripe_test\EventSubscriber\DecoratedOrderPaymentIntentSubscriber
+    parent: commerce_stripe.order_events_subscriber
+    decorates: commerce_stripe.order_events_subscriber

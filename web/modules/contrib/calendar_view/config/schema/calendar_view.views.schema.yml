@@ -1,0 +1,49 @@
+# Schema for plugins defined by the Calendar View module.
+
+calendar_view.view_style:
+  type: views_style
+  label: 'Calendar View'
+  mapping:
+    calendar_fields:
+      type: sequence
+      label: 'Date fields'
+      nullable: true
+      sequence:
+        type: string
+    calendar_display_rows:
+      type: boolean
+      label: 'Display default View results'
+      nullable: true
+    calendar_weekday_start:
+      type: boolean
+      label: 'First day of the week'
+      nullable: true
+    calendar_sort_order:
+      type: string
+      label: 'Sort order'
+      nullable: true
+    calendar_timestamp:
+      type: string
+      label: 'Default date'
+      nullable: true
+    calendar_title:
+      type: label
+      label: 'Calendar title'
+      nullable: true
+    calendar_row_title:
+      type: label
+      label: 'Title attribute for each result'
+      nullable: true
+
+views.style.calendar_month:
+  type: calendar_view.view_style
+  label: 'Calendar by month'
+
+views.style.calendar_week:
+  type: calendar_view.view_style
+  label: 'Calendar by week'
+  mapping:
+    calendar_work_week:
+      type: boolean
+      label: 'Hide weekend'
+      nullable: true

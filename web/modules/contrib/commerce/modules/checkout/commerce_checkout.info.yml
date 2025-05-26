@@ -1,0 +1,15 @@
+name: 'Commerce Checkout'
+type: module
+description: 'Provides configurable checkout flows.'
+package: Commerce
+core_version_requirement: ^10.3 || ^11
+configure: entity.commerce_checkout_flow.collection
+dependencies:
+  - commerce:commerce
+  - commerce:commerce_order
+  - commerce:commerce_cart
+
+# Information added by Drupal.org packaging script on 2025-04-28
+version: '3.0.2'
+project: 'commerce'
+datestamp: 1745848115

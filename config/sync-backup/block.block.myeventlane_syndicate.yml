@@ -1,0 +1,23 @@
+uuid: 850ce053-8d38-4b30-a3a9-8459b642d477
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  theme:
+    - myeventlane
+_core:
+  default_config_hash: 0gq3VPg-_UM69FCCWurLFIrrnIjC2HLKhwo9iQNtcUo
+id: myeventlane_syndicate
+theme: myeventlane
+region: header
+weight: 0
+provider: null
+plugin: node_syndicate_block
+settings:
+  id: node_syndicate_block
+  label: 'RSS feed'
+  label_display: '0'
+  provider: node
+  block_count: 10
+visibility: {  }

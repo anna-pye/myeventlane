@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Contains calendar_view.module.
+ */
+
+// Load all hooks related to templates.
+require_once __DIR__ . '/calendar_view.theme.inc';
+
+/**
+ * Implements hook_theme().
+ */
+function calendar_view_theme() {
+  return [
+    // Provide a default template for Views using Calendar View style.
+    'views_view__style__calendar' => [
+      'base hook' => 'views_view',
+    ],
+    // Allow other modules/themes to alter Calendar View table cells.
+    'calendar_view_day' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Helper method to make sure a timestamp is a timestamp.
+ *
+ * @param mixed $value
+ *   A given value.
+ *
+ * @return int
+ *   The timestamp or the original value.
+ */
+function _calendar_view_ensure_timestamp_value($value): int {
+  return !empty($value) && !is_numeric($value) ? (
+    strtotime($value) ?: (int) $value
+  ) : (int) $value;
+}

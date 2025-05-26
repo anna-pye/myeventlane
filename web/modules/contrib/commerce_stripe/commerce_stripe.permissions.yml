@@ -1,0 +1,8 @@
+administer commerce stripe:
+  title: 'Administer Commerce Stripe'
+  description: 'Allow to access the administration form to configure Commerce Stripe settings.'
+  restrict access: true
+
+view stripe dashboard links:
+  title: 'View Stripe dashboard links'
+  description: 'Allow to view Stripe dashboard links.'

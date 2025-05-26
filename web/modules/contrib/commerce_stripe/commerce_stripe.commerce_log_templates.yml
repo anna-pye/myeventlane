@@ -1,0 +1,4 @@
+commerce_stripe_order_placed_notify:
+  category: commerce_stripe
+  label: 'Order placed'
+  template: '<p>The order was placed by the Stripe webhook "{{ webhook_event_type }}". </p>'

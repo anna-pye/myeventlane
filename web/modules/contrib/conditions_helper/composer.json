@@ -1,0 +1,36 @@
+{
+  "name": "drupal/conditions_helper",
+  "description": "Helper module for conditions.",
+  "type": "drupal-module",
+  "keywords": [
+    "drupal",
+    "module"
+  ],
+  "homepage": "https://www.drupal.org/project/conditions_helper",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/conditions_helper",
+    "source": "http://cgit.drupalcode.org/conditions_helper"
+  },
+  "authors": [
+    {
+      "name": "Owen Bush (owenbush)",
+      "email": "owen@obush.co.uk"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "drupal/core": "^10 || ^11"
+  },
+  "require-dev": {
+    "drupal/coder": "^8.3",
+    "phpcompatibility/php-compatibility": "^9.3"
+  }
+}

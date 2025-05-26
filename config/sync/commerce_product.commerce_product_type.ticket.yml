@@ -1,0 +1,13 @@
+uuid: 205bfa54-bedc-4ca4-a8f3-28351433adb9
+langcode: en
+status: true
+dependencies: {  }
+id: ticket
+label: Ticket
+traits: {  }
+locked: false
+description: ''
+variationTypes:
+  - ticket_variation
+multipleVariations: true
+injectVariationFields: true

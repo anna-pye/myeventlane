@@ -1,0 +1,4 @@
+administer lb_styles_conditions:
+  title: 'Administer Layout Builder Styles Conditions'
+  description: 'Allows users to configure which conditions are available for Layout Builder Styles.'
+  restrict access: true

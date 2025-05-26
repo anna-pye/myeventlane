@@ -1,0 +1,12 @@
+name: 'Mailchimp Event Examples'
+type: module
+description: 'Helper forms to demonstrate and debug the Mailchimp event features.'
+core_version_requirement: ^10 || ^11
+package: 'Mailchimp'
+dependencies:
+  - mailchimp:mailchimp_events
+
+# Information added by Drupal.org packaging script on 2024-10-10
+version: '3.0.0'
+project: 'mailchimp'
+datestamp: 1728589881

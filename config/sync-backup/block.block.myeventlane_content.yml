@@ -1,0 +1,22 @@
+uuid: 7dfa1cb5-fca1-4028-8f31-75f7e5174cbd
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - myeventlane
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: myeventlane_content
+theme: myeventlane
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

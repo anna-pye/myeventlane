@@ -1,0 +1,16 @@
+name: Mailchimp Signup
+type: module
+description: Mailchimp signup blocks and pages
+package: Mailchimp
+core_version_requirement: ^10 || ^11
+configure: mailchimp.admin.signup
+
+dependencies:
+- mailchimp:mailchimp
+
+# configure: action.admin.config.services.mailchimp.signup
+
+# Information added by Drupal.org packaging script on 2024-10-10
+version: '3.0.0'
+project: 'mailchimp'
+datestamp: 1728589881

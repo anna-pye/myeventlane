@@ -1,0 +1,23 @@
+uuid: adaa781a-15ad-483a-a0ad-573529176925
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.ticket_variation
+    - field.storage.commerce_product_variation.field_quantity_available
+id: commerce_product_variation.ticket_variation.field_quantity_available
+field_name: field_quantity_available
+entity_type: commerce_product_variation
+bundle: ticket_variation
+label: 'Quantity Available'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

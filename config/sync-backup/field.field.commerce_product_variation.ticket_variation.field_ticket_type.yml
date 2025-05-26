@@ -1,0 +1,19 @@
+uuid: d04b2195-3066-4481-9327-cdb23abde966
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.ticket_variation
+    - field.storage.commerce_product_variation.field_ticket_type
+id: commerce_product_variation.ticket_variation.field_ticket_type
+field_name: field_ticket_type
+entity_type: commerce_product_variation
+bundle: ticket_variation
+label: 'Ticket Type'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
