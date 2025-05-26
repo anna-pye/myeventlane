@@ -1,0 +1,65 @@
+uuid: af83ed94-6bdd-41c2-98db-b50f931218ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.ticket_variation
+    - field.field.commerce_product_variation.ticket_variation.field_quantity_available
+    - field.field.commerce_product_variation.ticket_variation.field_ticket_type
+    - field.field.commerce_product_variation.ticket_variation.field_valid_date
+  module:
+    - commerce_price
+    - datetime
+id: commerce_product_variation.ticket_variation.default
+targetEntityType: commerce_product_variation
+bundle: ticket_variation
+mode: default
+content:
+  field_quantity_available:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_ticket_type:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_valid_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  list_price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: -1
+    region: content
+  price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  product_id: true
+  sku: true
+  title: true

@@ -1,0 +1,14 @@
+name: Mailchimp
+type: module
+description: Mailchimp email service integration.
+package: Mailchimp
+core_version_requirement: ^10 || ^11
+configure: mailchimp.admin
+
+dependencies:
+  - drupal:path_alias
+
+# Information added by Drupal.org packaging script on 2024-10-10
+version: '3.0.0'
+project: 'mailchimp'
+datestamp: 1728589881

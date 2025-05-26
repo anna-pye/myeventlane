@@ -4,7 +4,8 @@ description: 'Custom theme for MyEventLane based on Bootstrap 5.'
 core_version_requirement: ^11 || ^10
 base theme: stable9
 libraries:
-  - myeventlane/global-styling
+  - myeventlane/global-styles
+  - myeventlane/calendar-styles
 regions:
   header: Header
   primary_menu: 'Primary menu'
@@ -17,3 +18,5 @@ global-styling:
     theme:
       css/style.css: {}
       https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter&display=swap: { type: external }
+
+

@@ -1,0 +1,16 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for Event nodes.
+ */
+function myeventlane_form_logic_form_node_event_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['field_tickets']) && isset($form['field_rsvp_enabled'])) {
+    $form['field_tickets']['#states'] = [
+      'visible' => [
+        ':input[name="field_rsvp_enabled[0][value]"]' => ['checked' => FALSE],
+      ],
+    ];
+  }
+}

@@ -1,0 +1,13 @@
+
+langcode: en
+status: true
+dependencies: {}
+id: rsvp_submission
+label: 'RSVP Submission'
+uuid: be27e27d-34ca-4537-982b-781c74ef1315
+description: 'Clean RSVP submission content type.'
+new_revision: false
+preview_mode: 1
+display_submitted: true
+translatable: false
+third_party_settings: {}

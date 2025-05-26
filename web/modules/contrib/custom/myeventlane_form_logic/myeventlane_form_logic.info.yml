@@ -1,0 +1,7 @@
+name: MyEventLane Field States
+type: module
+description: 'Adds conditional logic to Event fields.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - node

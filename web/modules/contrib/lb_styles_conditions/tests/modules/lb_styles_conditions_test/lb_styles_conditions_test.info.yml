@@ -1,0 +1,12 @@
+name: 'Layout Builder Styles Conditions Test'
+type: module
+description: 'Provides test condition plugins for Layout Builder Styles Conditions.'
+core_version_requirement: ^10 || ^11
+package: Testing
+dependencies:
+  - drupal:lb_styles_conditions
+
+# Information added by Drupal.org packaging script on 2025-05-19
+version: '2.0.0'
+project: 'lb_styles_conditions'
+datestamp: 1747662528

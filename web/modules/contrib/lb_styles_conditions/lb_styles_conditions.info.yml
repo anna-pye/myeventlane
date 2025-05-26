@@ -1,0 +1,14 @@
+name: 'Layout Builder Styles Conditions'
+type: module
+description: 'Provides condition plugins for Layout Builder Styles.'
+package: Layout
+core_version_requirement: ^10 || ^11
+dependencies:
+  - layout_builder_styles:layout_builder_styles
+  - conditions_helper:conditions_helper
+configure: lb_styles_conditions.settings
+
+# Information added by Drupal.org packaging script on 2025-05-19
+version: '2.0.0'
+project: 'lb_styles_conditions'
+datestamp: 1747662528

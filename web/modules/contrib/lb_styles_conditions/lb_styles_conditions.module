@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Layout Builder Styles Conditions module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\lb_styles_conditions\FormAlters;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function lb_styles_conditions_form_layout_builder_style_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::classResolver(FormAlters::class)->layoutBuilderStylesFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function lb_styles_conditions_form_layout_builder_style_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::classResolver(FormAlters::class)->layoutBuilderStylesFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function lb_styles_conditions_form_layout_builder_add_block_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::classResolver(FormAlters::class)->alterLayoutBuilderBlockForm($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function lb_styles_conditions_form_layout_builder_update_block_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::classResolver(FormAlters::class)->alterLayoutBuilderBlockForm($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function lb_styles_conditions_form_layout_builder_configure_section_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::classResolver(FormAlters::class)->alterLayoutBuilderSectionForm($form, $form_state, $form_id);
+}

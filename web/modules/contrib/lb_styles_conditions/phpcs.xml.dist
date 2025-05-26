@@ -1,0 +1,18 @@
+<ruleset name="drupal/lb_styles_conditions">
+  <description>Layout Builder Styles Conditions module CodeSniffer configuration.</description>
+  <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,md,info,txt,yml"/>
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="75"/>
+    <arg value="p"/>
+
+    <config name="drupal_core_version" value="11"/>
+    <config name="testVersion" value="10.0-" />
+
+    <file>.</file>
+    <exclude-pattern>vendor</exclude-pattern>
+
+    <rule ref="./vendor/drupal/coder/coder_sniffer/Drupal"/>
+    <rule ref="./vendor/drupal/coder/coder_sniffer/DrupalPractice"/>
+    <rule ref="./vendor/phpcompatibility/php-compatibility/PHPCompatibility"/>
+</ruleset>

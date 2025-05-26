@@ -1,0 +1,19 @@
+uuid: 3ab5cce9-11d4-401c-87d6-27205f073047
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_name
+    - node.type.rsvp_submission
+id: node.rsvp_submission.field_name
+field_name: field_name
+entity_type: node
+bundle: rsvp_submission
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

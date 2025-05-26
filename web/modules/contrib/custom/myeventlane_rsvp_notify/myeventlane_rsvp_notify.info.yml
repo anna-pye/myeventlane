@@ -1,0 +1,7 @@
+name: 'MyEventLane RSVP Notify'
+type: module
+description: 'Sends an email when an RSVP Submission is created.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - node

@@ -1,0 +1,20 @@
+uuid: e002f526-821b-4603-99d6-01535e68e196
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+    - node
+id: node.field_attach_ticket_product
+field_name: field_attach_ticket_product
+entity_type: node
+type: entity_reference
+settings:
+  target_type: commerce_product
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

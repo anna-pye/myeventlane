@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * @file
+ * Provides Commerce integration for Stripe Payments.
+ */
+
+use Drupal\commerce_payment\Entity\PaymentGateway;
+use Drupal\commerce_stripe\Plugin\Commerce\PaymentGateway\Stripe;
+use Drupal\commerce_stripe\Plugin\Commerce\PaymentGateway\StripePaymentElement;
+use Drupal\commerce_stripe\Plugin\Commerce\PaymentGateway\StripePaymentElementInterface;
+use Drupal\commerce_stripe\PluginForm\Stripe\PaymentMethodAddForm;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function commerce_stripe_form_commerce_checkout_flow_alter(array &$form, FormStateInterface $form_state) {
+  // Add a "data-stripe" attributes to any email fields found, to allow
+  // javascript to collect customer email information for Stripe.
+  if (isset($form['contact_information']['email'])) {
+    $form['contact_information']['email']['#attributes']['data-stripe'] = 'email';
+  }
+  // Also add an after-build callback to add "data-stripe" attributes to
+  // shipping profile fields to use shipping address information, if present.
+  if (isset($form['shipping_information']['shipping_profile'])) {
+    $form['shipping_information']['shipping_profile']['#after_build'][] = [
+      PaymentMethodAddForm::class,
+      'addAddressAttributes',
+    ];
+  }
+  // Customize the label for the Stripe Payment Element payment method.
+  if (isset($form['payment_information']['payment_method'], $form['payment_information']['#payment_options'])) {
+    /** @var \Drupal\commerce_payment\PaymentOption $payment_option */
+    foreach ($form['payment_information']['#payment_options'] as $key => $payment_option) {
+      if (!$payment_option->getPaymentMethodId()) {
+        /** @var \Drupal\commerce_payment\Entity\PaymentGatewayInterface $payment_gateway */
+        $payment_gateway = PaymentGateway::load($payment_option->getPaymentGatewayId());
+        $plugin = $payment_gateway->getPlugin();
+        if ($plugin instanceof StripePaymentElement) {
+          $display_label = $plugin->getCheckoutDisplayLabel();
+          if (!empty($display_label)) {
+            $form['#attached']['library'][] = 'commerce_stripe/credit_card_icons';
+            $form['payment_information']['payment_method']['#options'][$key] = $display_label;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_stripe_theme() {
+  return [
+    'commerce_stripe_credit_card_logos' => [
+      'variables' => [
+        'credit_cards' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+function commerce_stripe_library_info_build() {
+  $libraries = [];
+  $stripe_src = 'https://js.stripe.com/v3/';
+  $stripe_config = Drupal::service('config.factory')->getEditable('commerce_stripe.settings');
+
+  $user_fraud_signals = $stripe_config->get('collect_user_fraud_signals') ?? TRUE;
+  if (!$user_fraud_signals) {
+    $stripe_src .= '?advancedFraudSignals=false';
+  }
+
+  $libraries['stripe'] = [
+    'version' => '3',
+    'js' => [
+      $stripe_src => [
+        'type' => 'external',
+        'minified' => TRUE,
+        'attributes' => [
+          'defer' => 'defer',
+        ],
+      ],
+    ],
+  ];
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function commerce_stripe_library_info_alter(array &$libraries, $module) {
+  if ($module === 'commerce_stripe' && isset($libraries['messages'])) {
+    // Adds a dependency on the payment_messages library only if it is defined.
+    if (Drupal::service('library.discovery')->getLibraryByName('commerce_payment', 'payment_messages')) {
+      $libraries['messages']['dependencies'][] = 'commerce_payment/payment_messages';
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function commerce_stripe_page_attachments(array &$page) {
+  // Adds Stripe.js to all pages except admin and ajax requests.
+  $is_admin_route = Drupal::service('router.admin_context')->isAdminRoute();
+  if (!$is_admin_route && !Drupal::request()->isXmlHttpRequest()) {
+    $stripe_config = Drupal::service('config.factory')->get('commerce_stripe.settings');
+    $load_on_every_page = $stripe_config->get('load_on_every_page') ?? FALSE;
+    if ($load_on_every_page) {
+      $page['#attached']['library'][] = 'commerce_stripe/stripe';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ */
+function commerce_stripe_preprocess_views_view_field(&$variables) {
+  // Link a Stripe payment's Remote ID in the order payments tab to the related
+  // payment in the Stripe dashboard.
+  if ($variables['view']->id() === 'commerce_order_payments' && $variables['field']->field === 'remote_id') {
+    if (!Drupal::currentUser()->hasPermission('view stripe dashboard links')) {
+      return;
+    }
+    $stripe_config = Drupal::service('config.factory')->get('commerce_stripe.settings');
+    $link_payments = $stripe_config->get('link_payments_remote_id') ?? FALSE;
+    if (!$link_payments) {
+      return;
+    }
+    /** @var \Drupal\commerce_payment\Entity\PaymentInterface $payment */
+    $payment = $variables['row']->_entity;
+    $plugin = $payment->getPaymentGateway()?->getPlugin();
+    if ($plugin instanceof Stripe ||
+      $plugin instanceof StripePaymentElementInterface) {
+      $redirect_url = $payment->getPaymentGatewayMode() === 'test' ? 'test/payments' : 'payments';
+      $variables['output'] = Link::fromTextAndUrl(
+        $payment->getRemoteId(),
+        Url::fromUri(
+          "https://dashboard.stripe.com/login?redirect=$redirect_url/" . $payment->getRemoteId(),
+          ['attributes' => ['target' => '_blank']]
+        )
+      );
+    }
+  }
+}
