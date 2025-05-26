@@ -1,0 +1,7 @@
+name: 'RSVP Visibility Condition'
+type: module
+description: 'Provides a condition plugin to check if RSVP is enabled on an Event node.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - block_visibility_groups

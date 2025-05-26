@@ -1,0 +1,6 @@
+block_visibility_groups_admin.settings:
+  title: 'Block visibility groups'
+  description: 'Configure block visibility groups.'
+  parent: block.admin_display
+  route_name: entity.block_visibility_group.collection
+  menu_name: admin

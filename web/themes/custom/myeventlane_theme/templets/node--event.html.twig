@@ -1,9 +1,10 @@
-node--event.html.twig
+<article class="card node--event {{ view_mode }}">
+  <header>
+    <h1 class="card__title">{{ label }}</h1>
+  </header>
 
-{% if node.field_rsvp_enabled.value %}
-  <a href="/rsvp/{{ node.id }}/form" class="btn btn-primary">RSVP Now</a>
-{% endif %}
-
-<article class="event-card {{ node.field_featured.value ? 'is-featured' : '' }}">
-  ...
+  <div class="card__body">
+    {{ content }}
+  </div>
 </article>
+

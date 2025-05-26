@@ -17,6 +17,8 @@
     "require": {
         "composer/installers": "^2.3",
         "drupal/admin_toolbar": "^3.6",
+        "drupal/block_visibility_groups": "^2.0",
+        "drupal/bootstrap5": "^4.0",
         "drupal/calendar_view": "^2.1",
         "drupal/commerce": "^3.0",
         "drupal/commerce_cart": "^3.0",
@@ -26,6 +28,7 @@
         "drupal/commerce_price": "^3.0",
         "drupal/commerce_product": "^3.0",
         "drupal/commerce_stripe": "^2.0",
+        "drupal/condition_field": "^2.0",
         "drupal/core-composer-scaffold": "^11.1",
         "drupal/core-project-message": "^11.1",
         "drupal/core-recommended": "^11.1",

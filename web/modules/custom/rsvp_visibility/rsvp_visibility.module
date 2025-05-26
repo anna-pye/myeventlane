@@ -1,0 +1,100 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_insert().
+ */
+function rsvp_visibility_node_insert(NodeInterface $node) {
+  if ($node->bundle() !== 'rsvp_submission') {
+    return;
+  }
+
+  // === Event reference ===
+  $event = NULL;
+  $event_title = '';
+  if ($node->hasField('field_event_reference') && !$node->get('field_event_reference')->isEmpty()) {
+    $event = $node->get('field_event_reference')->entity;
+    if ($event) {
+      $event_title = $event->label();
+    }
+  }
+
+  // === Messenger: display in-site thank you ===
+  if ($event_title) {
+    $message = t('🎉 Thank you for RSVPing for "@event"! We look forward to seeing you there.', ['@event' => $event_title]);
+    \Drupal::messenger()->addMessage($message);
+  }
+
+  // === Email confirmation ===
+  $email = $node->get('field_email')->value ?? NULL;
+
+  if ($email && $event) {
+    $event_url = $event->toUrl('canonical', ['absolute' => TRUE])->toString();
+
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'rsvp_visibility';
+    $key = 'rsvp_confirmation';
+    $to = $email;
+    $langcode = \Drupal::currentUser()->getPreferredLangcode();
+    $send = TRUE;
+
+    $params['subject'] = "You're confirmed for $event_title 🎟️";
+    $params['message'] = "Hi there,\n\nThank you for your RSVP to \"$event_title\".\nYou can view the event details here: $event_url\n\nSee you there!\n\n– The MyEventLane Team";
+
+    $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function rsvp_visibility_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'rsvp_confirmation':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['message'];
+      break;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() to prevent duplicate RSVPs.
+ */
+function rsvp_visibility_form_node_rsvp_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $user = \Drupal::currentUser();
+  if ($user->isAnonymous()) {
+    return;
+  }
+
+  $form['#validate'][] = 'rsvp_visibility_prevent_duplicate_rsvp';
+}
+
+/**
+ * Prevent duplicate RSVP submissions by the same user for the same event.
+ */
+function rsvp_visibility_prevent_duplicate_rsvp($form, FormStateInterface $form_state) {
+  $event_target_id = $form_state->getValue(['field_event_reference', 0, 'target_id']);
+  $uid = \Drupal::currentUser()->id();
+
+  if (!$event_target_id || !$uid) {
+    return;
+  }
+
+  $existing = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->getQuery()
+    ->condition('type', 'rsvp_submission')
+    ->condition('field_event_reference', $event_target_id)
+    ->condition('field_user_reference', $uid)
+    ->range(0, 1)
+    ->execute();
+
+  if (!empty($existing)) {
+    $form_state->setErrorByName('field_event_reference', t('You have already RSVP’d for this event.'));
+  }
+}
+
+

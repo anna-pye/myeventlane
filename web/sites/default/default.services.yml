@@ -243,3 +243,10 @@ parameters:
     # This is not applicable when a queue is suspended but does not specify
     # how long to wait before attempting to resume.
     suspendMaximumWait: 30
+
+    parameters:
+    twig.config:
+    debug: true
+    auto_reload: true
+    cache: false
+

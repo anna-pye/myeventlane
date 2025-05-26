@@ -1,0 +1,12 @@
+name: Block Visibility Groups Admin
+type: module
+description: Block Visibility Groups development helper
+core_version_requirement: ^9 || ^10 || ^11
+package: Other
+dependencies:
+  - block_visibility_groups:block_visibility_groups
+
+# Information added by Drupal.org packaging script on 2025-01-17
+version: '2.0.4'
+project: 'block_visibility_groups'
+datestamp: 1737112822
