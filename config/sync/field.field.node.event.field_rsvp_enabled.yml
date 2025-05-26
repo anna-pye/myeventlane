@@ -1,0 +1,23 @@
+uuid: 7dbfefb2-2f56-47c1-b4d7-ceb7c2b95993
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rsvp_enabled
+    - node.type.event
+id: node.event.field_rsvp_enabled
+field_name: field_rsvp_enabled
+entity_type: node
+bundle: event
+label: 'RSVP Enabled?'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
