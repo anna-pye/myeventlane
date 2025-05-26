@@ -30,3 +30,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Drupal 11 project scaffolded in DDEV
 - Config cleared for fresh rebuild
 - Backend, Frontend UI, and Troubleshooting ChatGPT threads created
+
+## [0.2.0] – 2025-05-26
+### Added
+- Config import fixed after dependency errors (field_title, orphaned content types)
+- Clean deploy script now fully functional
+- GitHub Actions check for Composer and config sync
+
+### Fixed
+- Removed broken field display configs and missing field storage references
