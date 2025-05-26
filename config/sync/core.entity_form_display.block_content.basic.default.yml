@@ -5,7 +5,9 @@ dependencies:
   config:
     - block_content.type.basic
     - field.field.block_content.basic.body
+    - field.field.block_content.basic.field_basic_sss
   module:
+    - address
     - text
 _core:
   default_config_hash: jAps3FCxvKecABS_tgExbhCZrBLQB3bNPWw18WjE3ss
@@ -23,6 +25,13 @@ content:
       summary_rows: 3
       placeholder: ''
       show_summary: false
+    third_party_settings: {  }
+  field_basic_sss:
+    type: address_zone_default
+    weight: 26
+    region: content
+    settings:
+      show_label_field: false
     third_party_settings: {  }
   info:
     type: string_textfield

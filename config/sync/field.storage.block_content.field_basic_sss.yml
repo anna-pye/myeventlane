@@ -1,0 +1,19 @@
+uuid: 79330ea8-a5d1-466b-9e4f-a95b18ed7092
+langcode: en
+status: true
+dependencies:
+  module:
+    - address
+    - block_content
+id: block_content.field_basic_sss
+field_name: field_basic_sss
+entity_type: block_content
+type: address_zone
+settings: {  }
+module: address
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

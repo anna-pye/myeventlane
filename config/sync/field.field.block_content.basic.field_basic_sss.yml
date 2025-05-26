@@ -1,0 +1,22 @@
+uuid: 2d3d6043-6511-4d31-86c2-8cf69318a009
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.basic
+    - field.storage.block_content.field_basic_sss
+  module:
+    - address
+id: block_content.basic.field_basic_sss
+field_name: field_basic_sss
+entity_type: block_content
+bundle: basic
+label: sss
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries: {  }
+field_type: address_zone
