@@ -1,0 +1,54 @@
+uuid: 9491753a-38d2-4199-bf62-a19dd6c0dd2b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.rsvp_submission.field_email
+    - field.field.node.rsvp_submission.field_event_reference
+    - field.field.node.rsvp_submission.field_name
+    - field.field.node.rsvp_submission.field_user_reference
+    - node.type.rsvp_submission
+  module:
+    - user
+id: node.rsvp_submission.default
+targetEntityType: node
+bundle: rsvp_submission
+mode: default
+content:
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_event_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_user_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

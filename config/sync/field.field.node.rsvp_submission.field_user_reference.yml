@@ -1,0 +1,29 @@
+uuid: 196438d6-f396-4bea-953a-9b1d847a5e53
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_user_reference
+    - node.type.rsvp_submission
+id: node.rsvp_submission.field_user_reference
+field_name: field_user_reference
+entity_type: node
+bundle: rsvp_submission
+label: 'User Reference'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: false
+field_type: entity_reference
