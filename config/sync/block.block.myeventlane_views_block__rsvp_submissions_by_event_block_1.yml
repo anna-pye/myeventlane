@@ -1,0 +1,38 @@
+uuid: 1171e067-f32e-47b9-bc64-c91e0222597f
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.rsvp_submissions_by_event
+  module:
+    - block_visibility_groups
+    - node
+    - views
+  theme:
+    - myeventlane
+id: myeventlane_views_block__rsvp_submissions_by_event_block_1
+theme: myeventlane
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:rsvp_submissions_by_event-block_1'
+settings:
+  id: 'views_block:rsvp_submissions_by_event-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  condition_group:
+    id: condition_group
+    negate: false
+    block_visibility_group: ''
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      event: event
