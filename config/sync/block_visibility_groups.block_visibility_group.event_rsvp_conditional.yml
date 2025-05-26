@@ -1,0 +1,19 @@
+uuid: 2c9e6fc6-be2d-45e1-a538-aac1864800da
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: event_rsvp_conditional
+label: 'Event RSVP Conditional'
+logic: and
+conditions:
+  abdcbb0e-3a56-4968-9b0f-aeb011ad2cb8:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: abdcbb0e-3a56-4968-9b0f-aeb011ad2cb8
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      event: event
+allow_other_conditions: true

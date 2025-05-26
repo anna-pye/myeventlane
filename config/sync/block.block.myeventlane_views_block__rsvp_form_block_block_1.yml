@@ -1,0 +1,30 @@
+uuid: 41d8cdce-ffa5-4693-a85d-e0ee1867a9ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.rsvp_form_block
+  module:
+    - block_visibility_groups
+    - views
+  theme:
+    - myeventlane
+id: myeventlane_views_block__rsvp_form_block_block_1
+theme: myeventlane
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:rsvp_form_block-block_1'
+settings:
+  id: 'views_block:rsvp_form_block-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  condition_group:
+    id: condition_group
+    negate: false
+    block_visibility_group: ''
