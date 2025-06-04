@@ -1,0 +1,76 @@
+uuid: f8ceb2f4-0d2d-432f-88ae-441b0fbb24d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.categories
+  module:
+    - taxonomy
+    - views
+id: taxonomy_category_filter_buttons
+label: 'Event Categories - Filter Buttons'
+module: views
+description: 'List of category terms used for filtering events'
+tag: ''
+base_table: taxonomy_term_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Master
+    display_plugin: default
+    position: 0
+    display_options:
+      fields:
+        name:
+          id: name
+          table: taxonomy_term_field_data
+          field: name
+          plugin_id: field
+          label: ''
+          alter:
+            make_link: true
+            path: '/events?category=[name]'
+      pager:
+        type: none
+      exposed_form:
+        type: basic
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+      filters:
+        vid:
+          id: vid
+          table: taxonomy_term_field_data
+          field: vid
+          plugin_id: taxonomy_vid
+          value: categories
+          group: 0
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            default_group: ''
+            default_group_multiple: false
+            group_info: {  }
+          is_grouped: false
+      style:
+        type: html_list
+        options:
+          type: ul
+          class: taxonomy-filter-buttons
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+      query:
+        type: views_query

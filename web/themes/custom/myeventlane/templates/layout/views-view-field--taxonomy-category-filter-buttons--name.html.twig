@@ -1,0 +1,17 @@
+{#
+  Renders each taxonomy term as a pastel button.
+  Assumes display ID = block_1 from view machine name: taxonomy_category_filter_buttons
+#}
+
+{% set slug = row._entity.label|lower|replace({
+  ' ': '-',
+  '+': 'plus',
+  '&': 'and',
+  '/': '',
+  ',': ''
+}) %}
+
+<a href="{{ row._entity.url() }}"
+   class="button button--tag button--{{ slug }}">
+  {{ row._entity.label }}
+</a>

@@ -1,0 +1,14 @@
+name: Search API Taxonomy Machine Name
+description: Search API integration for the Taxonomy Machine Name module
+type: module
+package: Other
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - taxonomy_machine_name:taxonomy_machine_name
+  - search_api:search_api
+
+# Information added by Drupal.org packaging script on 2024-11-21
+version: '2.0.1'
+project: 'taxonomy_machine_name'
+datestamp: 1732210452

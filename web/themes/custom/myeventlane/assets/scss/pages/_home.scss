@@ -1,0 +1,21 @@
+/* Homepage Specific Styles */
+.hero__headline {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.hero__tagline {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+// ---------------------------------------------
+// HOMEPAGE HERO
+// ---------------------------------------------
+
+.homepage_hero {
+  background-color: var(--color-light);
+  text-align: left;
+  padding: 3rem 1rem 2rem;
+  }

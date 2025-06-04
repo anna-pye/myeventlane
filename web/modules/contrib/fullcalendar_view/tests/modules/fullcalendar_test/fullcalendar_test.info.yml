@@ -1,0 +1,13 @@
+name: 'Fullcalendar Test'
+type: module
+description: 'Provides a test view for Fullcalendar.'
+package: Custom
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+dependencies:
+  - drupal:views
+  - drupal:fullcalendar_view
+
+# Information added by Drupal.org packaging script on 2024-12-17
+version: '5.2.4'
+project: 'fullcalendar_view'
+datestamp: 1734475494

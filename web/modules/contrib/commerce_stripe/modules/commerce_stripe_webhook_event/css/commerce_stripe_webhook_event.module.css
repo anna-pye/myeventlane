@@ -1,0 +1,40 @@
+/**
+ * @file
+ * Admin styles for the Commerce Stripe webhook event module.
+ */
+.commerce-stripe-webhook-event-filter-form .form-item-type,
+.commerce-stripe-webhook-event-filter-form .form-item-status {
+  display: inline-block;
+  max-width: 30%;
+  margin: 0.1em 0.9em 0.1em 0.1em; /* LTR */
+}
+[dir="rtl"] .commerce-stripe-webhook-event-filter-form .form-item-type,
+[dir="rtl"] .commerce-stripe-webhook-event-filter-form .form-item-status {
+  margin: 0.1em 0.1em 0.1em 0.9em;
+}
+.commerce-stripe-webhook-event-filter-form .form-actions {
+  display: inline-block;
+  padding: 3ex 0 0;
+  vertical-align: top;
+}
+.admin-webhook-event .icon,
+.admin-webhook-event .webhook-event-unprocessed .icon,
+.admin-webhook-event .webhook-event-skipped .icon,
+.admin-webhook-event .webhook-event-succeeded .icon,
+.admin-webhook-event .webhook-event-failed .icon {
+  width: 16px;
+  background: no-repeat center;
+}
+.admin-webhook-event .webhook-event-skipped .icon {
+  background-image: url(../images/icons/e29700/warning.svg);
+}
+.admin-webhook-event .webhook-event-failed .icon {
+  background-image: url(../images/icons/e32700/error.svg);
+}
+.admin-webhook-event .webhook-event-succeeded .icon {
+  background-image: url(../images/icons/73b355/check.svg);
+}
+
+.webhook-event .pre {
+  white-space: pre;
+}

@@ -1,0 +1,28 @@
+// ---------------------------------------------
+// BASE STYLES
+// ---------------------------------------------
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+a {
+  color: var(--color-coral);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+
+

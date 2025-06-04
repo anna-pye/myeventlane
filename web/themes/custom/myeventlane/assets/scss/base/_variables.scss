@@ -1,0 +1,42 @@
+// ---------------------------------------------
+// VARIABLES
+// ---------------------------------------------
+
+// COLORS
+$color-background: #fffaf5;
+$color-primary: #f26d5b;
+$color-secondary: #6d73f2;
+$color-accent: #f5c04c;
+$color-muted: #f4f4f4;
+$color-text: #1e1e1e;
+
+// TYPOGRAPHY
+$font-family-base: 'Inter', sans-serif;
+$font-size-base: 16px;
+$font-size-lg: 20px;
+$font-size-sm: 14px;
+
+// SPACING
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+// BORDER
+$border-radius-sm: 6px;
+$border-radius: 12px;
+$border-radius-lg: 20px;
+
+:root {
+  --color-coral: #f76c5e;
+  --color-lemon: #fdbc3a;
+  --color-lilac: #a78bfa;
+  --color-sky: #68c4db;
+  --color-dark: #1a1a1a;
+  --color-light: #fff9f3;
+  --color-coral: #f26d5b;
+  --radius-pill: 999px;
+  --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.05);
+  --radius-card: 1rem;
+}

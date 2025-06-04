@@ -1,0 +1,22 @@
+@import 'base/base';
+@import 'base/variables';
+@import 'components/card';
+@import 'components/button';
+@import 'layout/layout';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'components/homepagehero';
+@import 'components/hero';
+@import 'components/bage';
+@import 'base/reset';
+@import 'base/typography';
+@import 'components/forms';
+@import 'layout/grid';
+@import 'themes/colors';
+@import 'pages/home';
+
+// Global Styles
+body {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}

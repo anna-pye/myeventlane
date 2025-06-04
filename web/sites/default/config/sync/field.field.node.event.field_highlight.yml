@@ -1,0 +1,22 @@
+uuid: 49527460-6bd3-4c8a-9efd-a0373b0d1751
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_highlight
+    - node.type.event
+  module:
+    - color_field
+id: node.event.field_highlight
+field_name: field_highlight
+entity_type: node
+bundle: event
+label: 'Highlight Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  opacity: 1
+field_type: color_field_type

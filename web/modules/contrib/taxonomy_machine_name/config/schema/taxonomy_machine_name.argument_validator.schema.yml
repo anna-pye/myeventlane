@@ -1,0 +1,5 @@
+# Schema for the taxonomy machine name views argument validators.
+
+views.taxonomy_term_machine_name:
+  type: views.argument_validator_entity
+  label: 'Taxonomy term machine name'

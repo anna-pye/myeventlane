@@ -1,0 +1,60 @@
+{# node--event--teaser.html.twig #}
+
+<article class="card node--event teaser" style="--event-accent: #f76c5e;">
+
+   {% if node.field_promoted.value %}
+    <div class="boosted-badge">🔥 Boosted</div>
+  {% endif %}
+
+
+  {% if node.field_image.entity %}
+    <div class="card__image">
+      <img src="{{ file_url(node.field_image.entity.uri.value) }}" alt="{{ label }}" />
+    </div>
+  {% endif %}
+
+   <div class="badge-row">
+        {% if content.field_wheelchair['#markup']|lower == '1' %}
+          <span class="badge badge--wheelchair">♿ Wheelchair</span>
+        {% endif %}
+        {% if content.field_auslan['#markup']|lower == '2' %}
+          <span class="badge badge--auslan">🧏 Auslan</span>
+        {% endif %}
+        {% if content.field_hearing_loop['#markup']|lower == '3' %}
+          <span class="badge badge--hearing">🔊 Hearing Loop</span>
+        {% endif %}
+      </div>
+
+  <div class="card__body">
+     <h2 class="card__title">
+      <a href="{{ url }}">{{ label }}</a>
+    </h2>
+
+    {% if node.field_location %}
+      <div class="card__location">{{ node.field_location.0.address.address_line1 }}</div>
+    {% endif %}
+
+
+    {% if content.field_event_date %}
+      <div class="event-card__meta">
+        {{ content.field_event_date }}
+      </div>
+    {% endif %}
+
+    {% if content.field_location %}
+      <div class="event-card__meta">
+        {{ content.field_location }}
+      </div>
+    {% endif %}
+
+    {% if content.field_tags %}
+      <div class="event-card__tags">
+        {{ content.field_tags }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card__footer">
+    <a href="{{ url }}" class="button">View Event</a>
+  </div>
+</article>

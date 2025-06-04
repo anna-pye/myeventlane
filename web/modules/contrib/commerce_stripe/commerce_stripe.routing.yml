@@ -1,0 +1,7 @@
+commerce_stripe.settings:
+  path: '/admin/commerce/config/stripe'
+  defaults:
+    _form: '\Drupal\commerce_stripe\Form\StripeSettings'
+    _title: 'Stripe settings'
+  requirements:
+    _permission: 'administer commerce stripe'

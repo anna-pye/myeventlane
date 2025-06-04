@@ -1,0 +1,4 @@
+view machine name overview page:
+  title: 'View machine name on taxomomy Overview page'
+  description: 'View machine name on taxomomy Overview page'
+  restrict access: false

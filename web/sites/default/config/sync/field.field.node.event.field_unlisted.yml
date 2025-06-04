@@ -1,0 +1,21 @@
+uuid: 2174d80d-bd1d-4a90-98fa-a319dd45a9f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_unlisted
+    - node.type.event
+id: node.event.field_unlisted
+field_name: field_unlisted
+entity_type: node
+bundle: event
+label: 'Unlisted toggle'
+description: 'Listed Event Yes or No'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

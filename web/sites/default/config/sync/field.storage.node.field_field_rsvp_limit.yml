@@ -1,0 +1,20 @@
+uuid: 2910e442-afe0-4fff-b764-b41aac7429d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_field_rsvp_limit
+field_name: field_field_rsvp_limit
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

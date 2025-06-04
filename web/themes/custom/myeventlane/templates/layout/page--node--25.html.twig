@@ -1,0 +1,24 @@
+{# page--node--25.html.twig #}
+{% extends "page.html.twig" %}
+{% block content %}
+<section class="hero">
+  <div class="container hero__content">
+    <img src="/themes/custom/myeventlane/assets/images/myeventlanelogo.jpeg" alt="MyEventLane Logo" class="hero__logo" />
+    <h1 class="hero__headline">Run Your Show</h1>
+    <p class="hero__tagline">Empowering Event Creators</p>
+    <div class="hero__buttons">
+      <a href="/node/add/event" class="button button--tag button--yellow">Submit Event</a>
+      <a href="/events" class="button button--tag button--blue">Browse Events</a>
+      <a href="/user" class="button button--tag button--purple">Your Account</a>
+    </div>
+    <div class="hero__filters">
+      {{ drupal_view('taxonomy_category_filter_buttons', 'block_1') }}
+    </div>
+    <form class="hero__search" action="/search" method="get">
+      <input type="text" name="keys" placeholder="Search events..." />
+      <button type="submit" class="button">Search</button>
+    </form>
+  </div>
+</section>
+{{ page.content }}
+{% endblock %}

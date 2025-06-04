@@ -1,0 +1,21 @@
+uuid: 52155887-9369-48e4-9c87-d730decc2fc8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_boosted
+    - node.type.event
+id: node.event.field_boosted
+field_name: field_boosted
+entity_type: node
+bundle: event
+label: Boosted
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

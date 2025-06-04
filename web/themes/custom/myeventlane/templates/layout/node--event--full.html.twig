@@ -1,0 +1,67 @@
+{% set highlight = content.field_highlight['#markup'] ?? '#f76c5e' %}
+
+<article class="event-full" style="--event-accent: {{ highlight }};">
+
+  {% if content.field_image %}
+    <div class="event-hero">
+      {{ content.field_image }}
+    </div>
+  {% endif %}
+
+  <div class="event-body container">
+
+    <header class="event-header">
+      <h1 class="event-title">{{ label }}</h1>
+
+      {% if content.field_start_date_time %}
+        <div class="event-date">
+          {{ content.field_start_date_time }}
+        </div>
+      {% endif %}
+
+      {% if content.field_location %}
+        <div class="event-location">
+          {{ content.field_location }}
+        </div>
+      {% endif %}
+
+      {% if content.field_tags %}
+        <div class="event-tags">
+          {{ content.field_tags }}
+        </div>
+      {% endif %}
+
+      {% if content.field_boosted['#markup']|lower == 'yes' %}
+        <div class="boosted-badge">🔥 Boosted</div>
+      {% endif %}
+    </header>
+
+    {% if content.body %}
+      <div class="event-description">
+        {{ content.body }}
+      </div>
+    {% endif %}
+
+    <div class="event-footer">
+
+      {% if content.field_link %}
+        <div class="event-cta">
+          {{ content.field_link }}
+        </div>
+      {% else %}
+        <div class="event-cta fallback">
+          <em>RSVP or ticket link not available.</em>
+        </div>
+      {% endif %}
+
+      {# 🗺️ Optional future map field #}
+      {# {% if content.field_location_map %}
+        <div class="event-map">
+          {{ content.field_location_map }}
+        </div>
+      {% endif %} #}
+
+    </div>
+
+  </div>
+</article>

@@ -1,0 +1,24 @@
+uuid: 57a13e3e-1086-455c-98f5-ac0e2225ab3c
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - myeventlane
+id: myeventlane_mainpagecontent
+theme: myeventlane
+region: footer
+weight: -9
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: visible
+  provider: system
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: ''

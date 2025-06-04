@@ -1,0 +1,18 @@
+uuid: 26a9fb65-7491-426d-a9e0-f0427dbf5308
+langcode: en
+status: false
+dependencies:
+  theme:
+    - myeventlane
+id: myeventlane_pagetitle
+theme: myeventlane
+region: content
+weight: -9
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

@@ -1,0 +1,19 @@
+uuid: da4b2f58-30aa-431c-85f9-7fd81553fa48
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_passcode
+    - node.type.event
+id: node.event.field_passcode
+field_name: field_passcode
+entity_type: node
+bundle: event
+label: 'Private Access Passcode'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

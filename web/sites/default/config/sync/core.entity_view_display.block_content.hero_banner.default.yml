@@ -1,0 +1,12 @@
+uuid: 1c013a38-5a7c-4543-8855-11e6cd2d3abe
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.hero_banner
+id: block_content.hero_banner.default
+targetEntityType: block_content
+bundle: hero_banner
+mode: default
+content: {  }
+hidden: {  }

@@ -1,0 +1,373 @@
+<?php
+
+/**
+ * @file
+ * This is the Taxonomy Machine Name module.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\TermInterface;
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function taxonomy_machine_name_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+
+  if ($entity_type->id() == 'taxonomy_term') {
+    $fields['machine_name'] = BaseFieldDefinition::create('string')
+      ->setLabel('Machine name')
+      ->setDescription('Machine name for internal use.')
+      ->setRevisionable(FALSE);
+  }
+
+  return $fields;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function taxonomy_machine_name_form_taxonomy_overview_terms_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $user = \Drupal::currentUser();
+  if($user->hasPermission('view machine name overview page')) {
+    if (isset($form['terms']['#header'])) {
+      array_splice($form['terms']['#header'], 1, 0, [t('Machine name')]);
+    }
+    $position = FALSE;
+    if (isset($form['terms'])){
+      foreach (\Drupal\Core\Render\Element::children($form['terms']) as $key) {
+        /** @var \Drupal\taxonomy\Entity\Term $term */
+        $term = $form['terms'][$key]['#term'];
+        if (!empty($term_machine_name = $term->get('machine_name')->first())) {
+          $machine_name = $term_machine_name->getValue()['value'];
+        }
+        else {
+          $machine_name = '';
+        }
+
+        // Look for term position to place machine name just after.
+        if ($position === FALSE) {
+          $position = array_search('term', array_keys($form['terms'][$key]));
+
+          if ($position === FALSE) {
+            $position = 0;
+          }
+        }
+        $column = [
+          '#type' => 'link',
+          '#title' => $machine_name,
+          '#url' => $form['terms'][$key]['term']['#url'],
+        ];
+        array_splice($form['terms'][$key], $position + 1, 0, ['machine_name' => $column]);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function taxonomy_machine_name_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Only if 'name' field is enable in the current 'form display' or the field is not set as hidden.
+  if (isset($form['name']) &&
+      (isset($form['name']['widget'][0]['value']['#type']) && $form['name']['widget'][0]['value']['#type'] !== 'hidden')
+    ) {
+    $default_value = '';
+
+    /** @var \Drupal\taxonomy\Entity\Term $term */
+    $term = $form_state->getFormObject()->getEntity();
+    if (
+      $term->hasField('machine_name')
+      && !$term->get('machine_name')->isEmpty()
+    ) {
+      if (!empty($term->get('machine_name')->first()->getValue()['value'])) {
+        $default_value = $term->get('machine_name')->first()->getValue()['value'];
+      }
+      elseif (isset($term->get('name')->first()->getValue()['value'])) {
+        $default_value = taxonomy_machine_name_clean_name($term->get('name')->first()->getValue()['value']);
+      }
+    }
+
+    $form['machine_name'] = [
+      '#type' => 'machine_name',
+      '#default_value' => $default_value,
+      '#maxlength' => 255,
+      '#machine_name' => [
+        'exists' => 'taxonomy_machine_name_term_load',
+        'source' => ['name', 'widget', 0, 'value'],
+      ],
+      '#weight' => $form['name']['#weight'] + 0.01,
+    ];
+
+    $form['#validate'][] = 'taxonomy_machine_name_form_validate';
+  }
+}
+
+/**
+ * Implements hook_form_validate().
+ */
+function taxonomy_machine_name_form_validate($form, FormStateInterface $form_state) {
+  // During the deletion there is no 'machine_name' key.
+  if ($form_state->hasValue('machine_name')) {
+    // Do not allow machine names to conflict with taxonomy path arguments.
+    $machine_name = $form_state->getValue('machine_name');
+    $disallowed = ['add', 'list', 'delete', 'update'];
+
+    if (in_array($machine_name, $disallowed)) {
+      $form_state->setError(
+        $form['machine_name'],
+        t('The machine-readable name cannot be "add", "update", "delete" or "list".')
+      );
+    }
+  }
+}
+
+/**
+ * Try to map a string to an existing term, as for glossary use.
+ *
+ * Provides a case-insensitive and trimmed mapping, to maximize the
+ * likelihood of a successful match.
+ *
+ * @param string $machine_name
+ *   Name of the term to search for.
+ * @param string $vocabulary
+ *   Vocabulary machine name to limit the search. Defaults to NULL.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state.
+ *
+ * @return \Drupal\taxonomy\TermInterface|null
+ *   Taxonomy term object or NULL.
+ */
+function taxonomy_machine_name_term_load($machine_name, $vocabulary, FormStateInterface $form_state = NULL) {
+  // Support for machine_name form callback.
+  if (NULL !== $form_state) {
+    $buildInfo = $form_state->getBuildInfo();
+    /** @var \Drupal\taxonomy\TermForm $callbackObject */
+    $callbackObject = $buildInfo['callback_object'];
+    /** @var \Drupal\taxonomy\Entity\Term $term */
+    $term = $callbackObject->getEntity();
+    $vocabulary = $term->bundle();
+  }
+
+  $conditions = [
+    'machine_name' => $machine_name,
+    'vid' => $vocabulary,
+  ];
+
+  if ($terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties($conditions)
+  ) {
+    if (isset($term) && key($terms) == $term->id()) {
+      return NULL;
+    }
+
+    return reset($terms);
+  }
+
+  return NULL;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function taxonomy_machine_name_taxonomy_term_presave(EntityInterface $term) {
+  // Set default value based on current name term.
+  /** @var \Drupal\taxonomy\Entity\Term $term */
+  if ($term->get('machine_name')->isEmpty()) {
+    $machine_name = $term->get('name')->first()->getValue()['value'];
+  }
+  else {
+    // Clean by security.
+    $machine_name = $term->get('machine_name')->first()->getValue()['value'];
+  }
+
+  $machine_name = taxonomy_machine_name_clean_name($machine_name);
+
+  // If the alias already exists, generate a new,
+  // hopefully unique, variant.
+  taxonomy_machine_name_uniquify($machine_name, $term);
+
+  $term->set('machine_name', $machine_name);
+}
+
+/**
+ * Clean name to generate machine name.
+ *
+ * @param string $name
+ *   Name to clean.
+ * @param bool $force
+ *   Force new machine name.
+ *
+ * @return string
+ *   Cleaned name.
+ */
+function taxonomy_machine_name_clean_name($name, $force = FALSE) {
+  if (!preg_match('/^[a-z0-9\_]+$/', $name) || $force) {
+    $unknown_character = '_';
+    // Transliterate and sanitize the destination filename.
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $machine_name = \Drupal::transliteration()->transliterate($name, $langcode, $unknown_character);
+    $machine_name = trim(mb_strtolower($machine_name));
+    $machine_name = trim(preg_replace('/[^a-z0-9\_]+/', $unknown_character, $machine_name), $unknown_character);
+  }
+  else {
+    // Nothing to do.
+    $machine_name = $name;
+  }
+
+  \Drupal::moduleHandler()->alter('taxonomy_machine_name_clean_name', $machine_name, $name, $force);
+
+  return $machine_name;
+}
+
+/**
+ * Check and alter machine name to generate a unique value.
+ *
+ * @param string $machine_name
+ *   Machine name to uniquify.
+ * @param \Drupal\taxonomy\Entity\Term $term
+ *   Taxonomy term of reference.
+ */
+function taxonomy_machine_name_uniquify(&$machine_name, Term $term) {
+  /** @var \Drupal\taxonomy\Entity\Term $existing */
+  $existing = taxonomy_machine_name_term_load($machine_name, $term->bundle());
+  if (!$existing || $existing->id() == $term->id()) {
+    return;
+  }
+
+  // If the machine name already exists, generate a new, variant.
+  $original_machine_name = $machine_name;
+
+  $i = 0;
+  do {
+    // Append an incrementing numeric suffix until we find a unique value.
+    $unique_suffix = '_' . $i;
+    $machine_name = Unicode::truncate(
+        $original_machine_name,
+        255 - mb_strlen($unique_suffix)
+      ) . $unique_suffix;
+    $i++;
+  } while (taxonomy_machine_name_term_load($machine_name, $term->bundle()));
+}
+
+/**
+ * Update term with machine name.
+ *
+ * @param \Drupal\taxonomy\TermInterface $term
+ *   Taxonomy term storage.
+ *
+ * @return \Drupal\taxonomy\TermInterface
+ *   The taxonomy term.
+ */
+function taxonomy_machine_name_update_term(TermInterface $term) {
+  if (empty($term->get('machine_name')->first()) && !empty($term->get('name')->first())) {
+    $name = $term->get('name')->first()->getValue()['value'];
+    $term->machine_name = taxonomy_machine_name_clean_name($name);
+    $term->save();
+  }
+  return $term;
+}
+
+/**
+ * Implements hook_token_info_alter().
+ */
+function taxonomy_machine_name_token_info_alter(&$info) {
+  $info['tokens']['term']['machine_name'] = [
+    'name' => t('Machine name'),
+    'description' => t('The machine name of the taxonomy term.'),
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function taxonomy_machine_name_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+  $replacements = [];
+
+  if ($type == 'term' && !empty($data['term'])) {
+    $term = $data['term'];
+
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'machine_name':
+          $replacements[$original] = $term->machine_name->value;
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Implements hook_help().
+ */
+function taxonomy_machine_name_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.taxonomy_machine_name') {
+    $readme_file = file_exists(__DIR__ . '/README.md') ? __DIR__ . '/README.md' : __DIR__ . '/README.txt';
+    if (!file_exists($readme_file)) {
+      return NULL;
+    }
+    $text = file_get_contents($readme_file);
+    if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+      return '<pre>' . $text . '</pre>';
+    }
+    else {
+      // Use the Markdown filter to render the README.
+      $filter_manager = \Drupal::service('plugin.manager.filter');
+      $settings = \Drupal::configFactory()
+        ->get('markdown.settings')
+        ->getRawData();
+      $config = ['settings' => $settings];
+      $filter = $filter_manager->createInstance('markdown', $config);
+      return $filter->process($text, 'en');
+    }
+  }
+  return NULL;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function taxonomy_machine_name_preprocess_html(&$variables) {
+  // Match standard / Page Manager taxonomy term view route.
+  $routeName = \Drupal::routeMatch()->getRouteName();
+  if (strpos($routeName, 'entity.taxonomy_term.canonical') === FALSE) {
+    return;
+  }
+
+  $termParameter = \Drupal::routeMatch()->getParameter('taxonomy_term');
+  if (!$termParameter) {
+    return;
+  }
+
+  if ($termParameter->get('machine_name')->isEmpty()) {
+    return;
+  }
+
+  // Add machine name based body class.
+  $variables['attributes']['class'][] = Html::cleanCssIdentifier('term--' . $termParameter->machine_name->value);
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function taxonomy_machine_name_migration_plugins_alter(array &$definitions) {
+  // Alter any migration source using the d7_taxonomy_term plugin to use
+  // the d7_taxonomy_machine_name plugin.
+  foreach ($definitions as &$definition) {
+    if ($definition['source']['plugin'] == 'd7_taxonomy_term') {
+      $definition['source']['plugin'] = 'd7_taxonomy_machine_name_term';
+    }
+  }
+}

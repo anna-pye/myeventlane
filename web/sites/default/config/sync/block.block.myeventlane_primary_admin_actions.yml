@@ -1,0 +1,20 @@
+uuid: 7d02fce5-2e50-4474-9426-0fe58fa883fc
+langcode: en
+status: false
+dependencies:
+  theme:
+    - myeventlane
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: myeventlane_primary_admin_actions
+theme: myeventlane
+region: content
+weight: -6
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

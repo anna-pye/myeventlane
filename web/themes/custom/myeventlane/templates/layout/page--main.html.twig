@@ -1,0 +1,21 @@
+
+<header role="banner">
+  {{ page.header }}
+</header>
+
+<main role="main">
+  <div class="layout-container">
+
+    <div class="page-content">
+      {% block content %}
+        {{ page.content }}
+      {% endblock %}
+    </div>
+
+  </div>
+</main>
+
+<footer role="contentinfo">
+  {{ page.footer }}
+</footer>
+

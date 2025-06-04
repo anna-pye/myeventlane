@@ -1,0 +1,9 @@
+view commerce stripe webhook event:
+  title: 'View Commerce Stripe Webhook Events'
+  description: 'View commerce stripe webhook events.'
+  restrict access: true
+
+purge commerce stripe webhook event:
+  title: 'Purge Commerce Stripe Webhook Events'
+  description: 'Purge commerce stripe webhook events.'
+  restrict access: true

@@ -1,0 +1,104 @@
+uuid: 2440bf16-aaa7-4309-aa3e-712896ab6123
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.event.body
+    - field.field.node.event.field_accessibility
+    - field.field.node.event.field_boosted
+    - field.field.node.event.field_donations
+    - field.field.node.event.field_end_date_time
+    - field.field.node.event.field_event_host
+    - field.field.node.event.field_field_rsvp_limit
+    - field.field.node.event.field_highlight
+    - field.field.node.event.field_image
+    - field.field.node.event.field_location
+    - field.field.node.event.field_passcode
+    - field.field.node.event.field_rsvp
+    - field.field.node.event.field_start_date_time
+    - field.field.node.event.field_tags
+    - field.field.node.event.field_unlisted
+    - field.field.node.event.field_wallet_enabled
+    - image.style.medium
+    - node.type.event
+  module:
+    - address
+    - datetime
+    - image
+    - layout_builder
+    - options
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.event.teaser
+targetEntityType: node
+bundle: event
+mode: teaser
+content:
+  field_accessibility:
+    type: list_key
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_boosted:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: content
+      image_style: medium
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_location:
+    type: address_plain
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_start_date_time:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  body: true
+  field_donations: true
+  field_end_date_time: true
+  field_event_host: true
+  field_field_rsvp_limit: true
+  field_highlight: true
+  field_passcode: true
+  field_rsvp: true
+  field_unlisted: true
+  field_wallet_enabled: true
+  links: true
