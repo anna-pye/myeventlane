@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains all hook implementations for this module.
+ */
+
+use Drupal\search_api\IndexInterface;
+use Drupal\search_api\SearchApiException;
+
+/**
+ * Implements hook_search_api_solr_field_mapping_alter().
+ */
+function search_api_taxonomy_machine_name_search_api_solr_field_mapping_alter(IndexInterface $index, array &$fields, string $language_id) {
+  try {
+    /** @var \Drupal\search_api_taxonomy_machine_name\Plugin\search_api\processor\AddHierarchy $processor */
+    $processor = $index->getProcessor('taxonomy_machine_name_hierarchy');
+    $processor->alterFieldMapping($index, $fields, $language_id);
+  }
+  catch (SearchApiException $exception) {
+    // Processor not active for this index, so proceed. Logging isn't necessary.
+  }
+}

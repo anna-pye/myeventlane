@@ -1,0 +1,52 @@
+// ---------------------------------------------
+// HEADER
+// ---------------------------------------------
+
+.site-header {
+  background-color: var(--color-light);
+  padding: 1.25rem;
+  border-bottom: 1px solid #eee;
+  font-family: var(--font-family-sans);
+
+  .header__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header__logo-wrap {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0.5rem;
+
+    .header__logo {
+      height: 40px;
+    }
+
+    .header__brand {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+  }
+
+  .header__nav a {
+    margin-left: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 1rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+
+  .button {
+    font-size: 1rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+  }
+}

@@ -1,0 +1,31 @@
+name: MyEventLane
+type: theme
+description: 'Custom theme for MyEventLane platform.'
+core_version_requirement: ^11
+base theme: stable9  # or comment this out if not using a base theme
+
+llibraries:
+  - myeventlane/global-styling
+
+twig:
+  template_dirs:
+    - templates/layout
+
+dependencies:
+  - twig_tweak
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  highlighted: 'Highlighted'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: 'Footer'
+
+# Optional, if you're using logo/favicon overrides
+logo:
+  path: images/assets/myeventlanelogo.jpeg
+
+

@@ -1,0 +1,82 @@
+
+/* MyEventLane – Events Calendar Styling */
+
+.view-calendar {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.view-calendar .calendar-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.view-calendar .calendar-navigation a {
+  color: #FD6B5E;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  transition: background-color 0.2s;
+}
+.view-calendar .calendar-navigation a:hover {
+  background-color: #fbdcd9;
+}
+
+.view-calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.view-calendar th {
+  padding: 0.75rem 0.5rem;
+  font-size: 0.875rem;
+  color: #444;
+}
+
+.view-calendar td {
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  color: #222;
+  border-top: 1px solid #eee;
+  vertical-align: top;
+}
+
+.view-calendar td.today {
+  background-color: #FD6B5E;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.view-calendar td .event {
+  margin-top: 0.5rem;
+  background-color: #FFC94A;
+  color: #1E1E1E;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .view-calendar th,
+  .view-calendar td {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .view-calendar .calendar-navigation {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: en
+uuid: 78bca9e0-62a3-48d7-ad56-cb31f96640e0
+name: 'My Event Lane'
+mail: anna_pye@icloud.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node/25
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: null

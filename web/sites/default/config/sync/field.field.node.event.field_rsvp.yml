@@ -1,0 +1,21 @@
+uuid: 8a7993bf-8a1c-436c-9de4-38016e151c2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rsvp
+    - node.type.event
+id: node.event.field_rsvp
+field_name: field_rsvp
+entity_type: node
+bundle: event
+label: 'Free Event'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

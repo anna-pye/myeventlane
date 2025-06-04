@@ -1,0 +1,23 @@
+uuid: fdf6007c-4440-4c85-b6a5-e250f23d16c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_field_rsvp_limit
+    - node.type.event
+id: node.event.field_field_rsvp_limit
+field_name: field_field_rsvp_limit
+entity_type: node
+bundle: event
+label: 'RSVP Capacity'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

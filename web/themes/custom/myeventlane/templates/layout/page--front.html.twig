@@ -1,0 +1,35 @@
+{# web/themes/custom/myeventlane/templates/layout/page.html.twig #}
+{% extends "html.html.twig" %}
+
+{% block page %}
+  {% if page.header %}
+    <header class="site-header">
+      {{ page.header }}
+    </header>
+  {% endif %}
+
+  <main class="site-main" role="main">
+    {% if page.highlighted %}
+      <div class="highlighted">{{ page.highlighted }}</div>
+    {% endif %}
+
+    {% if page.breadcrumb %}
+      <nav class="breadcrumb">{{ page.breadcrumb }}</nav>
+    {% endif %}
+
+    <a id="main-content" tabindex="-1"></a>
+
+    {% if node.id == 25 %}
+        {# Custom homepage hero layout here #}
+      {% else %}
+        {{ page.content }}
+      {% endif %}
+
+  </main>
+
+  {% if page.footer %}
+    <footer class="site-footer">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+{% endblock %}

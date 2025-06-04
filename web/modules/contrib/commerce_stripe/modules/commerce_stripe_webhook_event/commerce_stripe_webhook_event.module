@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * @file
+ * Commerce Stripe webhook event hooks.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_cron().
+ *
+ * Controls the size of the commerce_stripe_webhook_event table,
+ * purging processed events older than
+ * 'commerce_stripe_webhook_event.settings'->'retention_time'.
+ */
+function commerce_stripe_webhook_event_cron() {
+  // Cleanup the watchdog table.
+  $retention_time = \Drupal::config('commerce_stripe_webhook_event.settings')->get('retention_time');
+
+  if ($retention_time > 0) {
+    $connection = \Drupal::database();
+    $request_time = \Drupal::time()->getRequestTime();
+    $connection->delete('commerce_stripe_webhook_event')
+      ->condition('status', '0', '>')
+      ->condition('processed', '0', '>')
+      ->condition('processed', ($request_time - $retention_time), '<')
+      ->execute();
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function commerce_stripe_webhook_event_form_commerce_stripe_settings_form_alter(&$form, FormStateInterface $form_state) {
+  $day = 86400;
+  $retention_times = [
+    0 => t('Unlimited'),
+    $day => t('1 day'),
+    $day * 7 => t('1 week'),
+    $day * 14 => t('2 weeks'),
+    $day * 30 => t('1 month'),
+  ];
+  $settings = \Drupal::configFactory()->get('commerce_stripe_webhook_event.settings');
+  $retention_time = $settings->get('retention_time');
+  $form['commerce_stripe_webhook_event'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Webhook events'),
+  ];
+  $form['commerce_stripe_webhook_event']['commerce_stripe_webhook_event_retention_time'] = [
+    '#type' => 'select',
+    '#title' => t('Retention Time'),
+    '#default_value' => $retention_time,
+    '#options' => $retention_times,
+    '#description' => t('The maximum time to keep webhook events. Only processed events are purged. Requires a <a href=":cron">cron maintenance task</a>. You may also purge manually.', [':cron' => Url::fromRoute('system.status')->toString()]),
+  ];
+  if (!\Drupal::moduleHandler()->moduleExists('advancedqueue')) {
+    $description = t('Queue webhook events for processing. <a href="https://www.drupal.org/project/advancedqueue" target="_blank">Advanced queue</a> is recommended.');
+  }
+  else {
+    $queue_collection_url = Url::fromRoute('entity.advancedqueue_queue.collection')->toString();
+    $description = t('<a href="@url" target="">Queue</a> webhook events using <a href="https://www.drupal.org/project/advancedqueue" target="_blank">advanced queue</a>.', ['@url' => $queue_collection_url]);
+  }
+  $form['commerce_stripe_webhook_event']['commerce_stripe_webhook_event_queue'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Queue webhook events'),
+    '#default_value' => $settings->get('queue'),
+    '#description' => $description,
+  ];
+  $form['#submit'][] = 'commerce_stripe_webhook_event_form_commerce_stripe_settings_form_submit';
+}
+
+/**
+ * Form submission handler for commerce_stripe_settings_form.
+ *
+ * @see commerce_stripe_webhook_event_form_commerce_stripe_settings_form_alter()
+ */
+function commerce_stripe_webhook_event_form_commerce_stripe_settings_form_submit($form, FormStateInterface $form_state) {
+  $retention_time = $form_state->getValue('commerce_stripe_webhook_event_retention_time');
+  $queue = $form_state->getValue('commerce_stripe_webhook_event_queue');
+  \Drupal::configFactory()->getEditable('commerce_stripe_webhook_event.settings')->set('retention_time', $retention_time)->set('queue', $queue)->save();
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function commerce_stripe_webhook_event_views_pre_render(ViewExecutable $view) {
+  if ($view->storage->get('base_table') === 'commerce_stripe_webhook_event') {
+    $view->element['#attached']['library'][] = 'commerce_stripe_webhook_event/webhook_event';
+  }
+}

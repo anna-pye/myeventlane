@@ -1,0 +1,21 @@
+uuid: 254cee76-61ff-421e-9087-d9384804a5ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_wallet_enabled
+    - node.type.event
+id: node.event.field_wallet_enabled
+field_name: field_wallet_enabled
+entity_type: node
+bundle: event
+label: 'Wallet Ticket Export'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

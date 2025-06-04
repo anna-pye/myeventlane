@@ -1,0 +1,25 @@
+uuid: f7e69c88-5ec2-43bc-9384-9ef068356ad9
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - myeventlane
+_core:
+  default_config_hash: n_nlgjggHVfQt2H__zvLOKB2YtjPDbQ5tHijF9LE1aM
+id: myeventlane_site_branding
+theme: myeventlane
+region: header
+weight: -9
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: Header
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

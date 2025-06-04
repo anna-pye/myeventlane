@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @file
+ * Install, update functions for the Taxonomy Machine Name module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ */
+function taxonomy_machine_name_install() {
+  batch_set(
+    [
+      'file' => \Drupal::service('extension.list.module')->getPath('taxonomy_machine_name') . '/taxonomy_machine_name.install',
+      'title' => t('Generating missing taxonomy term machine names'),
+      'init_message' => t('Starting taxonomy term machine names update'),
+      'error_message' => t('Error updating taxonomy term machine names'),
+      'operations' => [
+        ['taxonomy_machine_name_update_all_terms', []],
+      ],
+    ]
+  );
+}
+
+/**
+ * Update machine names for existing terms.
+ */
+function taxonomy_machine_name_update_8001(array &$sandbox = NULL) {
+  $context = [
+    'sandbox' => &$sandbox,
+  ];
+  taxonomy_machine_name_update_all_terms($context);
+  // Update engine names it different, sigh...
+  $sandbox['#finished'] = $context['finished'];
+
+  // Update engine does this different, too.
+  return $context['message'];
+}
+
+/**
+ * Update machine names for existing terms, usable both in batch and update.
+ *
+ * @param array|DrushBatchContext $context
+ *   The $context parameter in updates, called $context in Batch API.
+ */
+function taxonomy_machine_name_update_all_terms(&$context) {
+  $sandbox = &$context['sandbox'];
+  if (empty($sandbox['tids'])) {
+    // Size of the batch to process.
+    $batch_size = 10;
+
+    $tids = \Drupal::entityQuery('taxonomy_term')->notExists('machine_name')->accessCheck(FALSE)->execute();
+
+    $sandbox['total'] = count($tids);
+    $sandbox['tids'] = array_chunk($tids, $batch_size);
+    $sandbox['succeeded'] = $sandbox['errored'] = $sandbox['processed_chunks'] = 0;
+  }
+
+  // Nothing to do.
+  if (!$sandbox['total']) {
+    $context['message'] = t('No terms updated');
+    return;
+  }
+
+  // Process all terms in this chunk.
+  $current_chunk = $sandbox['tids'][$sandbox['processed_chunks']];
+  $terms = Term::loadMultiple($current_chunk);
+
+  foreach ($terms as $term) {
+    $success = taxonomy_machine_name_update_term($term);
+    $success ? $sandbox['succeeded']++ : $sandbox['errored']++;
+  }
+
+  // Increment the number of processed chunks to determine when we've finished.
+  $sandbox['processed_chunks']++;
+
+  // When we have processed all of the chunks $context['finished'] will be 1.
+  // Then the batch / update runner will consider the job finished.
+  $context['finished'] = $sandbox['processed_chunks'] / count($sandbox['tids']);
+
+  $context['message'] = t(
+    '@succeeded terms were updated correctly. @errored terms failed.',
+    [
+      '@succeeded' => $sandbox['succeeded'],
+      '@errored' => $sandbox['errored'],
+    ]
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function taxonomy_machine_name_uninstall() {
+  $db_connection = Database::getConnection();
+  $db_connection->update('taxonomy_term_field_data')
+    ->fields(['machine_name' => NULL])
+    ->execute();
+}

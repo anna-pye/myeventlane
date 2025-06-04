@@ -1,0 +1,22 @@
+uuid: 13f767a3-c7e5-4f08-8749-4d3e863d4dfd
+langcode: en
+status: false
+dependencies:
+  theme:
+    - myeventlane
+_core:
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
+id: myeventlane_secondary_local_tasks
+theme: myeventlane
+region: content
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }

@@ -1,0 +1,32 @@
+# module/library/tool words
+advancedqueue
+ddev
+# Proper names
+Centarro
+# payment processor words
+Alipay
+alipay
+applepay
+capturable
+cardnumber
+Cashapp
+Cashtag
+cashapp
+cashtag
+dinersclub
+googlepay
+Klarna
+klarna
+livemode
+scard
+seti
+unionpay
+WeChat
+wechat
+# SQL aliases
+cswe
+scem
+scey
+# test keys
+pk_test_EnquIXQLnqkP0knhcyRczqe600Iq21pkdd
+sk_test_4g69Cl9vOTJxe7bUmy5TRgWE00ytQmCnep

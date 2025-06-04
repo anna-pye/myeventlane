@@ -1,0 +1,29 @@
+uuid: 7303fec1-81f9-4635-917f-529ac7cbed64
+langcode: en
+status: false
+dependencies:
+  config:
+    - views.view.taxonomy_category_filter_buttons
+  module:
+    - system
+    - views
+  theme:
+    - myeventlane
+id: block_1
+theme: myeventlane
+region: header
+weight: -8
+provider: null
+plugin: 'views_block:taxonomy_category_filter_buttons-block_1'
+settings:
+  id: 'views_block:taxonomy_category_filter_buttons-block_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

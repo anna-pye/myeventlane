@@ -1,0 +1,30 @@
+uuid: a72e5ad6-c1d8-4bad-9894-a10460ad0a11
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_accessibility
+field_name: field_accessibility
+entity_type: node
+type: list_float
+settings:
+  allowed_values:
+    -
+      value: 1.0
+      label: 'Wheelchair Access'
+    -
+      value: 2.0
+      label: 'Auslan Interpreted'
+    -
+      value: 3.0
+      label: 'Hearing Loop'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

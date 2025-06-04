@@ -1,0 +1,20 @@
+name: Taxonomy Machine Name
+description: Provides a new property to store machine name for taxonomy terms.
+type: module
+package: Other
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - drupal:taxonomy
+
+simplytest_dependencies:
+  - entity:entity
+  - drupal:views
+  - drupal:views_ui
+  - rules:rules
+  - rules:rules_ui
+
+# Information added by Drupal.org packaging script on 2024-11-21
+version: '2.0.1'
+project: 'taxonomy_machine_name'
+datestamp: 1732210452

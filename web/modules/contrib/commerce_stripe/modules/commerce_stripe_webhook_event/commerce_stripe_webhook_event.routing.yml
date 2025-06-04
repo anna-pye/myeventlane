@@ -1,0 +1,28 @@
+commerce_stripe_webhook_event.overview:
+  path: '/admin/commerce/config/stripe-webhook-events'
+  defaults:
+    _controller: '\Drupal\commerce_stripe_webhook_event\Controller\WebhookEventController::overview'
+    _title: 'Stripe webhook events'
+  requirements:
+    _permission: 'view commerce stripe webhook event'
+
+commerce_stripe_webhook_event.confirm:
+  path: '/admin/commerce/config/stripe-webhook-events/confirm'
+  defaults:
+    _form: '\Drupal\commerce_stripe_webhook_event\Form\WebhookEventPurgeConfirmForm'
+    _title: 'Confirm purge processed webhook events'
+  requirements:
+    _permission: 'purge commerce stripe webhook event'
+
+commerce_stripe_webhook_event.event:
+  path: '/admin/commerce/config/stripe-webhook-events/{webhook_event_id}'
+  defaults:
+    _controller: '\Drupal\commerce_stripe_webhook_event\Controller\WebhookEventController::eventDetails'
+    _title: 'Details'
+  options:
+    _admin_route: TRUE
+    parameters:
+      webhook_event_id:
+        type: int
+  requirements:
+    _permission: 'view commerce stripe webhook event'

@@ -1,0 +1,23 @@
+myeventlane.mobile:
+  label: mobile
+  mediaQuery: 'all and (max-width: 600px)'
+  weight: 0
+  multipliers:
+    - 1x
+    - 2x
+
+myeventlane.tablet:
+  label: tablet
+  mediaQuery: 'all and (min-width: 601px) and (max-width: 1024px)'
+  weight: 1
+  multipliers:
+    - 1x
+    - 2x
+
+myeventlane.desktop:
+  label: desktop
+  mediaQuery: 'all and (min-width: 1025px)'
+  weight: 2
+  multipliers:
+    - 1x
+    - 2x

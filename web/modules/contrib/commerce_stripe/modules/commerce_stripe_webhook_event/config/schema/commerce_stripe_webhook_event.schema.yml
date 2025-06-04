@@ -1,0 +1,12 @@
+# Schema for the configuration files of the commerce_stripe_webhook event module.
+
+commerce_stripe_webhook_event.settings:
+  type: config_object
+  label: 'Commerce Stripe webhook event settings'
+  mapping:
+    retention_time:
+      type: integer
+      label: 'Webhook events retention time'
+    queue:
+      type: boolean
+      label: 'Webhook events queue'

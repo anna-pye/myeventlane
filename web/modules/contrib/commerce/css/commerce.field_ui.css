@@ -1,0 +1,8 @@
+/**
+ * @file
+ * Commerce styling for the field UI.
+ */
+
+.field-icon-commerce {
+  background-image: url("../icons/000000/drupal-cart.svg");
+}

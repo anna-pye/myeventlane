@@ -1,0 +1,108 @@
+// ---------------------------------------------
+// BUTTONS
+// ---------------------------------------------
+
+.button, input[type=submit],button {
+  background-color: var(--color-coral);
+  border: none;
+  border-radius: var(--radius-pill);
+  color: #fff;
+  padding: 0.6em 1.4em;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: background-color 0.3s;
+}
+
+.button {
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: #e05549;
+  transform: scale(1.05);
+}
+
+.button--tag {
+  display: inline-block;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  padding: 0.4em 1em;
+}
+
+.hero__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: left;
+    margin-top: 1rem;
+  }
+
+button--yellow {
+  background-color: #f504lc; 
+  color: #fff;
+}
+
+.button--blue {
+  background-color: #293241; 
+  color: #fff;
+}
+
+.button--purple {
+  background-color: #1e81b0;
+  color: #fff;
+}
+
+.button--workshop {
+  background-color: #ffd8b1; // soft orange
+  color: #fff;
+}
+
+.button--music {
+  background-color: #c6d8ff; // soft blue
+  color: #fff;
+}
+
+.button--lgbtqiplus {
+  background-color: #f3c1f3; // soft pink/lilac
+  color: #fff;
+}
+
+.button--community {
+  background-color: #fff2b2; // lemon cream
+  color: #fff;
+}
+
+.button--theater {
+  background-color: #fff2b9; // lemon cream
+  color: #fff;
+}
+
+.button--performance {
+  background-color: #d8f6d8; // mint
+  color: #fff;
+}
+
+.button--art {
+  background-color: #fde3c8; // peach
+  color: #fff;
+}
+
+.button--talk {
+  background-color: #e0d6f8; // soft purple
+  color: #fff;
+}
+.button--movie {
+  background-color: #e0d6f8; // soft purple
+  color: #fff;
+}
+
+.button--activism {
+  background-color: #ffe1e1; // pink haze
+  color: #fff;
+}
+
+

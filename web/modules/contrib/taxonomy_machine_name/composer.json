@@ -1,0 +1,29 @@
+{
+    "name": "drupal/taxonomy_machine_name",
+    "description": "This module create a new property named machine_name.",
+    "type": "drupal-module",
+    "keywords": [
+        "Drupal",
+        "taxonomy_machine_name"
+    ],
+    "homepage": "https://www.drupal.org/project/taxonomy_machine_name",
+    "authors": [
+        {
+            "name": "Sébastien MALOT (Sebastien @Actualys)",
+            "homepage": "https://www.drupal.org/u/sebastien-actualys",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Sorin Dediu (sdstyles)",
+            "homepage": "https://www.drupal.org/u/sdstyles",
+            "role": "Co-Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://drupal.org/project/issues/taxonomy_machine_name",
+        "source": "https://git.drupalcode.org/project/taxonomy_machine_name"
+    },
+    "require": {
+        "drupal/core": "^9.4 || ^10 || ^11"
+    }
+}

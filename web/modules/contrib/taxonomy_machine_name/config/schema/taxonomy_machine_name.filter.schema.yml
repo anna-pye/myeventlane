@@ -1,0 +1,5 @@
+# Schema for the taxonomy machine name views filter.
+
+views.filter.taxonomy_index_machine_name:
+  type: views.filter.in_operator
+  label: 'Taxonomy term machine name'

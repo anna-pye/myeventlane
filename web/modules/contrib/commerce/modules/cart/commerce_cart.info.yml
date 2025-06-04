@@ -1,0 +1,13 @@
+name: Commerce Cart
+type: module
+description: 'Implements the shopping cart system and add to cart features.'
+package: Commerce
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - commerce:commerce
+  - commerce:commerce_order
+
+# Information added by Drupal.org packaging script on 2025-04-28
+version: '3.0.2'
+project: 'commerce'
+datestamp: 1745848115

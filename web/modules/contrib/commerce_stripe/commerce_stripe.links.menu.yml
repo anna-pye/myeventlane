@@ -1,0 +1,6 @@
+commerce_stripe.settings:
+  title: 'Stripe settings'
+  route_name: 'commerce_stripe.settings'
+  parent: 'commerce_payment.configuration'
+  description: 'Configure your Stripe settings.'
+  weight: 20

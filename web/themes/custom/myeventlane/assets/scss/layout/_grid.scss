@@ -1,0 +1,26 @@
+/* Grid System */
+
+grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 5px;
+  margin-inline: 10px;
+}
+
+.grid__item {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .card__title {
+    font-size: 1.05rem;
+  }
+  .button {
+    font-size: 0.95rem;
+    padding: 0.5em 1em;
+  }
+}

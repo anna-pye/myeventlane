@@ -1,0 +1,21 @@
+/* Typography */
+
+// TYPOGRAPHY
+$font-family-base: 'Inter', sans-serif;
+$font-size-base: 16px;
+$font-size-lg: 20px;
+$font-size-sm: 14px;
+
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-dark);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
