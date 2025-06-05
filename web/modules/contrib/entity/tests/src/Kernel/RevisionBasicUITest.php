@@ -183,7 +183,7 @@ class RevisionBasicUITest extends KernelTestBase {
   public function testRevisionRevert() {
     $entity = EnhancedEntity::create([
       'name' => 'rev 1',
-      'type' => 'entity_test_enhance',
+      'type' => 'entity_test_enhanced',
     ]);
     $entity->save();
     $entity->name->value = 'rev 2';
@@ -211,6 +211,7 @@ class RevisionBasicUITest extends KernelTestBase {
     $request = Request::create($entity->toUrl('revision-revert-form')->toString());
     $response = $http_kernel->handle($request);
     $this->assertEquals(200, $response->getStatusCode());
+    $this->assertStringContainsString('Are you sure you want to revert', $response->getContent());
   }
 
 }
