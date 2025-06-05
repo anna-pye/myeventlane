@@ -4,7 +4,7 @@ description: 'Custom theme for MyEventLane platform.'
 core_version_requirement: ^11
 base theme: stable9  # or comment this out if not using a base theme
 
-llibraries:
+libraries:
   - myeventlane/global-styling
 
 twig:
