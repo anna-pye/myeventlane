@@ -6,3 +6,4 @@
 *.log
 *.sqlite
 *.DS_Store
+/web/modules/contrib/conditional_fields
