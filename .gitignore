@@ -1,0 +1,8 @@
+/vendor/
+/web/sites/default/files/
+/web/sites/default/settings.local.php
+/.ddev/secrets/
+/node_modules/
+*.log
+*.sqlite
+*.DS_Store
