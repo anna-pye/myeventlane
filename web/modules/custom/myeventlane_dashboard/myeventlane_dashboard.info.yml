@@ -1,0 +1,8 @@
+name: 'MyEventLane Dashboard'
+type: module
+description: 'Provides the vendor analytics dashboard and chart block.'
+core_version_requirement: ^11 || ^12
+package: Custom
+dependencies:
+  - node
+  - views

@@ -1,0 +1,9 @@
+# Schema for the views plugins of the Commerce Stripe webhook event module.
+
+views.filter.commerce_stripe_webhook_event_types:
+  type: 'views.filter.in_operator'
+  label: 'Types'
+
+views.filter.commerce_stripe_webhook_event_statuses:
+  type: 'views.filter.in_operator'
+  label: 'Status'

@@ -1,0 +1,47 @@
+@use "sass:color";
+@use "variables" as vars;
+
+.dashboard-empty {
+  text-align: center;
+  padding: vars.$spacing-3xl vars.$spacing-lg;
+
+  &__content {
+    max-width: 480px;
+    margin: 0 auto;
+    background: white;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 8px vars.$color-shadow;
+    padding: vars.$spacing-2xl;
+  }
+
+  img {
+    width: 160px;
+    margin-bottom: vars.$spacing-lg;
+  }
+
+  h2 {
+    font-size: vars.$font-size-h2;
+    margin-bottom: vars.$spacing-sm;
+    color: vars.$text-color-main;
+  }
+
+  p {
+    font-size: vars.$font-size-body;
+    color: vars.$color-muted-text;
+    margin-bottom: vars.$spacing-lg;
+  }
+
+  .btn-primary {
+    background-color: vars.$color-primary;
+    color: white;
+    padding: vars.$spacing-sm vars.$spacing-lg;
+    font-weight: vars.$font-weight-bold;
+    border-radius: vars.$radius-pill;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      background-color: color.adjust(vars.$color-primary, vars.$lightness: -5%);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+name: 'MyEventLane Auth UX'
+type: module
+description: 'Custom wrappers and styling for /user/login and /user/register.'
+core_version_requirement: ^11
+package: 'MyEventLane'
+dependencies:
+  - drupal:user

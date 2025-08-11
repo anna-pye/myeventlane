@@ -1,0 +1,18 @@
+<div class="boost-wrapper">
+
+<pre>
+event: {{ dump(event) }}
+message: {{ dump(message) }}
+purchase_form: {{ dump(purchase_form) }}
+</pre>
+
+  <h1 class="boost-title">Boost “{{ event.label }}”</h1>
+  {% if message %}
+    <div class="boost-status">{{ message }}</div>
+  {% elseif purchase_form %}
+    <div class="boost-purchase-form">
+      {{ purchase_form }}
+    </div>
+    <p class="boost-benefits">Your event will be featured on the homepage and marked as “Boosted” for increased visibility!</p>
+  {% endif %}
+</div>

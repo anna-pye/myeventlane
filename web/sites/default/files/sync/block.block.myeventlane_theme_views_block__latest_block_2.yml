@@ -1,0 +1,29 @@
+uuid: 9faf2a86-2295-4df3-83ba-31ed6c7aea0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.latest
+  module:
+    - system
+    - views
+  theme:
+    - myeventlane_theme
+id: myeventlane_theme_views_block__latest_block_2
+theme: myeventlane_theme
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:latest-block_2'
+settings:
+  id: 'views_block:latest-block_2'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

@@ -1,0 +1,22 @@
+myeventlane_vendor_dashboard.settings:
+  type: config_object
+  label: 'Stripe Connect Settings'
+  mapping:
+    mode:
+      type: string
+      label: 'Stripe Mode'
+    client_id_test:
+      type: string
+      label: 'Test Client ID'
+    secret_key_test:
+      type: string
+      label: 'Test Secret Key'
+    client_id_live:
+      type: string
+      label: 'Live Client ID'
+    secret_key_live:
+      type: string
+      label: 'Live Secret Key'
+    redirect_uri:
+      type: string
+      label: 'Redirect URI'

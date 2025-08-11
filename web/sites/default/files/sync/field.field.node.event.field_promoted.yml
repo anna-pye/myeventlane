@@ -1,0 +1,21 @@
+uuid: 810011bd-ff3f-49a5-a96a-d8faa2024361
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_promoted
+    - node.type.event
+id: node.event.field_promoted
+field_name: field_promoted
+entity_type: node
+bundle: event
+label: 'Promoted?'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,20 @@
+{{ attach_library('myeventlane_theme/auth') }}
+
+<div class="mel-auth-page">
+  <div class="mel-card mel-card--wide">
+    <img class="mel-logo" src="{{ myeventlane_logo_src }}" alt="MyEventLane" />
+    <h1 class="mel-auth-title">Join the lane!</h1>
+    <p class="mel-auth-subtitle">Create your account to save tickets and manage your events.</p>
+
+    {# If you want social buttons, you can print them here manually later.
+       For now we keep it clean and only show the form. #}
+
+    <div class="mel-auth-form-wrap mel-register">
+      {{ page.content }}
+    </div>
+
+    <div class="mel-auth-meta">
+      <a href="{{ path('user.login') }}">Have an account? Log in</a>
+    </div>
+  </div>
+</div>

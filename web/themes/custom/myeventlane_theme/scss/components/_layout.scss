@@ -1,0 +1,15 @@
+@use "sass:color";
+@use "../variables" as vars;
+
+.layout-wrapper {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: vars.$spacing-xl;
+  padding-right: vars.$spacing-xl;
+
+  @media (max-width: vars.$breakpoint-md) {
+    padding-left: vars.$spacing-lg;
+    padding-right: vars.$spacing-lg;
+  }
+}

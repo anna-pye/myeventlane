@@ -1,0 +1,142 @@
+uuid: f8221193-69e1-4e58-b1a3-b063ee826875
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.event.field_accessibility
+    - field.field.node.event.field_category
+    - field.field.node.event.field_end_date
+    - field.field.node.event.field_event
+    - field.field.node.event.field_event_discription
+    - field.field.node.event.field_image
+    - field.field.node.event.field_location
+    - field.field.node.event.field_product_target
+    - field.field.node.event.field_promo_expiry
+    - field.field.node.event.field_promoted
+    - field.field.node.event.field_rsvp_target
+    - field.field.node.event.field_start_date
+    - field.field.node.event.field_ticket_limit
+    - field.field.node.event.field_ticket_type
+    - field.field.node.event.field_venue
+    - field.field.node.event.field_venue_address
+    - node.type.event
+  module:
+    - address
+    - datetime
+    - options
+    - svg_image
+    - user
+id: node.event.default
+targetEntityType: node
+bundle: event
+mode: default
+content:
+  field_accessibility:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_category:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_end_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_event:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_event_discription:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_product_target:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_start_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_ticket_limit:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_ticket_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_venue:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_venue_address:
+    type: address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  field_location: true
+  field_promo_expiry: true
+  field_promoted: true
+  field_rsvp_target: true
+  links: true

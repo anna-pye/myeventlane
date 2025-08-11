@@ -1,0 +1,5 @@
+vendor_dashboard_analytics:
+  js:
+    js/dashboard-analytics.js: {}
+  dependencies:
+    - core/jquery

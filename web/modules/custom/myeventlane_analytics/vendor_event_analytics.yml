@@ -1,0 +1,510 @@
+uuid: 96072470-838c-470c-bcb2-a0160c341752
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image
+    - image.style.16_9_304x171_focal_point_webp
+    - node.type.event
+  module:
+    - commerce_order
+    - commerce_product
+    - node
+    - svg_image
+    - user
+id: vendor_event_analytics
+label: 'Vendor Event Analytics'
+module: views
+description: 'Displays RSVP and ticket totals for the current vendor’s events.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: null
+    display_options:
+      title: 'My Events Analytics'
+      fields:
+        field_image:
+          id: field_image
+          table: node__field_image
+          field: field_image
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: alt
+          type: image
+          settings:
+            image_link: content
+            image_style: 16_9_304x171_focal_point_webp
+            image_loading:
+              attribute: eager
+            svg_attributes:
+              width: null
+              height: null
+            svg_render_as_image: false
+          group_column: entity_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        title_1:
+          id: title_1
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: count
+          admin_label: ''
+          entity_type: node
+          entity_field: title
+          plugin_id: field
+          label: 'Event: '
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: h2
+          element_class: ''
+          element_label_type: p
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: file_link
+          settings:
+            link_to_entity: 1
+          group_column: entity_id
+          group_columns:
+            entity_id: entity_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ','
+          field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: field_rsvp_target
+          group_type: count
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: field
+          label: 'RSVP: '
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings: {  }
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+        quantity:
+          id: quantity
+          table: commerce_order_item
+          field: quantity
+          relationship: reverse__commerce_order_item__purchased_entity
+          group_type: sum
+          admin_label: ''
+          entity_type: commerce_order_item
+          entity_field: quantity
+          plugin_id: field
+          label: 'Ticket Sold:'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_decimal
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+      pager:
+        type: none
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      filters:
+        type_1:
+          id: type_1
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            min: ''
+            max: ''
+            value: ''
+            event: event
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        uid:
+          id: uid
+          table: node_field_data
+          field: uid
+          relationship: field_event
+          group_type: group
+          admin_label: ''
+          plugin_id: contextual
+          operator: empty
+          value: {  }
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          default_action: default
+          default_argument_type: current_user
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: default
+        options:
+          grouping:
+            -
+              field: title_1
+              rendered: true
+              rendered_strip: false
+          row_class: ''
+          default_row_class: true
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            nid: nid
+            quantity: quantity
+          separator: ' | '
+          hide_empty: false
+      query:
+        type: views_query
+      relationships:
+        field_rsvp_target:
+          id: field_rsvp_target
+          table: node__field_rsvp_target
+          field: field_rsvp_target
+          relationship: none
+          group_type: group
+          admin_label: 'field_rsvp_target: Content'
+          plugin_id: standard
+          required: false
+        field_event:
+          id: field_event
+          table: node__field_event
+          field: field_event
+          relationship: none
+          group_type: group
+          admin_label: 'field_event: Content'
+          plugin_id: standard
+          required: false
+        reverse__commerce_product_variation__field_event:
+          id: reverse__commerce_product_variation__field_event
+          table: node_field_data
+          field: reverse__commerce_product_variation__field_event
+          relationship: field_event
+          group_type: group
+          admin_label: field_event
+          entity_type: node
+          plugin_id: entity_reverse
+          required: false
+        reverse__commerce_order_item__purchased_entity:
+          id: reverse__commerce_order_item__purchased_entity
+          table: commerce_product_variation_field_data
+          field: reverse__commerce_order_item__purchased_entity
+          relationship: reverse__commerce_product_variation__field_event
+          group_type: group
+          admin_label: 'Order item'
+          entity_type: commerce_product_variation
+          plugin_id: standard
+          required: false
+      css_class: event-list
+      use_ajax: false
+      group_by: true
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_image'
+  page_1:
+    id: page_1
+    display_title: Page
+    display_plugin: page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: dashboard
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_image'
+

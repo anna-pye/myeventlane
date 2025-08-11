@@ -1,0 +1,19 @@
+uuid: dbc9268c-c584-4613-bb80-78517573f118
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event_discription
+    - node.type.event
+id: node.event.field_event_discription
+field_name: field_event_discription
+entity_type: node
+bundle: event
+label: 'Event Discription '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

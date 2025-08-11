@@ -1,0 +1,21 @@
+uuid: 74d6cab3-eafa-4cff-99c7-82f86f5214bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rsvp_time
+    - node.type.rsvp_submission
+  module:
+    - datetime
+id: node.rsvp_submission.field_rsvp_time
+field_name: field_rsvp_time
+entity_type: node
+bundle: rsvp_submission
+label: 'RSVP Time'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

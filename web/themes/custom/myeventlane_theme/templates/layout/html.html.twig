@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    {% if node is defined and node.bundle == 'event' %}
+      <meta property="og:type" content="article" />
+      <meta property="og:title" content="{{ node.label|striptags }}" />
+      <meta property="og:description" content="{{ node.body.summary ?? node.body.value|striptags|truncate(160, true, '...') }}" />
+      <meta property="og:url" content="{{ url('<current>', {}, {'absolute': true}) }}" />
+
+      {% if node.field_image.0.entity.uri.value is defined %}
+        <meta property="og:image" content="{{ file_url(node.field_image.0.entity.uri.value) }}" />
+      {% endif %}
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="{{ node.label|striptags }}" />
+      <meta name="twitter:description" content="{{ node.body.summary ?? node.body.value|striptags|truncate(160, true, '...') }}" />
+      {% if node.field_image.0.entity.uri.value is defined %}
+        <meta name="twitter:image" content="{{ file_url(node.field_image.0.entity.uri.value) }}" />
+      {% endif %}
+    {% endif %}
+    <meta name="facebook-domain-verification" content="8q36rgq7ub2c1stmxul55ahqqm1xk1" />
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+  </head>
+  <body{{ attributes }}>
+    <a href="#main-content" class="visually-hidden focusable skip-link">
+      {{ 'Skip to main content'|t }}
+    </a>
+
+    {{ page_top }}
+    {{ page }}
+    {{ page_bottom }}
+
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+  </body>
+</html>
+
+

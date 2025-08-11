@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: HlN7eAN2N4JIHsYv56V4E7sqC9bS609KwvGFjyD_mgk
+langcode: en
+uuid: 58d5dbdd-d30c-4aae-b20a-8eb2c4fad440
+name: 'My Event Lane'
+mail: admin@myeventlane.com.au
+slogan: ''
+page:
+  403: /user/login
+  404: ''
+  front: /home-view
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: ''

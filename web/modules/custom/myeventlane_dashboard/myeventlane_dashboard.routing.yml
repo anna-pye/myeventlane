@@ -1,0 +1,14 @@
+myeventlane_dashboard.vendor_analytics_json:
+  path: '/jsonapi/custom/vendor-analytics'
+  defaults:
+    _controller: '\Drupal\myeventlane_dashboard\Controller\VendorAnalyticsJsonController::data'
+    _title: 'Vendor Analytics Data'
+  requirements:
+    _permission: 'access content'
+myeventlane_dashboard.analytics:
+  path: '/dashboard/analytics'
+  defaults:
+    _controller: '\Drupal\myeventlane_dashboard\Controller\AnalyticsDashboardController::view'
+    _title: 'My Analytics'
+  requirements:
+    _role: 'authenticated'

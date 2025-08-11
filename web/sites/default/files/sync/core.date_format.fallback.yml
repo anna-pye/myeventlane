@@ -1,0 +1,10 @@
+uuid: 3602a610-2e83-4a5a-8997-e9353baf7211
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: iIBLu1j9n6Oo5PW-wpu5gdyNs9Kvv4LMRqtQUdJjRz8
+id: fallback
+label: 'Fallback date format'
+locked: true
+pattern: 'D, j M Y - H:i'

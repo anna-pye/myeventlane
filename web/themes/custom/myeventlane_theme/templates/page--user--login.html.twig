@@ -1,0 +1,22 @@
+{{ attach_library('myeventlane_theme/auth') }}
+
+{# Centered, full-height auth background #}
+<div class="mel-auth-page">
+  <div class="mel-card">
+    <img class="mel-logo" src="{{ myeventlane_logo_src }}" alt="MyEventLane" />
+
+    <h1 class="mel-auth-title">Welcome back to MyEventLane</h1>
+    {# Optional subhead—delete if you want it even cleaner #}
+    {# <p class="mel-auth-subtitle">Log in to manage events, RSVPs, and tickets.</p> #}
+
+    <div class="mel-auth-form-wrap">
+      {{ page.content }}
+    </div>
+
+    <div class="mel-auth-meta">
+      <a href="{{ path('user.pass') }}">Forgot password?</a>
+      <span> · </span>
+      <a href="{{ path('user.register') }}">Create an account</a>
+    </div>
+  </div>
+</div>

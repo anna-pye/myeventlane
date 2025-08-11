@@ -1,0 +1,65 @@
+<pre>
+  LOGO: {{ vendor_logo_url }}  
+  DESC: {{ vendor_description }}  
+  STRIPE ID: {{ stripe_account_id }}
+</pre>
+
+<section class="event-card-buffered">
+  <div class="vendor-dashboard">
+    <div class="event-card">
+
+      {% if vendor_logo_url %}
+        <img src="{{ vendor_logo_url }}" alt="Vendor Logo" class="vendor-logo" />
+      {% endif %}
+
+      <h1>Vendor Dashboard</h1>
+
+      {% if vendor_description %}
+        <div class="vendor-description">{{ vendor_description|raw }}</div>
+      {% endif %}
+
+      {% if vendor_store %}
+        <p><strong>Store:</strong> {{ vendor_store.getName() }}</p>
+      {% endif %}
+
+      <div class="vendor-sales-block">
+        {{ drupal_view('vendor_ticket_sales', 'block_1') }}
+      </div>
+
+      <div class="stripe-connect-status">
+        {% if stripe_connected %}
+          <div class="stripe-status-banner connected">
+            ✅ Your Stripe account is connected.
+            <br>
+            <small>Account ID: <code>{{ stripe_account_id }}</code></small>
+          </div>
+
+          <a href="https://dashboard.stripe.com/" class="button button--secondary" target="_blank">
+            Go to Stripe Dashboard
+          </a>
+
+          <a href="/connect-stripe" class="button button--secondary">
+            Reconnect Stripe
+          </a>
+        {% else %}
+          <div class="stripe-status-banner disconnected">
+            ⚠️ You haven’t connected your Stripe account yet.
+          </div>
+
+          <a href="/connect-stripe" class="button button--primary">
+            Connect Stripe
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="dashboard-card-grid">
+        {% for card in cards %}
+          {{ card }}
+        {% else %}
+          <div class="no-events">No events found.</div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>

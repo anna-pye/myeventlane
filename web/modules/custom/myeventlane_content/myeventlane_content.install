@@ -1,0 +1,169 @@
+<?php
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\node\Entity\NodeType;
+use Drupal\commerce_product\Entity\ProductType;
+use Drupal\commerce_product\Entity\ProductVariationType;
+use Drupal\commerce_product\Entity\ProductAttribute;
+use Drupal\commerce_product\Entity\ProductAttributeValue;
+
+/**
+ * Implements hook_install().
+ */
+function myeventlane_content_install() {
+  // 1. Create content types.
+  $types = [
+    'event' => 'Event',
+    'rsvp_submission' => 'RSVP Submission',
+    'vendor_store' => 'Vendor Store',
+  ];
+  foreach ($types as $machine_name => $label) {
+    if (!NodeType::load($machine_name)) {
+      $type = NodeType::create([
+        'type' => $machine_name,
+        'name' => $label,
+      ]);
+      $type->save();
+    }
+  }
+
+  // 2. Add Commerce ticketing product types/attributes if Commerce Product module exists.
+  if (class_exists('\Drupal\commerce_product\Entity\ProductType')) {
+    // Attribute: Ticket Type (General, Concession, VIP)
+    if (!ProductAttribute::load('ticket_type')) {
+      $attribute = ProductAttribute::create([
+        'id' => 'ticket_type',
+        'label' => 'Ticket Type',
+        'elementType' => 'select',
+      ]);
+      $attribute->save();
+      foreach (['General', 'Concession', 'VIP'] as $type) {
+        ProductAttributeValue::create([
+          'attribute' => 'ticket_type',
+          'name' => $type,
+          'value' => strtolower($type),
+        ])->save();
+      }
+    }
+    // Ticket Variation Type
+    if (!ProductVariationType::load('ticket')) {
+      ProductVariationType::create([
+        'id' => 'ticket',
+        'label' => 'Ticket Variation',
+        'orderItemType' => 'default',
+        'generateTitle' => TRUE,
+        'trackInventory' => TRUE,
+        'attributeFields' => ['ticket_type'],
+        'allowBackorders' => FALSE,
+      ])->save();
+    }
+    // Ticket Product Type
+    if (!ProductType::load('ticket')) {
+      ProductType::create([
+        'id' => 'ticket',
+        'label' => 'Ticket',
+        'variationType' => 'ticket',
+        'description' => 'Event Ticket Product',
+        'status' => TRUE,
+        'injectVariationFields' => TRUE,
+      ])->save();
+    }
+  }
+
+  // 3. Add fields to Event content type.
+  _myeventlane_add_field('event', 'field_start_date', 'datetime', 'Start Date');
+  _myeventlane_add_field('event', 'field_end_date', 'datetime', 'End Date');
+  _myeventlane_add_field('event', 'field_location', 'string', 'Location');
+  _myeventlane_add_field('event', 'field_image', 'image', 'Event Image');
+  _myeventlane_add_field('event', 'field_category', 'entity_reference', 'Event Category', [
+    'target_type' => 'taxonomy_term',
+    'handler' => 'default',
+    'handler_settings' => [
+      'target_bundles' => ['event_categories' => 'event_categories']
+    ],
+  ]);
+  _myeventlane_add_field('event', 'field_accessibility', 'entity_reference', 'Accessibility Options', [
+    'target_type' => 'taxonomy_term',
+    'handler' => 'default',
+    'handler_settings' => [
+      'target_bundles' => ['accessibility_options' => 'accessibility_options']
+    ],
+  ]);
+  _myeventlane_add_field('event', 'field_ticket_limit', 'integer', 'Ticket Limit');
+  _myeventlane_add_field('event', 'field_ticket_type', 'list_string', 'Ticket Type', [
+    'allowed_values' => ['RSVP' => 'RSVP', 'Paid' => 'Paid'],
+  ]);
+  _myeventlane_add_field('event', 'field_promoted', 'boolean', 'Promoted?');
+  _myeventlane_add_field('event', 'field_promo_expiry', 'datetime', 'Promotion Expiry');
+  _myeventlane_add_field('event', 'field_product_target', 'entity_reference', 'Ticket Product', [
+    'target_type' => 'commerce_product',
+    'handler' => 'default',
+    'handler_settings' => [],
+  ]);
+
+  // 4. Add RSVP Submission fields.
+  _myeventlane_add_field('rsvp_submission', 'field_user', 'entity_reference', 'User', [
+    'target_type' => 'user',
+    'handler' => 'default',
+    'handler_settings' => [],
+  ]);
+  _myeventlane_add_field('rsvp_submission', 'field_event', 'entity_reference', 'Event', [
+    'target_type' => 'node',
+    'handler' => 'default',
+    'handler_settings' => [
+      'target_bundles' => ['event' => 'event']
+    ],
+  ]);
+  _myeventlane_add_field('rsvp_submission', 'field_rsvp_time', 'datetime', 'RSVP Time');
+
+  // 5. Add Vendor Store fields.
+  _myeventlane_add_field('vendor_store', 'field_owner', 'entity_reference', 'Store Owner', [
+    'target_type' => 'user',
+    'handler' => 'default',
+    'handler_settings' => [],
+  ]);
+  _myeventlane_add_field('vendor_store', 'field_store_description', 'text_long', 'Store Description');
+  _myeventlane_add_field('vendor_store', 'field_store_banner', 'image', 'Store Banner Image');
+  _myeventlane_add_field('vendor_store', 'field_stripe_connected', 'boolean', 'Stripe Connected?');
+
+  // 6. Add body field to event content type.
+  if (\Drupal::entityTypeManager()->getStorage('node_type')->load('event')) {
+    node_add_body_field(\Drupal\node\Entity\NodeType::load('event'));
+  }
+}
+
+/**
+ * Helper to add a field.
+ */
+function _myeventlane_add_field($bundle, $field_name, $type, $label, $settings = []) {
+  if (empty($field_name)) {
+    \Drupal::logger('myeventlane_content')->error('Attempt to add a field with empty field_name for bundle: @bundle', ['@bundle' => $bundle]);
+    throw new \InvalidArgumentException('Field name is required');
+  }
+
+  // Storage config
+  if (!FieldStorageConfig::loadByName('node', $field_name)) {
+    $storage = [
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => $type,
+    ];
+    if (!empty($settings) && in_array($type, [
+      'entity_reference', 'list_string', 'string', 'integer', 'boolean', 'datetime', 'image', 'text_long'
+    ])) {
+      $storage['settings'] = $settings;
+    }
+    FieldStorageConfig::create($storage)->save();
+  }
+
+  // Field config
+  if (!FieldConfig::loadByName('node', $bundle, $field_name)) {
+    FieldConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'bundle' => $bundle,
+      'label' => $label,
+    ])->save();
+  }
+}

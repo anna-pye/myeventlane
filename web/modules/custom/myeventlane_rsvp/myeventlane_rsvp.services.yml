@@ -1,0 +1,5 @@
+# myeventlane_rsvp.services.yml
+services:
+  myeventlane_rsvp.email_service:
+    class: Drupal\myeventlane_rsvp\RSVPEmailService
+    arguments: ['@plugin.manager.mail', '@renderer']

@@ -1,0 +1,109 @@
+// --- Event Sidebar Add to Cart Form --- //
+@use "sass:color";
+@use "variables" as vars;
+
+
+
+.my-custom-cart-form,
+.commerce-order-item-add-to-cart-form {
+  margin-left: 20px;
+  text-align: left;
+  font-family: vars.$font-family-main;
+  font-size: vars.$font-size-body;
+  background: transparent;
+  padding: 0;
+}
+
+.my-custom-cart-form label,
+.commerce-order-item-add-to-cart-form label {
+  font-size: vars.$font-size-small;
+  font-weight: vars.$font-weight-semibold;
+  margin-bottom: vars.$spacing-xs;
+  color: vars.$text-color-main;
+}
+
+.ticket-type-list,
+.form-item-attributes,
+.commerce-order-item-add-to-cart-form .form-item-attributes {
+  margin-bottom: vars.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-sm;
+}
+
+.ticket-type-row,
+.commerce-order-item-add-to-cart-form .form-item-variation {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-md;
+  margin-bottom: vars.$spacing-xs;
+
+  .ticket-type-title {
+    min-width: 120px;
+    font-weight: vars.$font-weight-semibold;
+  }
+
+  .ticket-type-price {
+    font-weight: vars.$font-weight-bold;
+    color: vars.$color-primary;
+    margin-left: vars.$spacing-sm;
+  }
+
+  .ticket-type-qty {
+    margin-left: auto;
+    min-width: 80px;
+  }
+
+  .ticket-type-stock {
+    font-size: vars.$font-size-small;
+    margin-left: vars.$spacing-sm;
+    color: vars.$color-accent;
+  }
+}
+
+.commerce-order-item-add-to-cart-form input[type="number"],
+.commerce-order-item-add-to-cart-form select {
+  width: auto;
+  font-size: vars.$font-size-body;
+  border-radius: vars.$radius-small;
+  border: vars.$border-light;
+  padding: vars.$spacing-xs vars.$spacing-sm;
+  margin-left: vars.$spacing-xs;
+}
+
+.commerce-order-item-add-to-cart-form .form-actions,
+.my-custom-cart-form .form-actions {
+  margin-top: vars.$spacing-md;
+}
+
+.commerce-order-item-add-to-cart-form input[type="submit"],
+.commerce-order-item-add-to-cart-form button,
+.my-custom-cart-form input[type="submit"],
+.my-custom-cart-form button {
+  background: vars.$color-primary;
+  color: #fff;
+  border: none;
+  font-size: vars.$font-size-body;
+  font-weight: vars.$font-weight-bold;
+  border-radius: vars.$radius-pill;
+  padding: vars.$spacing-sm vars.$spacing-lg;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: vars.$spacing-sm;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    background: vars.$color-accent;
+    outline: 2px solid vars.$color-outline-focus;
+    outline-offset: 2px;
+  }
+}
+
+.tickets-soldout,
+.ticket-type-stock[aria-label="Sold Out"] {
+  color: vars.$color-muted-text;
+  font-weight: vars.$font-weight-semibold;
+  margin-left: vars.$spacing-xs;
+  letter-spacing: 0.5px;
+}

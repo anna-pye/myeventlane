@@ -1,0 +1,10 @@
+name: 'Platform Fee'
+type: module
+description: 'Adds a 1.5% platform fee to each order.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - commerce_order
+
+
+

@@ -1,0 +1,12 @@
+myeventlane_vendor_dashboard.become_vendor_link:
+  title: 'Become a Vendor'
+  description: 'Upgrade your account to become a vendor.'
+  route_name: myeventlane_vendor_dashboard.become_vendor
+  parent: user.page
+  weight: 20
+
+myeventlane_vendor_dashboard.logout_link:
+  title: 'Logout'
+  route_name: user.logout
+  menu_name: user-menu
+  weight: 21

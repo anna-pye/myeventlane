@@ -1,0 +1,13 @@
+uuid: 389d16e0-85db-400d-a05d-b6bdf4e8291a
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+_core:
+  default_config_hash: ZfeAFB0XHD3WjB_xibJhxKG1vqXzxRxylIzd3QVRric
+id: media.hero_wide
+label: 'Hero Wide'
+description: ''
+targetEntityType: media
+cache: true

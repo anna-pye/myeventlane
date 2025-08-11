@@ -1,0 +1,14 @@
+@use "sass:color";
+@use "variables" as vars;
+
+.admin-boosted-events {
+  h2 { font-size: 24px; margin-bottom: 20px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    th, td { padding: 12px 8px; font-size: 16px; }
+    th { background: #f4f4f4; color: #293241; }
+    tr:nth-child(even) { background: #fef5ec; }
+    td { border-bottom: 1px solid #eee; }
+  }
+}

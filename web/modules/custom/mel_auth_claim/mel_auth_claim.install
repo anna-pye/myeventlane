@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Install hooks.
+ */
+
+use Drupal\Core\Database\SchemaObjectExistsException;
+
+/**
+ * Implements hook_schema().
+ */
+function mel_auth_claim_schema() {
+  $schema['mel_claim_token'] = [
+    'description' => 'One-time claim tokens linking email to anonymous orders/RSVPs.',
+    'fields' => [
+      'tid' => ['type' => 'serial', 'not null' => TRUE],
+      'email' => ['type' => 'varchar', 'length' => 190, 'not null' => TRUE],
+      'token' => ['type' => 'varchar', 'length' => 64, 'not null' => TRUE],
+      'context' => ['type' => 'text', 'size' => 'big', 'not null' => FALSE], // JSON of order/RSVP ids.
+      'created' => ['type' => 'int', 'not null' => TRUE, 'default' => 0],
+      'expires' => ['type' => 'int', 'not null' => TRUE, 'default' => 0],
+      'redeemed' => ['type' => 'int', 'not null' => TRUE, 'default' => 0],
+      'ip' => ['type' => 'varchar', 'length' => 64, 'not null' => FALSE],
+      'ua' => ['type' => 'varchar', 'length' => 255, 'not null' => FALSE],
+    ],
+    'primary key' => ['tid'],
+    'indexes' => [
+      'token' => ['token'],
+      'email' => ['email'],
+      'expires' => ['expires'],
+    ],
+  ];
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function mel_auth_claim_uninstall() {
+  \Drupal::database()->schema()->dropTable('mel_claim_token');
+}

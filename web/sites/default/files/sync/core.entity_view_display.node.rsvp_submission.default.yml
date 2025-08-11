@@ -1,0 +1,57 @@
+uuid: 8667cbfc-4cff-4fba-b172-03b1da9b2e70
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.rsvp_submission.field_event
+    - field.field.node.rsvp_submission.field_rsvp_target
+    - field.field.node.rsvp_submission.field_rsvp_time
+    - field.field.node.rsvp_submission.field_user
+    - node.type.rsvp_submission
+  module:
+    - datetime
+    - user
+id: node.rsvp_submission.default
+targetEntityType: node
+bundle: rsvp_submission
+mode: default
+content:
+  field_event:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_rsvp_target:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_rsvp_time:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_user:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden: {  }

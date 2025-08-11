@@ -1,0 +1,124 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
+
+
+/**
+ * Implements hook_entity_insert().
+ * Sends a confirmation email when a new RSVP is submitted (optional).
+ */
+function myeventlane_rsvp_entity_insert(\Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'rsvp_submission') {
+    \Drupal::service('myeventlane_rsvp.email_service')->sendConfirmation($entity);
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ * Injects RSVP creation panel inline on event form if needed.
+ */
+function myeventlane_rsvp_inline_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  // Only on Event node add/edit forms.
+  if (
+    isset($form['#node'])
+    && $form['#node'] instanceof \Drupal\node\NodeInterface
+    && $form['#node']->bundle() === 'event'
+  ) {
+    $node = $form['#node'];
+    $ticket_type = $node->hasField('field_ticket_type') ? $node->get('field_ticket_type')->value : NULL;
+    $has_rsvp = $node->hasField('field_rsvp_target') && !$node->get('field_rsvp_target')->isEmpty();
+
+    if ($ticket_type === 'RSVP' && !$has_rsvp) {
+      $form['inline_rsvp'] = [
+        '#type' => 'details',
+        '#title' => t('Create RSVP Submission'),
+        '#open' => TRUE,
+      ];
+      $form['inline_rsvp']['title'] = [
+        '#type' => 'textfield',
+        '#title' => t('RSVP Title'),
+        '#default_value' => $node->label() . ' RSVP',
+      ];
+      $form['inline_rsvp']['rsvp_create'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Create RSVP submission on save'),
+        '#default_value' => 1,
+      ];
+      // Avoid duplicate submit handler.
+      if (!in_array('myeventlane_rsvp_inline_event_submit', $form['#submit'])) {
+        $form['#submit'][] = 'myeventlane_rsvp_inline_event_submit';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function myeventlane_rsvp_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'event') {
+    // Only for new RSVP selection and no existing RSVP submission.
+    if (
+      $entity->hasField('field_ticket_type') &&
+      $entity->get('field_ticket_type')->value === 'RSVP' &&
+      $entity->hasField('field_rsvp_target') &&
+      $entity->get('field_rsvp_target')->isEmpty()
+    ) {
+      // Create a minimal RSVP Submission node.
+      $rsvp = \Drupal\node\Entity\Node::create([
+        'type' => 'rsvp_submission',
+        'title' => $entity->label() . ' RSVP',
+        'status' => 1,
+      ]);
+      $rsvp->save();
+      // Link to event.
+      $entity->set('field_rsvp_target', ['target_id' => $rsvp->id()]);
+    }
+    \Drupal::messenger()->addStatus(t('RSVP submission was automatically created and linked to this event.'));
+
+  }
+}
+
+/**
+ * Implements hook_preprocess_node__rsvp_submission().
+ * Prevents undefined function error for RSVP Submission node preprocessing.
+ */
+function myeventlane_rsvp_preprocess_node__rsvp_submission(array &$variables) {
+  // Add logic here if you want to preprocess rsvp_submission nodes.
+  // For now, just an empty function to prevent the error.
+}
+
+/**
+ * Submit handler to create RSVP submission and link to event.
+ */
+function myeventlane_rsvp_inline_event_submit(array &$form, FormStateInterface $form_state) {
+  if (!isset($form['#node']) || !$form['#node'] instanceof \Drupal\node\NodeInterface) {
+    return;
+  }
+  $node = $form['#node'];
+  if ($node->bundle() !== 'event') return;
+
+  $create_rsvp = $form_state->getValue(['inline_rsvp', 'rsvp_create']);
+  $rsvp_title = $form_state->getValue(['inline_rsvp', 'title']);
+
+  if (
+    $node->hasField('field_ticket_type')
+    && $node->get('field_ticket_type')->value === 'RSVP'
+    && $node->hasField('field_rsvp_target')
+    && $node->get('field_rsvp_target')->isEmpty()
+    && $create_rsvp
+  ) {
+    $rsvp = Node::create([
+      'type' => 'rsvp_submission',
+      'title' => $rsvp_title ?: ($node->label() . ' RSVP'),
+      'status' => 1,
+    ]);
+    $rsvp->save();
+
+    // Link to event.
+    $node->set('field_rsvp_target', ['target_id' => $rsvp->id()]);
+
+    \Drupal::messenger()->addMessage(t('RSVP Submission created and linked!'));
+  }
+}

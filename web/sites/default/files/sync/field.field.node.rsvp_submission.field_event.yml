@@ -1,0 +1,29 @@
+uuid: bf771191-abbf-46b6-88fe-12b82a67bb08
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event
+    - node.type.event
+    - node.type.rsvp_submission
+id: node.rsvp_submission.field_event
+field_name: field_event
+entity_type: node
+bundle: rsvp_submission
+label: Event
+description: current-page
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      event: event
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

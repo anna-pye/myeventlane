@@ -1,0 +1,42 @@
+{# themes/custom/myeventlane_theme/templates/commerce/cart/commerce-product--event-ticket--add-to-cart-form.html.twig #}
+
+{# BEGIN: Custom Add to Cart form for Event Ticket products #}
+{% set product = attributes['data-product-id'] is defined ? attributes['data-product-id'] : null %}
+
+
+<form{{ attributes.addClass('event-add-to-cart-form') }}>
+  <div class="ticket-type-list">
+    {% if form.variations is defined and form.variations.widget is defined %}
+      {% for key, widget in form.variations.widget %}
+        {% if widget.variation %}
+          <div class="ticket-type-row">
+            <div class="ticket-type-title">
+              {{ widget.variation['#variation'].getTitle() }}
+            </div>
+            <div class="ticket-type-price">
+              ${{ widget.variation['#variation'].getPrice().getNumber()|number_format(2, '.', ',') }}
+            </div>
+            <div class="ticket-type-qty">
+              {{ widget.quantity }}
+            </div>
+            {% if widget.variation['#variation'].get('stock').value is defined %}
+              {% set stock = widget.variation['#variation'].get('stock').value|default(0) %}
+              <div class="ticket-type-stock">
+                {% if stock > 0 %}
+                  {{ stock }} left
+                {% else %}
+                  <span class="sold-out">Sold Out</span>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="form-actions">
+    {{ form.actions }}
+  </div>
+</form>
+{# END: Custom Add to Cart form for Event Ticket products #}

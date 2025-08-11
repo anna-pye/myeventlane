@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Module scaffolding + mail hook.
+ */
+
+/**
+ * Implements hook_mail().
+ */
+function mel_auth_claim_mail($key, &$message, $params) {
+  if ($key === 'claim_link') {
+    $message['subject'] = $params['subject'] ?? 'Claim your tickets on MyEventLane';
+    // Core MailManager sends text/plain by default; many SMTP transports accept basic HTML.
+    // Keep it simple & robust; you can swap to MailSystem+HTMLMail later.
+    $body = [];
+    $body[] = "Hi there,";
+    $body[] = "";
+    $body[] = "Tap the link below to claim your tickets and create/save your account:";
+    $body[] = $params['link'];
+    $body[] = "";
+    $body[] = "This is a one-time sign-in link and will expire in 24 hours.";
+    $body[] = "";
+    $body[] = "— MyEventLane";
+    $message['body'] = implode("\n", $body);
+  }
+}

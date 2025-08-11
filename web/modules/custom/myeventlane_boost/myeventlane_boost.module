@@ -1,0 +1,35 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_entity_presave().
+ * Unboosts event if promo expiry is in the past.
+ */
+function myeventlane_boost_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'event') {
+    $is_promoted = $entity->get('field_promoted')->value;
+    $expiry = $entity->get('field_promo_expiry')->value;
+    if ($is_promoted && $expiry && strtotime($expiry) < time()) {
+      $entity->set('field_promoted', 0);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ * Removes boost flag if expired.
+ */
+function myeventlane_boost_cron() {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $nids = \Drupal::entityQuery('node')
+    ->condition('type', 'event')
+    ->condition('field_promoted', 1)
+    ->condition('field_promo_expiry', date('Y-m-d\TH:i:s'), '<')
+    ->execute();
+  foreach ($storage->loadMultiple($nids) as $node) {
+    $node->set('field_promoted', 0);
+    $node->save();
+  }
+}

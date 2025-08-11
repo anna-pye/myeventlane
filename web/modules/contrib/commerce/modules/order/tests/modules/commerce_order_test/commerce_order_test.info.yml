@@ -1,0 +1,12 @@
+name: Commerce Order Test
+type: module
+description: Contains various non-specific things needed in order tests.
+package: Testing
+dependencies:
+  - commerce:commerce_order
+  - commerce:commerce_product
+
+# Information added by Drupal.org packaging script on 2025-07-04
+version: '3.1.0'
+project: 'commerce'
+datestamp: 1751630815

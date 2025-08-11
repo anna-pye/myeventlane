@@ -1,0 +1,10 @@
+<div class="vendor-store">
+  <h1>{{ store.name }}</h1>
+  <img src="{{ store.field_vendor_logo.entity.url }}" alt="{{ store.name }}">
+  <p>{{ store.field_vendor_description.value }}</p>
+
+  <h2>Upcoming Events</h2>
+  {% for event in events %}
+    <div class="event-card">{{ event.title }}</div>
+  {% endfor %}
+</div>

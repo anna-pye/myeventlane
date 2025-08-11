@@ -1,0 +1,93 @@
+.my-events-dashboard {
+  padding: 40px 24px;
+
+  h1 {
+    font-size: 28px;
+    color: #293241;
+    margin-bottom: 32px;
+  }
+
+  .event-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .event-card {
+    background-color: #f4f4f4;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(41, 50, 65, 0.1);
+    text-align: left;
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #293241;
+    }
+
+    .badge {
+      background-color: #f26d5b;
+      color: white;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 24px;
+      background-color: #f26d5b;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        background-color: darken(#f26d5b, 10%);
+      }
+    }
+  }
+
+  .no-events-msg {
+    color: #888;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 40px;
+  }
+}
+
+
+.btn-secondary {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  border: 2px solid #6e7ef2;
+  color: #6e7ef2;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #6e7ef2;
+    color: white;
+  }
+}
+
+.btn-cancel {
+  background-color: transparent;
+  border: 2px solid #f26d5b;
+  color: #f26d5b;
+  padding: 8px 14px;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #f26d5b;
+    color: white;
+  }
+}

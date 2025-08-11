@@ -1,0 +1,108 @@
+@use "sass:color";
+@use "variables" as vars; // if your vars file is theme-local, copy tokens here or adjust includePaths
+@use "login"; // if the file is _login.scss in the same folder
+
+
+/* Keep this minimal; it just aligns with your existing _forms.scss */
+.auth-wrapper {
+  background-color: vars.$color-bg-offwhite;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: vars.$spacing-2xl vars.$spacing-xl;
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+  color: vars.$text-color-main;
+}
+
+.auth-card {
+ 
+}
+
+.auth-title {
+  font-size: vars.$font-size-h2;
+  font-weight: vars.$font-weight-bold;
+  text-align: center;
+  margin: 0 0 vars.$spacing-sm;
+}
+
+.auth-logo .img{
+      width: 10em; /* min size from guide */
+      height: auto;
+      display: block;
+      margin-inline: auto;
+}
+
+.auth-subtitle {
+  font-size: vars.$font-size-small;
+  color: vars.$color-muted-text;
+  text-align: center;
+  margin: 0 0 vars.$spacing-xl;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-lg;
+
+  label {
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$text-color-main;
+    font-size: vars.$font-size-body;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: vars.$spacing-lg vars.$spacing-xl;
+    font-size: vars.$font-size-body;
+    border-radius: vars.$radius-small;
+    border: vars.$border-light;
+    color: vars.$text-color-main;
+
+    &:focus {
+      outline: 2px solid transparent;
+      border-color: vars.$color-outline-focus;
+      box-shadow: 0 0 0 3px color.change(vars.$color-outline-focus, $alpha: .25);
+    }
+  }
+}
+
+.auth-help-row {
+  display: flex; align-items: center; justify-content: space-between;
+  a {
+    color: vars.$color-primary;
+    font-weight: vars.$font-weight-semibold;
+    text-decoration: none;
+  }
+}
+
+.auth-actions input[type="submit"] {
+  background: vars.$color-primary;
+  color: #fff;
+  border: 0;
+  padding: vars.$spacing-lg vars.$spacing-xl;
+  border-radius: vars.$radius-pill;
+  font-weight: vars.$font-weight-semibold;
+  font-size: vars.$font-size-body;
+  width: 100%;
+  min-height: 48px;
+  box-shadow: 0 6px 16px color.change(vars.$color-primary, $alpha:.28);
+
+  &:hover { background: color.adjust(vars.$color-primary, $lightness: -7%); }
+  &:focus-visible {
+    outline: 3px solid color.change(vars.$color-outline-focus, $alpha:.45);
+    outline-offset: 2px;
+  }
+}
+
+.auth-footer {
+  margin-top: vars.$spacing-xl;
+  text-align: center;
+  font-size: vars.$font-size-small;
+
+  a {
+    color: vars.$color-primary; font-weight: vars.$font-weight-semibold; text-decoration: none;
+  }
+}

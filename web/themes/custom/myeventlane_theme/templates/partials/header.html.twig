@@ -1,0 +1,18 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="/" class="site-logo">
+      <img src="{{ directory }}/assets/branding/MyEventLane_Logo_Transparent.png" alt="MyEventLane" />
+    </a>
+
+    <nav class="site-nav">
+      {% if logged_in %}
+        <a href="/user" class="nav-link">My Account</a>
+      {% else %}
+        <a href="/user/login" class="nav-link">Login</a>
+        <a href="/user/register" class="nav-link">Sign Up</a>
+
+      {% endif %}
+    </nav>
+  </div>
+</header>
+

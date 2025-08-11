@@ -1,0 +1,35 @@
+.dashboard-tabs {
+  margin-top: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tab {
+  background: #f4f4f4;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  border: 2px solid transparent;
+}
+
+.tab.active {
+  border-color: #f26d5b;
+  background: #fef5ec;
+}
+
+.tab-content {
+  display: none;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.tab-content.show {
+  display: block;
+}

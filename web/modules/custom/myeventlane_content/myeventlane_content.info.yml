@@ -1,0 +1,16 @@
+name: 'MyEventLane Content'
+type: module
+description: 'Provides custom content types and fields for MyEventLane.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - node
+  - user
+  - field
+  - text
+  - datetime
+  - image
+  - media
+  - taxonomy
+  - options
+  - path

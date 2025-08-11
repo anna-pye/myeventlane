@@ -1,0 +1,169 @@
+<?php
+
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\commerce_product\Entity\ProductVariationType;
+
+/**
+ * Implements hook_schema().
+ */
+function myeventlane_analytics_schema() {
+  $schema['myeventlane_event_analytics'] = [
+    'description' => 'Stores event analytics data for MyEventLane.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary Key: Unique record ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'event_nid' => [
+        'description' => 'The Node ID of the event.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'tickets_sold' => [
+        'description' => 'Number of tickets sold for this event.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'rsvps' => [
+        'description' => 'Number of RSVPs for this event.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'created' => [
+        'description' => 'Timestamp when the record was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'event_nid' => ['event_nid'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function myeventlane_analytics_install() {
+  // ---- 1. Event: field_promoted (boolean)
+  if (!FieldStorageConfig::loadByName('node', 'field_promoted')) {
+    FieldStorageConfig::create([
+      'field_name'    => 'field_promoted',
+      'entity_type'   => 'node',
+      'type'          => 'boolean',
+      'cardinality'   => 1,
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'event', 'field_promoted')) {
+    FieldConfig::create([
+      'field_name'    => 'field_promoted',
+      'entity_type'   => 'node',
+      'bundle'        => 'event',
+      'label'         => 'Promoted?',
+      'required'      => FALSE,
+    ])->save();
+  }
+
+  // ---- 2. Event: field_promo_expiry (datetime)
+  if (!FieldStorageConfig::loadByName('node', 'field_promo_expiry')) {
+    FieldStorageConfig::create([
+      'field_name'    => 'field_promo_expiry',
+      'entity_type'   => 'node',
+      'type'          => 'datetime',
+      'settings'      => ['datetime_type' => 'datetime'],
+      'cardinality'   => 1,
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'event', 'field_promo_expiry')) {
+    FieldConfig::create([
+      'field_name'    => 'field_promo_expiry',
+      'entity_type'   => 'node',
+      'bundle'        => 'event',
+      'label'         => 'Promotion Expiry',
+      'required'      => FALSE,
+    ])->save();
+  }
+
+  // ---- 3. Product Variation: field_event (entity_reference to node:event)
+  // First, ensure the "ticket_variation" bundle exists.
+  if (!ProductVariationType::load('ticket_variation')) {
+    ProductVariationType::create([
+      'id' => 'ticket_variation',
+      'label' => 'Ticket Variation',
+      'orderItemType' => 'default', // Make sure 'default' is a valid order item type on your site!
+    ])->save();
+  }
+
+  // Now, create the field storage if needed.
+  if (!FieldStorageConfig::loadByName('commerce_product_variation', 'field_event')) {
+    FieldStorageConfig::create([
+      'field_name'    => 'field_event',
+      'entity_type'   => 'commerce_product_variation',
+      'type'          => 'entity_reference',
+      'settings'      => [
+        'target_type' => 'node',
+      ],
+      'cardinality'   => 1,
+    ])->save();
+  }
+
+  // Now safely attach the field to the bundle.
+  if (ProductVariationType::load('ticket_variation')) {
+    if (!FieldConfig::loadByName('commerce_product_variation', 'ticket_variation', 'field_event')) {
+      FieldConfig::create([
+        'field_name'    => 'field_event',
+        'entity_type'   => 'commerce_product_variation',
+        'bundle'        => 'ticket_variation',
+        'label'         => 'Event',
+        'required'      => FALSE,
+        'settings'      => [
+          'handler'          => 'default',
+          'handler_settings' => [
+            'target_bundles' => ['event' => 'event'],
+          ],
+        ],
+      ])->save();
+    }
+  }
+
+
+  // ---- 4. (Optional) RSVP Submission: field_event (entity reference)
+  // Uncomment and adjust if you use this relationship in your Views.
+
+  if (!FieldStorageConfig::loadByName('node', 'field_event')) {
+    FieldStorageConfig::create([
+      'field_name'    => 'field_event',
+      'entity_type'   => 'node',
+      'type'          => 'entity_reference',
+      'settings'      => [
+        'target_type' => 'node',
+      ],
+      'cardinality'   => 1,
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'rsvp_submission', 'field_event')) {
+    FieldConfig::create([
+      'field_name'    => 'field_event',
+      'entity_type'   => 'node',
+      'bundle'        => 'rsvp_submission',
+      'label'         => 'Event',
+      'required'      => FALSE,
+      'settings'      => [
+        'handler'          => 'default',
+        'handler_settings' => [
+          'target_bundles' => ['event' => 'event'],
+        ],
+      ],
+    ])->save();
+  }
+
+}

@@ -1,0 +1,4 @@
+social_auth_apple.settings_form:
+  title: 'Apple'
+  route_name: social_auth_apple.settings_form
+  base_route: social_auth.integrations

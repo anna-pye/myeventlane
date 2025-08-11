@@ -1,0 +1,29 @@
+uuid: 316fe87d-3b38-4fb2-9d96-b5858c31a56d
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.ticket
+    - field.storage.node.field_product_target
+    - node.type.event
+id: node.event.field_product_target
+field_name: field_product_target
+entity_type: node
+bundle: event
+label: 'Ticket Product'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:commerce_product'
+  handler_settings:
+    target_bundles:
+      ticket: ticket
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,23 @@
+name: 'MyEventLane Theme'
+type: theme
+description: 'Custom theme for MyEventLane community event platform'
+package: Custom
+core_version_requirement: ^11
+base theme: stable9
+version: 1.0
+libraries:
+  - myeventlane_theme/global-styling
+  - myeventlane_theme/ticket_inline
+  - myeventlane_theme/forms
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  content: Content
+  sidebar: Sidebar
+  social_login: Social login
+  footer: Footer
+templates:
+  - templates
+dependencies:
+  - twig_tweak
+

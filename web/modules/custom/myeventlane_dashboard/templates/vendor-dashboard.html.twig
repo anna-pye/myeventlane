@@ -1,0 +1,11 @@
+<div class="vendor-dashboard">
+  <h1>My Dashboard</h1>
+  {{ drupal_block('vendor_analytics_block') }}
+  {# Add views or other blocks here #}
+  {{ attach_library('myeventlane_theme/vendor_analytics_chart') }}
+  {{ attach_library('myeventlane_theme/dashboard_tabs') }}
+
+
+	<div id="vendor-analytics-app" class="vendor-analytics-wrapper"></div>
+
+</div>

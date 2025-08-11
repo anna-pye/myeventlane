@@ -1,0 +1,7 @@
+name: 'MyEventLane: Auth Claim'
+type: module
+description: 'Issue and redeem one-time claim links for guest RSVPs/orders.'
+core_version_requirement: ^10 || ^11
+package: 'MyEventLane'
+dependencies:
+  - drupal:user

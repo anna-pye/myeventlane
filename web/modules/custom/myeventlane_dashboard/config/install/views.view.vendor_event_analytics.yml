@@ -1,0 +1,97 @@
+uuid: 96072470-838c-470c-bcb2-a0160c341752
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - views
+    - commerce_order
+id: vendor_event_analytics
+label: 'Vendor Event Analytics'
+module: views
+description: 'Displays RSVP and ticket totals for the current vendor’s events.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    display_options:
+      title: 'My Events Analytics'
+      fields:
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          label: 'Event Title'
+        rsvp_count:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: rsvp_target
+          plugin_id: aggregation
+          label: 'RSVP Count'
+          aggregate_function: COUNT
+        ticket_sales:
+          id: quantity
+          table: commerce_order_item
+          field: quantity
+          relationship: order_items
+          plugin_id: aggregation
+          label: 'Tickets Sold'
+          aggregate_function: SUM
+      pager:
+        type: none
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      filters:
+        uid:
+          id: uid
+          table: node_field_data
+          field: uid
+          plugin_id: contextual
+          value: ''
+          default_action: default
+          default_argument_type: current_user
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value: event
+      style:
+        type: default
+      row:
+        type: fields
+      query:
+        type: views_query
+      relationships:
+        rsvp_target:
+          id: rsvp_target
+          table: node__field_rsvp_target
+          field: field_rsvp_target_target_id
+          relationship: none
+          required: false
+          base: node
+          base_field: nid
+          label: 'RSVP Submissions'
+        variation_event:
+          id: variation_event
+          table: commerce_product_variation__field_event
+          field: field_event_target_id
+          relationship: none
+          required: false
+          base: node
+          base_field: nid
+          label: 'Product Variations linked to Event'
+        order_items:
+          id: order_items
+          relationship: variation_event
+          required: false
+          base: commerce_order_item
+          base_field: purchased_entity
+          label: 'Order Items'
+      use_ajax: false

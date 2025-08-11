@@ -1,0 +1,56 @@
+uuid: 56704fc7-1a7b-4803-992a-53fd08af8275
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event
+    - node.type.vendor_store
+  module:
+    - commerce_checkout
+    - commerce_order
+    - commerce_price
+    - commerce_product
+    - commerce_store
+    - conditional_fields
+    - file
+    - node
+    - profile
+id: vendor
+label: Vendor
+weight: -7
+is_admin: false
+permissions:
+  - 'access checkout'
+  - 'access commerce_store overview'
+  - 'administer commerce_checkout_flow'
+  - 'change own username'
+  - 'create commerce_product_attribute'
+  - 'create default commerce_order'
+  - 'create default commerce_product'
+  - 'create event content'
+  - 'create online commerce_store'
+  - 'create ticket commerce_product'
+  - 'create vendor_store content'
+  - 'delete own default commerce_product'
+  - 'delete own event content'
+  - 'delete own files'
+  - 'delete own ticket commerce_product'
+  - 'edit conditional fields'
+  - 'edit own event content'
+  - 'unlock orders'
+  - 'update default commerce_order'
+  - 'update own customer profile'
+  - 'update own default commerce_product'
+  - 'update own online commerce_store'
+  - 'update own ticket commerce_product'
+  - 'view any customer profile'
+  - 'view any profile'
+  - 'view commerce_currency'
+  - 'view commerce_product'
+  - 'view commerce_store'
+  - 'view conditional fields'
+  - 'view own commerce_order'
+  - 'view own customer profile'
+  - 'view own profile'
+  - 'view own unpublished commerce_product'
+  - 'view own unpublished profile'

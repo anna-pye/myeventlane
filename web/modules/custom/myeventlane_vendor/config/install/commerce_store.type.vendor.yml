@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce
+id: vendor
+label: Vendor Store
+description: Store type for individual event vendors.
+addressType: customer

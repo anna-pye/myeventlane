@@ -1,0 +1,188 @@
+@use "sass:color";
+@use "variables" as vars;
+
+.event-card-buffered {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: vars.$spacing-2xl;
+  padding-bottom: vars.$spacing-3xl;
+  background-color: vars.$color-bg-offwhite;
+
+  .card-1,
+  .card-4 {
+    grid-column: span 1;
+  }
+
+  .card-2, .card-3, .card-4, .card-5, .card-6 {
+    grid-column: span 0.5;
+  }
+
+  @media (max-width: vars.$breakpoint-lg) {
+    grid-template-columns: 1fr 1fr;
+    gap: vars.$spacing-xl;
+    padding-bottom: vars.$spacing-2xl;
+
+    .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: vars.$spacing-md;
+    padding-bottom: vars.$spacing-lg;
+
+    .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 {
+      grid-column: span 1;
+    }
+  }
+
+  .event-card-wrapper {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 12px vars.$color-shadow;
+    font-family: vars.$font-family-main;
+    transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    min-height: 260px;
+
+    &:hover {
+      transform: translateY(-5px) scale(1.012);
+      box-shadow: 0 6px 22px rgba(41, 50, 65, 0.11);
+    }
+  }
+}
+
+.event-card {
+  background: #ffffff;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 2px 8px vars.$color-shadow;
+  font-family: vars.$font-family-main;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+  overflow: hidden;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .event-card__image {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 124px;
+      object-fit: cover;
+      border-radius: vars.$radius-medium vars.$radius-medium 0 0;
+      background: #e8e8e8;
+      display: block;
+    }
+
+    .event-card__date-overlay {
+      position: absolute;
+      top: vars.$spacing-sm;
+      left: vars.$spacing-sm;
+      min-width: 44px;
+      height: 48px;
+      background-color: vars.$color-highlight;
+      color: vars.$text-color-main;
+      border-radius: vars.$radius-small;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-weight: vars.$font-weight-bold;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.13);
+      z-index: 2;
+      padding: 3px 10px;
+
+      .event-card__month {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .event-card__day {
+        font-size: 17px;
+        line-height: 1.1;
+        margin-top: -2px;
+      }
+    }
+
+    .event-card__badge {
+      position: absolute;
+      top: vars.$spacing-sm;
+      right: vars.$spacing-sm;
+      background: vars.$color-primary;
+      color: #fff;
+      font-size: vars.$font-size-small;
+      font-weight: vars.$font-weight-semibold;
+      padding: 5px 12px;
+      border-radius: vars.$radius-pill;
+      z-index: 3;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+    }
+  }
+
+  .event-card__body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .event-card__category {
+    font-size: 12px;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$color-accent;
+    margin: 0 0 6px 0;
+  }
+
+  .event-card__title {
+    font-size: 17.5px;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+    margin-bottom: 6px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .event-card__meta {
+    font-size: 13.5px;
+    color: #5c6783;
+    line-height: 1.4;
+    margin-bottom: 11px;
+  }
+
+  .event-card__cta {
+    margin-top: auto;
+
+    .btn {
+      background-color: vars.$color-highlight;
+      color: vars.$text-color-main;
+      font-weight: vars.$font-weight-semibold;
+      font-size: vars.$font-size-small;
+      padding: 7px 20px;
+      border-radius: vars.$radius-pill;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+      text-decoration: none;
+      border: none;
+      display: inline-block;
+      transition: background 0.16s;
+
+      &:hover,
+      &:focus {
+        background-color: color.adjust(vars.$color-highlight, $lightness: 25%);
+      }
+    }
+  }
+}

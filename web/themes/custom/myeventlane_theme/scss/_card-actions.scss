@@ -1,0 +1,25 @@
+
+@use "sass:color";
+@use "variables" as vars;
+
+
+.card-actions {
+  margin-top: vars.$spacing-md;
+  display: flex;
+  flex-wrap: wrap;
+  gap: vars.$spacing-sm;
+
+  .btn-secondary {
+    font-size: vars.$font-size-small;
+    padding: vars.$spacing-sm vars.$spacing-md;
+    border: 1px solid vars.$color-accent;
+    color: vars.$color-accent;
+    border-radius: vars.$radius-pill;
+    text-decoration: none;
+
+    &:hover {
+      background: vars.$color-accent;
+      color: #fff;
+    }
+  }
+}

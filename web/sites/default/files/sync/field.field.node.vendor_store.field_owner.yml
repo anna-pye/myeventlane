@@ -1,0 +1,21 @@
+uuid: 5dee6806-3c8b-4618-9dac-f8ff60cb30b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_owner
+    - node.type.vendor_store
+id: node.vendor_store.field_owner
+field_name: field_owner
+entity_type: node
+bundle: vendor_store
+label: 'Store Owner'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings: {  }
+field_type: entity_reference

@@ -1,0 +1,17 @@
+<?php
+
+function testtheme_preprocess_html(&$variables) {
+  \Drupal::logger('testtheme')->notice('TEST THEME FILE LOADED');
+}
+
+/**
+ * Implements hook_theme().
+ */
+function testtheme_theme($existing, $type, $theme, $path) {
+  return [
+    'testtheme_page' => [
+      'variables' => [],
+      'template' => 'testtheme-page',
+    ],
+  ];
+}

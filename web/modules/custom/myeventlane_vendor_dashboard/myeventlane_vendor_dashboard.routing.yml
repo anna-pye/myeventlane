@@ -1,0 +1,42 @@
+myeventlane_vendor_dashboard.dashboard:
+  path: '/dashboard'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\DashboardController::dashboard'
+    _title: 'Vendor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: FALSE
+
+myeventlane_vendor_dashboard.connect_stripe:
+  path: '/connect-stripe'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\StripeConnectController::redirectToStripe'
+    _title: 'Connect to Stripe'
+  requirements:
+    _permission: 'access content'
+
+myeventlane_vendor_dashboard.settings:
+  path: '/admin/config/myeventlane/stripe-settings'
+  defaults:
+    _form: '\Drupal\myeventlane_vendor_dashboard\Form\StripeSettingsForm'
+    _title: 'Stripe Connect Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+myeventlane_vendor_dashboard.stripe_callback:
+  path: '/stripe/callback'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\StripeCallbackController::handleCallback'
+    _title: 'Stripe Connect Callback'
+  requirements:
+    _permission: 'access content'
+
+myeventlane_vendor_dashboard.become_vendor:
+  path: '/become-a-vendor'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\VendorUpgradeController::becomeVendor'
+    _title: 'Become a Vendor'
+  requirements:
+    _permission: 'access content'
+

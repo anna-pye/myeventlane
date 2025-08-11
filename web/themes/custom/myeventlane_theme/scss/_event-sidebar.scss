@@ -1,0 +1,72 @@
+@use "sass:color";
+@use "variables.scss" as vars;
+
+.event-main-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: vars.$spacing-xl;
+  @media (max-width: vars.$breakpoint-md) {
+    flex-direction: column;
+  }
+}
+.event-main-content {
+  flex: 2;
+  min-width: 0;
+}
+.event-sidebar {
+  flex: 1;
+  background: vars.$color-bg-offwhite;
+  border-radius: vars.$radius-medium;
+  padding: vars.$spacing-xl vars.$spacing-lg;
+  position: sticky;
+  z-index: 2;
+
+
+  @media (max-width: vars.$breakpoint-md) {
+    position: static;
+    width: 95%;
+    margin-top: vars.$spacing-lg;
+  }
+
+.rsvp-field{ 
+   max-width: 340px;
+   margin-bottom: 0.5em;
+  }
+
+  .sidebar-card {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 1px 8px vars.$color-shadow;
+    padding: vars.$spacing-lg vars.$spacing-md vars.$spacing-md vars.$spacing-md;
+    margin-bottom: vars.$spacing-lg;
+    text-align: left;
+  }
+  
+  .sidebar-cta-title {
+    font-size: vars.$font-size-h3;
+    font-weight: vars.$font-weight-bold;
+    margin-bottom: vars.$spacing-md;
+    color: vars.$color-primary;
+  }
+}
+
+.event-sidebar--mobile {
+  display: none;
+  @media (max-width: vars.$breakpoint-md) {
+    display: block;
+    margin-top: vars.$spacing-lg;
+    margin-bottom: vars.$spacing-lg;
+  }
+  .rsvp-field{ 
+   max-width: auto;
+   margin-bottom: 0.5em;
+  }
+}
+
+.event-sidebar--desktop {
+  display: block;
+  @media (max-width: 375px) {
+    display: none;
+  }
+}
+

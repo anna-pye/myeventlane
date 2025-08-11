@@ -1,0 +1,28 @@
+[90m= [39m[34;4mDrupal\commerce_store\Entity\Store[39;24m {#8908
+    [34mtranslationLanguages[39m: "[32men[39m",
+    [34mstore_id (integer)[39m: [],
+    [34muuid (uuid)[39m: "[32m3c778c27-dd51-424e-aa8f-5e4ab6a891ec[39m",
+    [34mlangcode (language)[39m: "[32men[39m",
+    [34mtype (entity_reference)[39m: "[32mdefault[39m",
+    [34muid (entity_reference)[39m: "[32mUser::load(1)[39m",
+    [34mname (string)[39m: "[32mMy Event Lane[39m",
+    [34mmail (email)[39m: [],
+    [34mdefault_currency (entity_reference)[39m: "[32mAUD[39m",
+    [34mtimezone (list_string)[39m: "[32mAustralia/Sydney[39m",
+    [34maddress (address)[39m: [
+      [
+        "[34mcountry_code[39m" => "[32mAU[39m",
+        "[34mlocality[39m" => "[32mMelbourne[39m",
+        "[34madministrative_area[39m" => "[32mVIC[39m",
+        "[34mpostal_code[39m" => "[32m3000[39m",
+        "[34maddress_line1[39m" => "[32m123 Lane St[39m",
+      ],
+    ],
+    [34mbilling_countries (list_string)[39m: [],
+    [34mpath (path)[39m: "[32men[39m",
+    [34mis_default (boolean)[39m: "",
+    [34mcreated (created)[39m: "",
+    [34mchanged (changed)[39m: "",
+    [34mdefault_langcode (boolean)[39m: "",
+  }
+

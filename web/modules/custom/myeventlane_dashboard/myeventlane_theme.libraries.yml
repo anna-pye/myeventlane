@@ -1,0 +1,6 @@
+dashboard_tabs:
+  js:
+    js/dashboard-tabs.js: {}
+  css:
+    theme:
+      css/dashboard-tabs.css: {}

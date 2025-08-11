@@ -1,0 +1,14 @@
+{{ attach_library('myeventlane_theme/auth') }}
+
+<div class="mel-auth-page">
+  <div class="mel-auth-card">
+    <img class="mel-logo" src="{{ myeventlane_logo_src }}" alt="MyEventLane" />
+    <h1 class="mel-auth-title">Your tickets are waiting</h1>
+    {% if auth_subheading %}
+      <p class="mel-auth-subtitle">{{ auth_subheading }}</p>
+    {% endif %}
+    <div class="mel-auth-form-wrap">
+      {{ page.content }}
+    </div>
+  </div>
+</div>

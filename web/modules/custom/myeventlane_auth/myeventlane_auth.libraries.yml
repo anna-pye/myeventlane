@@ -1,0 +1,4 @@
+auth:
+  css:
+    theme:
+      css/main.css: {}

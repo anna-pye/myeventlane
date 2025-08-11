@@ -1,0 +1,20 @@
+uuid: 3b2109a3-bddb-4b78-8876-0ecb4cb0bde3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_accessibility
+field_name: field_accessibility
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

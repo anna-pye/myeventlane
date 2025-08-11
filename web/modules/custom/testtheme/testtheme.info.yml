@@ -1,0 +1,6 @@
+name: 'Test Theme Hook'
+type: theme
+description: 'Custom theme for MyEventLane community event platform'
+package: Custom
+core_version_requirement: ^11
+base theme: Claro 11.2.2

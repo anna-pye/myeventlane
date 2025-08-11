@@ -1,0 +1,5 @@
+# services:
+#   myeventlane_vendor_dashboard.stripe_commission_subscriber:
+#     class: Drupal\myeventlane_vendor_dashboard\EventSubscriber\StripeCommissionSubscriber
+#     tags:
+#       - { name: event_subscriber }

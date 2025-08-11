@@ -1,0 +1,8 @@
+myeventlane_boost.boost_page:
+  path: '/boost/{node}'
+  defaults:
+    _controller: '\Drupal\myeventlane_boost\Controller\BoostController::boostPage'
+    _title: 'Boost Your Event'
+  requirements:
+    _permission: 'access content'
+    node: \d+

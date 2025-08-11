@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function myeventlane_rsvp_schema() {
+  $schema['myeventlane_rsvp'] = [
+    'description' => 'Stores RSVP submissions for events.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique RSVP ID.',
+      ],
+      'event_nid' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'description' => 'Event node ID.',
+      ],
+      'first_name' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'description' => 'First name of attendee.',
+      ],
+      'last_name' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'description' => 'Last name of attendee.',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Attendee email address.',
+      ],
+      'extra_answers' => [
+        'type' => 'text',
+        'not null' => FALSE,
+        'description' => 'JSON-encoded answers to extra questions.',
+      ],
+      'comments' => [
+        'type' => 'text',
+        'not null' => FALSE,
+        'description' => 'Any comments or extra info.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'UNIX timestamp when RSVP was created.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'event_nid' => ['event_nid'],
+      'email' => ['email'],
+    ],
+  ];
+  return $schema;
+}

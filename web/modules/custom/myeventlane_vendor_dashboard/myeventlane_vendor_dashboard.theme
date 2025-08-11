@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function myeventlane_vendor_dashboard_theme($existing, $type, $theme, $path) {
+  return [
+    'myeventlane_vendor_dashboard' => [
+      'variables' => ['cards' => []],
+      'template' => 'vendor-dashboard',
+    ],
+    'myeventlane_vendor_dashboard_card' => [
+      'variables' => [
+        'title' => NULL,
+        'type' => NULL,
+        'image' => NULL,
+        'venue' => NULL,
+        'ticket_limit' => NULL,
+        'count' => 0,
+        'download_csv' => NULL,
+        'view_rsvps_link' => NULL,
+        'show_chart_btn' => NULL,
+      ],
+      'template' => 'vendor-dashboard-card',
+    ],
+  ];
+}
+
+

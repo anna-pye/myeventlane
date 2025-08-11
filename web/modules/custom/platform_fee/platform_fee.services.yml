@@ -1,0 +1,11 @@
+services:
+  platform_fee.subscriber:
+    class: Drupal\platform_fee\EventSubscriber\PlatformFeeSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
+  event_boost.order_paid_subscriber:
+    class: Drupal\event_boost\EventSubscriber\OrderPaidSubscriber
+    tags:
+      - { name: event_subscriber }
+

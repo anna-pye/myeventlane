@@ -1,0 +1,21 @@
+uuid: 44403b39-5c54-4222-9a26-5c2c655f3398
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_user
+    - node.type.rsvp_submission
+id: node.rsvp_submission.field_user
+field_name: field_user
+entity_type: node
+bundle: rsvp_submission
+label: User
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings: {  }
+field_type: entity_reference

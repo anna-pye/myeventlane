@@ -1,0 +1,20 @@
+
+<div class="event-card-wrapper card-{{ loop.index }}">
+  <div class="dashboard-card">
+    {% if image %}
+      {{ image }}
+    {% endif %}
+    <h2 class="dashboard-card-title">{{ title }}</h2>
+    <div class="dashboard-card-meta">
+      <div>Type: {{ type }}</div>
+      <div>Limit: {{ ticket_limit }}</div>
+      <div>Venue: {{ venue }}</div>
+      <div>RSVPs / Tickets: {{ count }}</div>
+    </div>
+    <div class="dashboard-card-actions">
+      {{ view_rsvps_link }}
+      {{ download_csv }}
+      {{ show_chart_btn }}
+    </div>
+  </div>
+</div>

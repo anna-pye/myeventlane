@@ -1,0 +1,538 @@
+/* ==========================================================================
+   MyEventLane – Auth (clean version)
+   File: themes/custom/myeventlane_theme/scss/_mel-auth.scss
+   Compiles to: css/auth.css
+   Brand: coral #f26d5b, navy #293241, purple #6e7ef2, off-white #fef5ec, grey #f4f4f4
+   ========================================================================== */
+
+/* --- Variables ----------------------------------------------------------- */
+:root {
+  --mel-coral: #f26d5b;
+  --mel-navy:  #293241;
+  --mel-purple:#6e7ef2;
+  --mel-off:   #fef5ec;
+  --mel-grey:  #f4f4f4;
+  --mel-text:  #293241;
+}
+$mel-font: Inter, "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+/* --- Page background for auth routes (used by page--user--*.html.twig) --- */
+.mel-auth-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(242,109,91,.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 120%, rgba(110,126,242,.10), transparent 55%),
+    var(--mel-off);
+  font-family: $mel-font;
+  color: var(--mel-text);
+}
+
+/* --- Auth card ----------------------------------------------------------- */
+.mel-card {
+  width: min(520px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(41,50,65,.08), 0 2px 10px rgba(41,50,65,.05);
+  padding: clamp(22px, 4vw, 36px);
+  margin-inline: auto;
+}
+
+/* --- Optional small logo in card header (if present) --------------------- */
+.mel-logo { display:block; width:140px; height:auto; margin:0 auto 12px; }
+
+/* --- Titles (used by page templates) ------------------------------------- */
+.mel-auth-title {
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--mel-navy);
+  text-align: center;
+  margin: 4px 0 8px;
+}
+.mel-auth-subtitle {
+  font-size: 15px;
+  color: color-mix(in srgb, var(--mel-navy) 70%, white);
+  text-align: center;
+  margin: 0 0 14px;
+}
+
+/* ==========================================================================
+   FORM (this targets your exact markup)
+   <form class="user-login-form mel-auth-form mel-card"> … </form>
+   ========================================================================== */
+.mel-auth-form {
+  display: grid;
+  gap: 16px;
+
+  /* core/stable form-item wrappers */
+  .form-item { margin: 0 0 12px; }
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mel-navy);
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  /* Inputs (you already add .mel-input via hook_form_alter) */
+  .mel-input,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e6e6e6;
+    background: #fff;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--mel-text);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+
+  input::placeholder { color: #888; }
+
+  input:focus {
+    outline: 2px solid transparent;
+    border-color: var(--mel-coral);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mel-coral) 25%, transparent);
+  }
+
+  /* Helper/description text under fields */
+  .description {
+    font-size: 14px;
+    color: color-mix(in srgb, var(--mel-navy) 70%, white);
+    margin-top: 6px;
+  }
+
+  /* Error message inline */
+  .form-item--error-message,
+  .error {
+    background: #fee4e2;
+    color: #912018;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  /* Forgot password row injected by your alter */
+  .auth-help-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -4px;
+    a.auth-forgot-link {
+      color: var(--mel-purple);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    a.auth-forgot-link:hover { text-decoration: underline; }
+  }
+
+  /* Submit */
+  .form-actions { margin-top: 4px; }
+  .mel-btn,
+  .mel-btn--primary,
+  input[type="submit"],
+  .button {
+    appearance: none;
+    border: 0;
+    background: var(--mel-coral);
+    color: #fff;
+    font-weight: 700;
+    padding: 14px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 16px;
+    min-height: 44px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(242,109,91,.28);
+    transition: transform .06s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .mel-btn:hover,
+  input[type="submit"]:hover { background: #e8614d; }
+  .mel-btn:active,
+  input[type="submit"]:active { transform: translateY(1px); }
+  .mel-btn:focus-visible,
+  input[type="submit"]:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--mel-coral) 40%, white);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--mel-coral) 30%, transparent);
+  }
+
+  /* Bottom meta links (e.g., “Create an account”) if present outside form */
+  + .mel-auth-meta {
+    margin-top: 12px;
+    font-size: 14px;
+    color: color-mix(in srgb, var(--mel-navy) 70%, white);
+    a { color: var(--mel-purple); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  }
+}
+
+/* ==========================================================================
+   Optional: hide any leftover social icon rows in the core form output.
+   (We already remove these in PHP, this is a safety net.)
+   ========================================================================== */
+.mel-auth-form .social-login,
+.mel-auth-form .social_auth,
+.mel-auth-form .social-auth,
+.mel-auth-form [class*="social-login"],
+.mel-auth-form [class*="social_auth"] { display: none !important; }
+
+/* --- Global messages on auth pages (status/warn/error) ------------------- */
+.mel-auth-page .messages {
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.mel-auth-page .messages--status  { background: #ecfdf3; color: #065f46; }
+.mel-auth-page .messages--warning { background: #fff7e6; color: #8a6116; }
+.mel-auth-page .messages--error   { background: #fee4e2; color: #912018; }
+
+/* --- Mobile -------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mel-card { max-width: 92vw; margin: 16px auto; }
+  .mel-logo { margin-top: 4px; }
+}
+
+/* --- Reduced motion / forced colors ------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mel-auth-form .mel-btn,
+  .mel-auth-form input[type="submit"] { transition: none; }
+}
+@media (forced-colors: active) {
+  .mel-card,
+  .mel-auth-form .mel-input,
+  .mel-auth-form .mel-btn,
+  .mel-auth-form input[type="submit"] {
+    border: 1px solid CanvasText;
+    box-shadow: none !important;
+  }
+}
+
+/* ==========================================================================
+   MyEventLane – Auth (clean version)
+   File: themes/custom/myeventlane_theme/scss/_mel-auth.scss
+   Compiles to: css/auth.css
+   Brand: coral #f26d5b, navy #293241, purple #6e7ef2, off-white #fef5ec, grey #f4f4f4
+   ========================================================================== */
+
+/* --- Variables ----------------------------------------------------------- */
+:root {
+  --mel-coral: #f26d5b;
+  --mel-navy:  #293241;
+  --mel-purple:#6e7ef2;
+  --mel-off:   #fef5ec;
+  --mel-grey:  #f4f4f4;
+  --mel-text:  #293241;
+}
+$mel-font: Inter, "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+/* --- Page background for auth routes (used by page--user--*.html.twig) --- */
+.mel-auth-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(242,109,91,.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 120%, rgba(110,126,242,.10), transparent 55%),
+    var(--mel-off);
+  font-family: $mel-font;
+  color: var(--mel-text);
+}
+
+/* --- Auth card ----------------------------------------------------------- */
+.mel-card {
+  width: min(520px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(41,50,65,.08), 0 2px 10px rgba(41,50,65,.05);
+  padding: clamp(22px, 4vw, 36px);
+  margin-inline: auto;
+}
+
+/* --- Optional small logo in card header (if present) --------------------- */
+.mel-logo { display:block; width:140px; height:auto; margin:0 auto 12px; }
+
+/* --- Titles (used by page templates) ------------------------------------- */
+.mel-auth-title {
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--mel-navy);
+  text-align: center;
+  margin: 4px 0 8px;
+}
+.mel-auth-subtitle {
+  font-size: 15px;
+  color: color-mix(in srgb, var(--mel-navy) 70%, white);
+  text-align: center;
+  margin: 0 0 14px;
+}
+
+/* ==========================================================================
+   FORM (this targets your exact markup)
+   <form class="user-login-form mel-auth-form mel-card"> … </form>
+   ========================================================================== */
+.mel-auth-form {
+  display: grid;
+  gap: 16px;
+
+  /* core/stable form-item wrappers */
+  .form-item { margin: 0 0 12px; }
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mel-navy);
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  /* Inputs (you already add .mel-input via hook_form_alter) */
+  .mel-input,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e6e6e6;
+    background: #fff;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--mel-text);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+
+  input::placeholder { color: #888; }
+
+  input:focus {
+    outline: 2px solid transparent;
+    border-color: var(--mel-coral);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mel-coral) 25%, transparent);
+  }
+
+  /* Helper/description text under fields */
+  .description {
+    font-size: 14px;
+    color: color-mix(in srgb, var(--mel-navy) 70%, white);
+    margin-top: 6px;
+  }
+
+  /* Error message inline */
+  .form-item--error-message,
+  .error {
+    background: #fee4e2;
+    color: #912018;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  /* Forgot password row injected by your alter */
+  .auth-help-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -4px;
+    a.auth-forgot-link {
+      color: var(--mel-purple);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    a.auth-forgot-link:hover { text-decoration: underline; }
+  }
+
+  /* Submit */
+  .form-actions { margin-top: 4px; }
+  .mel-btn,
+  .mel-btn--primary,
+  input[type="submit"],
+  .button {
+    appearance: none;
+    border: 0;
+    background: var(--mel-coral);
+    color: #fff;
+    font-weight: 700;
+    padding: 14px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 16px;
+    min-height: 44px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(242,109,91,.28);
+    transition: transform .06s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .mel-btn:hover,
+  input[type="submit"]:hover { background: #e8614d; }
+  .mel-btn:active,
+  input[type="submit"]:active { transform: translateY(1px); }
+  .mel-btn:focus-visible,
+  input[type="submit"]:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--mel-coral) 40%, white);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--mel-coral) 30%, transparent);
+  }
+
+  /* Bottom meta links (e.g., “Create an account”) if present outside form */
+  + .mel-auth-meta {
+    margin-top: 12px;
+    font-size: 14px;
+    color: color-mix(in srgb, var(--mel-navy) 70%, white);
+    a { color: var(--mel-purple); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  }
+}
+
+/* ==========================================================================
+   Optional: hide any leftover social icon rows in the core form output.
+   (We already remove these in PHP, this is a safety net.)
+   ========================================================================== */
+.mel-auth-form .social-login,
+.mel-auth-form .social_auth,
+.mel-auth-form .social-auth,
+.mel-auth-form [class*="social-login"],
+.mel-auth-form [class*="social_auth"] { display: none !important; }
+
+/* --- Global messages on auth pages (status/warn/error) ------------------- */
+.mel-auth-page .messages {
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.mel-auth-page .messages--status  { background: #ecfdf3; color: #065f46; }
+.mel-auth-page .messages--warning { background: #fff7e6; color: #8a6116; }
+.mel-auth-page .messages--error   { background: #fee4e2; color: #912018; }
+
+
+/* One card only: page template wraps everything */
+.user-login-form.mel-auth-form { background: transparent; box-shadow: none; padding: 0; }
+
+/* Reduce label weight; hide verbose helper text for a cleaner look */
+.mel-auth-form label { font-size: 13px; color: color-mix(in srgb, var(--mel-navy) 60%, white); font-weight: 600; }
+.mel-auth-form .description { display: none; }
+
+/* Inputs */
+.mel-auth-form input[type="text"],
+.mel-auth-form input[type="email"],
+.mel-auth-form input[type="password"] {
+  padding: 14px 16px;
+  border: 1.5px solid #e6e6e6;
+  border-radius: 12px;
+}
+
+/* Submit */
+.mel-auth-form .form-actions { margin-top: 6px; }
+.mel-auth-form .form-actions input[type="submit"] { width: 100%; }
+
+/* Nuke any stray social rows in content just in case */
+.mel-auth-page .block-social-auth,
+.mel-auth-page [class*="social-auth"],
+.mel-auth-page [class*="social login"],
+.mel-auth-page [href*="Continue with"] { display: none !important; }
+
+
+/* --- Mobile -------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mel-card { max-width: 92vw; margin: 16px auto; }
+  .mel-logo { margin-top: 4px; }
+}
+
+/* --- Reduced motion / forced colors ------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mel-auth-form .mel-btn,
+  .mel-auth-form input[type="submit"] { transition: none; }
+}
+@media (forced-colors: active) {
+  .mel-card,
+  .mel-auth-form .mel-input,
+  .mel-auth-form .mel-btn,
+  .mel-auth-form input[type="submit"] {
+    border: 1px solid CanvasText;
+    box-shadow: none !important;
+  }
+}
+
+/* Wider card option for register / forgot pages */
+.mel-card--wide { width: min(760px, 100%); }
+
+/* Reset Password tweaks */
+.page-user-password .mel-auth-form .description { margin-top: 6px; }
+.page-user-password .mel-auth-form .form-actions { margin-top: 10px; }
+
+/* Register: field groups & paragraphs UI */
+.mel-register .form-item,
+.mel-register-form .form-item { margin-bottom: 14px; }
+
+.mel-register .form-wrapper,
+.mel-register fieldset,
+.mel-register .form-composite {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 14px 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02);
+}
+
+/* Fieldset legends */
+.mel-register fieldset > legend span,
+.mel-register .fieldset-legend {
+  font-weight: 700;
+  color: var(--mel-navy);
+  font-size: 16px;
+}
+
+/* Paragraphs “Vendor Profile” subform polish */
+.mel-register .paragraphs-subform > .fieldset-wrapper { padding-top: 6px; }
+.mel-register .paragraphs-actions,
+.mel-register .paragraph-type-top {
+  display: flex; align-items: center; gap: 8px;
+}
+.mel-register .paragraphs-dropdown,
+.mel-register .paragraph-type-title { font-weight: 600; }
+
+/* “Remove” button alignment to the right edge of the group */
+.mel-register .paragraphs-actions .button--danger,
+.mel-register .paragraphs-actions .button.button--danger {
+  margin-left: auto;
+  border-radius: 999px;
+  background: var(--mel-coral);
+  border: 0;
+  color: #fff;
+  padding: 8px 12px;
+  box-shadow: 0 4px 12px rgba(242,109,91,.20);
+}
+
+/* Inputs stay full width on the wide card */
+.mel-register .mel-auth-form input[type="text"],
+.mel-register .mel-auth-form input[type="email"],
+.mel-register .mel-auth-form input[type="password"],
+.mel-register .mel-auth-form textarea,
+.mel-register .mel-auth-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #e6e6e6;
+  border-radius: 12px;
+  background: #fff;
+}
+
+/* Reduce cluttered helper text on register. Keep labels for a11y. */
+.mel-register .description { display: none; }
+
+/* Submit button spacing for wide card */
+.mel-register .form-actions { margin-top: 16px; }
+.mel-register .form-actions input[type="submit"] { width: 100%; }
+
+/* Safety: nuke stray social rows anywhere on these pages */
+.is-auth-page .block-social-auth,
+.is-auth-page [class*="social-auth"],
+.is-auth-page [class*="social login"] { display: none !important; }
+

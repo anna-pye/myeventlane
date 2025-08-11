@@ -1,0 +1,58 @@
+uuid: 1936fd6c-8a99-4e67-9f81-78affb39b108
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_type.default
+  module:
+    - commerce_order
+    - inline_entity_form
+_core:
+  default_config_hash: OxAaChovIat28naja81fSKWGZHYQHv6xrrmhnK-bXUI
+id: commerce_order.default.default
+targetEntityType: commerce_order
+bundle: default
+mode: default
+content:
+  adjustments:
+    type: commerce_adjustment_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  billing_profile:
+    type: commerce_billing_profile
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  cart:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 20
+    region: content
+    third_party_settings: {  }
+  order_items:
+    type: inline_entity_form_complex
+    weight: 1
+    settings:
+      override_labels: true
+      label_singular: 'order item'
+      label_plural: 'order items'
+      allow_new: true
+      match_operator: CONTAINS
+      allow_existing: false
+      form_mode: default
+      removed_reference: delete
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  customer_comments: true
+  ip_address: true
+  mail: true
+  order_number: true
+  state: true
+  store_id: true
+  uid: true

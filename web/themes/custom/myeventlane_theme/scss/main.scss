@@ -1,0 +1,108 @@
+/*// scss/main.scss*/
+
+/*// 1. Import all variables FIRST and expose globally (as *).*/
+@use "sass:color";
+@use "variables" as vars;
+
+/*// 2. Use modern partial import syntax for all your SCSS modules:*/
+@use 'category-filters';
+@use 'event';
+@use 'node--event';
+@use 'event-card';
+@use 'homepage';
+@use 'header';
+@use 'forms';
+@use 'footer';
+@use 'vendor_dashboard';
+@use 'vendor-analytics';
+@use 'rsvp-form';
+@use 'ticket-form';
+@use 'ticket-type-panels';
+@use 'dashboard_empty';
+@use 'dashboard_stats';
+@use 'event-sidebar';
+@use 'buttons';
+@use 'components';
+@use 'boosted';
+@use 'admin-panel';
+@use 'dashboard_card';
+@use 'my-events';
+@use 'pages/my-profile';
+@use 'components/layout';
+@use 'card-actions';
+@use 'mel-auth';
+
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+/*// 4. Base styles:*/
+
+body,
+.main-content,
+.section,
+.page-wrapper {
+  background: #fef5ec !important;
+}
+
+.section,
+.hero-section,
+.featured-events-section,
+.event-list-section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .section,
+  .hero-section,
+  .featured-events-section,
+  .event-list-section {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+.event-list,
+.grid,
+.event-grid {
+  gap: 16px;
+  row-gap: 16px;
+  column-gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+body {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  background-color: vars.$color-bg-offwhite;
+  color: vars.$text-color-main;
+  line-height: 1.6;
+  font-size: vars.$font-size-body;
+  margin: 0;
+  padding: 0;
+}
+
+.category-filters a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+.filter-pill {
+  text-decoration: none;
+  // ... other styles
+}
+
+.my-custom-cart-form form {
+  padding: vars.$spacing-lg;
+  background: vars.$color-bg-offwhite;
+  // etc.
+}
+
+.my-custom-cart-form input[type="number"],
+.my-custom-cart-form select,
+.my-custom-cart-form .form-item {
+  // styling
+}
+
+

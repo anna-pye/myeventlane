@@ -1,0 +1,13 @@
+event_analytics_chart:
+  js:
+    js/event-analytics-chart.js: { type: external }
+  dependencies:
+    - core/drupalSettings
+    - core/drupal
+
+vendor_event_analytics_chart:
+  js:
+    js/vendor-event-analytics-chart.js: { type: external }
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

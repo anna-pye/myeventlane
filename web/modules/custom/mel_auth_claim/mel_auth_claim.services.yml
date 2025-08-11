@@ -1,0 +1,19 @@
+services:
+  logger.channel.mel_auth_claim:
+    parent: logger.channel_base
+    arguments: ['mel_auth_claim']
+
+  Drupal\mel_auth_claim\Service\MelAuthClaimService:
+    class: 'Drupal\mel_auth_claim\Service\MelAuthClaimService'
+    arguments:
+      - '@symfony_mailer.mailer'          # Using Symfony Mailer Lite
+      - '@config.factory'
+      - '@renderer'
+      - '@datetime.time'
+      - '@logger.channel.mel_auth_claim'
+      - '@keyvalue'
+    public: true
+
+  mel_auth_claim.service:
+    alias: 'Drupal\mel_auth_claim\Service\MelAuthClaimService'
+    public: true

@@ -1,0 +1,7 @@
+mel_auth_claim.redeem:
+  path: '/account/claim/{token}'
+  defaults:
+    _controller: '\Drupal\mel_auth_claim\Controller\ClaimController::redeem'
+    _title: 'Claim your tickets'
+  requirements:
+    _access: 'TRUE'

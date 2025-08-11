@@ -1,0 +1,6 @@
+commerce_stripe_webhook_event.overview:
+  title: 'Stripe webhook events'
+  parent: commerce_payment.configuration
+  description: 'View webhooks sent to your site by Stripe.'
+  route_name: commerce_stripe_webhook_event.overview
+  weight: 21

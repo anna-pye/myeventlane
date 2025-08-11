@@ -1,0 +1,507 @@
+<?php
+
+use Drupal\Core\Url;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariationInterface;
+
+/**
+ * ------------------------------------------------------------
+ * Helper: build a Social Auth link if the generic route exists
+ * and the provider appears configured (prevents route errors).
+ * ------------------------------------------------------------
+ */
+function _myeventlane_theme_build_social_link(string $network): ?array {
+  // 1) Ensure the generic Social Auth route exists.
+  try {
+    \Drupal::service('router.route_provider')->getRouteByName('social_auth.network.redirect');
+  }
+  catch (\Exception $e) {
+    return NULL;
+  }
+
+  // 2) Ensure the provider is configured (minimal check).
+  $config_map = [
+    'google' => 'social_auth_google.settings',
+    'facebook' => 'social_auth_facebook.settings',
+    'apple' => 'social_auth_apple.settings',
+  ];
+  if (!isset($config_map[$network])) {
+    return NULL;
+  }
+  $conf = \Drupal::config($config_map[$network]);
+  $has_id = (bool) trim((string) $conf->get('client_id'));
+  if (!$has_id) {
+    return NULL;
+  }
+
+  // 3) Build URL using the generic route.
+  try {
+    $url = Url::fromRoute('social_auth.network.redirect', ['network' => $network])->toString();
+  }
+  catch (\Exception $e) {
+    return NULL;
+  }
+
+  $labels = [
+    'google' => 'Continue with Google',
+    'facebook' => 'Continue with Facebook',
+    'apple' => 'Continue with Apple',
+  ];
+
+  return [
+    'id' => $network,
+    'label' => $labels[$network] ?? ucfirst($network),
+    'url' => $url,
+  ];
+}
+
+/**
+ * ------------------------------------------------------------
+ * hook_theme_suggestions_page_alter()
+ * Adds specific templates for auth routes:
+ *   page--user--login.html.twig
+ *   page--user--register.html.twig
+ *   page--user--password.html.twig
+ * ------------------------------------------------------------
+ */
+function myeventlane_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  $route = \Drupal::routeMatch()->getRouteName();
+  $map = [
+    'user.login'   => 'page__user__login',
+    'user.register'=> 'page__user__register',
+    'user.pass'    => 'page__user__password',
+  ];
+  if (isset($map[$route])) {
+    $suggestions[] = $map[$route];
+  }
+}
+
+/**
+ * ------------------------------------------------------------
+ * hook_preprocess_page()
+ * - Brand vars for auth pages (logo, headings)
+ * - Safe Social Auth links (only enabled providers)
+ * - Homepage category terms for your filter buttons
+ * ------------------------------------------------------------
+ */
+function myeventlane_theme_preprocess_page(array &$variables) {
+  $route = \Drupal::routeMatch()->getRouteName();
+  $current_path = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
+
+  // Brand asset for logo (served from theme assets).
+  // Brand asset for logo (served from theme assets).
+$theme_path = \Drupal::service('extension.list.theme')->getPath('myeventlane_theme');
+$variables['myeventlane_logo_src'] = base_path() . $theme_path . '/assets/branding/MyEventLane_Logo_Transparent.png';
+
+  // Auth page headings + toggle.
+  $variables['is_auth_page'] = in_array($route, ['user.login', 'user.register', 'user.pass'], TRUE);
+  if ($variables['is_auth_page']) {
+    switch ($route) {
+      case 'user.login':
+        $variables['auth_heading'] = 'Welcome back to MyEventLane';
+        $variables['auth_subheading'] = '';
+        break;
+
+      case 'user.register':
+        $variables['auth_heading'] = 'Join the lane!';
+        $variables['auth_subheading'] = 'Create your account to save tickets and manage your events.';
+        break;
+
+      case 'user.pass':
+        $variables['auth_heading'] = "Let's reset your password";
+        $variables['auth_subheading'] = 'Enter your email and we’ll send a reset link.';
+        break;
+    }
+
+    // Safe Social Auth links if social_auth exists and provider configured.
+    $variables['social_auth_links'] = [];
+    if (\Drupal::moduleHandler()->moduleExists('social_auth')) {
+      foreach (['google', 'facebook', 'apple'] as $net) {
+        if ($link = _myeventlane_theme_build_social_link($net)) {
+          $variables['social_auth_links'][] = $link;
+        }
+      }
+    }
+  }
+
+  // Homepage (front page or /homepage): build category terms for filter buttons.
+  if (\Drupal::service('path.matcher')->isFrontPage() || $alias === '/homepage') {
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('event_category');
+    $category_terms = [];
+    foreach ($terms as $term) {
+      $category_terms[] = [
+        'name' => $term->name,
+        'slug' => strtolower(str_replace(' ', '-', $term->name)),
+        'url'  => \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/' . $term->tid),
+      ];
+    }
+    $variables['event_category_terms'] = $category_terms;
+  }
+
+  if (!empty($variables['is_auth_page']) && isset($variables['attributes'])) {
+  $variables['attributes']['class'][] = 'is-auth-page';
+  }
+
+   $route = \Drupal::routeMatch()->getRouteName();
+
+  // Strip Social Auth blocks from auth pages (we'll place buttons ourselves later if needed).
+  if (in_array($route, ['user.login', 'user.register', 'user.pass'], TRUE) && !empty($variables['page']['content'])) {
+    foreach ($variables['page']['content'] as $k => $child) {
+      if (is_array($child) && (!empty($child['#plugin_id']) && str_contains($child['#plugin_id'], 'social_auth'))) {
+        unset($variables['page']['content'][$k]);
+      }
+      if (is_array($child) && !empty($child['#markup']) && str_contains(strip_tags((string) $child['#markup']), 'Continue with')) {
+        unset($variables['page']['content'][$k]);
+      }
+    }
+  }
+
+  // Logo path if not set elsewhere.
+  if (empty($variables['myeventlane_logo_src'])) {
+    $theme_path = \Drupal::service('extension.list.theme')->getPath('myeventlane_theme');
+    $variables['myeventlane_logo_src'] = base_path() . $theme_path . '/assets/MyEventLane_Logo_Transparent.png';
+  }
+
+}
+
+/**
+ * ------------------------------------------------------------
+ * My Profile page preprocess
+ * Makes $user, $orders, $rsvps available in page--my-profile.html.twig.
+ * ------------------------------------------------------------
+ */
+function myeventlane_theme_preprocess_page__my_profile(array &$variables): void {
+  $account = \Drupal::currentUser();
+  if (!$account->isAuthenticated()) {
+    // If this template ever renders for anon, fail safe.
+    $variables['user'] = NULL;
+    $variables['is_vendor'] = FALSE;
+    $variables['orders'] = [];
+    $variables['rsvps'] = [];
+    return;
+  }
+
+  /** @var \Drupal\user\Entity\User $user */
+  $user = \Drupal\user\Entity\User::load($account->id());
+  $variables['user'] = $user;
+
+  // Vendor logic.
+  $variables['is_vendor'] = $user ? in_array('vendor', $user->getRoles(), TRUE) : FALSE;
+
+  // Orders (Commerce).
+  $order_storage = \Drupal::entityTypeManager()->getStorage('commerce_order');
+  $order_ids = $order_storage->getQuery()
+    ->condition('uid', $account->id())
+    ->condition('state', ['completed', 'pending'], 'IN')
+    ->sort('created', 'DESC')
+    ->accessCheck(TRUE)
+    ->execute();
+  $variables['orders'] = $order_ids ? $order_storage->loadMultiple($order_ids) : [];
+
+  // RSVPs (custom table).
+  $connection = \Drupal::database();
+  $query = $connection->select('myeventlane_rsvp', 'r')
+    ->fields('r')
+    ->condition('uid', $account->id())
+    ->orderBy('created', 'DESC');
+  $result = $query->execute()->fetchAllAssoc('id', \PDO::FETCH_ASSOC);
+
+  $rsvps = [];
+  foreach ($result as $id => $row) {
+    // Default values to avoid notices.
+    $row += [
+      'event_title' => NULL,
+      'event_date' => NULL,
+      'event_venue' => NULL,
+      'event_address' => NULL,
+      'event_image_url' => NULL,
+    ];
+
+    if (!empty($row['event_nid']) && is_numeric($row['event_nid'])) {
+      /** @var \Drupal\node\NodeInterface|null $event */
+      $event = \Drupal\node\Entity\Node::load((int) $row['event_nid']);
+
+      if ($event instanceof \Drupal\node\NodeInterface && $event->isPublished()) {
+        $row['event'] = $event;
+        $row['event_title'] = $event->label();
+
+        // Date.
+        if ($event->hasField('field_start_date') && !$event->get('field_start_date')->isEmpty()) {
+          $row['event_date'] = $event->get('field_start_date')->value;
+        }
+
+        // Venue name/string.
+        if ($event->hasField('field_venue') && !$event->get('field_venue')->isEmpty()) {
+          $row['event_venue'] = $event->get('field_venue')->value;
+        }
+
+        // Address (address field).
+        if ($event->hasField('field_venue_address') && !$event->get('field_venue_address')->isEmpty()) {
+          $address = $event->get('field_venue_address')->first();
+          if ($address) {
+            $parts = array_filter([
+              $address->getAddressLine1(),
+              $address->getLocality(),
+              $address->getAdministrativeArea(),
+              $address->getPostalCode(),
+            ]);
+            $row['event_address'] = $parts ? implode(', ', $parts) : NULL;
+          }
+        }
+
+        // Image URL.
+        if ($event->hasField('field_image') && !$event->get('field_image')->isEmpty()) {
+          $image_file = $event->get('field_image')->entity;
+          if ($image_file) {
+            $row['event_image_url'] = \Drupal::service('file_url_generator')
+              ->generateAbsoluteString($image_file->getFileUri());
+          }
+        }
+      }
+    }
+
+    $rsvps[] = $row;
+  }
+  $variables['rsvps'] = $rsvps;
+
+
+}
+
+
+/**
+ * ------------------------------------------------------------
+ * hook_form_alter()
+ * - Strips any Social Auth widgets/blocks injected into auth forms
+ * - Adds brand classes/placeholders to inputs + primary CTA styling
+ * (Covers login/register/password; no need for a separate per-form alter.)
+ * ------------------------------------------------------------
+ */
+function myeventlane_theme_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $auth_forms = ['user_login_form', 'user_register_form', 'user_pass'];
+  if (!in_array($form_id, $auth_forms, TRUE)) {
+    return;
+  }
+
+  // Remove any Social Auth render arrays/libraries injected by other modules.
+  foreach ($form as $key => $child) {
+    if (is_array($child)) {
+      if (isset($child['#theme'])) {
+        $themes = (array) $child['#theme'];
+        if (in_array('social_auth_links', $themes) || in_array('social_auth_login', $themes)) {
+          unset($form[$key]);
+          continue;
+        }
+      }
+      if (isset($child['#attached']['library'])) {
+        foreach ($child['#attached']['library'] as $lib) {
+          if (strpos($lib, 'social_auth') === 0) {
+            unset($form[$key]);
+            break;
+          }
+        }
+      }
+    }
+  }
+  if (isset($form['#attached']['library'])) {
+    $form['#attached']['library'] = array_values(array_filter(
+      $form['#attached']['library'],
+      static fn($lib) => strpos($lib, 'social_auth') !== 0
+    ));
+  }
+
+  // Brand classes + placeholders.
+  $form['#attributes']['class'][] = 'mel-auth-form';
+
+  if (isset($form['actions']['submit'])) {
+    $form['actions']['submit']['#attributes']['class'][] = 'mel-btn';
+    $form['actions']['submit']['#attributes']['class'][] = 'mel-btn--primary';
+  }
+
+  // Remove any remaining social login elements at top of login form.
+  if (isset($form['social_login'])) {
+    unset($form['social_login']);
+  }
+  if (isset($form['social_auth'])) {
+    unset($form['social_auth']);
+  }
+  // Remove any render array children with 'social' in their key.
+  foreach (array_keys($form) as $key) {
+    if (stripos($key, 'social') !== FALSE) {
+      unset($form[$key]);
+    }
+  }
+
+
+  $fields = [
+    'name' => 'Email address',
+    'mail' => 'Email address',
+    'pass' => 'Password',
+    'current_pass' => 'Current password',
+    'pass1' => 'New password',
+    'pass2' => 'Confirm new password',
+  ];
+  foreach ($fields as $key => $placeholder) {
+    if (isset($form[$key])) {
+      $form[$key]['#attributes']['class'][] = 'mel-input';
+      if (empty($form[$key]['#attributes']['placeholder'])) {
+        $form[$key]['#attributes']['placeholder'] = $placeholder;
+      }
+    }
+  }
+}
+
+/**
+ * ------------------------------------------------------------
+ * Vendor event helper (unchanged)
+ * ------------------------------------------------------------
+ */
+function myeventlane_get_vendor_events(User $user) {
+  $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+  $nids = $query
+    ->condition('type', 'event')
+    ->condition('uid', $user->id())
+    ->condition('status', [0, 1], 'IN')
+    ->sort('created', 'DESC')
+    ->accessCheck(TRUE)
+    ->execute();
+
+  $nodes = Node::loadMultiple($nids);
+  $events = [];
+
+  foreach ($nodes as $node) {
+    $status = $node->isPublished() ? 'Published' : 'Pending';
+    $status_class = $node->isPublished() ? 'published' : 'pending';
+
+    $events[] = [
+      'title' => $node->label(),
+      'date' => $node->get('field_start_date')->date
+        ? date('j M Y, g:ia', strtotime($node->get('field_start_date')->value))
+        : 'No date',
+      'location' => $node->get('field_location')->value ?? 'TBA',
+      'status' => $status,
+      'status_class' => $status_class,
+      'edit_url' => $node->toUrl('edit-form')->toString(),
+      'view_url' => $node->toUrl()->toString(),
+    ];
+  }
+
+  return $events;
+}
+
+/**
+ * ------------------------------------------------------------
+ * Event edit form assets
+ * ------------------------------------------------------------
+ */
+function myeventlane_theme_form_node_event_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#attached']['library'][] = 'myeventlane_theme/event_form_toggle';
+}
+
+/**
+ * ------------------------------------------------------------
+ * hook_preprocess_node()
+ * - Exposes 'type' (rsvp/paid) on full event nodes
+ * - Adds ticket form stubs for paid events
+ * ------------------------------------------------------------
+ */
+function myeventlane_theme_preprocess_node(array &$variables) {
+  $node = $variables['node'] ?? NULL;
+
+  if ($node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'event' && ($variables['view_mode'] ?? NULL) === 'full') {
+
+    if ($node->hasField('field_ticket_type') && !$node->get('field_ticket_type')->isEmpty()) {
+      $variables['type'] = strtolower($node->get('field_ticket_type')->value);
+    }
+
+    if (
+      $node->hasField('field_ticket_type') &&
+      $node->field_ticket_type->value === 'paid' &&
+      $node->hasField('field_product_target') &&
+      !$node->get('field_product_target')->isEmpty()
+    ) {
+      $product = $node->get('field_product_target')->entity;
+      if ($product instanceof \Drupal\commerce_product\Entity\Product) {
+        $form = myeventlane_ticket_selector_render($product);
+        $variables['ticket_form'] = \Drupal::service('renderer')->render($form);
+
+        $variables['add_to_cart_form'] = \Drupal::entityTypeManager()
+          ->getViewBuilder('commerce_product')
+          ->view($product, 'add_to_cart_form');
+      }
+    }
+  }
+}
+
+
+/** Login form */
+function myeventlane_theme_form_user_login_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form['#attributes']['class'][] = 'mel-auth-form';
+  // Remove any social elements still injected into the form.
+  foreach (array_keys($form) as $key) {
+    if (stripos($key, 'social') !== FALSE) unset($form[$key]);
+  }
+}
+
+/** Password reset form */
+function myeventlane_theme_form_user_pass_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form['#attributes']['class'][] = 'mel-auth-form';
+  // Clean helper copy to one line.
+  if (isset($form['name']['#description'])) {
+    $form['name']['#description'] = 'Password reset instructions will be sent to your email.';
+  }
+}
+
+/** Register form */
+function myeventlane_theme_form_user_register_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form['#attributes']['class'][] = 'mel-auth-form';
+  $form['#attributes']['class'][] = 'mel-register-form';
+
+  // Remove social injections.
+  foreach (array_keys($form) as $key) {
+    if (stripos($key, 'social') !== FALSE) unset($form[$key]);
+  }
+
+  // Optional: move "forgot password" style links off the register form (none by default).
+  if (isset($form['actions']['submit']['#value'])) {
+    $form['actions']['submit']['#value'] = t('Create account');
+  }
+}
+
+
+/**
+ * Implements hook_mail().
+ */
+function myeventlane_auth_claim_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'magic_link':
+      $message['subject'] = $params['subject'] ?? 'Your MyEventLane sign‑in link';
+      $message['body'][]  = $params['message'] ?? '';
+      // If using HTML, set:
+      // $message['headers']['Content-Type'] = 'text/html; charset=UTF-8';
+      break;
+  }
+}
+
+
+/**
+ * Prevent fatal errors for RSVP Submission nodes (placeholder).
+ */
+function myeventlane_theme_preprocess_node__rsvp_submission(array &$variables) {
+  // Add custom logic if needed.
+}
+
+/**
+ * Ticket selector placeholder.
+ */
+function myeventlane_ticket_selector_render(Product $product) {
+  return [
+    '#markup' => '<div class="ticket-selector-placeholder">Ticket selector coming soon.</div>',
+    '#allowed_tags' => ['div'],
+  ];
+}

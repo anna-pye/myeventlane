@@ -1,0 +1,136 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Render\Markup;
+
+/** Build the logo HTML using the active theme path. */
+
+// function _myeventlane_auth_logo(): string {
+//   // Get the active theme machine name.
+//   $theme_name = \Drupal::theme()->getActiveTheme()->getName();
+
+//   // Resolve its file system path.
+//   $theme_path = \Drupal::service('extension.list.theme')->getPath($theme_name);
+
+//   // Build the logo URL.
+//   $logo_url = base_path() . $theme_path . '/assets/branding/MyEventLane_Logo_Transparent.png';
+
+//   // Return HTML markup for the logo.
+//   return '<div class="auth-logo">
+//             <img src="' . $logo_url . '" alt="MyEventLane logo" loading="lazy">
+//           </div>';
+// }
+
+/**
+ * Helper: build Social Auth login block if available.
+ */
+function _myeventlane_auth_social_block(): array {
+  // The Social Auth aggregate “Login” block plugin id is 'social_auth_login' (from social_api/social_auth).
+  if (!\Drupal::moduleHandler()->moduleExists('social_auth')) {
+    return [];
+  }
+  $block_manager = \Drupal::service('plugin.manager.block');
+  try {
+    $plugin = $block_manager->createInstance('social_auth_login', [
+      // You can pass settings here if needed; defaults will read enabled providers.
+    ]);
+    $build = $plugin->build();
+    if (!empty($build)) {
+      // Wrap with our own container so we can style consistently.
+      return [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['social-login']],
+        'inner' => $build,
+      ];
+    }
+  }
+  catch (\Throwable $e) {
+    // Fail silently; form still works without Social Auth.
+  }
+  return [];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for /user/login.
+ */
+// web/modules/custom/myeventlane_auth/myeventlane_auth.module
+function myeventlane_auth_form_user_login_form_alter(&$form, $form_state, $form_id) {
+  $form['#attached']['library'][] = 'myeventlane_theme/global';    
+
+  if (isset($form['actions']['submit'])) {
+    $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+  }
+
+  // Build wrappers.
+  $register = Url::fromRoute('user.register')->toString();
+  $prefix = [
+    '<main class="auth-wrapper" role="main" aria-labelledby="login-title">',
+    '<section class="auth-card" role="form" aria-describedby="login-desc">',
+    // _myeventlane_auth_logo(),
+    '<h1 id="login-title" class="auth-title">Welcome back</h1>',
+    '<p id="login-desc" class="auth-subtitle">Log in to manage events, RSVPs, and tickets.</p>',
+    '<div class="auth-form">',
+  ];
+  $suffix = [
+    '</div>', // .auth-form
+    '<p class="auth-footer">New here? <a href="' . $register . '">Create an account</a></p>',
+    '</section></main>',
+  ];
+
+  // Insert Social Auth buttons ABOVE the standard actions.
+  $form['myeventlane_auth_social'] = [
+    '#weight' => -10,
+  ] + _myeventlane_auth_social_block();
+
+  // Forgot password link row (near bottom).
+  $form['myeventlane_auth_forgot'] = [
+    '#type' => 'container',
+    '#weight' => 49,
+    '#attributes' => ['class' => ['auth-help-row']],
+    'link' => [
+      '#type' => 'link',
+      '#title' => t('Forgot password?'),
+      '#url' => Url::fromRoute('user.pass'),
+      '#attributes' => ['class' => ['auth-forgot-link']],
+    ],
+  ];
+
+  // Wrap the whole form.
+  $form['#prefix'] = implode('', $prefix) . ($form['#prefix'] ?? '');
+  $form['#suffix'] = ($form['#suffix'] ?? '') . implode('', $suffix);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for /user/register.
+ */
+function myeventlane_auth_form_user_register_form_alter(&$form, $form_state, $form_id) {
+  $form['#attached']['library'][] = 'myeventlane_theme/forms';     // same here
+
+  if (isset($form['actions']['submit'])) {
+    $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+  }
+
+  $login = Url::fromRoute('user.login')->toString();
+  $prefix = [
+    '<main class="auth-wrapper" role="main" aria-labelledby="register-title">',
+    '<section class="auth-card" role="form" aria-describedby="register-desc">',
+    // _myeventlane_auth_logo(),
+    '<h1 id="register-title" class="auth-title">Create your account</h1>',
+    '<p id="register-desc" class="auth-subtitle">Start hosting or grabbing tickets in seconds.</p>',
+    '<div class="auth-form">',
+  ];
+  $suffix = [
+    '</div>',
+    '<p class="auth-footer">Already have an account? <a href="' . $login . '">Log in</a></p>',
+    '</section></main>',
+  ];
+
+  // Show Social Auth on register too (nice conversion booster).
+  $form['myeventlane_auth_social'] = [
+    '#weight' => -10,
+  ] + _myeventlane_auth_social_block();
+
+  $form['#prefix'] = implode('', $prefix) . ($form['#prefix'] ?? '');
+  $form['#suffix'] = ($form['#suffix'] ?? '') . implode('', $suffix);
+}

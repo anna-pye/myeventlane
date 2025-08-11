@@ -1,0 +1,17 @@
+myeventlane_rsvp.export_csv:
+  path: '/event/{event}/rsvp-export'
+  defaults:
+    _controller: '\Drupal\myeventlane_rsvp\Controller\RSVPExportController::export'
+    _title: 'Export RSVPs'
+  requirements:
+    _permission: 'access content'
+    event: '\d+'
+
+myeventlane_rsvp.edit:
+  path: '/rsvp/edit/{rsvp_id}'
+  defaults:
+    _form: '\Drupal\myeventlane_rsvp\Form\RSVPEditForm'
+    _title: 'Edit RSVP'
+  requirements:
+    _permission: 'access content'
+    rsvp_id: '\d+'
