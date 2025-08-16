@@ -8,7 +8,9 @@ dependencies:
     - field.field.node.event.field_end_date
     - field.field.node.event.field_event
     - field.field.node.event.field_event_discription
+    - field.field.node.event.field_field_attendee_questions
     - field.field.node.event.field_image
+    - field.field.node.event.field_limit_one_rsvp
     - field.field.node.event.field_location
     - field.field.node.event.field_product_target
     - field.field.node.event.field_promo_expiry
@@ -23,6 +25,7 @@ dependencies:
   module:
     - address
     - datetime
+    - entity_reference_revisions
     - options
     - svg_image
     - user
@@ -70,6 +73,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 9
+    region: content
+  field_field_attendee_questions:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 12
     region: content
   field_image:
     type: image
@@ -135,6 +147,7 @@ content:
     weight: 10
     region: content
 hidden:
+  field_limit_one_rsvp: true
   field_location: true
   field_promo_expiry: true
   field_promoted: true

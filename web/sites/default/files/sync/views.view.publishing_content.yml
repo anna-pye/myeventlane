@@ -811,6 +811,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: node_field_data
     cache_metadata:
       max-age: 0
       contexts:

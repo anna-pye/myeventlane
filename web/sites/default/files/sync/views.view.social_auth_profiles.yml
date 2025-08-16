@@ -425,6 +425,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: social_auth_user
     cache_metadata:
       max-age: -1
       contexts:

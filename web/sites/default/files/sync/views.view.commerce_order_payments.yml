@@ -724,7 +724,6 @@ display:
           entity_type: commerce_payment
           entity_field: order_id
           plugin_id: entity_target_id
-          target_entity_type_id: commerce_payment
           default_action: empty
           exception:
             value: all
@@ -751,6 +750,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: commerce_payment
       filters: {  }
       style:
         type: table
@@ -868,6 +868,7 @@ display:
           plugin_id: commerce_payment_total_summary
           empty: false
       display_extenders: {  }
+      base_table: commerce_payment
     cache_metadata:
       max-age: -1
       contexts:

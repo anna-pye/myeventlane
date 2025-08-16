@@ -11,3 +11,5 @@ modules:
     none:
       sender: symfony_mailer_lite
       formatter: symfony_mailer_lite
+default_formatter: symfony_mailer_lite_php_mail
+default_sender: symfony_mailer_lite_php_mail

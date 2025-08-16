@@ -574,6 +574,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: redirect
     cache_metadata:
       max-age: 0
       contexts:

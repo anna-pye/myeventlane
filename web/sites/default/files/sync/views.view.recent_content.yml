@@ -347,6 +347,7 @@ display:
       link_display: custom_url
       link_url: /admin/content
       display_extenders: {  }
+      base_table: node_field_data
     cache_metadata:
       max-age: -1
       contexts:

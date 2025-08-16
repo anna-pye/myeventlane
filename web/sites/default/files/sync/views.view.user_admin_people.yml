@@ -877,6 +877,7 @@ display:
       display_comment: ''
       hide_attachment_summary: false
       display_extenders: {  }
+      base_table: users_field_data
     cache_metadata:
       max-age: 0
       contexts:

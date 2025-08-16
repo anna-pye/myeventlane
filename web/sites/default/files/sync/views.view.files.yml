@@ -789,6 +789,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: file_managed
     cache_metadata:
       max-age: -1
       contexts:

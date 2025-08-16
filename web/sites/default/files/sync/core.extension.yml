@@ -26,6 +26,7 @@ module:
   commerce_stripe: 0
   conditional_fields: 0
   config: 0
+  config_ignore: 0
   content_moderation: 0
   contextual: 0
   crop: 0
@@ -71,14 +72,19 @@ module:
   mailsystem: 0
   media: 0
   media_library: 0
+  mel_auth_claim: 0
   menu_link_attributes: 0
   menu_link_content: 0
   menu_ui: 0
   myeventlane_analytics: 0
+  myeventlane_auth: 0
   myeventlane_boost: 0
   myeventlane_content: 0
-  myeventlane_dashboard: 0
+  myeventlane_recommend: 0
   myeventlane_rsvp: 0
+  myeventlane_user: 0
+  myeventlane_vendor: 0
+  myeventlane_vendor_dashboard: 0
   mysql: 0
   navigation: 0
   node: 0
@@ -118,6 +124,7 @@ module:
   eca_form: 1
   pathauto: 1
   views: 10
+  paragraphs: 11
 theme:
   claro: 0
   gin: 0

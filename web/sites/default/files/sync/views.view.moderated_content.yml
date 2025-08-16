@@ -2,7 +2,10 @@ uuid: 7972ba4b-892c-4234-be3a-70a95332400f
 langcode: en
 status: true
 dependencies:
+  config:
+    - workflows.workflow.basic_editorial
   module:
+    - content_moderation
     - node
     - user
   enforced:
@@ -804,6 +807,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: content_moderation_state
     cache_metadata:
       max-age: -1
       contexts:

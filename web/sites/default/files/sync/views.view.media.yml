@@ -5,8 +5,8 @@ dependencies:
   config:
     - image.style.thumbnail
   module:
-    - image
     - media
+    - svg_image
     - user
 _core:
   default_config_hash: zwbF6kYhafeyYkQp4JM4qtykNGzfTn3ZXBTXzlVcUa8
@@ -875,6 +875,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: media_field_data
     cache_metadata:
       max-age: 0
       contexts:

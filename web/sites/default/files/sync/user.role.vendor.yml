@@ -11,10 +11,13 @@ dependencies:
     - commerce_price
     - commerce_product
     - commerce_store
+    - commerce_stripe
     - conditional_fields
+    - dashboard
     - file
     - node
     - profile
+    - system
 id: vendor
 label: Vendor
 weight: -7
@@ -22,7 +25,12 @@ is_admin: false
 permissions:
   - 'access checkout'
   - 'access commerce_store overview'
+  - 'access content'
+  - 'access user profiles'
   - 'administer commerce_checkout_flow'
+  - 'administer commerce_store'
+  - 'administer dashboard'
+  - 'administer profile'
   - 'change own username'
   - 'create commerce_product_attribute'
   - 'create default commerce_order'
@@ -37,6 +45,8 @@ permissions:
   - 'delete own ticket commerce_product'
   - 'edit conditional fields'
   - 'edit own event content'
+  - 'edit own vendor_store content'
+  - 'revert vendor_store revisions'
   - 'unlock orders'
   - 'update default commerce_order'
   - 'update own customer profile'
@@ -54,3 +64,4 @@ permissions:
   - 'view own profile'
   - 'view own unpublished commerce_product'
   - 'view own unpublished profile'
+  - 'view stripe dashboard links'

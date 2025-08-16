@@ -682,6 +682,7 @@ display:
       header: {  }
       footer: {  }
       display_extenders: {  }
+      base_table: watchdog
     cache_metadata:
       max-age: -1
       contexts:

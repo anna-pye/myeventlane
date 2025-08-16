@@ -1,18 +1,11 @@
 uuid: b41952d3-ad97-4709-bd01-70098e94ae06
-langcode: en
-status: true
-dependencies:
-  module:
-    - commerce_product
 id: commerce_product_variation.attribute_ticket_type
 field_name: attribute_ticket_type
 entity_type: commerce_product_variation
 type: entity_reference
 settings:
   target_type: commerce_product_attribute_value
-module: core
-locked: false
-cardinality: 1
+cardinality: -1
 translatable: false
 indexes: {  }
 persist_with_no_fields: false

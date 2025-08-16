@@ -252,6 +252,7 @@ display:
           bypass_access: false
       footer: {  }
       display_extenders: {  }
+      base_table: taxonomy_term_field_data
     cache_metadata:
       max-age: -1
       contexts:
