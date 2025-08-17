@@ -413,7 +413,7 @@ display:
           id: count
           table: file_usage
           field: count
-          relationship: fid
+          relationship: none
           group_type: sum
           admin_label: ''
           plugin_id: numeric
@@ -775,15 +775,7 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships:
-        fid:
-          id: fid
-          table: file_managed
-          field: fid
-          relationship: none
-          group_type: group
-          admin_label: 'File usage'
-          required: true
+      relationships: {  }
       group_by: true
       show_admin_links: true
       header: {  }
@@ -808,15 +800,7 @@ display:
       defaults:
         pager: true
         relationships: false
-      relationships:
-        fid:
-          id: fid
-          table: file_managed
-          field: fid
-          relationship: none
-          group_type: group
-          admin_label: 'File usage'
-          required: false
+      relationships: {  }
       display_description: ''
       display_extenders: {  }
       path: admin/content/files
@@ -1173,15 +1157,7 @@ display:
         arguments: false
         filters: false
         filter_groups: false
-      relationships:
-        fid:
-          id: fid
-          table: file_managed
-          field: fid
-          relationship: none
-          group_type: group
-          admin_label: 'File usage'
-          required: true
+      relationships: {  }
       group_by: false
       display_description: ''
       display_extenders: {  }

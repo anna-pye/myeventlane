@@ -22,6 +22,7 @@ module:
   commerce_payment: 0
   commerce_price: 0
   commerce_product: 0
+  commerce_stock: 0
   commerce_store: 0
   commerce_stripe: 0
   conditional_fields: 0
@@ -80,8 +81,10 @@ module:
   myeventlane_auth: 0
   myeventlane_boost: 0
   myeventlane_content: 0
+  myeventlane_profile: 0
   myeventlane_recommend: 0
   myeventlane_rsvp: 0
+  myeventlane_tickets: 0
   myeventlane_user: 0
   myeventlane_vendor: 0
   myeventlane_vendor_dashboard: 0
