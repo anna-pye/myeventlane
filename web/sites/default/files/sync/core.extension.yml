@@ -36,8 +36,6 @@ module:
   dblog: 0
   dynamic_page_cache: 0
   easy_breadcrumb: 0
-  easy_email: 0
-  easy_email_override: 0
   eca: 0
   eca_base: 0
   eca_config: 0
@@ -62,14 +60,11 @@ module:
   image: 0
   inline_entity_form: 0
   inline_form_errors: 0
-  jquery_ui: 0
-  jquery_ui_resizable: 0
   klaro: 0
   layout_builder: 0
   layout_discovery: 0
   link: 0
   linkit: 0
-  login_emailusername: 0
   mailsystem: 0
   media: 0
   media_library: 0
@@ -85,6 +80,7 @@ module:
   myeventlane_recommend: 0
   myeventlane_rsvp: 0
   myeventlane_tickets: 0
+  myeventlane_tools: 0
   myeventlane_user: 0
   myeventlane_vendor: 0
   myeventlane_vendor_dashboard: 0
@@ -97,10 +93,9 @@ module:
   path: 0
   path_alias: 0
   profile: 0
-  project_browser: 0
+
   redirect: 0
   responsive_image: 0
-  sam: 0
   scheduler: 0
   scheduler_content_moderation_integration: 0
   smtp: 0
@@ -133,6 +128,5 @@ theme:
   gin: 0
   olivero: 0
   easy_email_theme: 0
-  drupal_cms_olivero: 0
   stable9: 0
   myeventlane_theme: 0

@@ -1,0 +1,10 @@
+services:
+  myeventlane_recommend.affinity:
+    class: Drupal\myeventlane_recommend\Service\AffinityManager
+    arguments: ['@database', '@datetime.time']
+
+  myeventlane_recommend.order_placed_subscriber:
+    class: Drupal\myeventlane_recommend\EventSubscriber\OrderPlacedSubscriber
+    arguments: ['@myeventlane_recommend.affinity', '@entity_type.manager']
+    tags:
+      - { name: event_subscriber }

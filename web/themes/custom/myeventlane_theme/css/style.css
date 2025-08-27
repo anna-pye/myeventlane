@@ -527,7 +527,7 @@
 }
 .event-card .event-card__image img {
   width: 100%;
-  height: 124px;
+  height: 200px;
   object-fit: cover;
   border-radius: 16px 16px 0 0;
   background: #e8e8e8;
@@ -622,6 +622,182 @@
   transition: background 0.16s;
 }
 .event-card .event-card__cta .btn:hover, .event-card .event-card__cta .btn:focus {
+  background-color: rgb(251.746031746, 234.5, 196.753968254);
+}
+
+/* Page container spacing */
+.mel-rsvps-page {
+  margin-top: 24px;
+}
+
+/* Section titles (match brand: Nunito, bold, navy) */
+.mel-section-title {
+  font-family: "Nunito", sans-serif, sans-serif;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 700;
+  color: #293241;
+  margin: 0 0 16px 0;
+}
+
+/* Two-up centered grid for the RSVP cards */
+.mel-rsvp-grid.event-card-buffered {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center;
+  gap: 40px;
+  padding-bottom: 48px;
+  background-color: #fef5ec;
+}
+.mel-rsvp-grid.event-card-buffered .card-1, .mel-rsvp-grid.event-card-buffered .card-2, .mel-rsvp-grid.event-card-buffered .card-3, .mel-rsvp-grid.event-card-buffered .card-4, .mel-rsvp-grid.event-card-buffered .card-5, .mel-rsvp-grid.event-card-buffered .card-6 {
+  grid-column: auto !important;
+}
+.mel-rsvp-grid.event-card-buffered .event-card-wrapper {
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .mel-rsvp-grid.event-card-buffered {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: 16px;
+    padding-bottom: 40px;
+  }
+}
+
+/* Recommended grid wrapper — let the View fill with cards/teasers */
+.mel-reco {
+  margin-top: 24px;
+}
+
+.mel-reco-title {
+  margin-top: 40px;
+}
+
+/* If the View outputs node teasers, we still want a neat grid */
+.mel-reco-grid {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center;
+  gap: 40px;
+}
+@media (max-width: 768px) {
+  .mel-reco-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: 16px;
+  }
+}
+
+/* Ensure responsive image fills the header slot */
+.mel-rsvp-grid .event-card__image,
+.mel-rsvp-grid .event-card__image picture,
+.mel-rsvp-grid .event-card__image img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  background: #e8e8e8;
+}
+
+/* Links-as-buttons in CTAs */
+.event-card__cta .btn {
+  background-color: #f5c04c;
+  color: #293241;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 7px 20px;
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(41, 50, 65, 0.1);
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+  transition: background 0.16s;
+  margin-right: 8px;
+}
+.event-card__cta .btn:hover, .event-card__cta .btn:focus {
+  background-color: rgb(251.746031746, 234.5, 196.753968254);
+}
+
+/* Scope to the profile RSVP view only so we don't affect other grids */
+.mel-rsvp-grid {
+  /* center the grid block on the page */
+  max-width: 1160px; /* 2 * 520 + gap */
+  margin: 0 auto;
+  /* force exactly two columns on wide screens, centered */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center; /* centers the two fixed-width tracks */
+  gap: 40px;
+  padding-bottom: 48px;
+  background-color: #fef5ec;
+  /* kill any legacy span rules coming from _event-card.scss */
+  /* the card itself should not stretch beyond the track */
+}
+.mel-rsvp-grid .card-1, .mel-rsvp-grid .card-2, .mel-rsvp-grid .card-3, .mel-rsvp-grid .card-4, .mel-rsvp-grid .card-5, .mel-rsvp-grid .card-6 {
+  grid-column: auto !important;
+}
+.mel-rsvp-grid .event-card-wrapper {
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .mel-rsvp-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px; /* single card width */
+    gap: 16px;
+    padding-bottom: 40px;
+  }
+}
+
+/* Ensure images fill the header slot even when responsive_image emits <picture> */
+.mel-rsvp-grid .event-card__image,
+.mel-rsvp-grid .event-card__image picture,
+.mel-rsvp-grid .event-card__image img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  background: #e8e8e8;
+}
+
+.event-card__image {
+  min-height: 124px;
+  background: #e8e8e8;
+}
+
+/* Ensure the picture/img fills our slot even with responsive_image */
+.event-card__image picture,
+.event-card__image img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  background: #e8e8e8;
+}
+
+/* Links rendered as buttons */
+.event-card__cta .btn {
+  background-color: #f5c04c;
+  color: #293241;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 7px 20px;
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(41, 50, 65, 0.1);
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+  transition: background 0.16s;
+  margin-right: 8px;
+}
+
+.event-card__cta .btn:hover,
+.event-card__cta .btn:focus {
   background-color: rgb(251.746031746, 234.5, 196.753968254);
 }
 
@@ -1897,114 +2073,282 @@
   }
 }
 .event-main-layout {
-  display: flex;
-  align-items: flex-start;
+  display: grid;
   gap: 24px;
+  grid-template-columns: 1fr;
 }
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
   .event-main-layout {
-    flex-direction: column;
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
   }
 }
 
 .event-main-content {
-  flex: 2;
   min-width: 0;
+  display: grid;
+  gap: 24px;
 }
 
 .event-sidebar {
-  flex: 1;
-  background: #fef5ec;
-  border-radius: 16px;
-  padding: 24px 16px;
-  position: sticky;
-  z-index: 2;
+  display: grid;
+  gap: 16px;
 }
-@media (max-width: 768px) {
-  .event-sidebar {
-    position: static;
-    width: 95%;
-    margin-top: 16px;
-  }
-}
-.event-sidebar .rsvp-field {
-  max-width: 340px;
-  margin-bottom: 0.5em;
-}
-.event-sidebar .sidebar-card {
+.event-sidebar__panel {
   background: #fff;
+  border: 1px solid #f4f4f4;
   border-radius: 16px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
-  padding: 16px 12px 12px 12px;
-  margin-bottom: 16px;
-  text-align: left;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  display: grid;
+  gap: 12px;
 }
-.event-sidebar .sidebar-cta-title {
+.event-sidebar__panel h3 {
+  margin: 0 0 8px;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
+  color: #293241;
+}
+.event-sidebar__panel .subtext {
+  font-size: 14px;
+  color: #888;
+}
+.event-sidebar__panel .rsvp-field,
+.event-sidebar__panel .ticket-field,
+.event-sidebar__panel .donation-field {
+  display: grid;
+  gap: 8px;
   margin-bottom: 12px;
-  color: #f26d5b;
 }
-
-.event-sidebar--mobile {
-  display: none;
+.event-sidebar__panel .rsvp-field label,
+.event-sidebar__panel .ticket-field label,
+.event-sidebar__panel .donation-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #293241;
 }
-@media (max-width: 768px) {
-  .event-sidebar--mobile {
-    display: block;
-    margin-top: 16px;
-    margin-bottom: 16px;
+.event-sidebar__panel .rsvp-field input,
+.event-sidebar__panel .rsvp-field select,
+.event-sidebar__panel .ticket-field input,
+.event-sidebar__panel .ticket-field select,
+.event-sidebar__panel .donation-field input,
+.event-sidebar__panel .donation-field select {
+  width: 100%;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #f4f4f4;
+  padding: 8px 12px;
+  background: #fff;
+  color: #293241;
+}
+.event-sidebar__panel .rsvp-field input:focus-visible,
+.event-sidebar__panel .rsvp-field select:focus-visible,
+.event-sidebar__panel .ticket-field input:focus-visible,
+.event-sidebar__panel .ticket-field select:focus-visible,
+.event-sidebar__panel .donation-field input:focus-visible,
+.event-sidebar__panel .donation-field select:focus-visible {
+  outline: 2px solid #f26d5b;
+  outline-offset: 2px;
+}
+.event-sidebar__panel .rsvp-field .help,
+.event-sidebar__panel .ticket-field .help,
+.event-sidebar__panel .donation-field .help {
+  font-size: 14px;
+  color: #888;
+}
+.event-sidebar__panel .action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .event-sidebar--sticky {
+    position: sticky;
+    top: 40px;
   }
-}
-.event-sidebar--mobile .rsvp-field {
-  max-width: auto;
-  margin-bottom: 0.5em;
 }
 
 .event-sidebar--desktop {
-  display: block;
+  display: none;
 }
-@media (max-width: 375px) {
+@media (min-width: 376px) {
   .event-sidebar--desktop {
-    display: none;
+    display: block;
   }
 }
 
+/* =========================================
+   Base Button
+   ========================================= */
+.button, .btn-buy-ticket {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #f4f4f4;
+  color: #293241;
+  font-family: "Nunito", sans-serif, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: transform 0.06s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+.button:hover, .btn-buy-ticket:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+.button:active, .btn-buy-ticket:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.button:focus-visible, .btn-buy-ticket:focus-visible {
+  outline: 3px solid #f26d5b;
+  outline-offset: 2px;
+}
+.button:disabled, .btn-buy-ticket:disabled, .button.is-disabled, .is-disabled.btn-buy-ticket {
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+.button__icon {
+  width: 1.1em;
+  height: 1.1em;
+  display: inline-block;
+}
+
+/* =========================================
+   Variants
+   ========================================= */
+.button--primary, .btn-buy-ticket {
+  background: #f26d5b;
+  color: #fff;
+}
+.button--primary:hover, .btn-buy-ticket:hover {
+  background: rgb(239.7525423729, 83.7593220339, 62.6474576271);
+}
+.button--primary:active, .btn-buy-ticket:active {
+  background: rgb(237.5050847458, 58.5186440678, 34.2949152542);
+}
+.button--primary:disabled, .btn-buy-ticket:disabled, .button--primary.is-disabled, .is-disabled.btn-buy-ticket {
+  background: rgba(242, 109, 91, 0.6);
+  color: #fff;
+}
+
+.button--secondary {
+  background: #6e7ef2;
+  color: #fff;
+}
+.button--secondary:hover {
+  background: rgb(81.917721519, 101.0164556962, 239.482278481);
+}
+.button--secondary:active {
+  background: rgb(53.835443038, 76.0329113924, 236.964556962);
+}
+
+.button--outline {
+  background: transparent;
+  color: #f26d5b;
+  border: 2px solid #f26d5b;
+}
+.button--outline:hover {
+  background: rgba(242, 109, 91, 0.15);
+}
+.button--outline:active {
+  background: rgba(242, 109, 91, 0.25);
+}
+
+.button--ghost {
+  background: transparent;
+  color: #293241;
+}
+.button--ghost:hover {
+  background: #f4f4f4;
+}
+.button--ghost:active {
+  background: rgb(233.8, 233.8, 233.8);
+}
+
+.button--link {
+  background: transparent;
+  color: #6e7ef2;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.button--link:hover {
+  text-decoration: underline;
+}
+
+/* Sizes */
+.button--sm {
+  padding: 4px 12px;
+  font-size: 14px;
+}
+
+.button--lg {
+  padding: 12px 40px;
+  font-size: 18px;
+}
+
+.button--block {
+  width: 100%;
+}
+
+/* Mobile touch target */
+@media (max-width: 768px) {
+  .button, .btn-buy-ticket {
+    min-height: 44px;
+  } /* WCAG touch target */
+}
+/* =========================================
+   Your CTA: .btn-buy-ticket
+   (built on top of the button system)
+   ========================================= */
 .btn-buy-ticket {
   display: inline-block;
   width: 100%;
   max-width: 340px;
-  min-height: 48px;
+  min-height: 48px; /* ~48px */
   padding: 12px 24px;
   border: none;
-  border-radius: 999px;
-  background: #f26d5b;
-  color: #fff;
-  font-family: "Nunito", sans-serif, sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 1.3;
   text-align: center;
-  cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-  transition: background 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.06s;
 }
-.btn-buy-ticket:hover, .btn-buy-ticket:focus {
+.btn-buy-ticket:hover {
   background: rgb(239.7525423729, 83.7593220339, 62.6474576271);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  outline: 2px solid #f26d5b;
+  transform: translateY(-1px);
+}
+.btn-buy-ticket:focus-visible {
+  outline: 3px solid #f26d5b;
+  outline-offset: 2px;
 }
 .btn-buy-ticket:disabled, .btn-buy-ticket[aria-disabled=true] {
   background: #f4f4f4;
   color: #ccc;
   cursor: not-allowed;
   opacity: 0.7;
+  box-shadow: none;
 }
 
+/* Mobile tweaks for the CTA */
 @media (max-width: 768px) {
   .btn-buy-ticket {
-    font-size: font-size-h3;
-    min-height: 52px;
+    font-size: 22px; /* 22px, slightly larger mobile CTA */
+    min-height: 52px; /* ~52px */
     padding: 16px 16px;
     width: 100%;
   }
@@ -2121,6 +2465,71 @@
   border: 2px solid #f5c04c;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   animation: fadeInUp 0.4s ease;
+}
+
+.mel-boost-cta {
+  margin: 16px 0 24px;
+  padding: 12px 16px;
+  background: #fef5ec;
+  border-radius: 16px;
+}
+
+.mel-boost-status {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.mel-boost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  background: #f26d5b;
+  color: #fff;
+}
+
+.mel-boost-badge .spark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.9;
+}
+
+.mel-boost-expiry {
+  color: #293241;
+  font-weight: 600;
+}
+
+.mel-boost-actions .button {
+  text-decoration: none;
+}
+
+/* Minimal, brand-friendly “Boosted” badge styling */
+.mel-boost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  background: #f26d5b; /* Coral */
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.mel-boost-badge .spark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.9;
 }
 
 .admin-boosted-events h2 {
@@ -2345,6 +2754,36 @@
   color: white;
 }
 
+.mel-profile {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.mel-profile .mel-title {
+  font-family: "Nunito", sans-serif, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #293241;
+  margin: 0 0 12px;
+}
+.mel-profile .mel-profile__body {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+}
+.mel-profile .mel-empty {
+  text-align: center;
+  color: #888;
+  padding: 24px 0;
+}
+
+/* account menu highlight (optional) */
+.menu-item--my-profile > a {
+  border-radius: 12px;
+  padding: 6px 10px;
+}
+
 /* ---------- Base layout tweaks ---------- */
 .layout-wrapper {
   padding-inline: 24px;
@@ -2553,571 +2992,406 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+.card-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.1;
+}
+.card-actions .btn:focus-visible {
+  outline: 2px solid #f26d5b;
+  outline-offset: 2px;
+}
 .card-actions .btn-secondary {
   font-size: 14px;
   padding: 8px 12px;
   border: 1px solid #6e7ef2;
   color: #6e7ef2;
+  background: #fff;
   border-radius: 999px;
   text-decoration: none;
 }
-.card-actions .btn-secondary:hover {
+.card-actions .btn-secondary:hover, .card-actions .btn-secondary:focus-visible {
   background: #6e7ef2;
   color: #fff;
 }
-
-/* ==========================================================================
-   MyEventLane – Auth (clean version)
-   File: themes/custom/myeventlane_theme/scss/_mel-auth.scss
-   Compiles to: css/auth.css
-   Brand: coral #f26d5b, navy #293241, purple #6e7ef2, off-white #fef5ec, grey #f4f4f4
-   ========================================================================== */
-/* --- Variables ----------------------------------------------------------- */
-:root {
-  --mel-coral: #f26d5b;
-  --mel-navy: #293241;
-  --mel-purple:#6e7ef2;
-  --mel-off: #fef5ec;
-  --mel-grey: #f4f4f4;
-  --mel-text: #293241;
-}
-
-/* --- Page background for auth routes (used by page--user--*.html.twig) --- */
-.mel-auth-page {
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: radial-gradient(1200px 600px at 80% -10%, rgba(242, 109, 91, 0.12), transparent 60%), radial-gradient(900px 500px at -10% 120%, rgba(110, 126, 242, 0.1), transparent 55%), var(--mel-off);
-  font-family: Inter, "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  color: var(--mel-text);
-}
-
-/* --- Auth card ----------------------------------------------------------- */
-.mel-card {
-  width: min(520px, 100%);
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(41, 50, 65, 0.08), 0 2px 10px rgba(41, 50, 65, 0.05);
-  padding: clamp(22px, 4vw, 36px);
-  margin-inline: auto;
-}
-
-/* --- Optional small logo in card header (if present) --------------------- */
-.mel-logo {
-  display: block;
-  width: 140px;
-  height: auto;
-  margin: 0 auto 12px;
-}
-
-/* --- Titles (used by page templates) ------------------------------------- */
-.mel-auth-title {
-  font-size: clamp(24px, 3.4vw, 32px);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--mel-navy);
-  text-align: center;
-  margin: 4px 0 8px;
-}
-
-.mel-auth-subtitle {
-  font-size: 15px;
-  color: color-mix(in srgb, var(--mel-navy) 70%, white);
-  text-align: center;
-  margin: 0 0 14px;
-}
-
-/* ==========================================================================
-   FORM (this targets your exact markup)
-   <form class="user-login-form mel-auth-form mel-card"> … </form>
-   ========================================================================== */
-.mel-auth-form {
-  display: grid;
-  gap: 16px;
-  /* core/stable form-item wrappers */
-  /* Inputs (you already add .mel-input via hook_form_alter) */
-  /* Helper/description text under fields */
-  /* Error message inline */
-  /* Forgot password row injected by your alter */
-  /* Submit */
-  /* Bottom meta links (e.g., “Create an account”) if present outside form */
-}
-.mel-auth-form .form-item {
-  margin: 0 0 12px;
-}
-.mel-auth-form label {
+.card-actions .btn-quiet {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--mel-navy);
-  margin-bottom: 6px;
-  display: inline-block;
-}
-.mel-auth-form .mel-input,
-.mel-auth-form input[type=text],
-.mel-auth-form input[type=email],
-.mel-auth-form input[type=password] {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid #e6e6e6;
-  background: #fff;
-  border-radius: 12px;
-  font-size: 16px;
-  line-height: 1.4;
-  color: var(--mel-text);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-.mel-auth-form input::placeholder {
-  color: #888;
-}
-.mel-auth-form input:focus {
-  outline: 2px solid transparent;
-  border-color: var(--mel-coral);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mel-coral) 25%, transparent);
-}
-.mel-auth-form .description {
-  font-size: 14px;
-  color: color-mix(in srgb, var(--mel-navy) 70%, white);
-  margin-top: 6px;
-}
-.mel-auth-form .form-item--error-message,
-.mel-auth-form .error {
-  background: #fee4e2;
-  color: #912018;
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 14px;
-  margin-top: 8px;
-}
-.mel-auth-form .auth-help-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -4px;
-}
-.mel-auth-form .auth-help-row a.auth-forgot-link {
-  color: var(--mel-purple);
-  font-weight: 600;
-  text-decoration: none;
-}
-.mel-auth-form .auth-help-row a.auth-forgot-link:hover {
-  text-decoration: underline;
-}
-.mel-auth-form .form-actions {
-  margin-top: 4px;
-}
-.mel-auth-form .mel-btn,
-.mel-auth-form .mel-btn--primary,
-.mel-auth-form input[type=submit],
-.mel-auth-form .button {
-  appearance: none;
-  border: 0;
-  background: var(--mel-coral);
-  color: #fff;
-  font-weight: 700;
-  padding: 14px 18px;
+  padding: 8px 12px;
   border-radius: 999px;
-  cursor: pointer;
-  font-size: 16px;
-  min-height: 44px;
-  width: 100%;
-  box-shadow: 0 8px 20px rgba(242, 109, 91, 0.28);
-  transition: transform 0.06s ease, background 0.15s ease, box-shadow 0.15s ease;
-}
-.mel-auth-form .mel-btn:hover,
-.mel-auth-form input[type=submit]:hover {
-  background: #e8614d;
-}
-.mel-auth-form .mel-btn:active,
-.mel-auth-form input[type=submit]:active {
-  transform: translateY(1px);
-}
-.mel-auth-form .mel-btn:focus-visible,
-.mel-auth-form input[type=submit]:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--mel-coral) 40%, white);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--mel-coral) 30%, transparent);
-}
-.mel-auth-form + .mel-auth-meta {
-  margin-top: 12px;
-  font-size: 14px;
-  color: color-mix(in srgb, var(--mel-navy) 70%, white);
-}
-.mel-auth-form + .mel-auth-meta a {
-  color: var(--mel-purple);
-  font-weight: 600;
-  text-decoration: none;
-}
-.mel-auth-form + .mel-auth-meta a:hover {
-  text-decoration: underline;
-}
-
-/* ==========================================================================
-   Optional: hide any leftover social icon rows in the core form output.
-   (We already remove these in PHP, this is a safety net.)
-   ========================================================================== */
-.mel-auth-form .social-login,
-.mel-auth-form .social_auth,
-.mel-auth-form .social-auth,
-.mel-auth-form [class*=social-login],
-.mel-auth-form [class*=social_auth] {
-  display: none !important;
-}
-
-/* --- Global messages on auth pages (status/warn/error) ------------------- */
-.mel-auth-page .messages {
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-size: 14px;
-}
-
-.mel-auth-page .messages--status {
-  background: #ecfdf3;
-  color: #065f46;
-}
-
-.mel-auth-page .messages--warning {
-  background: #fff7e6;
-  color: #8a6116;
-}
-
-.mel-auth-page .messages--error {
-  background: #fee4e2;
-  color: #912018;
-}
-
-/* --- Mobile -------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .mel-card {
-    max-width: 92vw;
-    margin: 16px auto;
-  }
-  .mel-logo {
-    margin-top: 4px;
-  }
-}
-/* --- Reduced motion / forced colors ------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .mel-auth-form .mel-btn,
-  .mel-auth-form input[type=submit] {
-    transition: none;
-  }
-}
-@media (forced-colors: active) {
-  .mel-card,
-  .mel-auth-form .mel-input,
-  .mel-auth-form .mel-btn,
-  .mel-auth-form input[type=submit] {
-    border: 1px solid CanvasText;
-    box-shadow: none !important;
-  }
-}
-/* ==========================================================================
-   MyEventLane – Auth (clean version)
-   File: themes/custom/myeventlane_theme/scss/_mel-auth.scss
-   Compiles to: css/auth.css
-   Brand: coral #f26d5b, navy #293241, purple #6e7ef2, off-white #fef5ec, grey #f4f4f4
-   ========================================================================== */
-/* --- Variables ----------------------------------------------------------- */
-:root {
-  --mel-coral: #f26d5b;
-  --mel-navy: #293241;
-  --mel-purple:#6e7ef2;
-  --mel-off: #fef5ec;
-  --mel-grey: #f4f4f4;
-  --mel-text: #293241;
-}
-
-/* --- Page background for auth routes (used by page--user--*.html.twig) --- */
-.mel-auth-page {
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: radial-gradient(1200px 600px at 80% -10%, rgba(242, 109, 91, 0.12), transparent 60%), radial-gradient(900px 500px at -10% 120%, rgba(110, 126, 242, 0.1), transparent 55%), var(--mel-off);
-  font-family: Inter, "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  color: var(--mel-text);
-}
-
-/* --- Auth card ----------------------------------------------------------- */
-.mel-card {
-  width: min(520px, 100%);
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(41, 50, 65, 0.08), 0 2px 10px rgba(41, 50, 65, 0.05);
-  padding: clamp(22px, 4vw, 36px);
-  margin-inline: auto;
-}
-
-/* --- Optional small logo in card header (if present) --------------------- */
-.mel-logo {
-  display: block;
-  width: 140px;
-  height: auto;
-  margin: 0 auto 12px;
-}
-
-/* --- Titles (used by page templates) ------------------------------------- */
-.mel-auth-title {
-  font-size: clamp(24px, 3.4vw, 32px);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--mel-navy);
-  text-align: center;
-  margin: 4px 0 8px;
-}
-
-.mel-auth-subtitle {
-  font-size: 15px;
-  color: color-mix(in srgb, var(--mel-navy) 70%, white);
-  text-align: center;
-  margin: 0 0 14px;
-}
-
-/* ==========================================================================
-   FORM (this targets your exact markup)
-   <form class="user-login-form mel-auth-form mel-card"> … </form>
-   ========================================================================== */
-.mel-auth-form {
-  display: grid;
-  gap: 16px;
-  /* core/stable form-item wrappers */
-  /* Inputs (you already add .mel-input via hook_form_alter) */
-  /* Helper/description text under fields */
-  /* Error message inline */
-  /* Forgot password row injected by your alter */
-  /* Submit */
-  /* Bottom meta links (e.g., “Create an account”) if present outside form */
-}
-.mel-auth-form .form-item {
-  margin: 0 0 12px;
-}
-.mel-auth-form label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--mel-navy);
-  margin-bottom: 6px;
-  display: inline-block;
-}
-.mel-auth-form .mel-input,
-.mel-auth-form input[type=text],
-.mel-auth-form input[type=email],
-.mel-auth-form input[type=password] {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid #e6e6e6;
-  background: #fff;
-  border-radius: 12px;
-  font-size: 16px;
-  line-height: 1.4;
-  color: var(--mel-text);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-.mel-auth-form input::placeholder {
-  color: #888;
-}
-.mel-auth-form input:focus {
-  outline: 2px solid transparent;
-  border-color: var(--mel-coral);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mel-coral) 25%, transparent);
-}
-.mel-auth-form .description {
-  font-size: 14px;
-  color: color-mix(in srgb, var(--mel-navy) 70%, white);
-  margin-top: 6px;
-}
-.mel-auth-form .form-item--error-message,
-.mel-auth-form .error {
-  background: #fee4e2;
-  color: #912018;
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 14px;
-  margin-top: 8px;
-}
-.mel-auth-form .auth-help-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -4px;
-}
-.mel-auth-form .auth-help-row a.auth-forgot-link {
-  color: var(--mel-purple);
-  font-weight: 600;
-  text-decoration: none;
-}
-.mel-auth-form .auth-help-row a.auth-forgot-link:hover {
-  text-decoration: underline;
-}
-.mel-auth-form .form-actions {
-  margin-top: 4px;
-}
-.mel-auth-form .mel-btn,
-.mel-auth-form .mel-btn--primary,
-.mel-auth-form input[type=submit],
-.mel-auth-form .button {
-  appearance: none;
-  border: 0;
-  background: var(--mel-coral);
-  color: #fff;
-  font-weight: 700;
-  padding: 14px 18px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 16px;
-  min-height: 44px;
-  width: 100%;
-  box-shadow: 0 8px 20px rgba(242, 109, 91, 0.28);
-  transition: transform 0.06s ease, background 0.15s ease, box-shadow 0.15s ease;
-}
-.mel-auth-form .mel-btn:hover,
-.mel-auth-form input[type=submit]:hover {
-  background: #e8614d;
-}
-.mel-auth-form .mel-btn:active,
-.mel-auth-form input[type=submit]:active {
-  transform: translateY(1px);
-}
-.mel-auth-form .mel-btn:focus-visible,
-.mel-auth-form input[type=submit]:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--mel-coral) 40%, white);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--mel-coral) 30%, transparent);
-}
-.mel-auth-form + .mel-auth-meta {
-  margin-top: 12px;
-  font-size: 14px;
-  color: color-mix(in srgb, var(--mel-navy) 70%, white);
-}
-.mel-auth-form + .mel-auth-meta a {
-  color: var(--mel-purple);
-  font-weight: 600;
-  text-decoration: none;
-}
-.mel-auth-form + .mel-auth-meta a:hover {
-  text-decoration: underline;
-}
-
-/* ==========================================================================
-   Optional: hide any leftover social icon rows in the core form output.
-   (We already remove these in PHP, this is a safety net.)
-   ========================================================================== */
-.mel-auth-form .social-login,
-.mel-auth-form .social_auth,
-.mel-auth-form .social-auth,
-.mel-auth-form [class*=social-login],
-.mel-auth-form [class*=social_auth] {
-  display: none !important;
-}
-
-/* --- Global messages on auth pages (status/warn/error) ------------------- */
-.mel-auth-page .messages {
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-size: 14px;
-}
-
-.mel-auth-page .messages--status {
-  background: #ecfdf3;
-  color: #065f46;
-}
-
-.mel-auth-page .messages--warning {
-  background: #fff7e6;
-  color: #8a6116;
-}
-
-.mel-auth-page .messages--error {
-  background: #fee4e2;
-  color: #912018;
-}
-
-/* One card only: page template wraps everything */
-.user-login-form.mel-auth-form {
   background: transparent;
-  box-shadow: none;
-  padding: 0;
+  border: 1px solid #f4f4f4;
+  color: #293241;
+}
+.card-actions .btn-quiet:hover, .card-actions .btn-quiet:focus-visible {
+  background: #fef5ec;
 }
 
-/* Reduce label weight; hide verbose helper text for a cleaner look */
-.mel-auth-form label {
-  font-size: 13px;
-  color: color-mix(in srgb, var(--mel-navy) 60%, white);
-  font-weight: 600;
-}
-
-.mel-auth-form .description {
-  display: none;
-}
-
-/* Inputs */
-.mel-auth-form input[type=text],
-.mel-auth-form input[type=email],
-.mel-auth-form input[type=password] {
-  padding: 14px 16px;
-  border: 1.5px solid #e6e6e6;
-  border-radius: 12px;
-}
-
-/* Submit */
-.mel-auth-form .form-actions {
-  margin-top: 6px;
-}
-
-.mel-auth-form .form-actions input[type=submit] {
+/* ==========================================================================
+   MyEventLane — Auth (merged & tokenised)
+   File:   scss/_mel-auth.scss
+   Build:  css/auth.css
+   Uses:   scss/_variables.scss
+   ========================================================================== */
+/* --- Helpers ------------------------------------------------------------- */
+.mel-social a, .mel-form .form-actions .button,
+.mel-form .form-actions .button--primary,
+.mel-form input[type=submit],
+.mel-form .mel-btn,
+.mel-form .mel-btn--primary,
+.mel-auth-form .form-actions .button,
+.mel-auth-form .form-actions .button--primary,
+.mel-auth-form input[type=submit],
+.mel-auth-form .mel-btn,
+.mel-auth-form .mel-btn--primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  min-height: 44px; /* mobile tap target */
+  border: 0;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-/* Nuke any stray social rows in content just in case */
-.mel-auth-page .block-social-auth,
-.mel-auth-page [class*=social-auth],
-.mel-auth-page [class*="social login"],
-.mel-auth-page [href*="Continue with"] {
-  display: none !important;
+/* ==========================================================================
+   PAGE WRAPPER (use either .mel-auth OR .mel-auth-page)
+   ========================================================================== */
+.mel-auth,
+.mel-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 80% -10%, rgba(242, 109, 91, 0.12), transparent 60%), radial-gradient(900px 500px at -10% 120%, rgba(110, 126, 242, 0.1), transparent 55%), #fef5ec;
+  font-family: "Nunito", sans-serif, sans-serif;
+  color: #293241;
 }
 
-/* --- Mobile -------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .mel-card {
-    max-width: 92vw;
-    margin: 16px auto;
-  }
-  .mel-logo {
-    margin-top: 4px;
-  }
+/* ==========================================================================
+   AUTH CARD
+   ========================================================================== */
+.mel-card {
+  background: #fff;
+  border: 1px solid #f4f4f4;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 40px 24px;
+  margin-inline: auto;
+  /* register/forgot variants */
 }
-/* --- Reduced motion / forced colors ------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .mel-auth-form .mel-btn,
-  .mel-auth-form input[type=submit] {
-    transition: none;
-  }
-}
-@media (forced-colors: active) {
-  .mel-card,
-  .mel-auth-form .mel-input,
-  .mel-auth-form .mel-btn,
-  .mel-auth-form input[type=submit] {
-    border: 1px solid CanvasText;
-    box-shadow: none !important;
-  }
-}
-/* Wider card option for register / forgot pages */
 .mel-card--wide {
   width: min(760px, 100%);
 }
 
-/* Reset Password tweaks */
-.page-user-password .mel-auth-form .description {
-  margin-top: 6px;
+/* Header block (tiny logo + titles) */
+.mel-head {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.mel-head img .mel-logo {
+  width: 10em; /* min size from guide */
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}
+.mel-head .mel-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #293241;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+.mel-head .mel-sub {
+  font-size: 16px;
+  color: #888;
+  margin: 0;
 }
 
-.page-user-password .mel-auth-form .form-actions {
-  margin-top: 10px;
+/* ==========================================================================
+   FORM AREA (scoped so it can't bleed)
+   ========================================================================== */
+.mel-form,
+.mel-auth-form { /* support either wrapper */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Labels */
+  /* Inputs */
+  /* Helper / description */
+  /* Inline errors */
+  /* Forgot password row (optional) */
+  /* Submit (Drupal core: .button / .button--primary / input[type=submit]) */
+}
+.mel-form label,
+.mel-auth-form label {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #293241;
+  margin-bottom: 4px;
+}
+.mel-form input[type=text],
+.mel-form input[type=email],
+.mel-form input[type=password],
+.mel-form input[type=search],
+.mel-form textarea,
+.mel-form select,
+.mel-auth-form input[type=text],
+.mel-auth-form input[type=email],
+.mel-auth-form input[type=password],
+.mel-auth-form input[type=search],
+.mel-auth-form textarea,
+.mel-auth-form select {
+  width: 100%;
+  padding: 16px 24px;
+  border: 1px solid #f4f4f4;
+  border-radius: 12px;
+  font-size: 16px;
+  color: #293241;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.mel-form input[type=text]::placeholder,
+.mel-form input[type=email]::placeholder,
+.mel-form input[type=password]::placeholder,
+.mel-form input[type=search]::placeholder,
+.mel-form textarea::placeholder,
+.mel-form select::placeholder,
+.mel-auth-form input[type=text]::placeholder,
+.mel-auth-form input[type=email]::placeholder,
+.mel-auth-form input[type=password]::placeholder,
+.mel-auth-form input[type=search]::placeholder,
+.mel-auth-form textarea::placeholder,
+.mel-auth-form select::placeholder {
+  color: #888;
+}
+.mel-form input[type=text]:focus,
+.mel-form input[type=email]:focus,
+.mel-form input[type=password]:focus,
+.mel-form input[type=search]:focus,
+.mel-form textarea:focus,
+.mel-form select:focus,
+.mel-auth-form input[type=text]:focus,
+.mel-auth-form input[type=email]:focus,
+.mel-auth-form input[type=password]:focus,
+.mel-auth-form input[type=search]:focus,
+.mel-auth-form textarea:focus,
+.mel-auth-form select:focus {
+  outline: 2px solid transparent;
+  border-color: #f26d5b;
+  box-shadow: 0 0 0 3px rgba(242, 109, 91, 0.25);
+}
+.mel-form .description,
+.mel-auth-form .description {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+}
+.mel-form .form-item--error-message,
+.mel-form .error,
+.mel-auth-form .form-item--error-message,
+.mel-auth-form .error {
+  background: #fee4e2;
+  color: #912018;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-top: 8px;
+}
+.mel-form .auth-help-row,
+.mel-auth-form .auth-help-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+}
+.mel-form .auth-help-row a.auth-forgot-link,
+.mel-auth-form .auth-help-row a.auth-forgot-link {
+  color: #6e7ef2;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mel-form .auth-help-row a.auth-forgot-link:hover,
+.mel-auth-form .auth-help-row a.auth-forgot-link:hover {
+  text-decoration: underline;
+}
+.mel-form .form-actions .button,
+.mel-form .form-actions .button--primary,
+.mel-form input[type=submit],
+.mel-form .mel-btn,
+.mel-form .mel-btn--primary,
+.mel-auth-form .form-actions .button,
+.mel-auth-form .form-actions .button--primary,
+.mel-auth-form input[type=submit],
+.mel-auth-form .mel-btn,
+.mel-auth-form .mel-btn--primary {
+  background: #f26d5b;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(242, 109, 91, 0.28);
+}
+.mel-form .form-actions .button:hover,
+.mel-form .form-actions .button--primary:hover,
+.mel-form input[type=submit]:hover,
+.mel-form .mel-btn:hover,
+.mel-form .mel-btn--primary:hover,
+.mel-auth-form .form-actions .button:hover,
+.mel-auth-form .form-actions .button--primary:hover,
+.mel-auth-form input[type=submit]:hover,
+.mel-auth-form .mel-btn:hover,
+.mel-auth-form .mel-btn--primary:hover {
+  background: rgb(239.3779661017, 79.5525423729, 57.9220338983);
+}
+.mel-form .form-actions .button:active,
+.mel-form .form-actions .button--primary:active,
+.mel-form input[type=submit]:active,
+.mel-form .mel-btn:active,
+.mel-form .mel-btn--primary:active,
+.mel-auth-form .form-actions .button:active,
+.mel-auth-form .form-actions .button--primary:active,
+.mel-auth-form input[type=submit]:active,
+.mel-auth-form .mel-btn:active,
+.mel-auth-form .mel-btn--primary:active {
+  transform: translateY(1px);
+}
+.mel-form .form-actions .button:focus-visible,
+.mel-form .form-actions .button--primary:focus-visible,
+.mel-form input[type=submit]:focus-visible,
+.mel-form .mel-btn:focus-visible,
+.mel-form .mel-btn--primary:focus-visible,
+.mel-auth-form .form-actions .button:focus-visible,
+.mel-auth-form .form-actions .button--primary:focus-visible,
+.mel-auth-form input[type=submit]:focus-visible,
+.mel-auth-form .mel-btn:focus-visible,
+.mel-auth-form .mel-btn--primary:focus-visible {
+  outline: 3px solid rgba(242, 109, 91, 0.45);
+  outline-offset: 2px;
 }
 
-/* Register: field groups & paragraphs UI */
+/* ==========================================================================
+   DIVIDER + SOCIAL BUTTONS (dynamic buttons in Twig)
+   ========================================================================== */
+.mel-or {
+  position: relative;
+  text-align: center;
+  margin: 24px 0 12px;
+  color: #888;
+  font-size: 14px;
+}
+.mel-or::before, .mel-or::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  background: #f4f4f4;
+}
+.mel-or::before {
+  left: 0;
+}
+.mel-or::after {
+  right: 0;
+}
+.mel-or > span {
+  background: #fff;
+  padding: 0 12px;
+  border-radius: 999px;
+}
+
+.mel-social {
+  display: grid;
+  gap: 8px;
+}
+.mel-social a {
+  width: 100%;
+  background: #fff;
+  color: #293241;
+  text-decoration: none;
+  border: 1px solid #f4f4f4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.mel-social a:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+.mel-social a:active {
+  transform: translateY(1px);
+}
+.mel-social a:focus-visible {
+  outline: 3px solid rgba(242, 109, 91, 0.45);
+  outline-offset: 2px;
+}
+.mel-social a.apple {
+  background: #000;
+  color: #fff;
+  border-color: transparent;
+}
+.mel-social a.facebook {
+  border-color: #6e7ef2;
+}
+.mel-social a.google {
+  border-color: #f26d5b;
+}
+
+/* Signup row under the card */
+.mel-signup {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #888;
+}
+.mel-signup a {
+  color: #f26d5b;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mel-signup a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   MESSAGES INSIDE AUTH PAGES
+   ========================================================================== */
+.mel-auth .messages,
+.mel-auth-page .messages {
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.mel-auth .messages--status,
+.mel-auth-page .messages--status {
+  background: #ecfdf3;
+  color: #065f46;
+}
+
+.mel-auth .messages--warning,
+.mel-auth-page .messages--warning {
+  background: #fff7e6;
+  color: #8a6116;
+}
+
+.mel-auth .messages--error,
+.mel-auth-page .messages--error {
+  background: #fee4e2;
+  color: #912018;
+}
+
+/* ==========================================================================
+   REGISTER / WIDE CARD POLISH (optional selectors from previous file)
+   ========================================================================== */
 .mel-register .form-item,
 .mel-register-form .form-item {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .mel-register .form-wrapper,
@@ -3127,45 +3401,15 @@
   border: 1px solid #eee;
   border-radius: 12px;
   padding: 16px;
-  margin: 14px 0;
+  margin: 12px 0;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
 }
 
-/* Fieldset legends */
 .mel-register fieldset > legend span,
 .mel-register .fieldset-legend {
   font-weight: 700;
-  color: var(--mel-navy);
+  color: #293241;
   font-size: 16px;
-}
-
-/* Paragraphs “Vendor Profile” subform polish */
-.mel-register .paragraphs-subform > .fieldset-wrapper {
-  padding-top: 6px;
-}
-
-.mel-register .paragraphs-actions,
-.mel-register .paragraph-type-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mel-register .paragraphs-dropdown,
-.mel-register .paragraph-type-title {
-  font-weight: 600;
-}
-
-/* “Remove” button alignment to the right edge of the group */
-.mel-register .paragraphs-actions .button--danger,
-.mel-register .paragraphs-actions .button.button--danger {
-  margin-left: auto;
-  border-radius: 999px;
-  background: var(--mel-coral);
-  border: 0;
-  color: #fff;
-  padding: 8px 12px;
-  box-shadow: 0 4px 12px rgba(242, 109, 91, 0.2);
 }
 
 /* Inputs stay full width on the wide card */
@@ -3175,18 +3419,13 @@
 .mel-register .mel-auth-form textarea,
 .mel-register .mel-auth-form select {
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px 24px;
   border: 1.5px solid #e6e6e6;
   border-radius: 12px;
   background: #fff;
 }
 
-/* Reduce cluttered helper text on register. Keep labels for a11y. */
-.mel-register .description {
-  display: none;
-}
-
-/* Submit button spacing for wide card */
+/* Submit spacing for wide card */
 .mel-register .form-actions {
   margin-top: 16px;
 }
@@ -3195,11 +3434,1271 @@
   width: 100%;
 }
 
-/* Safety: nuke stray social rows anywhere on these pages */
-.is-auth-page .block-social-auth,
-.is-auth-page [class*=social-auth],
-.is-auth-page [class*="social login"] {
+/* ==========================================================================
+   SAFETY: hide any legacy/social rows rendered by modules
+   ========================================================================== */
+.mel-auth-form .social-login,
+.mel-auth-form .social_auth,
+.mel-auth-form .social-auth,
+.mel-auth-form [class*=social-login],
+.mel-auth-form [class*=social_auth] {
   display: none !important;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY / MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 768px) {
+  .mel-auth, .mel-auth-page {
+    padding: 16px;
+  }
+  .mel-card {
+    padding: 24px 16px;
+    max-width: 92vw;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mel-social a,
+  .mel-form .button,
+  .mel-form .button--primary,
+  .mel-form input[type=submit] {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .mel-card,
+  .mel-form input,
+  .mel-form .button,
+  .mel-form .button--primary,
+  .mel-form input[type=submit] {
+    border: 1px solid CanvasText;
+    box-shadow: none !important;
+  }
+}
+/* themes/custom/myeventlane_theme/scss/_login.scss */
+.mel-auth {
+  background: #fef5ec;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  /* Form area (scoped so it can't bleed) */
+  /* Optional: “or” divider + social buttons (still scoped) */
+}
+.mel-auth .mel-card {
+  width: 100%;
+  max-width: 560px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 40px 24px;
+  border: 1px solid #f4f4f4;
+}
+.mel-auth .mel-head {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.mel-auth .mel-head img {
+  height: 48px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.mel-auth .mel-head .mel-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #293241;
+  margin: 0 0 4px;
+}
+.mel-auth .mel-head .mel-sub {
+  font-size: 16px;
+  color: #888;
+  margin: 0;
+}
+.mel-auth .mel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Primary submit */
+}
+.mel-auth .mel-form label {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #293241;
+  margin-bottom: 4px;
+}
+.mel-auth .mel-form input[type=text],
+.mel-auth .mel-form input[type=email],
+.mel-auth .mel-form input[type=password] {
+  width: 100%;
+  padding: 16px 24px;
+  border: 1px solid #f4f4f4;
+  border-radius: 12px;
+  font-size: 16px;
+  color: #293241;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.mel-auth .mel-form input[type=text]::placeholder,
+.mel-auth .mel-form input[type=email]::placeholder,
+.mel-auth .mel-form input[type=password]::placeholder {
+  color: #888;
+}
+.mel-auth .mel-form input[type=text]:focus,
+.mel-auth .mel-form input[type=email]:focus,
+.mel-auth .mel-form input[type=password]:focus {
+  outline: 2px solid transparent;
+  border-color: #f26d5b;
+  box-shadow: 0 0 0 3px rgba(242, 109, 91, 0.25);
+}
+.mel-auth .mel-form .form-actions .button,
+.mel-auth .mel-form .form-actions .button--primary,
+.mel-auth .mel-form input[type=submit] {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  background: #f26d5b;
+  color: #fff;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 44px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(242, 109, 91, 0.28);
+  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.mel-auth .mel-form .form-actions .button:hover,
+.mel-auth .mel-form .form-actions .button--primary:hover,
+.mel-auth .mel-form input[type=submit]:hover {
+  background: rgb(239.3779661017, 79.5525423729, 57.9220338983);
+}
+.mel-auth .mel-form .form-actions .button:active,
+.mel-auth .mel-form .form-actions .button--primary:active,
+.mel-auth .mel-form input[type=submit]:active {
+  transform: translateY(1px);
+}
+.mel-auth .mel-form .form-actions .button:focus-visible,
+.mel-auth .mel-form .form-actions .button--primary:focus-visible,
+.mel-auth .mel-form input[type=submit]:focus-visible {
+  outline: 3px solid rgba(242, 109, 91, 0.45);
+  outline-offset: 2px;
+}
+.mel-auth .mel-or {
+  position: relative;
+  text-align: center;
+  margin: 24px 0 12px;
+  color: #888;
+  font-size: 14px;
+}
+.mel-auth .mel-or::before, .mel-auth .mel-or::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  background: #f4f4f4;
+}
+.mel-auth .mel-or::before {
+  left: 0;
+}
+.mel-auth .mel-or::after {
+  right: 0;
+}
+.mel-auth .mel-or > span {
+  background: #fff;
+  padding: 0 12px;
+}
+.mel-auth .mel-social {
+  display: grid;
+  gap: 8px;
+}
+.mel-auth .mel-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: 1px solid #f4f4f4;
+  color: #293241;
+  background: #fff;
+  transition: box-shadow 0.15s ease, transform 0.06s ease;
+}
+.mel-auth .mel-social a:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+.mel-auth .mel-social a:active {
+  transform: translateY(1px);
+}
+.mel-auth .mel-social a:focus-visible {
+  outline: 3px solid rgba(242, 109, 91, 0.45);
+  outline-offset: 2px;
+}
+.mel-auth .mel-social a.apple {
+  background: #000;
+  color: #fff;
+  border-color: transparent;
+}
+.mel-auth .mel-social a.facebook {
+  border-color: #6e7ef2;
+}
+.mel-auth .mel-social a.google {
+  border-color: #f26d5b;
+}
+.mel-auth .mel-signup {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #888;
+}
+.mel-auth .mel-signup a {
+  color: #f26d5b;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mel-auth .mel-signup a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile padding tighten */
+@media (max-width: 768px) {
+  .mel-auth {
+    padding: 16px;
+  }
+  .mel-auth .mel-card {
+    padding: 24px 16px;
+  }
+}
+/* Keep this minimal; it just aligns with your existing _forms.scss */
+.auth-wrapper {
+  background-color: #fef5ec;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 40px 24px;
+  font-family: "Nunito", sans-serif, sans-serif;
+  color: #293241;
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.auth-logo .img {
+  width: 10em; /* min size from guide */
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.auth-form label {
+  font-weight: 600;
+  color: #293241;
+  font-size: 16px;
+}
+.auth-form input[type=text],
+.auth-form input[type=email],
+.auth-form input[type=password],
+.auth-form textarea {
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #f4f4f4;
+  color: #293241;
+}
+.auth-form input[type=text]:focus,
+.auth-form input[type=email]:focus,
+.auth-form input[type=password]:focus,
+.auth-form textarea:focus {
+  outline: 2px solid transparent;
+  border-color: #f26d5b;
+  box-shadow: 0 0 0 3px rgba(242, 109, 91, 0.25);
+}
+
+.auth-help-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.auth-help-row a {
+  color: #f26d5b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-actions input[type=submit] {
+  background: #f26d5b;
+  color: #fff;
+  border: 0;
+  padding: 16px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  min-height: 48px;
+  box-shadow: 0 6px 16px rgba(242, 109, 91, 0.28);
+}
+.auth-actions input[type=submit]:hover {
+  background: rgb(239.3779661017, 79.5525423729, 57.9220338983);
+}
+.auth-actions input[type=submit]:focus-visible {
+  outline: 3px solid rgba(242, 109, 91, 0.45);
+  outline-offset: 2px;
+}
+
+.auth-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+}
+.auth-footer a {
+  color: #f26d5b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* MyEventLane RSVP Thank You (WCAG AA, mobile-first)
+   Tokens:
+   - Coral CTA: #f26d5b
+   - Text:      #293241
+   - Offwhite:  #fef5ec
+   - Accent:    #6e7ef2
+   - Muted bg:  #f4f4f4
+   Type: H1 36px, H2 28px, H3 22px, Body 16px, Small 14px
+   Spacing: 4, 8, 12, 16, 24, 40, 48
+*/
+:root {
+  --mel-bg:#fef5ec;
+  --mel-text:#293241;
+  --mel-cta:#f26d5b;
+  --mel-accent:#6e7ef2;
+  --mel-muted:#f4f4f4;
+  --mel-shadow:0 4px 16px rgba(0,0,0,0.06);
+  --r-sm:12px;
+  --r-md:16px;
+  --r-pill:999px;
+  --s-4:4px;
+  --s-8:8px;
+  --s-12:12px;
+  --s-16:16px;
+  --s-24:24px;
+  --s-40:40px;
+  --s-48:48px;
+  --fs-h1:36px;
+  --fs-h2:28px;
+  --fs-h3:22px;
+  --fs-body:16px;
+  --fs-sm:14px;
+}
+
+/* Base */
+.mel-thanks {
+  background: var(--mel-bg);
+  color: var(--mel-text);
+  padding: var(--s-40) var(--s-24);
+}
+
+.mel-thanks__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-40);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.mel-thanks__title {
+  font-size: var(--fs-h1);
+  line-height: 1.2;
+  margin: 0 0 var(--s-12);
+  font-weight: 700;
+}
+
+.mel-thanks__subtitle {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  margin: 0 0 var(--s-24);
+}
+
+/* Event card */
+.mel-eventcard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-24);
+  background: #fff;
+  border-radius: var(--r-md);
+  box-shadow: var(--mel-shadow);
+  overflow: hidden;
+}
+
+.mel-eventcard__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mel-eventcard__body {
+  padding: var(--s-24);
+}
+
+.mel-eventcard__title {
+  font-size: var(--fs-h2);
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 0 0 var(--s-16);
+}
+
+.mel-eventcard__meta {
+  margin: 0 0 var(--s-24);
+}
+
+.mel-eventcard__meta-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: var(--s-12);
+  align-items: start;
+  margin-bottom: var(--s-8);
+}
+
+.mel-eventcard__meta-label {
+  font-size: var(--fs-sm);
+  color: rgba(41, 50, 65, 0.8);
+}
+
+.mel-eventcard__meta-value {
+  font-size: var(--fs-body);
+}
+
+.mel-eventcard__empty {
+  padding: var(--s-24);
+}
+
+/* Actions (links styled as buttons) */
+.mel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-12);
+}
+
+.mel-actions__item > a, .mel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: 1;
+  border: 2px solid transparent;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+  outline-offset: 2px;
+}
+
+.mel-btn--primary a, .mel-btn--primary {
+  background: var(--mel-cta);
+  color: #fff;
+}
+
+.mel-btn--secondary a, .mel-btn--secondary {
+  background: #fff;
+  border-color: var(--mel-accent);
+  color: var(--mel-accent);
+}
+
+.mel-btn--ghost a, .mel-btn--ghost {
+  background: transparent;
+  border-color: rgba(41, 50, 65, 0.25);
+  color: var(--mel-text);
+}
+
+.mel-actions__item > a:hover, .mel-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--mel-shadow);
+}
+
+.mel-actions__item > a:active, .mel-btn:active {
+  transform: translateY(0);
+}
+
+.mel-actions__item > a:focus-visible, .mel-btn:focus-visible {
+  outline: 3px solid var(--mel-accent);
+}
+
+/* Aside / Recommended */
+.mel-aside-card {
+  background: #fff;
+  border-radius: var(--r-md);
+  box-shadow: var(--mel-shadow);
+  padding: var(--s-24);
+}
+
+.mel-aside-card__title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  margin: 0 0 var(--s-16);
+}
+
+.mel-recommended__empty {
+  background: var(--mel-muted);
+  border-radius: var(--r-md);
+  padding: var(--s-24);
+}
+
+/* Responsive: split columns at ≥768px */
+@media (min-width: 768px) {
+  .mel-thanks__container {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+  .mel-eventcard {
+    grid-template-columns: 1fr 1.2fr;
+  }
+}
+/* Optional font stack if Inter isn’t globally loaded */
+.mel-thanks, .mel-thanks * {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+.mel-recommend {
+  margin: 40px 0;
+  padding: 24px;
+  background: #fef5ec;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+.mel-recommend .mel-recommend__title {
+  font-family: "Nunito", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #293241;
+  margin: 0 0 16px 0;
+}
+.mel-recommend .view-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+.mel-recommend .node--type-event.node--view-mode-teaser {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(41, 50, 65, 0.07);
+  transition: transform 0.18s ease;
+}
+.mel-recommend .node--type-event.node--view-mode-teaser:hover {
+  transform: translateY(-2px);
+}
+.mel-recommend .button, .mel-recommend .btn, .mel-recommend a.button {
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #f26d5b;
+  color: #fff;
+  border: none;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .mel-recommend {
+    padding: 16px;
+  }
+  .mel-recommend .mel-recommend__title {
+    font-size: 22px;
+  }
+}
+.mel-tickets {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+}
+
+.mel-tickets__title {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: #293241;
+}
+
+.mel-tickets__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mel-tickets__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #f4f4f4;
+}
+
+.mel-tickets__row:first-child {
+  border-top: 0;
+}
+
+.mel-tickets__name {
+  font-weight: 600;
+  color: #293241;
+}
+
+.mel-tickets__meta {
+  font-size: 14px;
+  color: #293241;
+  opacity: 0.9;
+  display: flex;
+  gap: 12px;
+}
+
+.mel-tickets__qty-input {
+  width: 80px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #f4f4f4;
+}
+
+.mel-btn--primary {
+  background: #f26d5b;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 700;
+}
+
+.mel-btn--primary:focus {
+  outline: 3px solid #f26d5b;
+  outline-offset: 2px;
+}
+
+.mel-tickets__submit {
+  width: 100%;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .mel-tickets {
+    padding: 12px;
+  }
+  .mel-tickets__row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+.dashboard-tabs {
+  margin-top: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tab {
+  background: #f4f4f4;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  border: 2px solid transparent;
+}
+
+.tab.active {
+  border-color: #f26d5b;
+  background: #fef5ec;
+}
+
+.tab-content {
+  display: none;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.tab-content.show {
+  display: block;
+}
+
+.mel-boost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  background: #f26d5b;
+  color: #fff;
+}
+
+.mel-boost-badge .spark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.9;
+}
+
+.mel-boost-status {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 8px 0 12px;
+}
+
+.mel-boost-expiry {
+  color: #293241;
+  font-weight: 600;
+}
+
+.mel-boost-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f26d5b;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* point this import at your theme tokens file */
+/* ======= Hero ======= */
+.boost-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 24px 0 16px;
+}
+
+.boost-title {
+  margin: 0;
+  font-family: "Nunito", sans-serif, sans-serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f26d5b; /* coral title */
+}
+
+.boost-kicker {
+  margin: 8px 0;
+  color: #293241;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 600;
+}
+
+.boost-section {
+  margin: 12px 0 0;
+  font-size: 22px;
+  color: #293241;
+}
+
+.boost-hero__art {
+  inline-size: 120px;
+  block-size: 120px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(175.5253164557, 184.2949367089, 247.8746835443);
+  font-size: 56px;
+  line-height: 1; /* emoji size */
+}
+
+/* ======= Card wrapper ======= */
+.boost-card {
+  background: #fff;
+  border: 1px solid #f4f4f4;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+}
+
+/* The form renders these containers (see form build below) */
+.boost-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+/* One selectable row (icon | title/desc | price | radio) */
+.boost-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  background: #fef5ec;
+  border: 1px solid #f4f4f4;
+  border-radius: 12px;
+  transition: background-color 0.12s ease, box-shadow 0.12s ease;
+}
+.boost-row:hover {
+  background: rgb(253.6175, 241.175, 228.7325);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.boost-row__icon {
+  inline-size: 40px;
+  block-size: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgb(194.246835443, 200.9506329114, 249.553164557);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.boost-row__text {
+  display: grid;
+  gap: 2px;
+}
+
+.boost-row__title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 22px;
+  color: #293241;
+}
+
+.boost-row__desc {
+  margin: 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.boost-row__price {
+  justify-self: end;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Pretty radio on the right (looks like rounded checkbox) */
+.boost-row__radio input[type=radio] {
+  appearance: none;
+  inline-size: 24px;
+  block-size: 24px;
+  border-radius: 8px;
+  border: 2px solid #6e7ef2;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.boost-row__radio input[type=radio]:checked {
+  background: #6e7ef2;
+  border-color: #6e7ef2;
+  box-shadow: 0 0 0 3px rgba(110, 126, 242, 0.25);
+}
+
+.boost-row__radio input[type=radio]:focus-visible {
+  outline: 3px solid #f26d5b;
+  outline-offset: 2px;
+}
+
+/* Footer buttons */
+.boost-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .boost-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .boost-footer {
+    flex-direction: column-reverse;
+  }
+}
+/* Grid helper */
+.mel-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.mel-grid--gap-lg {
+  gap: 16px;
+}
+
+.mel-grid--gap-xl {
+  gap: 24px;
+}
+
+.mel-grid--1 {
+  grid-template-columns: 1fr;
+}
+
+.mel-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mel-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+  .mel-grid--2,
+  .mel-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+/* Base card */
+.mel-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #f4f4f4;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.08s ease, box-shadow 0.16s ease;
+}
+.mel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.mel-card__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.mel-card__body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mel-card__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #293241;
+  letter-spacing: -0.01em;
+}
+
+.mel-card__meta {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.mel-card__desc {
+  margin: 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.mel-card__actions {
+  margin-top: auto;
+  padding: 0 16px 16px;
+}
+
+/* Floating Boosted chip for image areas */
+.mel-boost-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #f26d5b;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 3;
+}
+.mel-boost-chip .spark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.95;
+}
+
+/* Plan variant (for Boost plans) */
+.mel-card--plan .mel-card__meta .mel-price {
+  font-weight: 700;
+}
+
+/* Ensure image wrappers can host overlay */
+.event-card__media,
+.event-hero,
+.node--type-event .field--name-field_image,
+.node--type-event .field--name-field_event_banner {
+  position: relative;
+}
+
+/* MyEventLane Ticket Card */
+.mel-ticket-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  font-family: Inter, Nunito, sans-serif;
+  color: #293241;
+}
+
+.mel-ticket-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mel-badge {
+  display: inline-block;
+  background: #fef5ec;
+  color: #293241;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mel-ticket-card__title {
+  font-size: 22px;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.mel-ticket-card__body {
+  display: grid;
+  gap: 12px;
+}
+
+.mel-ticket-card__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mel-price {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mel-link {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #6e7ef2;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mel-remaining {
+  font-size: 14px;
+  color: #555;
+}
+
+.mel-ticket-card__form-fields .form-item {
+  margin-bottom: 12px;
+}
+
+.mel-ticket-card__footer .button,
+.mel-ticket-card__footer input[type=submit] {
+  background: #f26d5b;
+  color: #fff;
+  border: none;
+  padding: 14px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  width: 100%;
+}
+
+.mel-ticket-card__footer .button:hover,
+.mel-ticket-card__footer input[type=submit]:hover {
+  filter: brightness(0.95);
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .mel-ticket-card {
+    padding: 16px;
+  }
+  .mel-ticket-card__title {
+    font-size: 20px;
+  }
+}
+/* Generic centering for selected pages (activated by body class) */
+.mel-centered-page {
+  /* Constrain and center the main content wrapper used by most base themes */
+  /* Boost hero + card should also align to the same center line */
+  /* Login form, cart, and checkout panes get a narrower column for scannability */
+  /* Keep buttons full-width on mobile */
+}
+.mel-centered-page .layout-container,
+.mel-centered-page .page-wrapper,
+.mel-centered-page .region--content,
+.mel-centered-page .region-content,
+.mel-centered-page main[role=main] {
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 24px);
+}
+.mel-centered-page .boost-hero {
+  max-width: 960px;
+  margin-inline: auto;
+}
+.mel-centered-page .boost-card {
+  max-width: 620px; /* comfy reading width for a form card */
+  margin-inline: auto;
+  padding: 16px; /* already set in boost.scss; this enforces on centered pages */
+}
+.mel-centered-page form.user-login-form,
+.mel-centered-page form.commerce-cart-form,
+.mel-centered-page .checkout-pane,
+.mel-centered-page .checkout-layout__main,
+.mel-centered-page .commerce-checkout-flow,
+.mel-centered-page .commerce-checkout-form {
+  max-width: 560px;
+  margin-inline: auto;
+}
+@media (max-width: 768px) {
+  .mel-centered-page .button.button--block {
+    width: 100%;
+  }
+}
+
+/* Optional polish for Boost hero so it visually centers even with the right art */
+.boost-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px;
+  margin: 24px 0 16px;
+}
+
+.boost-hero__copy {
+  /* left-aligned text; you can set text-align:center if you prefer full center */
+}
+
+.boost-hero__art {
+  inline-size: 120px;
+  block-size: 120px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(175.5253164557, 184.2949367089, 247.8746835443);
+  font-size: 56px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .boost-hero {
+    grid-template-columns: 1fr;
+    justify-items: start; /* or center if you want text centered on mobile */
+  }
+  .boost-hero__art {
+    margin-top: 12px;
+  }
+}
+/* Ensure Boost form rows never overflow the card width */
+.boost-list {
+  min-width: 0;
+}
+
+.boost-row {
+  min-width: 0;
+}
+
+.boost-row__text,
+.boost-row__price {
+  min-width: 0;
+}
+
+.mel-ticket-card {
+  background: #f4f4f4;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+.mel-ticket-card__header {
+  margin-bottom: 8px;
+}
+.mel-ticket-card__title {
+  font-weight: 700;
+  color: #293241;
+  margin: 8px 0;
+}
+.mel-ticket-card__price-row {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.mel-ticket-card__form-fields {
+  display: grid;
+  gap: 12px;
+}
+.mel-ticket-card__footer {
+  margin-top: 12px;
+}
+
+.mel-badge {
+  display: inline-block;
+  background: #f5c04c;
+  color: #293241;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.mel-ticket-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.mel-ticket-row__title {
+  color: #293241;
+}
+.mel-ticket-row__price {
+  font-weight: 700;
+}
+.mel-ticket-row__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /*// 4. Base styles:*/

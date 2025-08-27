@@ -23,7 +23,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Latest
+      title: ''
       fields:
         title:
           id: title
@@ -199,7 +199,7 @@ display:
       tags: {  }
   block_2:
     id: block_2
-    display_title: 'Block 2'
+    display_title: 'Featured Events '
     display_plugin: block
     position: 4
     display_options:
@@ -304,8 +304,9 @@ display:
         title: false
         filters: false
         filter_groups: false
+      display_description: ''
       display_extenders: {  }
-      block_description: 'Featured Events'
+      block_description: ''
     cache_metadata:
       max-age: -1
       contexts:

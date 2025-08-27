@@ -1,0 +1,61 @@
+<article class="rsvp-submission-page">
+  <header class="rsvp-header">
+    <h1 class="rsvp-title">{{ node.title.value }}</h1>
+    <p class="rsvp-lead">Reserve your spot below for this event.</p>
+  </header>
+
+  <section class="rsvp-form-fields">
+    {% if node.id is defined %}
+      {{ drupal_form('Drupal\\myeventlane_rsvp_form\\Form\\PublicRSVPForm') }}
+    {% endif %}
+  </section>
+
+  <section class="rsvp-details">
+    {% if content.field_rsvp_status %}
+      <div class="rsvp-item"><strong>RSVP Status:</strong> {{ content.field_rsvp_status }}</div>
+    {% endif %}
+    {% if content.field_rsvp_deadline %}
+      <div class="rsvp-item"><strong>RSVP Deadline:</strong> {{ content.field_rsvp_deadline }}</div>
+    {% endif %}
+    {% if content.field_ticket_limit %}
+      <div class="rsvp-item"><strong>Ticket Limit:</strong> {{ content.field_ticket_limit }}</div>
+    {% endif %}
+  </section>
+
+  {% if content.field_donation_amount %}
+    <section class="rsvp-donation-block">
+      <label><strong>💖 Support this event:</strong></label>
+      {{ content.field_donation_amount }}
+    </section>
+  {% endif %}
+
+  {% if content.field_confirmation_message %}
+    <section class="rsvp-confirmation-message">
+      {{ content.field_confirmation_message }}
+    </section>
+  {% endif %}
+
+  {% if content.field_field_notes %}
+    <section class="rsvp-notes admin-only">
+      <div class="rsvp-item">
+        <strong>Internal Notes:</strong>
+        {{ content.field_field_notes }}
+      </div>
+    </section>
+  {% endif %}
+    
+  <footer class="rsvp-footer">
+    {% if node.id is defined and node.id.value %}
+      {{ content|without(
+        'field_rsvp_status',
+        'field_rsvp_deadline',
+        'field_ticket_limit',
+        'field_donation_amount',
+        'field_confirmation_message',
+        'field_field_notes'
+      ) }}
+    {% else %}
+      <div class="rsvp-preview-placeholder">RSVP not yet saved.</div>
+    {% endif %}
+  </footer>
+</article>

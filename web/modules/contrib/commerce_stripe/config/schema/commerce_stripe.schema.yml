@@ -1,6 +1,15 @@
 commerce_payment.commerce_payment_gateway.plugin.stripe:
   type: commerce_payment_gateway_configuration
   mapping:
+    authentication_method:
+      type: string
+      label: 'The authentication method'
+    access_token:
+      type: string
+      label: 'OAuth access token'
+    stripe_user_id:
+      type: string
+      label: 'Stripe User ID'
     publishable_key:
       type: string
       label: 'Publishable key'
@@ -17,6 +26,15 @@ commerce_payment.commerce_payment_gateway.plugin.stripe_payment_element:
     api_version:
       type: string
       label: 'API version'
+    authentication_method:
+      type: string
+      label: 'The authentication method'
+    access_token:
+      type: string
+      label: 'OAuth access token'
+    stripe_user_id:
+      type: string
+      label: 'Stripe User ID'
     publishable_key:
       type: string
       label: 'Publishable key'

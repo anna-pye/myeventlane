@@ -1,3 +1,0 @@
-drupal_cms_olivero.settings:
-  # Inherit all our settings from Olivero.
-  type: olivero.settings

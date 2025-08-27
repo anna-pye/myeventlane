@@ -21,7 +21,7 @@
   display: block;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(255, 255, 255, 0.8);
 }
 .stripe-review-autosubmit-loader::after {
   position: fixed;
@@ -36,10 +36,10 @@
   transform: translate(-50%, -50%);
   -webkit-animation: load8 1.1s infinite linear;
   animation: load8 1.1s infinite linear;
-  border-top: 12px solid rgba(0, 0, 0, 0.15);
-  border-right: 12px solid rgba(0, 0, 0, 0.15);
-  border-bottom: 12px solid rgba(0, 0, 0, 0.15);
-  border-left: 12px solid rgba(0, 0, 0, 0.4);
+  border-top: 12px solid rgb(0, 0, 0, 0.15);
+  border-right: 12px solid rgb(0, 0, 0, 0.15);
+  border-bottom: 12px solid rgb(0, 0, 0, 0.15);
+  border-left: 12px solid rgb(0, 0, 0, 0.4);
   border-radius: 50%;
 }
 @keyframes load8 {

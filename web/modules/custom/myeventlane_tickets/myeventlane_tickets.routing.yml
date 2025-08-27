@@ -1,0 +1,12 @@
+# myeventlane_tickets.routing.yml
+myeventlane_tickets.add_to_cart:
+  path: '/event/{node}/tickets'
+  defaults:
+    _controller: 'Drupal\myeventlane_tickets\Controller\AddToCartController::build'
+    _title: 'Tickets'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      node:
+        type: entity:node

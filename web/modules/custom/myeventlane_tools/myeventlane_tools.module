@@ -1,0 +1,87 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\commerce_product\Entity\ProductAttributeValueInterface;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Logs creation of NEW Commerce Product Attribute Values (e.g., ticket types),
+ * capturing the first custom code path (module/theme) from the backtrace to
+ * help pinpoint who triggered the create.
+ */
+function myeventlane_tools_entity_presave(EntityInterface $entity): void {
+  // Only act on NEW product attribute values.
+  if (!$entity instanceof ProductAttributeValueInterface || !$entity->isNew()) {
+    return;
+  }
+
+  $route = \Drupal::routeMatch()->getRouteName();
+  $uri   = \Drupal::request()->getRequestUri();
+
+  // Build a trimmed backtrace to locate the first custom file that triggered this.
+  $offender   = 'unknown';
+  $frames_out = [];
+
+  foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 80) as $f) {
+    $file = $f['file'] ?? '';
+    $line = $f['line'] ?? 'n/a';
+
+    // If file is missing but a class is present, try reflection to recover the file.
+    if (!$file && !empty($f['class'])) {
+      try {
+        $ref  = new \ReflectionClass($f['class']);
+        $file = $ref->getFileName() ?: '';
+      }
+      catch (\Throwable $e) {
+        // Best-effort only.
+      }
+    }
+
+    $func = (($f['class'] ?? '') . ($f['type'] ?? '') . ($f['function'] ?? ''));
+    $frames_out[] = ($file ?: 'n/a') . ':' . $line . ' ' . $func;
+
+    if ($file && (str_contains($file, '/web/modules/custom/') || str_contains($file, '/web/themes/custom/'))) {
+      // First custom frame is our likely source.
+      $offender = $file . ':' . $line . ' ' . $func;
+      break;
+    }
+  }
+
+  $name = method_exists($entity, 'getName') ? (string) $entity->getName() : (string) $entity->label();
+  $attr = method_exists($entity, 'getAttributeId') ? (string) $entity->getAttributeId() : 'n/a';
+
+  // One-liner to dblog.
+  \Drupal::logger('mel_attr_value')->notice(
+    'OFFENDER: @off | name=@name attr=@attr route=@route uri=@uri',
+    [
+      '@off'   => $offender,
+      '@name'  => $name,
+      '@attr'  => $attr,
+      '@route' => $route,
+      '@uri'   => $uri,
+    ]
+  );
+
+  // Full stack (top ~80 frames) to /tmp for deep inspection (best-effort).
+  @file_put_contents(
+    '/tmp/mel_attr_value_trace.log',
+    "[mel_attr_value TRACE]\n" .
+    "name={$name} attr={$attr}\n" .
+    "route={$route} uri={$uri}\n" .
+    "Backtrace:\n" . implode("\n", $frames_out) . "\n-----\n",
+    FILE_APPEND
+  );
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ *
+ * Intentionally a no-op. Do NOT override Commerce storage handlers here.
+ * (Previously swapping handlers caused uninstall/CRUD issues.)
+ */
+function myeventlane_tools_entity_type_alter(array &$entity_types): void {
+  // Intentionally left blank to avoid clobbering Commerce handler definitions.
+}

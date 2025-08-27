@@ -1,0 +1,27 @@
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 32px;
+
+  .filter-pill {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #ccc; // default fallback
+
+    &.filter-yellow { background-color: #f5c04c; }
+    &.filter-purple { background-color: #6e7ef2; }
+    &.filter-coral  { background-color: #f26d5b; }
+    &.filter-blue   { background-color: #8e9cff; }
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

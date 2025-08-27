@@ -15,6 +15,7 @@ dependencies:
     - conditional_fields
     - dashboard
     - file
+    - myeventlane_boost
     - node
     - profile
     - system
@@ -39,6 +40,7 @@ permissions:
   - 'create online commerce_store'
   - 'create ticket commerce_product'
   - 'create vendor_store content'
+  - 'delete own boost_upgrade commerce_product'
   - 'delete own default commerce_product'
   - 'delete own event content'
   - 'delete own files'
@@ -46,15 +48,18 @@ permissions:
   - 'edit conditional fields'
   - 'edit own event content'
   - 'edit own vendor_store content'
+  - 'purchase boost for events'
   - 'revert vendor_store revisions'
   - 'unlock orders'
   - 'update default commerce_order'
+  - 'update own boost_upgrade commerce_product'
   - 'update own customer profile'
   - 'update own default commerce_product'
   - 'update own online commerce_store'
   - 'update own ticket commerce_product'
   - 'view any customer profile'
   - 'view any profile'
+  - 'view boost_upgrade commerce_product'
   - 'view commerce_currency'
   - 'view commerce_product'
   - 'view commerce_store'

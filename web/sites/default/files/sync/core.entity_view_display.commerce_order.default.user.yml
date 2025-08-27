@@ -18,86 +18,104 @@ bundle: default
 mode: user
 content:
   balance:
-    label: hidden
     type: commerce_price_default
-    weight: 0
-    region: content
+    label: hidden
     settings:
       strip_trailing_zeroes: false
       currency_display: symbol
     third_party_settings: {  }
+    weight: 0
+    region: content
   billing_profile:
     type: entity_reference_revisions_entity_view
-    weight: 0
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 0
     region: content
   completed:
-    label: inline
     type: timestamp
-    weight: 2
+    label: inline
     settings:
       date_format: short
       custom_date_format: ''
       timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
     third_party_settings: {  }
+    weight: 2
     region: content
   customer_comments:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    region: content
-    weight: 7
-    third_party_settings: {  }
-  mail:
-    label: inline
     type: basic_string
-    weight: 1
+    label: above
     settings: {  }
     third_party_settings: {  }
+    weight: 7
+    region: content
+  mail:
+    type: basic_string
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
   order_items:
     type: commerce_order_item_table
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
     label: hidden
+    settings:
+      view: commerce_order_item_table
+    third_party_settings: {  }
+    weight: 5
     region: content
   order_number:
     type: string
-    weight: 0
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
     region: content
   placed:
-    label: inline
     type: timestamp
-    weight: 3
+    label: inline
     settings:
       date_format: short
       custom_date_format: ''
       timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
     third_party_settings: {  }
+    weight: 3
     region: content
   state:
     type: list_default
-    weight: 4
     label: inline
     settings: {  }
     third_party_settings: {  }
+    weight: 4
     region: content
   total_price:
     type: commerce_order_total_summary
-    weight: 6
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    label: hidden
+    weight: 6
     region: content
 hidden:
   changed: true

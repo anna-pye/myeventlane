@@ -1,0 +1,45 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fef5ec;
+  padding: 0 0;
+  border-bottom: 1px solid #f4f4f4;
+
+  .site-header__inner {
+    max-width: 1030px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      padding: 0 16px;
+    }
+  }
+
+  .site-logo img {
+    height: 100px;
+    width: auto;
+    display: block;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 16px;
+
+    .nav-link {
+      font-size: 16px;
+      font-weight: 600;
+      color: #293241;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+
+      &:hover {
+        background-color: #f4f4f4;
+      }
+    }
+  }
+}

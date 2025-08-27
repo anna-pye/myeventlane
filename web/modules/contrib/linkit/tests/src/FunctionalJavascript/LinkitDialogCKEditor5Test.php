@@ -168,7 +168,8 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $this->assertCount(1, $results);
       // Find the first result and click it.
       $results[0]->click();
-      // Make sure the linkit field field is populated with the test entity's URL.
+      // Make sure the linkit field field is populated with the test entity's
+      // URL.
       $expected_url = base_path() . 'entity_test_mul/manage/1';
       $this->assertSame($expected_url, $autocomplete_field->getValue());
       $balloon->pressButton('Insert');
@@ -181,8 +182,9 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $this->assertSame('entity_test_mul', $linkit_link->getAttribute('data-entity-type'));
       $this->assertSame($entity->uuid(), $linkit_link->getAttribute('data-entity-uuid'));
       $this->assertSame('canonical', $linkit_link->getAttribute('data-entity-substitution'));
-      // Open the edit link dialog by moving selection to the link, verifying the
-      // "Link" button is off before and on after, and then pressing that button.
+      // Open the edit link dialog by moving selection to the link, verifying
+      // the "Link" button is off before and on after, and then pressing that
+      // button.
       $this->assertFalse($this->getEditorButton('Link')->hasClass('ck-on'));
       $this->selectTextInsideElement('a');
       $this->assertTrue($this->getEditorButton('Link')->hasClass('ck-on'));
@@ -190,7 +192,7 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $link_edit_balloon = $this->assertVisibleBalloon('.ck-link-form');
       $autocomplete_field = $link_edit_balloon->find('css', '.form-linkit-autocomplete');
       $this->assertSame($expected_url, $autocomplete_field->getValue());
-      // Click to trigger the reset of the the autocomplete status.
+      // Click to trigger the reset of the autocomplete status.
       $autocomplete_field->click();
       // Enter a URL and verify that no link suggestions are found.
       $autocomplete_field->setValue('http://example.com');
@@ -205,7 +207,8 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $results = $page->findAll('css', '.linkit-result-line.ui-menu-item');
       $results[0]->click();
       $link_edit_balloon->pressButton('Update');
-      // Assert balloon is still visible, but now it's again the link actions one.
+      // Assert balloon is still visible, but now it's again the link actions
+      // one.
       $this->assertVisibleBalloon('.ck-link-toolbar');
       // Assert balloon can be closed by clicking elsewhere in the editor.
       $page->find('css', '.ck-editor__editable')->click();
@@ -223,14 +226,13 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
     }
   }
 
-
   /**
    * Test the link dialog with CKEditor version 44 or below.
    */
   public function testLinkDialogCkeditor44() {
     $core_version = \Drupal::VERSION;
-    // The following should run for Drupal 10.4 or lower and Drupal 11.1 or lower
-    // which use CKEditor version 44.
+    // The following should run for Drupal 10.4 or lower and Drupal 11.1 or
+    // lower which use CKEditor version 44.
     if (
       str_starts_with('10', $core_version) && version_compare($core_version, '10.5', '<') ||
       str_starts_with('11', $core_version) && version_compare($core_version, '11.2', '<')
@@ -272,7 +274,8 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $this->assertCount(1, $results);
       // Find the first result and click it.
       $results[0]->click();
-      // Make sure the linkit field field is populated with the test entity's URL.
+      // Make sure the linkit field field is populated with the test entity's
+      // URL.
       $expected_url = base_path() . 'entity_test_mul/manage/1';
       $this->assertSame($expected_url, $autocomplete_field->getValue());
       $balloon->pressButton('Save');
@@ -285,8 +288,9 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $this->assertSame('entity_test_mul', $linkit_link->getAttribute('data-entity-type'));
       $this->assertSame($entity->uuid(), $linkit_link->getAttribute('data-entity-uuid'));
       $this->assertSame('canonical', $linkit_link->getAttribute('data-entity-substitution'));
-      // Open the edit link dialog by moving selection to the link, verifying the
-      // "Link" button is off before and on after, and then pressing that button.
+      // Open the edit link dialog by moving selection to the link, verifying
+      // the "Link" button is off before and on after, and then pressing that
+      // button.
       $this->assertFalse($this->getEditorButton('Link')->hasClass('ck-on'));
       $this->selectTextInsideElement('a');
       $this->assertTrue($this->getEditorButton('Link')->hasClass('ck-on'));
@@ -297,7 +301,7 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       $link_edit_balloon = $this->assertVisibleBalloon('.ck-link-form');
       $autocomplete_field = $link_edit_balloon->find('css', '.ck-input-text');
       $this->assertSame($expected_url, $autocomplete_field->getValue());
-      // Click to trigger the reset of the the autocomplete status.
+      // Click to trigger the reset of the autocomplete status.
       $autocomplete_field->click();
       // Enter a URL and verify that no link suggestions are found.
       $autocomplete_field->setValue('http://example.com');
@@ -313,7 +317,8 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       // Accept the link as-is.
       $link_edit_balloon->pressButton('Save');
       $this->assertTrue($assert_session->waitForElementRemoved('css', '.ck-button-save'));
-      // Assert balloon is still visible, but now it's again the link actions one.
+      // Assert balloon is still visible, but now it's again the link actions
+      // one.
       $this->assertVisibleBalloon('.ck-link-actions');
       // Assert balloon can be closed by clicking elsewhere in the editor.
       $page->find('css', '.ck-editor__editable')->click();
@@ -331,4 +336,5 @@ class LinkitDialogCKEditor5Test extends WebDriverTestBase {
       }
     }
   }
+
 }

@@ -1,0 +1,39 @@
+{# Ticket list with quantity inputs; submitted to Commerce cart. #}
+<div class="mel-tickets">
+  <h2 class="mel-tickets__title">Tickets</h2>
+
+  {% if variations|length == 0 %}
+    <p class="mel-tickets__empty">No tickets available.</p>
+  {% else %}
+    <form class="mel-tickets__form" method="post" action="{{ path('commerce_cart.add') }}">
+      <input type="hidden" name="form_id" value="commerce_cart_add_to_cart_form" />
+      <ul class="mel-tickets__list">
+        {% for v in variations %}
+          {% set price = v.getPrice() %}
+          {% set title = v.getTitle() %}
+          <li class="mel-tickets__row">
+            <div class="mel-tickets__left">
+              <div class="mel-tickets__name">{{ title }}</div>
+              <div class="mel-tickets__meta">
+                <span class="mel-tickets__price">{{ price ? price.toString() : '' }}</span>
+              </div>
+            </div>
+            <div class="mel-tickets__qty">
+              <label class="visually-hidden" for="qty-{{ v.id() }}">Quantity</label>
+              <input id="qty-{{ v.id() }}"
+                     class="mel-tickets__qty-input"
+                     type="number"
+                     name="purchased_entity[{{ v.id() }}][quantity]"
+                     min="0" step="1" value="0" inputmode="numeric" />
+              <input type="hidden" name="purchased_entity[{{ v.id() }}][variation_id]" value="{{ v.id() }}" />
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <button class="mel-btn mel-btn--primary mel-tickets__submit" type="submit">
+        Buy Tickets
+      </button>
+    </form>
+  {% endif %}
+</div>

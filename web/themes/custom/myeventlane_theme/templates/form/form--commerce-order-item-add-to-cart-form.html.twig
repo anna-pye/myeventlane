@@ -1,0 +1,22 @@
+{#
+  Custom add-to-cart form wrapper.
+  Variables are the same as core's form.html.twig:
+  - attributes
+  - children
+#}
+<div class="mel-ticket-card" {{ attributes.removeClass() }}>
+  <div class="mel-ticket-card__header">
+    <div class="mel-badge">Buy Tickets</div>
+  </div>
+
+  <div class="mel-ticket-card__body">
+    {# You can’t reliably split price/quantity here without altering the form,
+       so render all children. Use CSS to lay out fields nicely. #}
+    {{ children }}
+  </div>
+
+  <div class="mel-ticket-card__footer">
+    {# If actions are a separate container, they'll appear above too.
+       That's okay; CSS can target .form-actions. #}
+  </div>
+</div>

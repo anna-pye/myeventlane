@@ -14,7 +14,11 @@ provider: null
 plugin: system_main_block
 settings:
   id: system_main_block
-  label: 'Main page content'
-  label_display: '0'
+  label: 'New Events'
+  label_display: visible
   provider: system
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

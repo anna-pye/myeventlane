@@ -1,0 +1,4 @@
+services:
+  myeventlane_tickets.capacity_calculator:
+    class: 'Drupal\myeventlane_tickets\Service\EventCapacityCalculator'
+    arguments: ['@entity_type.manager', '@database']

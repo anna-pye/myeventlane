@@ -1,0 +1,26 @@
+<article class="mel-ticket-card__product">
+  {% if product_title %}
+    <div class="mel-ticket-card__row">
+      <span class="mel-ticket-card__label">Ticket</span>
+      <span class="mel-ticket-card__value">{{ product_title }}</span>
+    </div>
+  {% endif %}
+
+  {% if variation_title %}
+    <div class="mel-ticket-card__row">
+      <span class="mel-ticket-card__label">Type</span>
+      <span class="mel-ticket-card__value">{{ variation_title }}</span>
+    </div>
+  {% endif %}
+
+  {% if price %}
+    <div class="mel-ticket-card__row">
+      <span class="mel-ticket-card__label">Price</span>
+      <span class="mel-ticket-card__value">{{ price }}</span>
+    </div>
+  {% endif %}
+
+  <div class="mel-ticket-card__cta">
+    {{ add_to_cart_form }}
+  </div>
+</article>

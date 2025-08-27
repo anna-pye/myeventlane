@@ -1,0 +1,4 @@
+access my profile dashboard:
+  title: 'Access My Profile dashboard'
+  description: 'View own My Profile pages (RSVPs, Tickets, Settings).'
+  restrict access: false

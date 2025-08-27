@@ -1,46 +1,120 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\myeventlane_boost\Controller;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Drupal\node\Entity\Node;
-use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\node\NodeInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class BoostController extends ControllerBase {
+/**
+ * Boost controller: renders the single "pick a duration" selector form.
+ */
+final class BoostController extends ControllerBase {
 
   /**
-   * Boost page for vendors.
+   * Page title callback.
    */
-  public function boostPage($node) {
+  public function title(NodeInterface $node): string|TranslatableMarkup {
+    return $this->t('Boost “@title”', ['@title' => $node->label()]);
+  }
+
+  /**
+   * Route access callback.
+   */
+  public function access(NodeInterface $node): AccessResult {
+    if ($node->bundle() !== 'event' || !$node->isPublished()) {
+      return AccessResult::forbidden();
+    }
     $account = $this->currentUser();
-    $event = Node::load($node);
+    $is_owner = ((int) $node->getOwnerId() === (int) $account->id());
+    $can_purchase = $account->hasPermission('purchase boost for events') || $account->hasPermission('administer nodes');
 
-    // Only event owner or admin can boost.
-    if (!$event || $event->bundle() !== 'event' || $event->getOwnerId() != $account->id()) {
-      return ['#markup' => $this->t('You do not have access to boost this event.')];
+    return AccessResult::allowedIf($is_owner || $can_purchase)
+      ->addCacheableDependency($node)
+      ->cachePerPermissions()
+      ->cachePerUser();
+  }
+
+  /**
+   * Page builder: hero + card with selector form + footer actions.
+   */
+  public function build(NodeInterface $node): array {
+    if ($node->bundle() !== 'event') {
+      throw new NotFoundHttpException();
     }
 
-    // If already boosted and not expired, show status.
-    $expiry_value = $event->get('field_promo_expiry')->value;
-    if ($event->get('field_promoted')->value && $expiry_value && strtotime($expiry_value) > time()) {
-      $expiry = \Drupal::service('date.formatter')->format(strtotime($expiry_value), 'custom', 'j M Y, g:ia');
-      return [
-        '#theme' => 'boost_event_page',
-        '#event' => $event,
-        '#message' => $this->t('This event is currently boosted until @expiry.', ['@expiry' => $expiry]),
-      ];
-    }
+    // The selector form (radios + submit) lives in BoostSelectForm.
+    // We pass the Node so the form can bind order item to this event.
+    $form = \Drupal::formBuilder()->getForm(\Drupal\myeventlane_boost\Form\BoostSelectForm::class, $node);
 
+    // A clean, styled "Cancel" link back to the event page.
+    $cancel_link = Link::fromTextAndUrl(
+      $this->t('Cancel'),
+      $node->toUrl('canonical')
+    )->toRenderable();
+    // Hook for your CSS (ghost/secondary button look).
+    $cancel_link['#attributes']['class'][] = 'mel-btn';
+    $cancel_link['#attributes']['class'][] = 'mel-btn--ghost';
+    $cancel_link['#attributes']['class'][] = 'boost-cancel';
 
-    // Show boost purchase form.
-    $form = \Drupal::formBuilder()->getForm('\Drupal\myeventlane_boost\Form\BoostPurchaseForm', $event);
     return [
-      '#theme' => 'boost_event_page',
-      '#event' => $event,
-      '#purchase_form' => $form,
+      '#type' => 'container',
+      '#attributes' => ['class' => ['mel-boost-page']],
+
+      // Hero header (matches the screenshot + brand guide).
+      'lead' => [
+        '#markup' =>
+          '<div class="boost-hero">'
+            . '<div>'
+              . '<h1 class="boost-title">' . $this->t('Boost “@title”', ['@title' => $node->label()]) . '</h1>'
+              . '<div class="boost-kicker">' . $this->t('Featured placement + badge. Choose a boost duration below.') . '</div>'
+            . '</div>'
+            . '<div class="boost-hero__art" aria-hidden="true">📈</div>'
+          . '</div>',
+      ],
+
+      // Card wrapper around the form (your library adds the visual).
+      'card' => [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['boost-card']],
+        'form' => $form,
+        // Footer actions under the form: Cancel on the left, submit lives in form.
+        'footer' => [
+          '#type' => 'container',
+          '#attributes' => ['class' => ['boost-footer']],
+          'left' => $cancel_link,
+          // Right side is the form submit (BoostSelectForm sets button label).
+        ],
+      ],
+
+      '#attached' => [
+        'library' => ['myeventlane_boost/boost'],
+      ],
+      '#cache' => [
+        'tags' => $node->getCacheTags(),
+        'contexts' => ['user', 'user.permissions'],
+        'max-age' => 0,
+      ],
     ];
   }
+
+  /**
+   * Back-compat wrappers (if any old routes point to these names).
+   */
+  public function boostPage(NodeInterface $node): array {
+    return $this->build($node);
+  }
+  public function boostTitle(NodeInterface $node): string|TranslatableMarkup {
+    return $this->title($node);
+  }
+  public function boostAccess(NodeInterface $node): AccessResult {
+    return $this->access($node);
+  }
+
 }

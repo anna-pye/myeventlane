@@ -127,7 +127,6 @@ class Actions {
        */
       $action = $this->actionManager->createInstance($plugin_id, $configuration);
     }
-    // @phpstan-ignore-next-line
     catch (\Exception | \Throwable $e) {
       $action = NULL;
       $this->logger->error('The action plugin %pluginid can not be initialized. ECA is ignoring this action. The issue with this action: %msg', [
@@ -156,7 +155,6 @@ class Actions {
       try {
         $form = $action->buildConfigurationForm([], $form_state);
       }
-      // @phpstan-ignore-next-line
       catch (\Throwable | \AssertionError | \Exception $e) {
         $this->logger->error('The configuration form of %label action plugin can not be loaded. Plugin ignored. %message', [
           '%label' => $action->getPluginId(),
@@ -203,7 +201,6 @@ class Actions {
         ];
       }
     }
-    // @phpstan-ignore-next-line
     catch (\Throwable | \AssertionError | \Exception $e) {
       $this->logger->error('There is an issue with the %label action plugin. Plugin ignored.', [
         '%label' => $action->getPluginId(),

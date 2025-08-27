@@ -1,0 +1,23 @@
+myeventlane_profile.tabs:
+  route_name: myeventlane_profile.dashboard
+  title: 'Overview'
+  base_route: myeventlane_profile.dashboard
+  weight: 0
+
+myeventlane_profile.tabs_rsvps:
+  route_name: myeventlane_profile.rsvps
+  title: 'RSVPs'
+  base_route: myeventlane_profile.dashboard
+  weight: 1
+
+myeventlane_profile.tabs_tickets:
+  route_name: myeventlane_profile.tickets
+  title: 'Tickets'
+  base_route: myeventlane_profile.dashboard
+  weight: 2
+
+myeventlane_profile.tabs_settings:
+  route_name: myeventlane_profile.settings
+  title: 'Settings'
+  base_route: myeventlane_profile.dashboard
+  weight: 3

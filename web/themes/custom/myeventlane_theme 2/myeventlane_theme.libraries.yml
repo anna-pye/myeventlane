@@ -1,0 +1,43 @@
+global-styling:
+  css:
+    theme:
+      css/style.css: {}
+  dependencies:
+    - core/jquery
+
+vendor_dashboard:
+  js:
+    js/theme.js: {}
+  dependencies:
+    - core/jquery
+    
+event_display:
+  css:
+    theme:
+      css/vendor/swiper-bundle.min.css: {}
+      css/vendor/lightbox.min.css: {}
+  js:
+    js/vendor/swiper-bundle.min.js: {}
+    js/vendor/lightbox.min.js: {}
+    js/event-gallery.js: {}
+  dependencies:
+    - core/jquery
+
+  ticket_inline:
+    js:
+      js/ticket-toggle.js: {}
+    dependencies:
+      - core/jquery
+
+  event_form_toggle:
+    js:
+      js/ticket-type-toggle.js: {}
+    dependencies:
+      - core/jquery
+
+vendor_analytics_chart:
+  js:
+    js/build/vendor_analytics.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery

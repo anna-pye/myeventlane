@@ -1,0 +1,6 @@
+myeventlane_boost.boost_menu:
+  title: 'Boost this event'
+  description: 'Purchase a featured placement for your event'
+  route_name: myeventlane_boost.boost_page
+  menu_name: account
+  weight: 0

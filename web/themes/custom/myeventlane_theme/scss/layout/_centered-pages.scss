@@ -1,0 +1,79 @@
+@use "sass:color";
+@use "../variables" as vars;
+
+/* Generic centering for selected pages (activated by body class) */
+.mel-centered-page {
+  /* Constrain and center the main content wrapper used by most base themes */
+  .layout-container,
+  .page-wrapper,
+  .region--content,
+  .region-content,
+  main[role="main"] {
+    max-width: 960px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 3vw, 24px);
+  }
+
+  /* Boost hero + card should also align to the same center line */
+  .boost-hero {
+    max-width: 960px;
+    margin-inline: auto;
+  }
+
+  .boost-card {
+    max-width: 620px;           /* comfy reading width for a form card */
+    margin-inline: auto;
+    padding: vars.$spacing-lg;  /* already set in boost.scss; this enforces on centered pages */
+  }
+
+  /* Login form, cart, and checkout panes get a narrower column for scannability */
+  form.user-login-form,
+  form.commerce-cart-form,
+  .checkout-pane,
+  .checkout-layout__main,
+  .commerce-checkout-flow,
+  .commerce-checkout-form {
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  /* Keep buttons full-width on mobile */
+  @media (max-width: vars.$breakpoint-md) {
+    .button.button--block { width: 100%; }
+  }
+}
+
+/* Optional polish for Boost hero so it visually centers even with the right art */
+.boost-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: vars.$spacing-xl;
+  margin: vars.$spacing-xl 0 vars.$spacing-lg;
+}
+.boost-hero__copy {
+  /* left-aligned text; you can set text-align:center if you prefer full center */
+}
+.boost-hero__art {
+  inline-size: 120px; block-size: 120px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: color.adjust(vars.$color-accent, $lightness: +14%);
+  font-size: 56px; line-height: 1;
+}
+
+@media (max-width: vars.$breakpoint-md) {
+  .boost-hero {
+    grid-template-columns: 1fr;
+    justify-items: start; /* or center if you want text centered on mobile */
+  }
+  .boost-hero__art {
+    margin-top: vars.$spacing-md;
+  }
+}
+
+/* Ensure Boost form rows never overflow the card width */
+.boost-list { min-width: 0; }
+.boost-row  { min-width: 0; }
+.boost-row__text,
+.boost-row__price { min-width: 0; }

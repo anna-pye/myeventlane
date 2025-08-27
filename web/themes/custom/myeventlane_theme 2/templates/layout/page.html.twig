@@ -1,0 +1,41 @@
+{#
+  Default page template for all pages except front.
+  Includes global header, optional nav, sidebar, and footer.
+#}
+
+{% include "@myeventlane_theme/partials/header.html.twig" %}
+
+
+<div id="page-wrapper" class="layout-container">
+
+{% if url('<current>') == '/user/login' %}
+  {% include '@myeventlane_theme/form--user-login-form.html.twig' %}
+ {% endif %}
+
+
+  {% if page.primary_menu %}
+    <nav role="navigation" class="primary-nav">
+      {{ page.primary_menu }}
+    </nav>
+  {% endif %}
+
+  <main id="main-content" role="main">
+    <a id="main-content" tabindex="-1"></a>
+    {{ page.content }}
+  </main>
+
+  {% if page.sidebar %}
+    <aside class="sidebar">
+      {{ page.sidebar }}
+    </aside>
+  {% endif %}
+
+  {% if page.footer %}
+    <footer id="footer" role="contentinfo">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+
+</div>
+
+{% include '@myeventlane_theme/includes/html-bottom.html.twig' %}

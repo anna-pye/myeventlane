@@ -1,0 +1,11 @@
+name: 'MyEventLane Tickets'
+type: module
+description: 'Ticket availability and event-level capacity (hard cap).'
+core_version_requirement: '^11'
+package: 'MyEventLane'
+dependencies:
+  - drupal:commerce
+  - drupal:commerce_product
+  - drupal:commerce_order
+  - drupal:commerce_cart
+  - drupal:commerce_stock

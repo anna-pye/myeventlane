@@ -216,8 +216,13 @@ class StripePaymentElement extends OffsitePaymentGatewayBase implements StripePa
       ApiRequestor::setHttpClient($curl);
     }
 
-    StripeLibrary::setApiKey($this->getSecretKey());
     StripeLibrary::setApiVersion($this->getApiVersion());
+    if (!empty($this->configuration['access_token'])) {
+      StripeLibrary::setApiKey($this->configuration['access_token']);
+    }
+    else {
+      StripeLibrary::setApiKey($this->getSecretKey());
+    }
   }
 
   /**
@@ -226,6 +231,9 @@ class StripePaymentElement extends OffsitePaymentGatewayBase implements StripePa
   public function defaultConfiguration(): array {
     return [
       'api_version' => NULL,
+      'authentication_method' => 'stripe_connect',
+      'access_token' => '',
+      'stripe_user_id' => '',
       'publishable_key' => '',
       'secret_key' => '',
       'webhook_signing_secret' => '',
@@ -242,21 +250,46 @@ class StripePaymentElement extends OffsitePaymentGatewayBase implements StripePa
   public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildConfigurationForm($form, $form_state);
 
+    $form['access_token'] = [
+      '#type' => 'value',
+      '#default_value' => $this->configuration['access_token'],
+    ];
+    $form['stripe_user_id'] = [
+      '#type' => 'value',
+      '#default_value' => $this->configuration['stripe_user_id'],
+    ];
+    $form['authentication_method'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Authentication Method'),
+      '#description' => $this->t('When "Stripe connect" is selected, connecting to Stripe is done from the payment gateway list page.'),
+      '#options' => [
+        'stripe_connect' => $this->t('Stripe connect (Preferred)'),
+        'api_keys' => $this->t('API keys'),
+      ],
+      '#default_value' => !empty($this->configuration['secret_key']) ? 'api_keys' : $this->configuration['authentication_method'],
+      '#disabled' => !empty($this->configuration['access_token']),
+    ];
+    $stripe_connect_states = [
+      'invisible' => [
+        ':input[name="configuration[' . $this->pluginId . '][authentication_method]"]' => ['value' => 'stripe_connect'],
+      ],
+    ];
     $form['publishable_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Publishable key'),
       '#default_value' => $this->getPublishableKey(),
-      '#required' => TRUE,
+      '#states' => $stripe_connect_states,
     ];
     $form['secret_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Secret key'),
       '#default_value' => $this->getSecretKey(),
-      '#required' => TRUE,
+      '#states' => $stripe_connect_states,
     ];
     $form['validate_api_keys'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Validate API keys upon form submission.'),
+      '#states' => $stripe_connect_states,
       '#default_value' => TRUE,
     ];
     $form['webhook'] = [
@@ -391,7 +424,7 @@ class StripePaymentElement extends OffsitePaymentGatewayBase implements StripePa
       $values = $form_state->getValue($form['#parents']);
       // Validate the secret key.
       $expected_livemode = $values['mode'] === 'live';
-      if (!empty($values['secret_key']) && $values['validate_api_keys']) {
+      if ($values['validate_api_keys'] && $values['authentication_method'] === 'api_keys') {
         try {
           StripeLibrary::setApiKey($values['secret_key']);
           // Make sure we use the right mode for the secret keys.
@@ -415,7 +448,14 @@ class StripePaymentElement extends OffsitePaymentGatewayBase implements StripePa
     if (!$form_state->getErrors()) {
       $values = $form_state->getValue($form['#parents']);
       $this->configuration['publishable_key'] = $values['publishable_key'];
-      $this->configuration['secret_key'] = $values['secret_key'];
+      if ($values['authentication_method'] === 'api_keys') {
+        $this->configuration['secret_key'] = $values['secret_key'];
+      }
+      else {
+        $this->configuration['access_token'] = $values['access_token'];
+        $this->configuration['stripe_user_id'] = $values['stripe_user_id'];
+      }
+      $this->configuration['authentication_method'] = $values['authentication_method'];
       $this->configuration['webhook_signing_secret'] = $values['webhook']['webhook_signing_secret'];
       $this->configuration['payment_method_usage'] = $values['payment_method_usage'];
       $this->configuration['capture_method'] = $values['capture_method'];

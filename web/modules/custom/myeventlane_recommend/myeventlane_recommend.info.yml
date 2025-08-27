@@ -1,0 +1,10 @@
+name: MyEventLane Recommend
+type: module
+description: Weighted, tag-based recommendations for events based on user activity.
+core_version_requirement: ^11
+package: MyEventLane
+dependencies:
+  - drupal:taxonomy
+  - drupal:user
+  - drupal:views
+  - drupal:commerce_order

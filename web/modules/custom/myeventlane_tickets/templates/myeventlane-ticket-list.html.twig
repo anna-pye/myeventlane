@@ -1,0 +1,17 @@
+<div class="mel-ticket-card">
+  {% if title %}
+    <h3 class="mel-ticket-card__title">{{ title }}</h3>
+  {% endif %}
+
+  {% if tickets %}
+    <div class="mel-ticket-list">
+      {% for card in tickets %}
+        {{ card }}
+      {% endfor %}
+    </div>
+  {% else %}
+    {% if empty %}
+      <div class="cta-unavailable">{{ empty }}</div>
+    {% endif %}
+  {% endif %}
+</div>

@@ -48,9 +48,17 @@ forms:
       css/forms.css: {}
 
 auth:
-  version: 1.x
   css:
     theme:
-      css/styles.css: {}
+      css/auth.css: {}
 
-
+mel_tickets:
+  js:
+    js/mel_tickets.js: {}
+  css:
+    theme:
+      css/components/ticket-card.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once

@@ -1,0 +1,174 @@
+{{ attach_library('myeventlane_theme/event_display') }}
+
+<article class="event-full">
+  <div class="event-main-layout">
+    <div class="event-main-content">
+
+      {# Event image and category badge #}
+      {% if content.field_image %}
+        <div class="event-image">
+          {% if node.field_category.0.entity.name.value is defined %}
+            <div class="event-category-badge">
+              {{ node.field_category.0.entity.name.value }}
+            </div>
+          {% endif %}
+          {{ content.field_image }}
+        </div>
+      {% endif %}
+
+      <h1 class="event-title">{{ label }}</h1>
+
+      {% if node.uid.entity %}
+        <div class="event-subtitle">
+          by {{ node.uid.entity.display_name.value | default(node.uid.entity.name.value | default('')) }}
+        </div>
+      {% endif %}
+
+      {# Boosted Badge #}
+      {% set promo_expiry_value = node.field_promo_expiry.value %}
+      {% if node.field_promoted.value and promo_expiry_value %}
+        <div class="event-boost-badge">
+          🌟 <strong>Boosted until {{ promo_expiry_value|date('j M Y') }}</strong>
+        </div>
+      {% endif %}
+
+      <section class="event-meta">
+        {% if node.field_start_date.value %}
+          <div class="event-meta-item">
+            🗓 <strong>Starts:</strong> {{ node.field_start_date.value|date("D, d M Y - H:i") }}
+          </div>
+        {% endif %}
+        {% if node.field_end_date.value %}
+          <div class="event-meta-item">
+            🏁 <strong>Ends:</strong> {{ node.field_end_date.value|date("D, d M Y - H:i") }}
+          </div>
+        {% endif %}
+        {% if node.field_venue.value %}
+          <div class="event-meta-item">
+            📍 <strong>Venue:</strong> {{ node.field_venue.value }}
+          </div>
+        {% endif %}
+        {% if node.field_venue_address.value %}
+          <div class="event-meta-item">
+            🗺 <strong>Address:</strong> {{ content.field_venue_address }}
+          </div>
+        {% endif %}
+      </section>
+
+      {# Accessibility #}
+      {% if node.field_accessibility %}
+        <div class="event-accessibility">
+          {% for term in node.field_accessibility %}
+            {% set term_machine = term.entity.field_machine_name.value ?? term.entity.name.value|lower|replace({' ': '-'}) %}
+            <span class="access-flag access-flag--{{ term_machine|clean_class }}">
+              {% if term_machine == 'wheelchair' %}
+                🦽
+              {% elseif term_machine == 'auslan' %}
+                🎤
+              {% elseif term_machine in ['hearing', 'hearing-loop'] %}
+                🎧
+              {% else %}
+                ♿
+              {% endif %}
+              {{ term.entity.name.value }}
+            </span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {# Social Share #}
+      <div class="event-share">
+        <p class="share-label">Share this event:</p>
+        <div class="share-buttons">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ drupal_url('<current>', {}, 'absolute') }}"
+             target="_blank" rel="noopener noreferrer" class="share-btn share-facebook">Facebook</a>
+          <a href="https://twitter.com/intent/tweet?text={{ label|escape('url') }}&url={{ drupal_url('<current>', {}, 'absolute') }}"
+             target="_blank" rel="noopener noreferrer" class="share-btn share-twitter">X</a>
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ drupal_url('<current>', {}, 'absolute')|escape('url') }}&title={{ label|escape('url') }}"
+             target="_blank" rel="noopener noreferrer" class="share-btn share-linkedin">LinkedIn</a>
+          <a href="mailto:?subject={{ label|escape('url') }}&body={{ drupal_url('<current>', {}, 'absolute') }}"
+             class="share-btn share-email">Email</a>
+        </div>
+      </div>
+
+      {# Description #}
+      {% if node.field_event_discription.value %}
+        <section class="event-description">
+          <h2>About this event</h2>
+          {{ node.field_event_discription.value }}
+        </section>
+      {% elseif content.body %}
+        <section class="event-description">
+          <h2>About this event</h2>
+          {{ content.body }}
+        </section>
+      {% endif %}
+
+      <footer class="event-footer">
+        <div class="event-organizer">
+          {% if node.uid.entity.user_picture.entity.uri.value is defined %}
+            <div class="organizer-avatar">
+              <img src="{{ file_url(node.uid.entity.user_picture.entity.uri.value) }}" alt="{{ node.uid.entity.name.value|default('Organizer') }}" />
+            </div>
+          {% endif %}
+          <div class="organizer-info">
+            <div class="organizer-label">Organiser</div>
+            <div class="organizer-name">
+              <a href="{{ path('entity.user.canonical', {'user': node.uid.target_id}) }}">
+                {{ node.uid.entity.display_name.value|default(node.uid.entity.name.value|default('')) }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {# Guest list if RSVP #}
+      {% if type == 'rsvp' %}
+        {{ drupal_view('rsvp_guest_submissions_by_event', 'block_1', node.id.value) }}
+      {% endif %}
+    </div>
+
+    {# SIDEBAR #}
+    <aside class="event-sidebar event-sidebar--mobile">
+     {% if type == 'rsvp' %}
+       <div class="sidebar-card">
+         <h2 class="sidebar-cta-title">RSVP</h2>
+         <h2 class="sidebar-cta-title">Reserve Your Spot</h2>
+         {{ drupal_form('Drupal\\myeventlane_rsvp\\Form\\RSVPSubmissionForm', {'event_id': node.id.value}) }}
+       </div>
+      {% elseif type == 'paid' and add_to_cart_form is defined and add_to_cart_form %}
+        <div class="sidebar-card">
+          <h2 class="sidebar-cta-title">Buy Tickets</h2>
+          <div class="my-custom-cart-form">
+            {{ drupal_entity('commerce_product', product_id, 'add_to_cart_form') }}
+          </div>
+        </div>
+      {% elseif (type != 'rsvp' and (add_to_cart_form is not defined or add_to_cart_form is empty)) %}
+        <div class="sidebar-card">
+          <div class="cta-unavailable">Registration is not available for this event.</div>
+        </div>
+      {% endif %}
+    </aside>
+
+    <aside class="event-sidebar event-sidebar--desktop">
+      {% if type == 'rsvp' %}
+        <div class="sidebar-card">
+         <h2 class="sidebar-cta-title">RSVP</h2>
+         <h2 class="sidebar-cta-title">Reserve Your Spot</h2>
+         {{ drupal_form('Drupal\\myeventlane_rsvp\\Form\\RSVPSubmissionForm', {'event_id': node.id.value}) }}
+        </div>
+      {% elseif type == 'paid' and add_to_cart_form is defined and add_to_cart_form %}
+        <div class="sidebar-card">
+          <h2 class="sidebar-cta-title">Buy Tickets</h2>
+          <div class="my-custom-cart-form">
+            {{ drupal_entity('commerce_product', product_id, 'add_to_cart_form') }}
+          </div>
+        </div>
+      {% elseif (type != 'rsvp' and (add_to_cart_form is not defined or add_to_cart_form is empty)) %}
+        <div class="sidebar-card">
+          <div class="cta-unavailable">Registration is not available for this event.</div>
+        </div>
+      {% endif %}
+    </aside>
+  </div>
+</article>

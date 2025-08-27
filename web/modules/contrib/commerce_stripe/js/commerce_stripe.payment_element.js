@@ -20,7 +20,7 @@
       async function processStripeForm(item) {
         const stripeForm = item.closest('form');
         const primaryButton = stripeForm.querySelector(
-          'input[data-drupal-selector="edit-actions-next"],button[data-drupal-selector="edit-actions-next"]',
+          `input[data-drupal-selector="${settings.buttonId}"],button[data-drupal-selector="${settings.buttonId}"]`,
         );
 
         const stripeOptions = {

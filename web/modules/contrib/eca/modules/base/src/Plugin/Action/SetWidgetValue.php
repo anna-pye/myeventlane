@@ -6,6 +6,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\eca\Plugin\Action\ConfigurableActionBase;
+use Drupal\eca\Plugin\DataType\DataTransferObject;
 use Drupal\eca_base\Event\FieldWidgetEvent;
 
 /**
@@ -36,11 +37,23 @@ class SetWidgetValue extends ConfigurableActionBase {
     $event = $this->getEvent();
     $value = $this->configuration['widget_value'];
     if ($this->tokenService->hasTokenData($value)) {
-      $event->setWidgetValue($this->tokenService->getTokenData($value));
+      $value = $this->tokenService->getTokenData($value);
     }
     else {
-      $event->setWidgetValue($this->tokenService->replaceClear($value));
+      $value = $this->tokenService->replaceClear($value);
     }
+    if ($value instanceof DataTransferObject) {
+      $value = $value->getValue();
+      if (is_array($value)) {
+        if (isset($value['_string_representation'])) {
+          $value = $value['_string_representation'];
+        }
+        elseif (isset($value['values'])) {
+          $value = $value['values'];
+        }
+      }
+    }
+    $event->setWidgetValue($value);
   }
 
   /**

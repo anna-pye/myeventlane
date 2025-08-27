@@ -1,35 +1,139 @@
 <?php
 
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\node\Entity\Node;
+declare(strict_types=1);
+
+use Drupal\Core\Template\Attribute;
 
 /**
- * Implements hook_entity_presave().
- * Unboosts event if promo expiry is in the past.
+ * Implements hook_form_alter().
+ *
+ * Adds hidden target-event value to Boost add-to-cart forms.
  */
-function myeventlane_boost_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) {
-  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'event') {
-    $is_promoted = $entity->get('field_promoted')->value;
-    $expiry = $entity->get('field_promo_expiry')->value;
-    if ($is_promoted && $expiry && strtotime($expiry) < time()) {
-      $entity->set('field_promoted', 0);
-    }
+function myeventlane_boost_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id): void {
+  if ($form_id !== 'commerce_cart_add_to_cart_form') {
+    return;
+  }
+  if (!isset($form['#order_item_type']) || $form['#order_item_type'] !== 'boost') {
+    return;
+  }
+
+  $request = \Drupal::request();
+  $target = $request->query->get('event') ?? $request->attributes->get('node');
+  $target_nid = 0;
+  if ($target instanceof \Drupal\node\NodeInterface) {
+    $target_nid = (int) $target->id();
+  } elseif (is_scalar($target)) {
+    $target_nid = (int) $target;
+  }
+
+  if ($target_nid > 0) {
+    $form['field_target_event'] = [
+      '#type' => 'hidden',
+      '#value' => $target_nid,
+      '#parents' => ['order_item', 'field_target_event', 0, 'target_id'],
+    ];
   }
 }
 
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function myeventlane_boost_preprocess_node(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+  if (!$node instanceof \Drupal\node\NodeInterface || $node->bundle() !== 'event') {
+    return;
+  }
+  $account = \Drupal::currentUser();
+
+  // Compute boosted state (UTC-safe).
+  $promoted = (bool) $node->get('field_promoted')->value;
+  $expires_val = $node->get('field_promo_expires')->value; // ISO UTC "Y-m-d\TH:i:s"
+  $expires_ts = $expires_val ? (new \DateTimeImmutable($expires_val, new \DateTimeZone('UTC')))->getTimestamp() : 0;
+
+  $now = \Drupal::time()->getRequestTime();
+  $is_boosted = $promoted && ($expires_ts > $now);
+
+  $variables['mel_is_boosted'] = $is_boosted;
+  $variables['mel_boost_expires'] = $expires_val;   // raw ISO (kept for reference)
+  $variables['mel_boost_expires_ts'] = $expires_ts; // integer TS (best for Twig date)
+  $variables['mel_hide_boost_cta'] = $is_boosted;
+
+  // Days left (ceil so 1.2 days => 2 days).
+  $seconds_left = max(0, $expires_ts - $now);
+  $variables['mel_boost_days_left'] = $is_boosted ? (int) ceil($seconds_left / 86400) : 0;
+
+  // Human interval like "1 day 3 hours".
+  $variables['mel_boost_expires_in'] = $is_boosted
+    ? \Drupal::service('date.formatter')->formatInterval($seconds_left, 2)
+    : '';
+
+  // Site timezone pretty string, e.g. "24 Aug 2025, 5:00pm AEST"
+  if ($expires_ts) {
+    // Let DateFormatter pick site/user tz automatically by not forcing a tz param.
+    $variables['mel_boost_expires_formatted'] = \Drupal::service('date.formatter')
+      ->format($expires_ts, 'custom', 'j M Y, g:ia T');
+  }
+  else {
+    $variables['mel_boost_expires_formatted'] = '';
+  }
+
+  // Can current user boost?
+  $is_owner = ((int) $node->getOwnerId() === (int) $account->id());
+  $can_purchase = $account->hasPermission('purchase boost for events');
+  $can_admin = $node->access('update', $account);
+  $variables['mel_can_boost'] = ($is_owner || $can_purchase || $can_admin);
+
+  // Ensure styles.
+  $variables['#attached']['library'][] = 'myeventlane_boost/boost';
+}
+
+
 /**
  * Implements hook_cron().
- * Removes boost flag if expired.
  */
-function myeventlane_boost_cron() {
-  $storage = \Drupal::entityTypeManager()->getStorage('node');
-  $nids = \Drupal::entityQuery('node')
-    ->condition('type', 'event')
-    ->condition('field_promoted', 1)
-    ->condition('field_promo_expiry', date('Y-m-d\TH:i:s'), '<')
-    ->execute();
-  foreach ($storage->loadMultiple($nids) as $node) {
-    $node->set('field_promoted', 0);
-    $node->save();
+function myeventlane_messaging_cron_removed(): void {
+  \Drupal::service('myeventlane_messaging.scheduler.boost')->scan();
+  \Drupal::service('myeventlane_messaging.scheduler.cart')->scan();
+  \Drupal::service('myeventlane_messaging.scheduler.event')->scan();
+}
+
+/**
+ * Implements hook_theme().
+ * (Drupal 11-safe: avoid drupal_get_path(); use extension.list.module service.)
+ */
+function myeventlane_messaging_theme_removed($existing, $type, $theme, $path) {
+  $tpl_path = \Drupal::service('extension.list.module')->getPath('myeventlane_messaging') . '/templates';
+  return [
+    'myeventlane_email' => [
+      'variables' => ['body' => '', 'context' => []],
+      'template'  => 'myeventlane-email',
+      'path'      => $tpl_path,
+    ],
+    'myeventlane_messaging_inline' => [
+      'variables' => ['template' => '', 'context' => []],
+      'template'  => 'myeventlane-messaging-inline',
+      'path'      => $tpl_path,
+    ],
+  ];
+}
+
+/**
+ * Preprocess for myeventlane_email.
+ */
+function template_preprocess_myeventlane_email_removed(array &$variables): void {
+  $variables['attributes'] = new Attribute(['style' => 'margin:0;padding:0;background:#fef5ec;']);
+}
+
+/**
+ * Implements hook_mail().
+ * Single generic key used by MessagingManager.
+ */
+function myeventlane_boost_mail($key, &$message, $params) {
+  if ($key !== 'generic') {
+    return;
   }
+  $message['subject'] = $params['subject'] ?? '(no subject)';
+  $message['body']    = $params['html'] ?? $params['body'] ?? '';
+  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8';
 }

@@ -1,0 +1,34 @@
+
+@use 'variables' as *;
+@use 'sass:color';
+
+
+.ticket-stock-list {
+  margin: $spacing-md 0 $spacing-lg 0;
+  padding: 0;
+  list-style: none;
+  font-size: $font-size-small;
+  color: $text-color-main;
+  aline: left;
+
+  .ticket-stock {
+    margin-bottom: $spacing-xs;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $color-bg-muted;
+    border-radius: $radius-small;
+    padding: $spacing-sm $spacing-md;
+  }
+
+  .tickets-left {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
+
+  .tickets-soldout {
+    color: $color-muted-text;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.5px;
+  }
+}

@@ -2,6 +2,7 @@
   <h1>My Dashboard</h1>
   {{ drupal_block('vendor_analytics_block') }}
   {# Add views or other blocks here #}
+  {{<a class="button button--small" href="/boost/[nid]">Boost</a>}}
   {{ attach_library('myeventlane_theme/vendor_analytics_chart') }}
   {{ attach_library('myeventlane_theme/dashboard_tabs') }}
 

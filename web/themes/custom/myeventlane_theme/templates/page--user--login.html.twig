@@ -1,22 +1,47 @@
-{{ attach_library('myeventlane_theme/auth') }}
+{# templates/page--user--login.html.twig #}
+{% extends "page.html.twig" %}
 
-{# Centered, full-height auth background #}
-<div class="mel-auth-page">
+{% block content %}
+  {{ attach_library('myeventlane_theme/auth') }}
+
+  <div class="mel-auth">
   <div class="mel-card">
-    <img class="mel-logo" src="{{ myeventlane_logo_src }}" alt="MyEventLane" />
+    <header class="mel-head">
+        {# Keep your original logo placement & sizing #}
+        <img
+          src="{{ myeventlane_logo_src|default(base_path ~ directory ~ '/assets/branding/MyEventLane_Logo_Transparent.png') }}"
+          alt="{{ site_name_from_config|default('MyEventLane') }} logo"
+          height="48"
+        />
+        <h1>Welcome back</h1>
+        <p>Log in to manage events, RSVPs, and tickets.</p>
+      </header>
 
-    <h1 class="mel-auth-title">Welcome back to MyEventLane</h1>
-    {# Optional subhead—delete if you want it even cleaner #}
-    {# <p class="mel-auth-subtitle">Log in to manage events, RSVPs, and tickets.</p> #}
+      <div class="mel-form">
+        {{ page.content }}
+      </div>
 
-    <div class="mel-auth-form-wrap">
-      {{ page.content }}
-    </div>
+      {# Social logins: use preprocessed links so we don’t call config() in Twig #}
+      {% if social_auth_links is defined and social_auth_links %}
+        <div class="mel-or"><span>or</span></div>
+        <nav class="mel-social">
+          {% for link in social_auth_links %}
+            <a href="{{ link.url }}" class="{{ link.provider }}">
+              {{ link.title }}
+            </a>
+          {% endfor %}
+        </nav>
+      {% endif %}
 
-    <div class="mel-auth-meta">
-      <a href="{{ path('user.pass') }}">Forgot password?</a>
-      <span> · </span>
-      <a href="{{ path('user.register') }}">Create an account</a>
+      <p class="mel-signup">
+        New here? <a href="{{ path('user.register') }}">Create an account</a>
+      </p>
+
+      {# Return to homepage link/button #}
+      <div class="mel-actions">
+        <a href="{{ path('<front>') }}" class="mel-btn mel-btn--secondary">Return to homepage</a>
+      </div>
+
     </div>
   </div>
-</div>
+{% endblock %}

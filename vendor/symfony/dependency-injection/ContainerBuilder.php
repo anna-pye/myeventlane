@@ -823,7 +823,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
 
         if ($bag instanceof EnvPlaceholderParameterBag) {
             if ($resolveEnvPlaceholders) {
-                $this->parameterBag = new ParameterBag($this->resolveEnvPlaceholders($bag->all(), true));
+                $this->parameterBag = new ParameterBag($this->resolveEnvPlaceholders($this->escapeParameters($bag->all()), true));
             }
 
             $this->envPlaceholders = $bag->getEnvPlaceholders();
@@ -1174,7 +1174,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
             if (!$definition->isDeprecated() && \is_array($factory) && \is_string($factory[0])) {
                 $r = new \ReflectionClass($factory[0]);
 
-                if (0 < strpos($r->getDocComment(), "\n * @deprecated ")) {
+                if (0 < strpos($r->getDocComment() ?: '', "\n * @deprecated ")) {
                     trigger_deprecation('', '', 'The "%s" service relies on the deprecated "%s" factory class. It should either be deprecated or its factory upgraded.', $id, $r->name);
                 }
             }
@@ -1191,7 +1191,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
                 $service = $r->getConstructor() ? $r->newInstanceArgs($arguments) : $r->newInstance();
             }
 
-            if (!$definition->isDeprecated() && 0 < strpos($r->getDocComment(), "\n * @deprecated ")) {
+            if (!$definition->isDeprecated() && 0 < strpos($r->getDocComment() ?: '', "\n * @deprecated ")) {
                 trigger_deprecation('', '', 'The "%s" service relies on the deprecated "%s" class. It should either be deprecated or its implementation upgraded.', $id, $r->name);
             }
         }
@@ -1500,8 +1500,8 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
 
         $autoconfiguredAttributes = [];
         foreach ($this->autoconfiguredAttributes as $attribute => $configurators) {
-            if (count($configurators) > 1) {
-                throw new LogicException(\sprintf('The "%s" attribute has %d configurators. Use "getAttributeAutoconfigurators()" to get all of them.', $attribute, count($configurators)));
+            if (\count($configurators) > 1) {
+                throw new LogicException(\sprintf('The "%s" attribute has %d configurators. Use "getAttributeAutoconfigurators()" to get all of them.', $attribute, \count($configurators)));
             }
 
             $autoconfiguredAttributes[$attribute] = $configurators[0];
@@ -1828,5 +1828,19 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
         }
 
         return $this->pathsInVendor[$path] = false;
+    }
+
+    private function escapeParameters(array $parameters): array
+    {
+        $params = [];
+        foreach ($parameters as $k => $v) {
+            $params[$k] = match (true) {
+                \is_array($v) => $this->escapeParameters($v),
+                \is_string($v) => str_replace('%', '%%', $v),
+                default => $v,
+            };
+        }
+
+        return $params;
     }
 }

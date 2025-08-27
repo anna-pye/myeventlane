@@ -1,7 +1,0 @@
-{%
-  set classes = [
-    'heading',
-    'heading--' ~ element|clean_class,
-  ]
-%}
-<{{ element }}{{ attributes.addClass(classes) }}>{{ text }}</{{ element }}>

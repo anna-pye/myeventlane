@@ -1,0 +1,40 @@
+@use "sass:color";
+@use "../variables" as *;
+
+.mel-ticket-card {
+  background: #f4f4f4;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+
+  &__header { margin-bottom: 8px; }
+  &__title { font-weight: 700; color: #293241; margin: 8px 0; }
+  &__price-row { font-weight: 600; margin-bottom: 12px; }
+  &__form-fields { display: grid; gap: 12px; }
+  &__footer { margin-top: 12px; }
+}
+
+.mel-badge {
+  display: inline-block;
+  background: #f5c04c;
+  color: #293241;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.mel-ticket-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+
+  &__title { color: #293241; }
+  &__price { font-weight: 700; }
+  &__controls { display: flex; align-items: center; gap: 8px; }
+}
+

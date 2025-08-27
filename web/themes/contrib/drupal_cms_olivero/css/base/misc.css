@@ -1,9 +1,0 @@
-/**
- * @file
- * Miscellaneous fixes.
- */
-
- /* Fix Gin admin theme applying negative margin. */
-.tabs-wrapper[class] {
-  margin-inline: 0;
-}

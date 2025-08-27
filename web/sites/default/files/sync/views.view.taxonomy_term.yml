@@ -233,7 +233,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
-      css_class: event-list
+      css_class: ''
       link_display: page_1
       link_url: ''
       header:

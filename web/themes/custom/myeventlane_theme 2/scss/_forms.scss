@@ -1,0 +1,493 @@
+@use 'variables' as *;
+@use 'sass:color';
+
+
+.auth-wrapper {
+  background-color: #fef5ec;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  font-family: 'Inter', sans-serif;
+
+  .auth-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+    text-align: center;
+
+    .auth-heading {
+      font-size: 28px;
+      font-weight: 700;
+      color: #293241;
+      margin-bottom: 0.25rem;
+    }
+
+    .auth-subheading {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      input.form-text,
+      input.form-email,
+      input.form-password {
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 100%;
+
+        &:focus {
+          border-color: #f26d5b;
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(242, 109, 91, 0.3);
+        }
+      }
+
+      .form-actions input[type="submit"] {
+        background-color: #f26d5b;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+
+        &:hover {
+          background-color: color.adjust(#f26d5b, $lightness: -7%);
+        }
+      }
+    }
+
+    .auth-footer {
+      margin-top: 1.5rem;
+      font-size: 14px;
+
+      a {
+        color: #f26d5b;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.login-form-container {
+  background: #fef5ec;
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 32px;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+
+  .login-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #293241;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+
+      &:focus {
+        outline: 2px solid #f26d5b;
+      }
+    }
+  }
+
+  .form-actions input[type="submit"] {
+    width: 100%;
+    background-color: #f26d5b;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(#f26d5b, 5%);
+    }
+  }
+}
+
+.login-form-container {
+  background-color: #ffffff;
+  padding: 40px 24px;
+  max-width: 800px;
+  margin: 40px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: 'Inter', sans-serif;
+
+  .form-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #293241;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-item,
+  .form-wrapper {
+    label {
+      font-weight: 600;
+      color: #293241;
+      font-size: 16px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    textarea {
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 16px;
+      width: 90%;
+
+      &:focus {
+        outline: 2px solid #f26d5b;
+      }
+    }
+  }
+
+.form-actions input[type="submit"],
+  .button--primary {
+    background-color: #f26d5b;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+      background-color: darken(#f26d5b, 5%);
+    }
+  }
+
+  .description {
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+
+// RSVP / Paid Panel Styling
+
+.rsvp-wrapper {
+  border: 2px dashed #ccc;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: #f9f9ff;
+
+  input[type="submit"] {
+    margin-top: 1rem;
+  }
+
+.ticket-panel {
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  background: #f6f9fc;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+  display: none;
+
+  &.visible {
+    display: block;
+    animation: fade-in 0.4s ease-in-out;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Mobile-first tweaks
+@media (max-width: 768px) {
+  .ticket-panel {
+    padding: 0.75rem;
+    border-radius: 8px;
+    }
+  } 
+}
+.form-item-field-donation {
+  background: #fff9f3;
+  border-left: 4px solid #ffa366;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+
+  label {
+    font-weight: bold;
+    color: #cc5200;
+  }
+
+  input {
+    border-color: #ffccaa;
+    background-color: #fff;
+  }
+}
+
+.donation-highlight {
+  background: #fef5ec;
+  border: 2px dashed #ffa07a;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+
+  label {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  .form-element {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+}
+.rsvp-form-wrapper {
+  background: #fffaf5;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  max-width: 640px;
+  margin: 2rem auto;
+
+  .rsvp-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rsvp-intro {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 2rem;
+  }
+
+  .rsvp-form-fields {
+    margin-top: 1rem;
+  }
+
+  .rsvp-donation {
+    background: #fff3e6;
+    border: 2px dashed #ffa07a;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+}
+.rsvp-submission-page {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fffdfc;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+
+  .rsvp-header {
+    margin-bottom: 2rem;
+
+    .rsvp-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1c1c1c;
+    }
+
+    .rsvp-lead {
+      font-size: 1rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .rsvp-details {
+    margin-bottom: 1.5rem;
+    .rsvp-item {
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+  }
+
+  .rsvp-donation-block {
+    background: #fff4eb;
+    border: 2px dashed #ffa07a;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .rsvp-footer {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #999;
+  }
+}
+
+// Inline Entity Form ticketing style tweaks
+.field--name-field-product-target {
+  background: #f7f9fb;
+  border-radius: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 2rem;
+
+  .form-type--textfield, .form-type--number {
+    margin-bottom: 1.1rem;
+  }
+  .inline-entity-form-add {
+    margin-top: 1.2rem;
+    button, .button {
+      background: #56a8e9;
+      color: #fff;
+      border-radius: 1.5rem;
+      padding: 0.8rem 1.8rem;
+      font-family: inherit;
+      font-size: 1.09rem;
+      font-weight: 600;
+      margin-left: 0;
+    }
+  }
+  .ief-entity-table, .ief-entity-operations {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+  }
+}
+
+
+.event-add-to-cart-form {
+  margin: $spacing-lg 0;
+  padding: $spacing-lg;
+  background: $color-bg-muted;
+  border-radius: $radius-medium;
+  box-shadow: 0 2px 8px $color-shadow;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .event-form-label {
+    font-size: $font-size-body;
+    color: $text-color-main;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-xs;
+  }
+
+  .event-form-select,
+  .event-form-input {
+    width: 100%;
+    padding: $spacing-md;
+    border-radius: $radius-small;
+    border: $border-light;
+    font-size: $font-size-body;
+    font-family: $font-family-main;
+    color: $text-color-main;
+    background: #fff;
+    margin-bottom: $spacing-sm;
+
+    &:focus {
+      outline: 2px solid $color-outline-focus;
+      border-color: $color-primary;
+    }
+  }
+
+  .event-single-ticket {
+    font-size: $font-size-body;
+    color: $text-color-main;
+    font-weight: $font-weight-semibold;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+  }
+
+  .btn-buy-ticket {
+    // Inherit all from your main button style!
+    margin-top: $spacing-md;
+  }
+}
+
+.ticket-type-list {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.ticket-type-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.ticket-type-title {
+  min-width: 140px;
+  font-weight: $font-weight-semibold;
+  color: $text-color-main;
+}
+
+.ticket-type-price {
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.ticket-type-qty input[type="number"] {
+  width: 54px;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-small;
+  border: $border-light;
+  text-align: center;
+  font-size: $font-size-body;
+}
+
+.ticket-type-stock {
+  font-size: $font-size-small;
+  color: $color-accent;
+}
+
+

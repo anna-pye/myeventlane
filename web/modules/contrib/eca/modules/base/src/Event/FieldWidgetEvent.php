@@ -19,9 +19,9 @@ class FieldWidgetEvent extends Event {
   /**
    * The value of the field widget.
    *
-   * @var string|null
+   * @var array|string|null
    */
-  protected ?string $widgetValue = NULL;
+  protected array|string|null $widgetValue = NULL;
 
   /**
    * Constructs a FieldWidgetEvent.
@@ -76,10 +76,10 @@ class FieldWidgetEvent extends Event {
   /**
    * Get the field widget value.
    *
-   * @return string|null
+   * @return array|string|null
    *   The field widget value.
    */
-  public function getWidgetValue(): ?string {
+  public function getWidgetValue(): array|string|null {
     return $this->widgetValue;
   }
 
@@ -89,7 +89,7 @@ class FieldWidgetEvent extends Event {
    * @param string $widgetValue
    *   The field widget value.
    */
-  public function setWidgetValue(string $widgetValue): void {
+  public function setWidgetValue(array|string $widgetValue): void {
     $this->widgetValue = $widgetValue;
   }
 

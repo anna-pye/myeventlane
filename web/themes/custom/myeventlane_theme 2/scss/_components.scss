@@ -1,0 +1,111 @@
+// --- Event Sidebar Add to Cart Form --- //
+
+
+@use "variables.scss" as *;
+@use 'sass:color';
+
+
+
+.my-custom-cart-form,
+.commerce-order-item-add-to-cart-form {
+  margin-left: 20px;
+  text-align: left;
+  font-family: $font-family-main;
+  font-size: $font-size-body;
+  background: transparent;
+  padding: 0;
+}
+
+.my-custom-cart-form label,
+.commerce-order-item-add-to-cart-form label {
+  font-size: $font-size-small;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-xs;
+  color: $text-color-main;
+}
+
+.ticket-type-list,
+.form-item-attributes,
+.commerce-order-item-add-to-cart-form .form-item-attributes {
+  margin-bottom: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.ticket-type-row,
+.commerce-order-item-add-to-cart-form .form-item-variation {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xs;
+
+  .ticket-type-title {
+    min-width: 120px;
+    font-weight: $font-weight-semibold;
+  }
+
+  .ticket-type-price {
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin-left: $spacing-sm;
+  }
+
+  .ticket-type-qty {
+    margin-left: auto;
+    min-width: 80px;
+  }
+
+  .ticket-type-stock {
+    font-size: $font-size-small;
+    margin-left: $spacing-sm;
+    color: $color-accent;
+  }
+}
+
+.commerce-order-item-add-to-cart-form input[type="number"],
+.commerce-order-item-add-to-cart-form select {
+  width: auto;
+  font-size: $font-size-body;
+  border-radius: $radius-small;
+  border: $border-light;
+  padding: $spacing-xs $spacing-sm;
+  margin-left: $spacing-xs;
+}
+
+.commerce-order-item-add-to-cart-form .form-actions,
+.my-custom-cart-form .form-actions {
+  margin-top: $spacing-md;
+}
+
+.commerce-order-item-add-to-cart-form input[type="submit"],
+.commerce-order-item-add-to-cart-form button,
+.my-custom-cart-form input[type="submit"],
+.my-custom-cart-form button {
+  background: $color-primary;
+  color: #fff;
+  border: none;
+  font-size: $font-size-body;
+  font-weight: $font-weight-bold;
+  border-radius: $radius-pill;
+  padding: $spacing-sm $spacing-lg;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: $spacing-sm;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    background: $color-accent;
+    outline: 2px solid $color-outline-focus;
+    outline-offset: 2px;
+  }
+}
+
+.tickets-soldout,
+.ticket-type-stock[aria-label="Sold Out"] {
+  color: $color-muted-text;
+  font-weight: $font-weight-semibold;
+  margin-left: $spacing-xs;
+  letter-spacing: 0.5px;
+}

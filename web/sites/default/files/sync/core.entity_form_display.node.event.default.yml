@@ -7,12 +7,14 @@ dependencies:
     - field.field.node.event.field_category
     - field.field.node.event.field_end_date
     - field.field.node.event.field_event
+    - field.field.node.event.field_event_capacity
     - field.field.node.event.field_event_discription
     - field.field.node.event.field_field_attendee_questions
     - field.field.node.event.field_image
     - field.field.node.event.field_limit_one_rsvp
     - field.field.node.event.field_location
     - field.field.node.event.field_product_target
+    - field.field.node.event.field_promo_expires
     - field.field.node.event.field_promo_expiry
     - field.field.node.event.field_promoted
     - field.field.node.event.field_rsvp_target
@@ -27,7 +29,6 @@ dependencies:
     - address
     - commerce_store
     - conditional_fields
-    - datetime
     - inline_entity_form
     - paragraphs
     - scheduler
@@ -65,7 +66,7 @@ content:
     third_party_settings: {  }
   field_event_discription:
     type: string_textarea
-    weight: 18
+    weight: 16
     region: content
     settings:
       rows: 5
@@ -73,7 +74,7 @@ content:
     third_party_settings: {  }
   field_field_attendee_questions:
     type: paragraphs
-    weight: 21
+    weight: 17
     region: content
     settings:
       title: Paragraph
@@ -103,7 +104,26 @@ content:
     region: content
     settings:
       display_label: true
-    third_party_settings: {  }
+    third_party_settings:
+      conditional_fields:
+        cceb475e-2282-4200-bf08-40ad37c3702a:
+          entity_type: node
+          bundle: event
+          dependee: field_ticket_type
+          settings:
+            state: visible
+            reset: false
+            condition: value
+            grouping: XOR
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: RSVP
+            effect: show
+            effect_options: {  }
+            selector: ''
   field_product_target:
     type: inline_entity_form_complex
     weight: 4
@@ -141,19 +161,6 @@ content:
             effect: show
             effect_options: {  }
             selector: ''
-  field_promo_expiry:
-    type: datetime_default
-    weight: 20
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_promoted:
-    type: boolean_checkbox
-    weight: 19
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   field_start_date:
     type: commerce_store_datetime
     weight: 6
@@ -196,7 +203,7 @@ content:
     third_party_settings: {  }
   publish_state:
     type: scheduler_moderation
-    weight: 15
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -222,20 +229,24 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 16
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   unpublish_state:
     type: scheduler_moderation
-    weight: 17
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
   field_event: true
+  field_event_capacity: true
   field_location: true
+  field_promo_expires: true
+  field_promo_expiry: true
+  field_promoted: true
   field_rsvp_target: true
   moderation_state: true
   path: true

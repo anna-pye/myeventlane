@@ -15,7 +15,7 @@ use Drupal\Tests\UnitTestCase;
 class ExternalMatcherTest extends UnitTestCase {
 
   /**
-   * @covers Drupal\linkit\Plugin\Linkit\Matcher\ExternalMatcher::canBeUrl;
+   * @covers \Drupal\linkit\Plugin\Linkit\Matcher\ExternalMatcher::canBeUrl
    */
   public function testValidExternalUrls() {
     $tests = [

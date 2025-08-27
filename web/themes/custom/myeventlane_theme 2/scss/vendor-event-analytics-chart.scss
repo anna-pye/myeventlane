@@ -1,0 +1,19 @@
+.vendor-event-analytics-chart {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(44,50,70,0.09);
+  padding: 32px 24px;
+  margin-bottom: 2rem;
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+    color: #293241;
+  }
+  .recharts-bar-rectangle {
+    rx: 8px;
+  }
+  .recharts-tooltip-label {
+    font-weight: 600;
+  }
+}

@@ -71,7 +71,20 @@ export default class LinkitEditing extends Plugin {
       linkCommandExecuting = true;
       // Any decorators should be an object provided as the second element to
       // the execute params.
-      const extraAttributeValues = args[1];
+      // If no linkit_attributes passed in event arguments (eg decorator updated), then get values from state.
+      let linkitAttributes = [];
+      const decoratorsArgIndex = 1;
+      if (args && args[decoratorsArgIndex] && !args[decoratorsArgIndex]['linkit_attributes']) {
+        this.attrs.forEach((attribute) => {
+          linkitAttributes[attribute] = evt.source[attribute];
+        });
+        args[decoratorsArgIndex]['linkit_attributes'] = linkitAttributes;
+      }
+      else {
+        linkitAttributes = args[decoratorsArgIndex]['linkit_attributes'];
+      }
+      args[decoratorsArgIndex]['linkit_attributes'] = linkitAttributes;
+      const extraAttributeValues = linkitAttributes;
       const model = this.editor.model;
       const selection = model.document.selection;
 

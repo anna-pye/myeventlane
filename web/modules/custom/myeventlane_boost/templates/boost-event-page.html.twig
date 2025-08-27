@@ -1,18 +1,14 @@
-<div class="boost-wrapper">
+{{ attach_library('myeventlane_boost/boost') }}
 
-<pre>
-event: {{ dump(event) }}
-message: {{ dump(message) }}
-purchase_form: {{ dump(purchase_form) }}
-</pre>
+<header class="boost-hero">
+  <div class="boost-hero__copy">
+    <h1 class="boost-title">Boost Your Event</h1>
+    <p class="boost-kicker">Get more visibility and sell more tickets</p>
+    <h2 class="boost-section">Upgrade options</h2>
+  </div>
+  <div class="boost-hero__art" aria-hidden="true">📣</div>
+</header>
 
-  <h1 class="boost-title">Boost “{{ event.label }}”</h1>
-  {% if message %}
-    <div class="boost-status">{{ message }}</div>
-  {% elseif purchase_form %}
-    <div class="boost-purchase-form">
-      {{ purchase_form }}
-    </div>
-    <p class="boost-benefits">Your event will be featured on the homepage and marked as “Boosted” for increased visibility!</p>
-  {% endif %}
+<div class="mel-card boost-card">
+  {{ form }}
 </div>

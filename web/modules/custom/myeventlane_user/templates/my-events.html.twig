@@ -1,0 +1,99 @@
+
+{# web/modules/custom/myeventlane_user/templates/page-my-events.html.twig #}
+<div class="layout-wrapper">
+  <div class="my-events-dashboard">
+    <h1>My Events</h1>
+
+    {# Determine if we have anything to show #}
+    {% set has_items = (rsvps is defined and rsvps and rsvps|length) or (orders is defined and orders and orders|length) %}
+
+    {% if has_items %}
+      <div class="event-card-grid">
+
+        {# ---------------- RSVPs ---------------- #}
+        {% if rsvps is defined and rsvps %}
+          {% for rsvp in rsvps %}
+            {% set event = rsvp.field_rsvp_event.entity ?? null %}
+            {% if event %}
+              {# Safely get a start date (supports single/range fields) #}
+              {% set start_raw = event.field_event_date.value
+                ?? event.field_event_date.0.value
+                ?? event.field_start_date.value
+                ?? event.field_start_date.0.value
+                ?? null %}
+              {% set start_ts = start_raw ? (start_raw|date('U')) : 0 %}
+
+              <div class="event-card">
+                <h2>{{ event.label }}</h2>
+                <p>Date: {{ start_ts ? (start_ts|format_date('custom','M j, Y')) : 'Date TBC' }}</p>
+                <span class="badge">RSVP</span>
+
+                <a href="{{ path('entity.node.canonical', {'node': event.id()}) }}" class="btn">View Details</a>
+
+                {% if event.id is defined %}
+                  <a class="btn-secondary" href="/calendar-download/{{ event.id }}" download>Download .ics</a>
+                {% endif %}
+
+                <a href="/cancel-rsvp/{{ rsvp.id }}" class="btn-cancel" onclick="return confirm('Cancel this RSVP?');">
+                  Cancel RSVP
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {# ---------------- ORDERS / TICKETS ---------------- #}
+        {% if orders is defined and orders %}
+          {% for order in orders %}
+            {# Resolve the event node from the order items (product → field_event) #}
+            {% set event_node = null %}
+            {% set event_title = null %}
+            {% set start_raw = null %}
+
+            {% for item in order.get('order_items') %}
+              {% set order_item = item.entity %}
+              {% if order_item and order_item.purchased_entity.entity %}
+                {% set product = order_item.purchased_entity.entity %}
+                {% set event_node = product.field_event.entity ?? event_node %}
+
+                {% if event_node %}
+                  {% set event_title = event_node.label %}
+                  {% set start_raw = start_raw
+                    ?? event_node.field_event_date.value
+                    ?? event_node.field_event_date.0.value
+                    ?? event_node.field_start_date.value
+                    ?? event_node.field_start_date.0.value
+                    ?? null %}
+                {% else %}
+                  {# Fallback to product title if no event ref #}
+                  {% set event_title = product.title ?? event_title %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {% set start_ts = start_raw ? (start_raw|date('U')) : 0 %}
+
+            <div class="event-card">
+              <h2>{{ event_title ?? 'Event' }}</h2>
+              <p>Order ID: #{{ order.id() }}</p>
+              <p>Date: {{ start_ts ? (start_ts|format_date('custom','M j, Y')) : 'Date TBC' }}</p>
+              <span class="badge">Ticket Purchase</span>
+
+              <a href="{{ path('entity.commerce_order.canonical', {'commerce_order': order.id()}) }}" class="btn">
+                View Ticket
+              </a>
+
+              {% if event_node and event_node.id is defined %}
+                <a class="btn-secondary" href="/calendar-download/{{ event_node.id }}" download>Download .ics</a>
+                <a class="btn" href="{{ path('entity.node.canonical', {'node': event_node.id()}) }}">View Event</a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+      </div>
+    {% else %}
+      <p class="no-events-msg">You have no upcoming RSVPs or ticket purchases.</p>
+    {% endif %}
+  </div>
+</div>

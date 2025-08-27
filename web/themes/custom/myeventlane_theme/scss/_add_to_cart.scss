@@ -1,0 +1,14 @@
+
+
+.mel-tickets { background: #fff; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 16px; }
+.mel-tickets__title { margin: 0 0 12px; font-size: 22px; color: #293241; }
+.mel-tickets__list { list-style: none; padding: 0; margin: 0; }
+.mel-tickets__row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-top: 1px solid #f4f4f4; }
+.mel-tickets__row:first-child { border-top: 0; }
+.mel-tickets__name { font-weight: 600; color: #293241; }
+.mel-tickets__meta { font-size: 14px; color: #293241; opacity: .9; display: flex; gap: 12px; }
+.mel-tickets__qty-input { width: 80px; padding: 10px; border-radius: 12px; border: 1px solid #f4f4f4; }
+.mel-btn--primary { background: #f26d5b; color: #fff; border: 0; border-radius: 999px; padding: 12px 18px; font-weight: 700; }
+.mel-btn--primary:focus { outline: 3px solid #f26d5b; outline-offset: 2px; }
+.mel-tickets__submit { width: 100%; margin-top: 12px; }
+@media (max-width: 768px) { .mel-tickets { padding: 12px; } .mel-tickets__row { flex-wrap: wrap; gap: 8px; } }

@@ -1,0 +1,57 @@
+<article class="event-card">
+
+ 
+    <div class="event-card__image">
+      {% if node.field_image.entity %}
+        <img src="{{ file_url(node.field_image.entity.uri.value) }}" alt="{{ node.field_image.alt }}" />
+      {% else %}
+        <div class="event-card__placeholder"></div>
+      {% endif %}
+
+      <div class="event-card__date-overlay">
+        <div class="event-card__month">{{ node.field_event_date.value|date("M") }}</div>
+        <div class="event-card__day">{{ node.field_event_date.value|date("d") }}</div>
+      </div>
+
+      {% if node.field_promoted.value %}
+        <div class="event-card__badge">🌟 Boosted</div>
+      {% endif %}
+    </div>
+
+    <div class="event-card__body">
+      <h3 class="event-card__title">
+        <a href="{{ url }}">{{ label }}</a>
+      </h3>
+
+      <div class="event-card__meta">
+        <div class="meta-item">
+          {{ node.field_event_date.value|date("F j, Y") }}
+        </div>
+        {% if node.field_venue.value %}
+          <div class="meta-item">
+            {{ node.field_venue.value }}
+          </div>
+        {% endif %}
+        {% if node.field_category %}
+          <div class="event-card__category">
+            {% for term in node.field_category %}
+              <a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': term.target_id}) }}">
+                {{ term.entity.name.value }}
+              </a>{% if not loop.last %} | {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+        <div class="event-card__cta">
+          {% if node.field_ticket_type.value == 'RSVP' %}
+            <a href="{{ url }}" class="btn">RSVP</a>
+          {% elseif node.field_ticket_type.value == 'Free' %}
+            <a href="{{ url }}" class="btn">Free</a>
+          {% else %}
+            <a href="{{ url }}" class="btn">Buy Tickets</a>
+          {% endif %}
+        </div>
+      </div>
+
+</article>

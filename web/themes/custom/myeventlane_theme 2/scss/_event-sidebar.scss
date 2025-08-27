@@ -1,0 +1,71 @@
+@use "variables.scss" as *;
+
+.event-main-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-xl;
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+  }
+}
+.event-main-content {
+  flex: 2;
+  min-width: 0;
+}
+.event-sidebar {
+  flex: 1;
+  background: $color-bg-offwhite;
+  border-radius: $radius-medium;
+  padding: $spacing-xl $spacing-lg;
+  position: sticky;
+  z-index: 2;
+
+
+  @media (max-width: $breakpoint-md) {
+    position: static;
+    width: 95%;
+    margin-top: $spacing-lg;
+  }
+
+.rsvp-field{ 
+   max-width: 340px;
+   margin-bottom: 0.5em;
+  }
+
+  .sidebar-card {
+    background: #fff;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 8px $color-shadow;
+    padding: $spacing-lg $spacing-md $spacing-md $spacing-md;
+    margin-bottom: $spacing-lg;
+    text-align: left;
+  }
+  
+  .sidebar-cta-title {
+    font-size: $font-size-h3;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+    color: $color-primary;
+  }
+}
+
+.event-sidebar--mobile {
+  display: none;
+  @media (max-width: $breakpoint-md) {
+    display: block;
+    margin-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
+  }
+  .rsvp-field{ 
+   max-width: auto;
+   margin-bottom: 0.5em;
+  }
+}
+
+.event-sidebar--desktop {
+  display: block;
+  @media (max-width: 375px) {
+    display: none;
+  }
+}
+

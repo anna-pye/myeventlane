@@ -1,0 +1,99 @@
+@use 'sass:color';
+@use 'variables' as *; 
+
+.public-rsvp-form {
+  background: $color-bg-offwhite;
+  padding: $spacing-2xl $spacing-xl;
+  border-radius: $radius-medium;
+  box-shadow: 0 2px 24px $color-shadow;
+  margin: 0 auto $spacing-2xl auto;
+  max-width: 440px;
+  font-family: $font-family-main, $font-family-fallback;
+
+  label {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-body;
+    color: $text-color-main;
+    margin-bottom: $spacing-xs;
+    display: block;
+  }
+
+  .form-item {
+    margin-bottom: $spacing-lg;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    border: $border-light;
+    border-radius: $radius-small;
+    padding: $spacing-md;
+    font-size: $font-size-body;
+    background: $color-bg-muted;
+    color: $text-color-main;
+    font-family: inherit;
+    margin-bottom: $spacing-sm;
+    transition: border 0.2s, background 0.2s;
+
+    &::placeholder {
+      color: $color-placeholder;
+      font-size: $font-size-small;
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid $color-outline-focus;
+      background: #fff;
+    }
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .cta-button,
+  input[type="submit"] {
+    background: $color-primary;
+    color: #fff;
+    font-size: $font-size-body;
+    border: none;
+    border-radius: $radius-pill;
+    padding: $spacing-md $spacing-2xl;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    margin-top: $spacing-xs;
+    transition: background 0.18s;
+    box-shadow: 0 2px 4px $color-shadow;
+
+    &:hover,
+    &:focus {
+      background: color.adjust($color-primary, $lightness: -8%);
+    }
+  }
+
+  .form-item--error input,
+  .form-item--error textarea {
+    border-color: $color-primary;
+    background: color.adjust($color-primary, $lightness: 38%);
+  }
+
+  // Responsive
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-lg $spacing-md;
+    max-width: 100%;
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      font-size: $font-size-small;
+    }
+    .cta-button,
+    input[type="submit"] {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

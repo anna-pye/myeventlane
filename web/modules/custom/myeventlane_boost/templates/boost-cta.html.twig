@@ -1,0 +1,14 @@
+{{ attach_library('myeventlane_boost/boost') }}
+
+<div class="mel-boost-cta">
+  {% if is_boosted %}
+  <div class="mel-boost-status">
+    <span class="mel-boost-badge"><span class="spark"></span> Boosted</span>
+    {% if expires %}<span class="mel-boost-expiry">until {{ expires|date('j M Y, g:ia') }}</span>{% endif %}
+    </div>
+  {% else %}
+    <div class="mel-boost-actions">{{ cta }}</div>
+    <p class="mel-boost-help">Boost moves your event to the top of listings and adds a featured badge.</p>
+  {% endif %}
+
+</div>

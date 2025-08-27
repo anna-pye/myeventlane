@@ -4,25 +4,30 @@ namespace Drupal\mel_auth_claim\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\user\Entity\User;
 use Drupal\Component\Serialization\Json;
+use Drupal\mel_auth_claim\Service\ClaimService;
 
 class ClaimController extends ControllerBase {
 
-  protected $service;
+  /** @var \Drupal\mel_auth_claim\Service\ClaimService */
+  protected ClaimService $claim;
 
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     $instance = new static();
-    $instance->service = $container->get('mel_auth_claim.service');
+    $instance->claim = $container->get('mel_auth_claim.service');
     return $instance;
   }
 
+  /**
+   * Redeem a one-time claim token.
+   */
   public function redeem(string $token) {
-    $row = $this->service->loadValidToken($token);
+    // Validate token.
+    $row = $this->claim->loadValidToken($token);
     if (!$row) {
       $this->messenger()->addError($this->t('This claim link is invalid or has expired.'));
-      return new RedirectResponse('/user/login');
+      return $this->redirect('user.login');
     }
 
     $email = $row['email'];
@@ -31,13 +36,22 @@ class ClaimController extends ControllerBase {
       $context = Json::decode($row['context']) ?: [];
     }
 
-    // If user exists, use it; otherwise create a minimal account (blocked=false).
-    $accounts = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties(['mail' => $email]);
+    // Find or create user by email.
+    $accounts = $this->entityTypeManager()->getStorage('user')->loadByProperties(['mail' => $email]);
+    /** @var \Drupal\user\UserInterface|null $account */
     $account = $accounts ? reset($accounts) : NULL;
 
     if (!$account) {
+      // Base the username on email local part; ensure uniqueness.
+      $base_name = preg_replace('/[^a-z0-9_.-]+/i', '', strtok($email, '@')) ?: 'user';
+      $name = $base_name;
+      $i = 1;
+      while ($this->entityTypeManager()->getStorage('user')->loadByProperties(['name' => $name])) {
+        $name = $base_name . '_' . $i++;
+      }
+
       $account = User::create([
-        'name' => $email,
+        'name' => $name,
         'mail' => $email,
         'status' => 1,
       ]);
@@ -45,15 +59,18 @@ class ClaimController extends ControllerBase {
       $account->save();
     }
 
-    // Attach historical data.
-    $this->service->attachHistoryToUser((int) $account->id(), $context + ['email' => $email]);
+    // Attach historical data (RSVP IDs, orders, etc.).
+    $this->claim->attachHistoryToUser((int) $account->id(), $context + ['email' => $email]);
 
-    // One-time sign-in.
+    // Mark token redeemed and log the user in.
+    $this->claim->redeemToken((int) $row['tid']);
     user_login_finalize($account);
-    $this->service->redeemToken((int) $row['tid']);
 
-    $this->messenger()->addStatus($this->t('Welcome! Your tickets and RSVPs have been saved to your account.'));
-    // Encourage password (or passkey) set if they don’t have one.
-    return new RedirectResponse('/my-events');
+    $this->messenger()->addStatus($this->t('Welcome! Your RSVPs and purchases have been linked to your account.'));
+
+    // Redirect to your dashboard if you have a route, else front.
+    // return $this->redirect('myeventlane.my_events'); // if you’ve defined this route
+    return $this->redirect('<front>');
   }
+
 }

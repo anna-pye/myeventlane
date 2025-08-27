@@ -1,4 +1,15 @@
+{# web/themes/custom/myeventlane_theme/templates/node--event.html.twig #}
 {{ attach_library('myeventlane_theme/event_display') }}
+
+{# ---- Safe date values ---- #}
+{% set start_raw = node.field_start_date.value ?? node.field_start_date.0.value ?? null %}
+{% set end_raw   = node.field_end_date.value   ?? node.field_end_date.0.value   ?? null %}
+{% set start_ts  = start_raw ? (start_raw|date('U')) : 0 %}
+{% set end_ts    = end_raw   ? (end_raw|date('U'))   : 0 %}
+
+{% set promo_expiry_ts = node.field_promo_expiry.value ? (node.field_promo_expiry.value|date('U')) : 0 %}
+{% set now_ts = "now"|date('U') %}
+
 <article class="event-full">
   <div class="event-main-layout">
     <div class="event-main-content">
@@ -25,34 +36,42 @@
 
       {# Boosted Badge #}
       {% set promo_expiry_value = node.field_promo_expiry.value %}
-      {% if node.field_promoted.value and node.field_promo_expiry.value > "now"|date('U') %}
-        <span class="promo-badge">🌟 Boosted</span>
+      {% if node.field_promoted.value and promo_expiry_value %}
+        <div class="event-boost-badge">
+          🌟 <strong>Boosted until: {{ promo_expiry_value|date('j M Y') }}</strong>
+        </div>
       {% endif %}
+
       <section class="event-meta">
-        {% if node.field_start_date.value %}
+        {% if start_ts %}
           <div class="event-meta-item">
-            🗓 <strong>Starts:</strong> {{ node.field_start_date.value|date("D, d M Y - H:i") }}
+            🗓 <strong>Starts:</strong>
+            <time datetime="{{ start_raw }}">{{ start_ts|format_date('custom',"D, d M Y - H:i") }}</time>
           </div>
         {% endif %}
-        {% if node.field_end_date.value %}
+
+        {% if end_ts %}
           <div class="event-meta-item">
-            🏁 <strong>Ends:</strong> {{ node.field_end_date.value|date("D, d M Y - H:i") }}
+            🏁 <strong>Ends:</strong>
+            <time datetime="{{ end_raw }}">{{ end_ts|format_date('custom',"D, d M Y - H:i") }}</time>
           </div>
         {% endif %}
+
         {% if node.field_venue.value %}
           <div class="event-meta-item">
             📍 <strong>Venue:</strong> {{ node.field_venue.value }}
           </div>
         {% endif %}
-        {% if node.field_venue_address.value %}
+
+        {% if content.field_venue_address %}
           <div class="event-meta-item">
             🗺 <strong>Address:</strong> {{ content.field_venue_address }}
           </div>
         {% endif %}
       </section>
 
-      {# Accessibility #}
-      {% if node.field_accessibility %}
+      {# Accessibility flags #}
+      {% if node.field_accessibility is defined and node.field_accessibility|length %}
         <div class="event-accessibility">
           {% for term in node.field_accessibility %}
             {% set term_machine = term.entity.field_machine_name.value ?? term.entity.name.value|lower|replace({' ': '-'}) %}
@@ -117,35 +136,78 @@
           </div>
         </div>
       </footer>
+
     </div>
 
-    {# SIDEBAR #}
-    
+    {# ---------------- SIDEBAR ---------------- #}
+
+    {% set ticket_choice = (node.field_ticket_type is defined and node.field_ticket_type.value)
+      ? node.field_ticket_type.value|lower
+      : '' %}
+    {% set product = node.field_product_target.entity ?? null %}
+    {% set variations = product ? product.getVariations() : [] %}
+    {% set has_tickets = variations|length > 0 %}
+    {% set show_rsvp = ticket_choice == 'rsvp' %}
+    {% set show_cart = ticket_choice == 'paid' and has_tickets %}
+
     <aside class="event-sidebar event-sidebar--desktop">
-      {% if type == 'rsvp' %}
+
+      {% if mel_can_boost and not mel_is_boosted %}
+        <div class="mel-boost-inline-cta" style="margin:12px 0 20px;">
+          <a class="button button--primary" href="{{ path('myeventlane_boost.boost_page', {'node': node.id}) }}">
+            Boost your event
+          </a>
+        </div>
+      {% endif %}
+
+      {% if mel_is_boosted %}
+        <div class="mel-boost-status">
+          <span class="mel-boost-badge"> Boosted</span>
+          {% if mel_boost_expires %}
+            <span class="mel-boost-expiry"> Until: {{ mel_boost_expires|date('j M Y ') }};<br>
+            {{ mel_boost_days_left }} day{{ mel_boost_days_left == 1 ? '' : 's' }} left</span>
+          {% endif %}
+          {% if mel_is_boosted %}
+            <br>
+            <span class="mel-boost-expiry">
+              <a href="{{ path('myeventlane_boost.boost_page', {'node': node.id}) }}" class="button button--ghost">Extend Boost</a>
+            </span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if show_rsvp %}
         <div class="sidebar-card">
           <h2 class="sidebar-cta-title">RSVP</h2>
-          <h2 class="sidebar-cta-title">Reserve Your Spot</h2>
-
-          {% if event.field_limit_one_rsvp.value and user_has_rsvped %}
+          {% if event.field_limit_one_rsvp is defined and event.field_limit_one_rsvp.value and user_has_rsvped %}
             <p class="warning">You’ve already RSVP’d to this event.</p>
           {% else %}
             {{ drupal_form('Drupal\\myeventlane_rsvp\\Form\\RSVPSubmissionForm', node.id) }}
           {% endif %}
         </div>
-      {% elseif type == 'paid' and add_to_cart_form is defined and add_to_cart_form %}
+      {% endif %}
+
+      {% if show_cart %}
         <div class="sidebar-card">
           <h2 class="sidebar-cta-title">Buy Tickets</h2>
-          <div class="my-custom-cart-form">
-            {{ drupal_entity('commerce_product', product_id, 'add_to_cart_form') }}
-          </div>
+          {% for item in content.field_product_target['#items'] ?? [] %}
+            {% set pid = item.target_id ?? null %}
+            {% if pid %}
+              <div class="event-actions" style="margin-bottom: 1rem;">
+                {# Optional small heading using the product label: #}
+                <div class="ticket-type-heading">{{ drupal_field('title', 'commerce_product', pid) }}</div>
+                {{ drupal_field('variations', 'commerce_product', pid, 'add_to_cart') }}
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
-      {% elseif (type != 'rsvp' and (add_to_cart_form is not defined or add_to_cart_form is empty)) %}
+      {% elseif ticket_choice == 'paid' and not has_tickets %}
         <div class="sidebar-card">
-          <div class="cta-unavailable">Registration is not available for this event.</div>
+          <div class="cta-unavailable">Tickets are not available yet.</div>
         </div>
       {% endif %}
-    </aside>
 
+
+    </aside>
   </div>
 </article>

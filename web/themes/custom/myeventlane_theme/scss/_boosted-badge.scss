@@ -1,0 +1,6 @@
+.mel-boost-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-weight:600; font-size:14px; background:#f26d5b; color:#fff; }
+.mel-boost-badge .spark { width:8px; height:8px; border-radius:50%; background:#fff; opacity:.9; }
+.mel-boost-status { display:flex; gap:12px; align-items:center; margin:8px 0 12px; }
+.mel-boost-expiry { color:#293241; font-weight:600; }
+
+.mel-boost-chip { position:absolute; top:12px; right:12px; padding:4px 10px; border-radius:999px; background:#f26d5b; color:#fff; font-weight:600; font-size:12px; box-shadow:0 2px 6px rgba(0,0,0,.08); }

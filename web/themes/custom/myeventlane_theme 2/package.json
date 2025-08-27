@@ -1,0 +1,23 @@
+{
+  "name": "myeventlane_theme",
+  "version": "1.0.0",
+  "description": "MyEventLane custom theme",
+  "main": "index.js",
+  "scripts": {
+    "build:sass": "sass scss/main.scss css/style.css --style=compressed",
+    "build:react": "vite build",
+    "watch": "sass --watch scss/main.scss:css/style.css"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.8.0",
+    "vite": "^4.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "sass": "^1.89.2"
+  },
+  "author": "Anna Pye",
+  "license": "MIT"
+}

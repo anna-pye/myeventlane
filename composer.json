@@ -15,13 +15,26 @@
             "url": "https://packages.drupal.org/8"
         }
     },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\mel_auth_claim\\": "web/modules/custom/mel_auth_claim/src/"
+        }
+      },
     "require": {
         "composer/installers": "^2.3",
         "drupal/address_map_link": "2.x-dev@dev",
+        "drupal/automatic_updates": "^4.0",
         "drupal/captcha": "2.0.9",
+        "drupal/coffee": "^2.0",
         "drupal/commerce": "^3.1",
-        "drupal/commerce_product": "^3.1",
-        "drupal/commerce_stripe": "^2.0",
+        "drupal/commerce_cart": "^3",
+        "drupal/commerce_checkout": "^3",
+        "drupal/commerce_order": "^3",
+        "drupal/commerce_payment": "^3",
+        "drupal/commerce_price": "^3",
+        "drupal/commerce_product": "^3",
+        "drupal/commerce_stock": "^3",
+        "drupal/commerce_stripe": "^2.1",
         "drupal/conditional_fields": "4.x-dev@dev",
         "drupal/config_ignore": "^3.3",
         "drupal/core": "^11.2",
@@ -29,6 +42,7 @@
         "drupal/core-project-message": "^11.2",
         "drupal/core-recipe-unpack": "^11.2",
         "drupal/core-recommended": "^11.2",
+        "drupal/dashboard": "^2.0",
         "drupal/drupal_cms_accessibility_tools": "^1.2",
         "drupal/drupal_cms_ai": "^1.2",
         "drupal/drupal_cms_analytics": "^1.2",
@@ -41,21 +55,25 @@
         "drupal/drupal_cms_person": "^1.2",
         "drupal/drupal_cms_project": "^1.2",
         "drupal/drupal_cms_seo_tools": "^1.2",
-        "drupal/drupal_cms_starter": "^1.2",
-        "drupal/eca": "2.1.11",
+        "drupal/easy_breadcrumb": "^2.0",
+        "drupal/easy_email_theme": "^1.0",
+        "drupal/eca": "2.1.13",
         "drupal/field_group": "^4.0",
         "drupal/gin": "^5.0",
         "drupal/inline_entity_form": "^3.0@rc",
+        "drupal/jquery_ui": "^1.7",
+        "drupal/linkit": "7.0.8",
         "drupal/mailsystem": "^4.5",
         "drupal/paragraphs": "1.x-dev",
         "drupal/profile": "^1.12",
-        "drupal/project_browser": "@beta",
         "drupal/recipe_installer_kit": "^1-alpha6@alpha",
+        "drupal/redirect": "^1.11",
         "drupal/smtp": "^1.4",
         "drupal/social_auth": "^4.1",
         "drupal/social_auth_apple": "^2.0",
         "drupal/social_auth_facebook": "^4.0",
         "drupal/social_auth_google": "^4.0",
+        "drupal/symfony_mailer_lite": "^2.0",
         "drupal/token": "^1.15",
         "drupal/twig_tweak": "^3.4",
         "drupal/views_infinite_scroll": "^2.0",
@@ -64,6 +82,7 @@
         "stripe/stripe-php": "^15.10"
     },
     "require-dev": {
+        "drupal/core-dev": "^11",
         "drupal/devel": "^5.4",
         "drush/drush": "^13.6",
         "mglaman/phpstan-drupal": "^2.0"
@@ -76,11 +95,14 @@
     "config": {
         "allow-plugins": {
             "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
             "drupal/core-recipe-unpack": true,
+            "drupal/core-vendor-hardening": true,
             "php-http/discovery": true,
-            "drupal/core-vendor-hardening": true
+            "phpstan/extension-installer": true,
+            "tbachert/spi": true
         },
         "sort-packages": true,
         "optimize-autoloader": true

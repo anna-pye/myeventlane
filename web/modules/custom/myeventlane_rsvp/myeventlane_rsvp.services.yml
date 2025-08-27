@@ -1,5 +1,21 @@
-# myeventlane_rsvp.services.yml
 services:
   myeventlane_rsvp.email_service:
-    class: Drupal\myeventlane_rsvp\RSVPEmailService
+    class: 'Drupal\myeventlane_rsvp\RSVPEmailService'
     arguments: ['@plugin.manager.mail', '@renderer']
+
+  myeventlane_rsvp.link_builder:
+    class: 'Drupal\myeventlane_rsvp\Service\RsvpLinkBuilder'
+    arguments: ['@csrf_token']
+
+  myeventlane_rsvp.redirect_resolver:
+    class: 'Drupal\myeventlane_rsvp\Service\RsvpRedirectResolver'
+    arguments: ['@config.factory', '@entity_type.manager']
+
+  myeventlane_rsvp.user_rsvp_repository:
+    class: 'Drupal\myeventlane_rsvp\Service\UserRsvpRepository'
+    arguments:
+      - '@database'
+      - '@entity_type.manager'
+      - '@entity_field.manager'
+      - '@date.formatter'
+      - '@myeventlane_rsvp.link_builder'

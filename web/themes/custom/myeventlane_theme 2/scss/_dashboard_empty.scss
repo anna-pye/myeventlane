@@ -1,0 +1,47 @@
+@use "sass:color";
+@use "variables.scss" as vas;
+
+.dashboard-empty {
+  text-align: center;
+  padding: vas.$spacing-3xl vas.$spacing-lg;
+
+  &__content {
+    max-width: 480px;
+    margin: 0 auto;
+    background: white;
+    border-radius: vas.$radius-medium;
+    box-shadow: 0 2px 8px vas.$color-shadow;
+    padding: vas.$spacing-2xl;
+  }
+
+  img {
+    width: 160px;
+    margin-bottom: vas.$spacing-lg;
+  }
+
+  h2 {
+    font-size: vas.$font-size-h2;
+    margin-bottom: vas.$spacing-sm;
+    color: vas.$text-color-main;
+  }
+
+  p {
+    font-size: vas.$font-size-body;
+    color: vas.$color-muted-text;
+    margin-bottom: vas.$spacing-lg;
+  }
+
+  .btn-primary {
+    background-color: vas.$color-primary;
+    color: white;
+    padding: vas.$spacing-sm vas.$spacing-lg;
+    font-weight: vas.$font-weight-bold;
+    border-radius: vas.$radius-pill;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      background-color: color.adjust(vas.$color-primary, $lightness: -5%);
+    }
+  }
+}

@@ -1,17 +1,31 @@
 uuid: 918e61a0-df3f-4d82-ba08-1f7e8d360696
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - commerce_cart
+    - commerce_checkout
+third_party_settings:
+  commerce_cart:
+    cart_block_view: commerce_cart_block
+    cart_form_view: commerce_cart_form
+    cart_expiration:
+      number: 30
+      unit: hour
+    enable_cart_message: true
+    cart: true
+  commerce_checkout:
+    checkout_flow: default
 _core:
   default_config_hash: kYapI397yx2zFJGyDEs85Hyqgfc9jhmzxqPZMl2Fqhk
-label: Default
 id: default
-workflow: order_default
+label: Default
+traits: {  }
+locked: false
+workflow: order_default_validation
 numberPattern: order_default
-refresh_mode: customer
+refresh_mode: always
 refresh_frequency: 300
 sendReceipt: true
 receiptBcc: ''
 receiptSubject: ''
-traits: {  }
-locked: false

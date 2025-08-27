@@ -730,7 +730,7 @@ abstract class ModellerBpmnBase extends ModellerBase {
     }
     $provider = $plugin->getPluginDefinition()['provider'];
     $basePath = (mb_strpos($provider, 'eca_') === 0) ?
-      str_replace('_', '/', $provider) :
+      str_replace('eca_', 'eca/', $provider) :
       $provider;
     return sprintf('%s/plugins/%s/%ss/%s/', $domain, $basePath, $plugin_type, str_replace([':'], '_', $plugin->getPluginId()));
   }
@@ -752,7 +752,7 @@ abstract class ModellerBpmnBase extends ModellerBase {
         [$element['camunda:properties']['camunda:property']] :
         $element['camunda:properties']['camunda:property'];
       foreach ($elements as $child) {
-        if ($child['@attributes']['name'] === $property_name) {
+        if (isset($child['@attributes']['name']) && $child['@attributes']['name'] === $property_name) {
           return $child['@attributes']['value'];
         }
       }

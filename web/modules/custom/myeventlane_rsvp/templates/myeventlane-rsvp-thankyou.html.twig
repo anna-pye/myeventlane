@@ -1,0 +1,112 @@
+{#
+/**
+ * @file
+ * Thank You page after an RSVP submission (MyEventLane).
+ *
+ * Variables (from controller + preprocess):
+ * - event: \Drupal\node\NodeInterface|null
+ * - event_image: Render array for responsive image (optional, recommended)
+ * - event_date_formatted: string (e.g., "Sat 23 Aug 2025, 7:00–9:00pm")
+ * - event_location_formatted: string (venue + formatted address)
+ * - actions: array of render arrays:
+ *     - actions.event (link to View Event)
+ *     - actions.ics   (link to .ics download)
+ *     - actions.home  (link to /events)
+ * - recommended: render array (Views block: recommended_for_you_affinity:block_1)
+ *
+ * Notes:
+ * - UTM parameters are appended in preprocess (not in Twig).
+ * - "View Event" CTA is gated in preprocess (removed if missing/unpublished).
+ * - Mobile-first; 1 column → 2 columns ≥768px (content left, recommended right).
+ * - Uses semantic landmarks, proper heading order, and visible focus styles.
+ */
+#}
+
+{{ attach_library('myeventlane_rsvp/thankyou') }}
+
+<section class="mel-thanks" aria-labelledby="mel-thanks-title">
+  <div class="mel-thanks__container">
+
+    <!-- Main content -->
+    <main class="mel-thanks__main" role="main">
+      <header class="mel-thanks__header" aria-live="polite">
+        <h1 id="mel-thanks-title" class="mel-thanks__title">Thanks for your RSVP!</h1>
+        <p class="mel-thanks__subtitle">
+          You’ll receive a confirmation email shortly. Save the date and share it with friends.
+        </p>
+      </header>
+
+      <!-- Event summary -->
+      <article class="mel-eventcard" aria-labelledby="mel-eventcard-title">
+        {% if event %}
+          {% if event_image %}
+            <div class="mel-eventcard__media">
+              {{ event_image }}
+            </div>
+          {% endif %}
+
+          <div class="mel-eventcard__body">
+            <h2 id="mel-eventcard-title" class="mel-eventcard__title">{{ event.label }}</h2>
+
+            <dl class="mel-eventcard__meta">
+              {% if event_date_formatted %}
+                <div class="mel-eventcard__meta-row">
+                  <dt class="mel-eventcard__meta-label">When</dt>
+                  <dd class="mel-eventcard__meta-value">{{ event_date_formatted }}</dd>
+                </div>
+              {% endif %}
+
+              {% if event_location_formatted %}
+                <div class="mel-eventcard__meta-row">
+                  <dt class="mel-eventcard__meta-label">Where</dt>
+                  <dd class="mel-eventcard__meta-value">{{ event_location_formatted }}</dd>
+                </div>
+              {% endif %}
+            </dl>
+
+            <!-- CTAs (render arrays) -->
+            <div class="mel-actions" role="group" aria-label="Event actions">
+              {% if actions.event is defined and actions.event %}
+                <span class="mel-actions__item mel-btn mel-btn--primary">{{ actions.event }}</span>
+              {% endif %}
+              {% if actions.ics is defined and actions.ics %}
+                <span class="mel-actions__item mel-btn mel-btn--secondary">{{ actions.ics }}</span>
+              {% endif %}
+              {% if actions.home is defined and actions.home %}
+                <span class="mel-actions__item mel-btn mel-btn--ghost">{{ actions.home }}</span>
+              {% endif %}
+            </div>
+          </div>
+        {% else %}
+          <!-- Graceful fallback if event is missing -->
+          <div class="mel-eventcard__empty">
+            <h2 class="mel-eventcard__title">RSVP received.</h2>
+            <p>We couldn’t load the event details, but your RSVP has been recorded.</p>
+            <div class="mel-actions" role="group" aria-label="Next steps">
+              {% if actions.home is defined and actions.home %}
+                <span class="mel-actions__item mel-btn mel-btn--ghost">{{ actions.home }}</span>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </article>
+    </main>
+
+    <!-- Recommended (stacks below on mobile; sits right on desktop) -->
+    <aside class="mel-thanks__aside" aria-label="Recommended events">
+      <div class="mel-aside-card">
+        <h2 class="mel-aside-card__title">Also recommended</h2>
+        <div class="mel-aside-card__content">
+          {% if recommended is defined and recommended %}
+            {{ recommended }}
+          {% else %}
+            <div class="mel-recommended__empty" role="note">
+              <p>No recommendations yet. Explore upcoming events to discover more.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>

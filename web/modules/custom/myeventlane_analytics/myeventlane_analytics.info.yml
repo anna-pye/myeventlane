@@ -3,3 +3,6 @@ type: module
 description: 'Analytics dashboard and reporting for MyEventLane.'
 core_version_requirement: ^11
 package: Custom
+dependencies:
+  - drupal:views
+  - drupal:node

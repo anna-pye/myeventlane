@@ -1,0 +1,37 @@
+{{ attach_library('myeventlane_theme/mel_tickets') }}
+
+<article class="mel-ticket-card__product">
+  {% if content.title is defined %}
+    <h3 class="mel-ticket-card__title">{{ content.title }}</h3>
+  {% endif %}
+
+  <div class="mel-ticket-card__meta">
+    {% if content.variation_field_variation_title is defined %}
+      <div class="mel-ticket-card__row">
+        <span class="mel-ticket-card__label">Ticket</span>
+        <span class="mel-ticket-card__value">{{ content.variation_field_variation_title }}</span>
+      </div>
+    {% endif %}
+
+    {% if content.variation_field_variation_price is defined %}
+      <div class="mel-ticket-card__row">
+        <span class="mel-ticket-card__label">Price</span>
+        <span class="mel-ticket-card__value">{{ content.variation_field_variation_price }}</span>
+      </div>
+    {% endif %}
+
+    {% if content.variation_field_variation_field_show_remaining is defined %}
+      <div class="mel-ticket-card__row">
+        <span class="mel-ticket-card__label">Availability</span>
+        <span class="mel-ticket-card__value">{{ content.variation_field_variation_field_show_remaining }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  {# 🔑 Always render the lazy-built form #}
+  {% if content.variations is defined %}
+    <div class="mel-ticket-card__cta">
+      {{ content.variations }}
+    </div>
+  {% endif %}
+</article>

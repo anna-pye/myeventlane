@@ -141,7 +141,6 @@ class Views extends RenderElementActionBase {
       }
     }
 
-    // @phpstan-ignore-next-line
     $build = views_embed_view(...$args);
 
     $markup = $this->renderer->executeInRenderContext(new RenderContext(), function () use (&$build) {

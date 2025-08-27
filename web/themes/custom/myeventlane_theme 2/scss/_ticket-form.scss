@@ -1,0 +1,52 @@
+@use 'variables' as *;
+@use 'sass:color';
+
+.ticket-inline-wrapper {
+  background: #fef5ec;
+  padding: 24px;
+  border-radius: 16px;
+  margin-top: 16px;
+
+  input {
+    margin-bottom: 12px;
+  }
+
+  .form-submit {
+    background-color: #f26d5b;
+    color: #fff;
+    border-radius: 24px;
+    padding: 10px 20px;
+    font-weight: bold;
+  }
+
+  input[type='submit'] {
+    background-color: #f26d5b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-top: 12px;
+    cursor: pointer;
+
+    &:hover {
+    background-color: color.adjust(#f26d5b, $lightness: -5%);
+    }
+  }
+    .form-section-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .ticket-inline-wrapper {
+    padding: 16px;
+  }
+
+  .form-item input {
+    font-size: 16px;
+  }
+}

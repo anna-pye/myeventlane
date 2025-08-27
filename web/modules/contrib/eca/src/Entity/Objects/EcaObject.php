@@ -324,7 +324,6 @@ abstract class EcaObject {
 
       // Ask predecessor(s) for having previously declared entities.
       $predecessor = $this->predecessor ?? NULL;
-      // @phpstan-ignore-next-line
       if ($predecessor instanceof ObjectWithPluginInterface && $predecessor instanceof self && $objects = $this->filterEntities($predecessor->getObjects($predecessor->getPlugin()))) {
         return $objects;
       }

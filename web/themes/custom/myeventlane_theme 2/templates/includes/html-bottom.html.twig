@@ -1,0 +1,21 @@
+{#
+  html-bottom.html.twig
+  Optional bottom-of-page include used in page.html.twig.
+  Use for deferred scripts, analytics, or 3rd-party widgets.
+#}
+
+{# Example: Stripe JS loader (deferred) #}
+<script src="https://js.stripe.com/v3/" defer></script>
+
+{# Example: Plausible analytics #}
+{#
+<script defer data-domain="myeventlane.com" src="https://plausible.io/js/script.js"></script>
+#}
+
+{# Placeholder for any future site-specific JS #}
+<script>
+  // Example: add 'js-enabled' class to body
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('js-enabled');
+  });
+</script>

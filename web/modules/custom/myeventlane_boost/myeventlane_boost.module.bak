@@ -1,0 +1,134 @@
+<?php
+
+declare(strict_types=1);
+
+
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Database\Database;
+use Drupal\commerce_product\Entity\ProductVariationInterface;
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Adds hidden target-event value to Boost add-to-cart forms via ?event=NID.
+ */
+function myeventlane_boost_form_alter(array &$form, FormStateInterface $form_state, $form_id): void {
+  if ($form_id !== 'commerce_cart_add_to_cart_form') {
+    return;
+  }
+
+  // Only inject for order item type 'boost'.
+  if (!isset($form['#order_item_type']) || $form['#order_item_type'] !== 'boost') {
+    return;
+  }
+
+  $request = \Drupal::request();
+  $event_id = (int) ($request->query->get('event') ?? 0);
+  if ($event_id > 0) {
+    // Order item field structure: order_item[field_target_event][0][target_id]
+    $form['field_target_event'] = [
+      '#type' => 'hidden',
+      '#value' => $event_id,
+      '#parents' => ['order_item', 'field_target_event', 0, 'target_id'],
+    ];
+  }
+}
+
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function myeventlane_boost_preprocess_node(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+  if (!$node instanceof \Drupal\node\NodeInterface || $node->bundle() !== 'event') {
+    return;
+  }
+  $account = \Drupal::currentUser();
+
+  // Compute boosted state (UTC-safe).
+  $promoted = (bool) $node->get('field_promoted')->value;
+  $expires_val = $node->get('field_promo_expires')->value;
+  $expires_ts = $expires_val ? (new \DateTimeImmutable($expires_val, new \DateTimeZone('UTC')))->getTimestamp() : 0;
+  $variables['mel_is_boosted'] = $promoted && ($expires_ts > \Drupal::time()->getRequestTime());
+  $variables['mel_boost_expires'] = $expires_val;
+
+  // Compute permission in PHP, not in Twig.
+  $is_owner = ((int) $node->getOwnerId() === (int) $account->id());
+  $can_purchase = $account->hasPermission('purchase boost for events');
+  $can_admin = $node->access('update', $account);
+  $variables['mel_can_boost'] = ($is_owner || $can_purchase || $can_admin);
+
+  // Ensure styles.
+  $variables['#attached']['library'][] = 'myeventlane_boost/boost';
+}
+
+/**
+ * Implements hook_cron().
+ * Unflags expired promotions.
+ */
+function myeventlane_boost_cron(): void {
+  $connection = Database::getConnection();
+  $now = new \DateTimeImmutable('now', new \DateTimeZone(date_default_timezone_get()));
+  $now_iso = $now->format('Y-m-d\TH:i:s');
+
+  $query = $connection->select('node__field_promoted', 'p');
+  $query->join('node__field_promo_expires', 'e', 'e.entity_id = p.entity_id AND e.langcode = p.langcode');
+  $query->fields('p', ['entity_id']);
+  $query->condition('p.field_promoted_value', 1);
+  $query->condition('e.field_promo_expires_value', $now_iso, '<=');
+  $nids = $query->execute()->fetchCol();
+
+  if ($nids) {
+    /** @var \Drupal\myeventlane_boost\BoostManager $manager */
+    $manager = \Drupal::service('myeventlane_boost.manager');
+    foreach ($nids as $nid) {
+      $manager->revokeIfExpired((int) $nid);
+    }
+  }
+}
+
+
+
+/**
+ * Implements hook_theme().
+ *
+ * NOTE: hook_theme() must be in the .module file for modules.
+ */
+function myeventlane_messaging_theme($existing, $type, $theme, $path) {
+  $tpl_path = drupal_get_path('module', 'myeventlane_messaging') . '/templates';
+  return [
+    'myeventlane_email' => [
+      'variables' => ['body' => '', 'context' => []],
+      'template'  => 'myeventlane-email',
+      'path'      => $tpl_path,
+    ],
+    'myeventlane_messaging_inline' => [
+      'variables' => ['template' => '', 'context' => []],
+      'template'  => 'myeventlane-messaging-inline',
+      'path'      => $tpl_path,
+    ],
+  ];
+}
+
+/**
+ * Preprocess for myeventlane_email.
+ */
+function template_preprocess_myeventlane_email(array &$variables): void {
+  $variables['attributes'] = new Attribute(['style' => 'margin:0;padding:0;background:#fef5ec;']);
+}
+
+/**
+ * Implements hook_mail().
+ * Single generic key used by MessagingManager.
+ */
+function myeventlane_boost_mail($key, &$message, $params) {
+  if ($key !== 'generic') {
+    return;
+  }
+  $message['subject'] = $params['subject'] ?? '(no subject)';
+  $message['body']    = $params['html'] ?? $params['body'] ?? '';
+  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8';
+}
+
+

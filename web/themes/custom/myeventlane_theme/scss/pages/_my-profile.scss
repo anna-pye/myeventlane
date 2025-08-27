@@ -1,6 +1,41 @@
 @use "sass:math";
 @use "../variables" as vars;
 
+
+.mel-profile {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: vars.$spacing-xl;
+
+  .mel-title {
+    font-family: vars.$font-family-main, vars.$font-family-fallback;
+    font-size: vars.$font-size-h2;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+    margin: 0 0 vars.$spacing-md;
+  }
+
+  .mel-profile__body {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 8px vars.$color-shadow;
+    padding: vars.$spacing-xl;
+  }
+
+  .mel-empty {
+    text-align: center;
+    color: vars.$color-muted-text;
+    padding: vars.$spacing-xl 0;
+  }
+}
+
+/* account menu highlight (optional) */
+.menu-item--my-profile > a {
+  border-radius: vars.$radius-small;
+  padding: 6px 10px;
+}
+
+
 /* ---------- Base layout tweaks ---------- */
 .layout-wrapper {
   padding-inline: vars.$spacing-xl;

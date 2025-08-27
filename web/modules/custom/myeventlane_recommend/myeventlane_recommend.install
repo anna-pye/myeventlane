@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for MyEventLane Recommend.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function myeventlane_recommend_install(): void {
+  $schema = \Drupal::database()->schema();
+
+  if (!$schema->tableExists('myeventlane_user_affinity')) {
+    $schema->createTable('myeventlane_user_affinity', [
+      'fields' => [
+        'uid' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+        'tid' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+        'weight' => ['type' => 'float', 'size' => 'normal', 'not null' => TRUE, 'default' => 0],
+        'changed' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0],
+      ],
+      'primary key' => ['uid', 'tid'],
+      'indexes' => [
+        'tid' => ['tid'],
+        'uid' => ['uid'],
+      ],
+    ]);
+  }
+}

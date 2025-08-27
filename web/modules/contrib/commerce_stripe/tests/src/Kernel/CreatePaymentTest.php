@@ -118,7 +118,7 @@ class CreatePaymentTest extends StripeIntegrationTestBase {
    * @return \Generator
    *   The test data.
    */
-  public function dataProviderCreatePayment() {
+  public static function dataProviderCreatePayment() {
     // 3DS 2 authentication must be completed for the payment to be successful.
     yield [
       'pm_card_threeDSecure2Required',

@@ -1,0 +1,123 @@
+@use "sass:color";
+/* point this import at your theme tokens file */
+@use "variables" as vars;
+
+/* ======= Hero ======= */
+.boost-hero {
+  display: flex; align-items: center; justify-content: space-between; gap: vars.$spacing-xl;
+  margin: vars.$spacing-xl 0 vars.$spacing-lg;
+}
+.boost-title {
+  margin: 0;
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: vars.$font-weight-bold;
+  letter-spacing: -0.01em;
+  color: vars.$color-primary; /* coral title */
+}
+.boost-kicker {
+  margin: vars.$spacing-sm 0;
+  color: vars.$text-color-main;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: vars.$font-weight-semibold;
+}
+.boost-section {
+  margin: vars.$spacing-md 0 0;
+  font-size: vars.$font-size-h3;
+  color: vars.$text-color-main;
+}
+.boost-hero__art {
+  inline-size: 120px; block-size: 120px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: color.adjust(vars.$color-accent, $lightness: +14%);
+  font-size: 56px; line-height: 1; /* emoji size */
+}
+
+/* ======= Card wrapper ======= */
+.boost-card {
+  background: #fff;
+  border: vars.$border-light;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 8px 24px vars.$color-shadow;
+  padding: vars.$spacing-lg;
+}
+
+/* The form renders these containers (see form build below) */
+.boost-list {
+  display: flex; flex-direction: column; gap: vars.$spacing-md;
+  margin: 0 0 vars.$spacing-lg;
+}
+
+/* One selectable row (icon | title/desc | price | radio) */
+.boost-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto auto;
+  gap: vars.$spacing-md;
+  align-items: center;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  background: vars.$color-bg-offwhite;
+  border: vars.$border-light;
+  border-radius: vars.$radius-small;
+  transition: background-color .12s ease, box-shadow .12s ease;
+
+  &:hover { background: color.adjust(vars.$color-bg-offwhite, $lightness: -1.5%); box-shadow: 0 2px 8px vars.$color-shadow; }
+}
+
+.boost-row__icon {
+  inline-size: 40px; block-size: 40px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: color.adjust(vars.$color-accent, $lightness: +18%);
+  font-size: 22px; line-height: 1;
+}
+
+.boost-row__text {
+  display: grid; gap: 2px;
+}
+.boost-row__title {
+  margin: 0;
+  font-weight: vars.$font-weight-bold;
+  font-size: vars.$font-size-h3;
+  color: vars.$text-color-main;
+}
+.boost-row__desc {
+  margin: 0;
+  color: vars.$color-muted-text;
+  font-size: vars.$font-size-small;
+}
+
+.boost-row__price {
+  justify-self: end;
+  font-weight: vars.$font-weight-semibold;
+  color: vars.$color-navy;
+}
+
+/* Pretty radio on the right (looks like rounded checkbox) */
+.boost-row__radio input[type="radio"] {
+  appearance: none;
+  inline-size: 24px; block-size: 24px;
+  border-radius: 8px;
+  border: 2px solid vars.$color-accent;
+  background: #fff;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background-color .12s ease, border-color .12s ease, box-shadow .12s ease;
+}
+.boost-row__radio input[type="radio"]:checked {
+  background: vars.$color-accent;
+  border-color: vars.$color-accent;
+  box-shadow: 0 0 0 3px color.adjust(vars.$color-accent, $alpha: -0.75);
+}
+.boost-row__radio input[type="radio"]:focus-visible {
+  outline: 3px solid vars.$color-outline-focus; outline-offset: 2px;
+}
+
+/* Footer buttons */
+.boost-footer {
+  display: flex; justify-content: space-between; gap: vars.$spacing-md;
+}
+@media (max-width: vars.$breakpoint-md) {
+  .boost-hero { flex-direction: column; align-items: flex-start; }
+  .boost-footer { flex-direction: column-reverse; }
+}

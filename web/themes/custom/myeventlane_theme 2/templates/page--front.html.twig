@@ -1,0 +1,72 @@
+{# Custom front page layout #}
+
+{% include '@myeventlane_theme/partials/header.html.twig' %}
+
+{% block content %}
+<div class="homepage layout-container">
+
+  <main role="main" class="homepage-main">
+    <div class="page-inner">
+
+      <section class="hero">
+        <h1 class="hero__tagline">
+          Run Your<br>Show
+        </h1>
+       
+      <p class="hero__subtitle">Empowering Event Creators</p>
+
+       {% if category_terms is defined and category_terms|length > 0 %}
+        <div class="category-filters">
+
+          {# All Events pill goes first #}
+          <a href="/events" class="filter-pill filter-yellow">All Events</a>
+
+          {% for term in category_terms %}
+            {% set class = '' %}
+            {% if term.slug == 'arts' %}
+              {% set class = 'filter-yellow' %}
+            {% elseif term.slug == 'lgbtqi' %}
+              {% set class = 'filter-purple' %}
+            {% elseif term.slug == 'music' %}
+              {% set class = 'filter-blue' %}
+            {% elseif term.slug == 'on-line' %}
+              {% set class = 'filter-blue' %}
+            {% elseif term.slug == 'workshop' %}
+              {% set class = 'filter-coral' %}
+            {% endif %}
+
+            <a href="{{ term.url }}" class="filter-pill {{ class }}">{{ term.name }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+        <div class="hero__search">
+          <input type="text" placeholder="Search events…" />
+          <button class="search-button">Search</button>
+        </div>
+
+        <div class="featured-events-header">
+            <h2 class="section-title">Featured Events</h2>
+            <a href="/node/add/event" class="create-event-btn">Create an Event</a>
+          </div>
+
+      </section>
+      {% if page.content %}
+        <div id="content" class="layout-content">
+          {{ page.content }}
+        </div>
+      {% endif %}
+       </div>
+  
+  </main>
+
+  {% if page.footer %}
+    <footer class="site-footer">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+  
+{% include '@myeventlane_theme/partials/footer.html.twig' %}
+
+</div>
+{% endblock %}

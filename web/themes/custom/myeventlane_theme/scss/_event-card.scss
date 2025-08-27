@@ -73,7 +73,7 @@
 
     img {
       width: 100%;
-      height: 124px;
+      height: 200px;
       object-fit: cover;
       border-radius: vars.$radius-medium vars.$radius-medium 0 0;
       background: #e8e8e8;
@@ -186,3 +186,174 @@
     }
   }
 }
+
+/* Page container spacing */
+.mel-rsvps-page {
+  margin-top: vars.$spacing-xl;
+}
+
+/* Section titles (match brand: Nunito, bold, navy) */
+.mel-section-title {
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: vars.$font-weight-bold;
+  color: vars.$text-color-main;
+  margin: 0 0 vars.$spacing-lg 0;
+}
+
+/* Two-up centered grid for the RSVP cards */
+.mel-rsvp-grid.event-card-buffered {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center;
+  gap: vars.$spacing-2xl;
+  padding-bottom: vars.$spacing-3xl;
+  background-color: vars.$color-bg-offwhite;
+
+  .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 { grid-column: auto !important; }
+  .event-card-wrapper { width: 100%; }
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: vars.$spacing-lg;
+    padding-bottom: vars.$spacing-2xl;
+  }
+}
+
+/* Recommended grid wrapper — let the View fill with cards/teasers */
+.mel-reco {
+  margin-top: vars.$spacing-xl;
+}
+.mel-reco-title {
+  margin-top: vars.$spacing-2xl;
+}
+
+/* If the View outputs node teasers, we still want a neat grid */
+.mel-reco-grid {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center;
+  gap: vars.$spacing-2xl;
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: vars.$spacing-lg;
+  }
+}
+
+/* Ensure responsive image fills the header slot */
+.mel-rsvp-grid .event-card__image,
+.mel-rsvp-grid .event-card__image picture,
+.mel-rsvp-grid .event-card__image img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+  border-radius: vars.$radius-medium vars.$radius-medium 0 0;
+  background: #e8e8e8;
+}
+
+/* Links-as-buttons in CTAs */
+.event-card__cta .btn {
+  background-color: vars.$color-highlight;
+  color: vars.$text-color-main;
+  font-weight: vars.$font-weight-semibold;
+  font-size: vars.$font-size-small;
+  padding: 7px 20px;
+  border-radius: vars.$radius-pill;
+  box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+  transition: background 0.16s;
+  margin-right: 8px;
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust(vars.$color-highlight, $lightness: 25%);
+  }
+}
+
+
+/* Scope to the profile RSVP view only so we don't affect other grids */
+.mel-rsvp-grid {
+  /* center the grid block on the page */
+  max-width: 1160px; /* 2 * 520 + gap */
+  margin: 0 auto;
+
+  /* force exactly two columns on wide screens, centered */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center; /* centers the two fixed-width tracks */
+  gap: vars.$spacing-2xl;
+  padding-bottom: vars.$spacing-3xl;
+  background-color: vars.$color-bg-offwhite;
+
+  /* kill any legacy span rules coming from _event-card.scss */
+  .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 { grid-column: auto !important; }
+
+  /* the card itself should not stretch beyond the track */
+  .event-card-wrapper { width: 100%; }
+
+  @media (max-width: vars.$breakpoint_md) {
+    grid-template-columns: 1fr;
+    max-width: 560px; /* single card width */
+    gap: vars.$spacing-lg;
+    padding-bottom: vars.$spacing-2xl;
+  }
+}
+
+/* Ensure images fill the header slot even when responsive_image emits <picture> */
+.mel-rsvp-grid .event-card__image,
+.mel-rsvp-grid .event-card__image picture,
+.mel-rsvp-grid .event-card__image img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+  border-radius: vars.$radius-medium vars.$radius-medium 0 0;
+  background: #e8e8e8;
+}
+.event-card__image {
+  min-height: 124px; // ensures overlay space even if no <img>
+  background: #e8e8e8;
+  }
+
+/* Ensure the picture/img fills our slot even with responsive_image */
+.event-card__image picture,
+.event-card__image img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+  border-radius: vars.$radius-medium vars.$radius-medium 0 0;
+  background: #e8e8e8;
+}
+
+/* Links rendered as buttons */
+.event-card__cta .btn {
+  background-color: vars.$color-highlight;
+  color: vars.$text-color-main;
+  font-weight: vars.$font-weight-semibold;
+  font-size: vars.$font-size-small;
+  padding: 7px 20px;
+  border-radius: vars.$radius-pill;
+  box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+  transition: background 0.16s;
+  margin-right: 8px;
+}
+.event-card__cta .btn:hover,
+.event-card__cta .btn:focus {
+  background-color: color.adjust(vars.$color-highlight, $lightness: 25%);
+}
+
+

@@ -9,7 +9,7 @@ use Drupal\Tests\ckeditor5\Kernel\ValidatorsTest as CKEditor5CoreValidatorsTest;
 /**
  * @covers \Drupal\linkit\Plugin\CKEditor5Plugin\Linkit::validChoices
  * @covers \Drupal\linkit\Plugin\CKEditor5Plugin\Linkit::requireProfileIfEnabled
- * @covers linkit.schema.yml
+ * @see linkit.schema.yml
  *
  * @group linkit
  */

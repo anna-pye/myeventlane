@@ -1,0 +1,166 @@
+<?php
+
+use Drupal\Core\Url;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariationInterface;
+
+/**
+ * Implements hook_theme_suggestions_form_alter().
+ */
+function myeventlane_theme_theme_suggestions_form_alter(array &$suggestions, array $variables) {
+  if ($variables['element']['#form_id'] === 'user_register_form') {
+    $suggestions[] = 'form__user_register_form';
+  }
+}
+
+/**
+ * Implements hook_preprocess_form__user_register_form().
+ */
+function myeventlane_theme_preprocess_form__user_register_form(&$variables) {
+  $variables['form'] = $variables['element'];
+}
+
+/**
+ * Implements hook_preprocess_page().
+ * Adds taxonomy terms for category buttons on the homepage.
+ */
+function myeventlane_theme_preprocess_page(array &$variables) {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $terms = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadTree('event_categories');
+
+    $variables['category_terms'] = [];
+
+    foreach ($terms as $term) {
+      $variables['category_terms'][] = [
+        'tid' => $term->tid,
+        'name' => $term->name,
+        'slug' => strtolower(str_replace(' ', '-', $term->name)),
+        'url' => Url::fromRoute('entity.taxonomy_term.canonical', ['taxonomy_term' => $term->tid])->toString(),
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_user().
+ * Loads vendor-specific dashboard content if applicable.
+ */
+function myeventlane_theme_preprocess_user(array &$variables) {
+  // Get user entity (works reliably in all cases)
+  $user = $variables['user'] ?? NULL;
+
+  if ($user instanceof User && $user->hasRole('vendor')) {
+    $variables['theme_hook_suggestions'][] = 'user__vendor_dashboard';
+    $variables['events'] = myeventlane_get_vendor_events($user);
+  }
+}
+
+/**
+ * Helper: Gets the current vendor's submitted event nodes.
+ *
+ * @param \Drupal\user\Entity\User $user
+ *   The user entity object.
+ *
+ * @return array
+ *   A keyed array of event data for Twig use.
+ */
+function myeventlane_get_vendor_events(User $user) {
+  $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+  $nids = $query
+    ->condition('type', 'event')
+    ->condition('uid', $user->id())
+    ->condition('status', [0, 1], 'IN') // Published or Unpublished
+    ->sort('created', 'DESC')
+    ->accessCheck(TRUE)
+    ->execute();
+
+  $nodes = Node::loadMultiple($nids);
+  $events = [];
+
+  foreach ($nodes as $node) {
+    $status = $node->isPublished() ? 'Published' : 'Pending';
+    $status_class = $node->isPublished() ? 'published' : 'pending';
+
+    $events[] = [
+      'title' => $node->label(),
+      'date' => $node->get('field_start_date')->date
+        ? date('j M Y, g:ia', strtotime($node->get('field_start_date')->value))
+        : 'No date',
+      'location' => $node->get('field_location')->value ?? 'TBA',
+      'status' => $status,
+      'status_class' => $status_class,
+      'edit_url' => $node->toUrl('edit-form')->toString(),
+      'view_url' => $node->toUrl()->toString(),
+    ];
+  }
+
+  return $events;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function myeventlane_theme_form_node_event_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#attached']['library'][] = 'myeventlane_theme/event_form_toggle';
+}
+
+/**
+ * Implements hook_preprocess_node().
+ * - Sets the `type` variable for RSVP sidebar rendering in Twig
+ * - Handles ticket form logic for paid events
+ */
+function myeventlane_theme_preprocess_node(array &$variables) {
+  $node = $variables['node'] ?? NULL;
+
+  if ($node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'event' && ($variables['view_mode'] ?? NULL) === 'full') {
+
+    // 1. Set the `type` variable for Twig, e.g. 'rsvp' or 'paid'
+    if ($node->hasField('field_ticket_type') && !$node->get('field_ticket_type')->isEmpty()) {
+      $variables['type'] = strtolower($node->get('field_ticket_type')->value);
+    }
+
+    // 2. Ticket selector or add-to-cart form for paid events (optional: keep both, or just one as needed)
+    if (
+      $node->hasField('field_ticket_type') &&
+      $node->field_ticket_type->value === 'paid' &&
+      $node->hasField('field_product_target') &&
+      !$node->get('field_product_target')->isEmpty()
+    ) {
+      $product = $node->get('field_product_target')->entity;
+      if ($product instanceof \Drupal\commerce_product\Entity\Product) {
+        // Optional: your ticket selector render array (custom logic)
+        $form = myeventlane_ticket_selector_render($product);
+        $variables['ticket_form'] = \Drupal::service('renderer')->render($form);
+
+        // Add-to-cart form view mode (Commerce best practice)
+        $variables['add_to_cart_form'] = \Drupal::entityTypeManager()
+          ->getViewBuilder('commerce_product')
+          ->view($product, 'add_to_cart_form');
+      }
+    }
+  }
+}
+
+/**
+ * Stub: Render a ticket selector for the event.
+ * Replace this with real ticket purchase UI when ready.
+ *
+ * @param \Drupal\commerce_product\Entity\Product $product
+ *   The Commerce product entity for the event tickets.
+ *
+ * @return array
+ *   A render array or placeholder.
+ */
+function myeventlane_ticket_selector_render(Product $product) {
+  return [
+    '#markup' => '<div class="ticket-selector-placeholder">Ticket selector coming soon.</div>',
+    '#allowed_tags' => ['div'],
+  ];
+}

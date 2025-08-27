@@ -1,0 +1,48 @@
+.stripe-preview-block {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(44,50,70,0.09);
+  padding: 32px 24px;
+  .stripe-badge {
+    display: inline-block;
+    background: #6e7ef2;
+    color: #fff;
+    border-radius: 12px;
+    padding: 3px 12px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .stripe-amount {
+    color: #f26d5b;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .btn-boosted-pay {
+    background: #f26d5b;
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover { background: #d45b45; }
+    display: flex;
+    align-items: center;
+    svg { margin-right: 6px; }
+  }
+  .stripe-note {
+    color: #888;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}

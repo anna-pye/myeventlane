@@ -63,24 +63,23 @@
    *   False to prevent further handlers.
    */
   function selectHandler(event, ui) {
-    var linkSelector = event.target.getAttribute('data-drupal-selector');
-    var $context = $(event.target).closest('form,fieldset,tr');
-
     // Set hidden inputs for "href_dirty_check" and the "options" field.
+    const $context = $(event.target).closest('form,fieldset,tr');
     setMetadata(ui.item, $context);
 
+    event.target.value = ui.item.path;
+
+    // Auto populate the title field if configured to do so for this link field.
     if (ui.item.label) {
-      // Automatically set the link title.
-      var $linkTitle = $('*[data-linkit-widget-title-autofill-enabled]', $context);
-      if ($linkTitle.length > 0) {
-        var titleSelector = $linkTitle.attr('data-drupal-selector');
-        if (titleSelector === undefined || linkSelector === undefined) {
-          return false;
-        }
-        if (titleSelector.replace('-title', '') !== linkSelector.replace('-uri', '')) {
-          return false;
-        }
-        if (!$linkTitle.val() || $linkTitle.hasClass('link-widget-title--auto')) {
+      // The title field for the link field should have the same drupal selector
+      // except instead of ending in -uri, it will end in -title.
+      const linkSelector = event.target.getAttribute('data-drupal-selector');
+      if (linkSelector && linkSelector.endsWith('-uri')) {
+        const titleSelector = linkSelector.slice(0, -4) + '-title';
+        const $linkTitle = $(`[data-drupal-selector="${titleSelector}"]`, $context);
+        // Don't overwrite an existing label unless we already replaced it
+        // before.
+        if ($linkTitle.length > 0 && (!$linkTitle.val() || $linkTitle.hasClass('link-widget-title--auto'))) {
           // Set value to the label.
           $linkTitle.val($('<span>').html(ui.item.label).text());
           // Flag title as being automatically set.
@@ -88,8 +87,6 @@
         }
       }
     }
-
-    event.target.value = ui.item.path;
 
     return false;
   }

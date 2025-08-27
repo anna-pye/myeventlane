@@ -6,3 +6,34 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   animation: fadeInUp 0.4s ease;
 }
+
+
+.mel-boost-cta { margin: 16px 0 24px; padding: 12px 16px; background: #fef5ec; border-radius: 16px; }
+.mel-boost-status { display:flex; gap:12px; align-items:center; margin-bottom: 8px; }
+.mel-boost-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-weight:600; font-size:14px; background:#f26d5b; color:#fff; }
+.mel-boost-badge .spark { width:8px; height:8px; border-radius:50%; background:#fff; opacity:.9; }
+.mel-boost-expiry { color:#293241; font-weight:600; }
+.mel-boost-actions .button { text-decoration:none; }
+
+
+
+/* Minimal, brand-friendly “Boosted” badge styling */
+.mel-boost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  background: #f26d5b; /* Coral */
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.mel-boost-badge .spark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: .9;
+}

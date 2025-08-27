@@ -8,6 +8,7 @@ use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_stripe\ErrorHelper;
 use Drupal\commerce_stripe\Plugin\Commerce\PaymentGateway\StripeInterface;
 use Drupal\commerce_stripe\Plugin\Commerce\PaymentGateway\StripePaymentElementInterface;
+use Drupal\commerce_stripe\StripeHelper;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
@@ -146,7 +147,7 @@ class StripeReview extends CheckoutPaneBase {
     }
 
     $plugin = $gateway->entity->getPlugin();
-    return $plugin instanceof StripeInterface || $plugin instanceof StripePaymentElementInterface;
+    return StripeHelper::isStripeGateway($plugin);
   }
 
   /**
@@ -184,18 +185,29 @@ class StripeReview extends CheckoutPaneBase {
       }
     }
     if ($intent === NULL) {
-      if ($stripe_plugin instanceof StripeInterface) {
-        $intent_attributes = [];
-        $payment_process_pane = $this->checkoutFlow->getPane('payment_process');
-        assert($payment_process_pane instanceof CheckoutPaneInterface);
-        $intent_attributes['capture_method'] = $payment_process_pane->getConfiguration()['capture'] ? 'automatic' : 'manual';
-        if (!empty($this->getConfiguration()['setup_future_usage'])) {
-          $intent_attributes['setup_future_usage'] = $this->getConfiguration()['setup_future_usage'];
+      try {
+        if ($stripe_plugin instanceof StripeInterface) {
+          $intent_attributes = [];
+          $payment_process_pane = $this->checkoutFlow->getPane('payment_process');
+          assert($payment_process_pane instanceof CheckoutPaneInterface);
+          $intent_attributes['capture_method'] = $payment_process_pane->getConfiguration()['capture'] ? 'automatic' : 'manual';
+          if (!empty($this->getConfiguration()['setup_future_usage'])) {
+            $intent_attributes['setup_future_usage'] = $this->getConfiguration()['setup_future_usage'];
+          }
+          $intent = $stripe_plugin->createPaymentIntent($this->order, $intent_attributes);
         }
-        $intent = $stripe_plugin->createPaymentIntent($this->order, $intent_attributes);
+        else {
+          $intent = $stripe_plugin->createIntent($this->order);
+        }
       }
-      else {
-        $intent = $stripe_plugin->createIntent($this->order);
+      // This can happen in case Stripe got disconnected and the gateway was
+      // not disabled.
+      catch (\Exception $e) {
+        $message = $this->t('We encountered an unexpected error processing your payment. Please try again using a different payment method or try again later.');
+        $this->messenger()->addError($message);
+        $previous_step_id = $this->checkoutFlow->getPreviousStepId($this->getStepId());
+        $this->checkoutFlow->redirectToStep($previous_step_id);
+        return $pane_form;
       }
     }
     if (!$this->order->get('payment_method')->isEmpty()) {
@@ -263,6 +275,7 @@ class StripeReview extends CheckoutPaneBase {
         'apiVersion' => $stripe_plugin->getApiVersion(),
         'publishableKey' => $stripe_plugin->getPublishableKey(),
         'clientSecret' => $intent->client_secret,
+        'buttonId' => $this->configuration['button_id'],
         'returnUrl' => Url::fromRoute('commerce_payment.checkout.return', [
           'commerce_order' => $this->order->id(),
           'step' => 'review',

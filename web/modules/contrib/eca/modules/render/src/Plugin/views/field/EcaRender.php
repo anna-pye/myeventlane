@@ -59,7 +59,6 @@ class EcaRender extends FieldPluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     parent::buildOptionsForm($form, $form_state);
-    // @phpstan-ignore-next-line
     $form['name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Field name'),

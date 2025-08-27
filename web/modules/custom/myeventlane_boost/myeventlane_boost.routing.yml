@@ -1,8 +1,13 @@
 myeventlane_boost.boost_page:
-  path: '/boost/{node}'
+  path: '/event/{node}/boost'
   defaults:
-    _controller: '\Drupal\myeventlane_boost\Controller\BoostController::boostPage'
-    _title: 'Boost Your Event'
+    _title: 'Boost your event'
+    _form: '\Drupal\myeventlane_boost\Form\BoostSelectForm'
   requirements:
     _permission: 'access content'
-    node: \d+
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+

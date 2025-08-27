@@ -1,0 +1,19 @@
+{#
+/**
+ * Directly render the Add to Cart form via Twig Tweak.
+ * Bypasses missing product var and view mode issues.
+ */
+#}
+
+<article class="mel-ticket-card__product">
+  <div class="mel-ticket-card">
+    <div class="mel-ticket-card__header">
+      <div class="mel-badge">{{ 'Buy Tickets'|t }}</div>
+    </div>
+
+    <div class="mel-ticket-card__body">
+      {# 🔑 Render the ATC form for the first purchasable variation #}
+      {{ drupal_form('commerce_order_item_add_to_cart_form', {'purchasable_entity': product.variationIds|first}) }}
+    </div>
+  </div>
+</article>

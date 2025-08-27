@@ -15,3 +15,61 @@ myeventlane_rsvp.edit:
   requirements:
     _permission: 'access content'
     rsvp_id: '\d+'
+
+myeventlane_rsvp.settings:
+  path: '/admin/config/myeventlane/rsvp'
+  defaults:
+    _form: '\Drupal\myeventlane_rsvp\Form\RsvpSettingsForm'
+    _title: 'RSVP settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+myeventlane_rsvp.thankyou:
+  path: '/thankyou/{event}'
+  defaults:
+    _controller: '\Drupal\myeventlane_rsvp\Controller\ThankYouController::page'
+    _title: 'Thank You!'
+  requirements:
+    _access: 'TRUE'
+  options:
+    parameters:
+      event:
+        type: entity:node
+
+myeventlane_rsvp.cancel_form:
+  path: '/rsvp/{rsvp}/cancel'
+  defaults:
+    _form: '\Drupal\myeventlane_rsvp\Form\RSVPCancelConfirmForm'
+    _title_callback: '\Drupal\myeventlane_rsvp\Form\RSVPCancelConfirmForm::getTitle'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      rsvp:
+        type: entity:rsvp_submission
+    no_cache: TRUE
+
+# Legacy: /rsvp/cancel/{id} -> new route, preserving token if present.
+myeventlane_rsvp.cancel_redirect_with_id:
+  path: '/rsvp/cancel/{id}'
+  defaults:
+    _controller: '\Drupal\myeventlane_rsvp\Controller\RSVPCancelController::cancel'
+    _title: 'Cancel RSVP'
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  options:
+    no_cache: TRUE
+
+# Legacy: /rsvp/cancel -> home with message.
+myeventlane_rsvp.cancel_redirect_no_id:
+  path: '/rsvp/cancel'
+  defaults:
+    _controller: '\Drupal\myeventlane_rsvp\Controller\RSVPCancelController::cancel'
+    _title: 'Cancel RSVP'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+

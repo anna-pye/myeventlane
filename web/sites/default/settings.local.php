@@ -6,3 +6,9 @@ error_reporting(E_ALL);
 
 $config['myeventlane_vendor_dashboard.settings']['secret_key_test'] = 'sk_test_...';
 $config['myeventlane_vendor_dashboard.settings']['client_id_test'] = 'ca_test_...';
+
+
+$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/default/development.services.yml';
+$settings['twig_debug'] = TRUE;
+$settings['twig_auto_reload'] = TRUE;
+$settings['twig_cache'] = FALSE;

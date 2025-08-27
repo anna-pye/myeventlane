@@ -57,3 +57,8 @@ credit_card_icons:
       css/commerce_stripe.credit_card_icons.css: {}
   dependencies:
     - commerce_payment/payment_method_icons
+
+connect_buttons:
+  css:
+    theme:
+      css/commerce_stripe.connect_buttons.css: {}

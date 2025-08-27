@@ -8,7 +8,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * Defines an extra Action attribute object for ECA.
  */
 #[\Attribute(\Attribute::TARGET_CLASS)]
-readonly class EcaAction {
+class EcaAction {
 
   /**
    * Constructs an ECA Action attribute.

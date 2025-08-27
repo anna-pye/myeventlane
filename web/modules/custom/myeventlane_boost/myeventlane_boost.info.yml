@@ -6,3 +6,6 @@ package: Custom
 dependencies:
   - drupal:commerce
   - drupal:commerce_product
+  - drupal:commerce_order
+  - drupal:commerce_cart
+

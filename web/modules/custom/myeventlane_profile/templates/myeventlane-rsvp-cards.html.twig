@@ -1,0 +1,55 @@
+<div class="event-card-buffered mel-rsvp-grid">
+
+  {% for item in items %}
+    <div class="event-list">
+    <article class="event-card-wrapper card-{{ item.index }}">
+
+
+      <div class="event-card">
+        <div class="event-card__image">
+          {# Responsive image if provided; otherwise empty block keeps layout #}
+          {% if item.image %}
+            {{ item.image }}
+          {% endif %}
+
+          {# Date overlay #}
+          {% if item.month or item.day %}
+            <div class="event-card__date-overlay">
+              {% if item.month %}<div class="event-card__month">{{ item.month }}</div>{% endif %}
+              {% if item.day %}<div class="event-card__day">{{ item.day }}</div>{% endif %}
+            </div>
+          {% endif %}
+
+          {# Status badge #}
+          {% if item.badge %}
+            <div class="event-card__badge {{ item.badge_class }}">{{ item.badge }}</div>
+          {% endif %}
+        </div>
+
+        <div class="event-card__body">
+          <div class="event-card__category">RSVP</div>
+
+          <h3 class="event-card__title">
+            {{ item.title_link }}
+          </h3>
+
+          {% if item.meta %}
+            <div class="event-card__meta">{{ item.meta }}</div>
+          {% endif %}
+
+         <div class="event-card__cta">
+            {% if item.cta_view %}
+              {{ item.cta_view }}
+            {% endif %}
+            {% if item.cta_cancel %}
+              {{ item.cta_cancel }}
+            {% endif %}
+          </div>
+
+         </div>
+        </div>
+     
+      </article>
+     </div>
+  {% endfor %}
+</div>

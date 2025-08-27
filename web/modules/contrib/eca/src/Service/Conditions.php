@@ -124,7 +124,6 @@ class Conditions {
        */
       $condition = $this->conditionManager->createInstance($plugin_id, $configuration);
     }
-    // @phpstan-ignore-next-line
     catch (\Exception | \Throwable $e) {
       $condition = NULL;
       $this->logger->error('The condition plugin %pluginid can not be initialized. ECA is ignoring this condition. The issue with this condition: %msg', [

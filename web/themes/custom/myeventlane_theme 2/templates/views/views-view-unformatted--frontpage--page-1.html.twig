@@ -1,0 +1,9 @@
+{# Custom view template for frontpage view (page_1) #}
+<section class="event-card-buffered">
+  {% for row in rows %}
+    <div class="event-card-wrapper card-{{ loop.index }}">
+      {{ row.content }}
+    </div>
+  {% endfor %}
+</section>
+

@@ -40,3 +40,15 @@ function mel_auth_claim_schema() {
 function mel_auth_claim_uninstall() {
   \Drupal::database()->schema()->dropTable('mel_claim_token');
 }
+
+
+/**
+ * Add mel_claim_token table for existing installs.
+ */
+function mel_auth_claim_update_8001() {
+  $schema = \Drupal::database()->schema();
+  if (!$schema->tableExists('mel_claim_token')) {
+    $tables = mel_auth_claim_schema();
+    $schema->createTable('mel_claim_token', $tables['mel_claim_token']);
+  }
+}

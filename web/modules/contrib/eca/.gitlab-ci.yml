@@ -19,7 +19,7 @@ phpcs:
 phpstan:
   allow_failure: false
 phpstan (next minor):
-  allow_failure: true
+  allow_failure: false
 phpstan (next major):
   allow_failure: false
 phpunit (previous major):

@@ -10,7 +10,9 @@ use Psr\Log\LoggerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Datetime\TimeInterface;
+use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\Url;
+
 
 class ClaimService {
 
@@ -48,7 +50,11 @@ class ClaimService {
       'ua' => substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255),
     ])->execute();
 
-    $link = \Drupal::url('mel_auth_claim.redeem', ['token' => $token], ['absolute' => TRUE]);
+    $link = Url::fromRoute(
+      'mel_auth_claim.redeem',
+      ['token' => $token],
+      ['absolute' => TRUE]
+    )->toString();
     $langcode = $this->langManager->getDefaultLanguage()->getId();
 
     $this->mailManager->mail(

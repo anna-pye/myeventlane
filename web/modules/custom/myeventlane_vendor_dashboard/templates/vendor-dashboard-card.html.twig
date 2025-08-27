@@ -5,6 +5,26 @@
       {{ image }}
     {% endif %}
     <h2 class="dashboard-card-title">{{ title }}</h2>
+
+   {# remove this block entirely OR keep it wrapped like this #}
+    {% if mel_can_boost and not mel_is_boosted %}
+      <div class="mel-boost-inline-cta" style="margin:12px 0 20px;">
+       <a class="button button--primary" href="{{ path('myeventlane_boost.boost_page', {'node': node.id}) }}">
+          Boost your event
+        </a>
+      </div>
+    {% endif %}
+
+
+    {% if mel_is_boosted %}
+      <div class="mel-boost-status">
+        <span class="mel-boost-badge"><span class="spark"></span> Boosted</span>
+        {% if mel_boost_expires %}
+          <span class="mel-boost-expiry">until {{ mel_boost_expires|date('j M Y, g:ia') }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+
     <div class="dashboard-card-meta">
       <div>Type: {{ type }}</div>
       <div>Limit: {{ ticket_limit }}</div>
@@ -15,6 +35,7 @@
       {{ view_rsvps_link }}
       {{ download_csv }}
       {{ show_chart_btn }}
-    </div>
+   
+    
   </div>
 </div>

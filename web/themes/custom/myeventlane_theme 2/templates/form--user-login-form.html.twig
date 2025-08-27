@@ -1,0 +1,28 @@
+
+{# themes/custom/myeventlane_theme/templates/form--user-login-form.html.twig #}
+
+{% include '@myeventlane_theme/partials/header.html.twig' %}
+
+<div class="login-form-container">
+  <h1 class="login-title">Welcome Back</h1>
+
+  {% if status_messages %}
+    <div class="messages">{{ status_messages }}</div>
+  {% endif %}
+
+  <div class="form-group">
+    {{ form.name }}
+  </div>
+
+  <div class="form-group">
+    {{ form.pass }}
+  </div>
+
+  <div class="form-actions">
+    {{ form.actions }}
+  </div>
+</div>
+
+{% include '@myeventlane_theme/partials/footer.html.twig' %}
+
+

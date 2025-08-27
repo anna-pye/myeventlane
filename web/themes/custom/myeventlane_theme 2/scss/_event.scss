@@ -1,0 +1,202 @@
+@use "variables.scss" as *;
+@use 'sass:color';
+
+
+.event-full {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  font-family: 'Inter', sans-serif;
+  color: #293241;
+  overflow: hidden;
+}
+
+.event-image,
+.event-carousel {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.event-image img {
+  width: 100%;
+  border-radius: 1rem;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+/* Swiper Carousel */
+.event-carousel .swiper {
+  width: 100%;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide a:hover img {
+  transform: scale(1.02);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #293241;
+  top: 45%;
+}
+
+.swiper-pagination {
+  bottom: 10px;
+}
+
+/* Lightbox override */
+.lightboxOverlay {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.lb-data .lb-caption {
+  color: #fff;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+/* Category badge */
+.event-category-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #f5c04c;
+  color: #000;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button {
+  background-color: #f26d5b;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 16px;
+}
+
+// scss/components/_rsvp-form.scss
+
+.public-rsvp-form {
+  background: $color-bg-offwhite;
+  padding: $spacing-2xl $spacing-xl;
+  border-radius: $radius-medium;
+  box-shadow: 0 2px 24px $color-shadow;
+  margin: 0 auto $spacing-2xl auto;
+  max-width: 440px;
+  font-family: $font-family-main, $font-family-fallback;
+
+  label {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-body;
+    color: $text-color-main;
+    margin-bottom: $spacing-xs;
+    display: block;
+  }
+
+  .form-item {
+    margin-bottom: $spacing-lg;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    border: $border-light;
+    border-radius: $radius-small;
+    padding: $spacing-md;
+    font-size: $font-size-body;
+    background: $color-bg-muted;
+    color: $text-color-main;
+    font-family: inherit;
+    margin-bottom: $spacing-sm;
+    transition: border 0.2s, background 0.2s;
+
+    &::placeholder {
+      color: $color-placeholder;
+      font-size: $font-size-small;
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid $color-outline-focus;
+      background: #fff;
+    }
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .cta-button,
+  input[type="submit"] {
+    background: $color-primary;
+    color: #fff;
+    font-size: $font-size-body;
+    border: none;
+    border-radius: $radius-pill;
+    padding: $spacing-md $spacing-2xl;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    margin-top: $spacing-xs;
+    transition: background 0.18s;
+    box-shadow: 0 2px 4px $color-shadow;
+
+    &:hover,
+    &:focus {
+      background: darken($color-primary, 8%);
+    }
+  }
+
+  .form-item--error input,
+  .form-item--error textarea {
+    border-color: $color-primary;
+    background: lighten($color-primary, 38%);
+  }
+
+  // Responsive
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-lg $spacing-md;
+    max-width: 100%;
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      font-size: $font-size-small;
+    }
+    .cta-button,
+    input[type="submit"] {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+.event-boost-badge {
+  background: #f5c04c;
+  color: #293241;
+  border-radius: 12px;
+  padding: 10px 18px;
+  display: inline-block;
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 6px rgba(244, 192, 76, 0.08);
+}

@@ -1,0 +1,188 @@
+// Global styles for the homepage layout
+@use 'variables' as vars;
+
+$font-family-main: 'Nunito', sans-serif !default;
+$font-family-fallback: sans-serif !default;
+
+// ====== HEADER ======
+.site-header {
+  background-color: #fef5ec;
+  padding: 16px 32px;
+  border-bottom: 1px solid #f4f4f4;
+  font-family: $font-family-main;
+
+  .site-header__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .site-logo img {
+    height: 48px;
+    width: auto;
+  }
+
+  .site-nav .nav-link {
+    font-size: 16px;
+    font-weight: 600;
+    color: vars.$text-color-main;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: vars.$radius-pill;
+
+    &:hover {
+      background-color: vars.$color-bg-muted;
+    }
+  }
+}
+
+// ====== HOMEPAGE ======
+.homepage {
+  background-color: vars.$color-bg-offwhite;
+  color: vars.$text-color-main;
+  font-family: $font-family-main;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .page-inner {
+    padding-left: 100px;
+    padding-right: 100px;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    @media (max-width: 768px) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .event-section {
+      padding-top: 40px;
+      padding-bottom: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .featured-events-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      margin-bottom: 24px;
+
+      .section-title {
+        font-size: vars.$font-size-h2;
+        font-weight: vars.$font-weight-bold;
+        color: vars.$text-color-main;
+        margin: 0;
+      }
+
+      .create-event-btn {
+        background-color: vars.$color-primary;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 12px 24px;
+        border-radius: vars.$radius-pill;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .hero {
+    text-align: left;
+    padding: 20px 0;
+
+    @media (min-width: 768px) {
+      padding: 40px 0 0;
+    }
+
+    &__tagline {
+      font-size: 55px;
+      font-weight: 700;
+      line-height: 0.8;
+      color: vars.$color-primary;
+      margin-bottom: 12px;
+
+      @media (min-width: 768px) {
+        font-size: 80px;
+      }
+
+      br {
+        display: inline;
+      }
+    }
+
+    &__subtitle {
+      font-size: 30px;
+      font-weight: 450;
+      color: vars.$text-color-main;
+      margin-bottom: 24px;
+    }
+
+    &__search {
+      display: flex;
+      justify-content: left;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+
+      input {
+        padding: 14px 24px;
+        border-radius: vars.$radius-pill;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 400px;
+
+        &::placeholder {
+          color: vars.$color-placeholder;
+        }
+
+        &:focus {
+          outline: 2px solid vars.$color-outline-focus;
+        }
+      }
+
+      .search-button {
+        background-color: vars.$color-primary;
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: vars.$radius-pill;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+      margin-bottom: 32px;
+
+      .filter-pill {
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        padding: 10px 16px;
+        border-radius: vars.$radius-pill;
+        border: none;
+        text-decoration: none;
+
+        &.filter-yellow { background-color: vars.$color-highlight; }
+        &.filter-purple { background-color: vars.$color-accent; }
+        &.filter-coral  { background-color: vars.$color-primary; }
+        &.filter-blue   { background-color: #8e9cff; }
+      }
+    }
+  }
+}

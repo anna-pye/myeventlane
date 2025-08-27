@@ -1,9 +1,0 @@
-commerce.order_receipt:
-  id: 'commerce.order_receipt'
-  label: 'Commerce Order: Order receipt'
-  module: 'commerce'
-  key: 'order_receipt'
-  params:
-    order:
-      type: 'entity:commerce_order'
-      label: 'Order'

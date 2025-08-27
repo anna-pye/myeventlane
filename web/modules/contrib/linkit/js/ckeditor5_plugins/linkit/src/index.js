@@ -120,15 +120,8 @@ class Linkit extends Plugin {
       // - The normal (default) priority listener in ckeditor5-link sets
       //   (creates) the actual link.
       linkCommand.once('execute', (evt, args) => {
-        // Assume decorators is the second argument provided to the
-        // linkCommand.execute() call.
-        if (!(typeof args[decoratorsArgIndex] === 'object')) {
-          // This is either an object or null because decorators are optional.
-          args[decoratorsArgIndex] = values;
-          return;
-        }
-        // An object exists, so we need to merge the values.
-        Object.assign(args[decoratorsArgIndex], values);
+        // In CKEditor v45+ decorators go in the second argument (args[1]).
+        args[1]['linkit_attributes'] = values;
       }, { priority: 'highest' });
     }, { priority: 'high' });
   }

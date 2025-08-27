@@ -1,0 +1,27 @@
+{#
+  html-top.html.twig
+  Optional top-of-page include used in page.html.twig.
+  Injects metadata, preload links, or favicon declarations.
+  Customize as needed for SEO, social sharing, or performance.
+#}
+
+{# Preload example (fonts, images) #}
+<link rel="preload" href="/themes/custom/myeventlane_theme/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+{# Meta and social tags (override dynamically if needed) #}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f26d5b">
+
+{# Favicon fallback #}
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+{# Open Graph fallback (can override in HTML head via metatag module) #}
+<meta property="og:site_name" content="MyEventLane">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/themes/custom/myeventlane_theme/social-preview.jpg">
+
+{# Optional apple touch icon #}
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+{# DNS prefetch for faster 3rd-party connections (like Stripe) #}
+<link rel="dns-prefetch" href="https://js.stripe.com">

@@ -288,6 +288,15 @@ services:
 		arguments:
 			entityMapping: %drupal.entityMapping%
 	-
+		class: mglaman\PHPStanDrupal\Type\EntityIdNarrowedByNew
+		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+	-
+		class: mglaman\PHPStanDrupal\Type\EntityTypeKeyByExistence
+		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+	-
+		class: mglaman\PHPStanDrupal\Type\EntityTypeLinkTemplateByExistence
+		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+	-
 		class: mglaman\PHPStanDrupal\Type\EntityTypeManagerGetStorageDynamicReturnTypeExtension
 		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
 	-

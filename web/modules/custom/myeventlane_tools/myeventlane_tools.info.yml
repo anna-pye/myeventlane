@@ -1,0 +1,7 @@
+name: MyEventLane Tools
+type: module
+description: Dev helpers for MyEventLane.
+core_version_requirement: ^11
+package: MyEventLane
+dependencies:
+  - drupal:views

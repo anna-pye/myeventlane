@@ -1,0 +1,104 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\commerce_product\Entity\ProductVariationInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * For 'commerce_product_variation' (ticket):
+ * - Guard duplicate UUID if any external code injected one.
+ * - Ensure SKU exists; uniquify with -2/-3 if needed.
+ * - Ensure title defaults to "{Event Title} – {SKU}".
+ */
+function myeventlane_commerce_entity_presave(EntityInterface $entity): void {
+  if (!$entity instanceof ProductVariationInterface) {
+    return;
+  }
+  if ($entity->bundle() !== 'ticket') {
+    return;
+  }
+
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_product_variation');
+
+  // 1) UUID guard (VERY defensive): if new & provided UUID already exists, swap.
+  if ($entity->isNew()) {
+    // Some code paths inject UUID via $entity->set('uuid', ...).
+    $incoming_uuid = $entity->get('uuid')->value ?? null;
+    if ($incoming_uuid) {
+      $exists = $storage->loadByProperties(['uuid' => $incoming_uuid]);
+      if (!empty($exists)) {
+        $entity->set('uuid', \Drupal::service('uuid')->generate());
+      }
+    }
+  }
+
+  // 2) Resolve context (product->field_event label if present).
+  $event_title = null;
+  $product = $entity->getProduct();
+  if ($product && $product->hasField('field_event') && !$product->get('field_event')->isEmpty()) {
+    $event_node = $product->get('field_event')->entity;
+    if ($event_node) {
+      $event_title = $event_node->label();
+    }
+  }
+
+  // 3) SKU: ensure it exists; make it unique if it collides.
+  $sku = (string) $entity->getSku();
+  if ($sku === '') {
+    $base = _myeventlane_commerce_slug($event_title ?: 'ticket');
+    // Short readable + entropy.
+    $sku = strtoupper(substr($base, 0, 12)) . '-' . substr(\Drupal::service('uuid')->generate(), 0, 6);
+  }
+  // Uniquify across default rows (storage-level check is sufficient here).
+  $sku_final = $sku;
+  $i = 2;
+  while ($storage->loadByProperties(['sku' => $sku_final])) {
+    $sku_final = $sku . '-' . $i++;
+  }
+  if ($sku_final !== $sku) {
+    $entity->setSku($sku_final);
+  } elseif ($sku === '') {
+    $entity->setSku($sku_final);
+  }
+
+  // 4) Title: default to "{Event Title} – {SKU}" (fallback Ticket).
+  $title = (string) $entity->getTitle();
+  if ($title === '' || str_starts_with($title, 'Ticket')) {
+    $entity->setTitle(($event_title ?: 'Ticket') . ' – ' . $entity->getSku());
+  }
+}
+
+/**
+ * Lock SKU/Title in vendor forms; admins keep edit rights.
+ */
+function myeventlane_commerce_form_commerce_product_variation_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $entity = $form_state->getFormObject()->getEntity();
+  if (!$entity instanceof ProductVariationInterface || $entity->bundle() !== 'ticket') {
+    return;
+  }
+  $is_admin = \Drupal::currentUser()->hasPermission('administer commerce_product');
+
+  if (!$is_admin) {
+    if (isset($form['sku'])) {
+      $form['sku']['#disabled'] = TRUE;
+      $form['sku']['#description'] = t('Auto-generated. Contact support if you need a change.');
+    }
+    if (isset($form['title'])) {
+      $form['title']['#disabled'] = TRUE;
+      $form['title']['#description'] = t('Auto-generated as "Event Title – SKU".');
+    }
+  }
+}
+
+/**
+ * Simple slug helper.
+ */
+function _myeventlane_commerce_slug(string $value): string {
+  $value = strtolower(trim($value));
+  $value = preg_replace('/[^a-z0-9]+/u', '-', $value);
+  return trim($value, '-');
+}

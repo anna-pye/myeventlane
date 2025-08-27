@@ -1,0 +1,33 @@
+{# Themes the add-to-cart form itself. Hook: commerce_order_item_add_to_cart_form #}
+{# Vars: form (render array) #}
+<div class="mel-ticket-form">
+  <div class="mel-ticket-form__row">
+    {# Variation selector (radios/select) #}
+    {% if form.purchased_entity is defined %}
+      <div class="mel-field mel-field--variation">
+        {{ form.purchased_entity }}
+      </div>
+    {% endif %}
+
+    {# Quantity #}
+    {% if form.quantity is defined %}
+      <div class="mel-field mel-field--qty">
+        {{ form.quantity }}
+      </div>
+    {% endif %}
+  </div>
+
+  {# Price (if exposed) #}
+  {% if form.price is defined %}
+    <div class="mel-ticket-form__price">
+      {{ form.price }}
+    </div>
+  {% endif %}
+
+  <div class="mel-ticket-form__actions">
+    {{ form.actions }}
+  </div>
+
+  {# Always render leftovers (#attached assets etc.) #}
+  {{ form|without('purchased_entity','quantity','price','actions') }}
+</div>

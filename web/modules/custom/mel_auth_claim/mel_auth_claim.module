@@ -2,26 +2,86 @@
 
 /**
  * @file
- * Module scaffolding + mail hook.
+ * Module scaffolding + mail hooks for MyEventLane Auth Claim.
  */
 
 /**
  * Implements hook_mail().
  */
 function mel_auth_claim_mail($key, &$message, $params) {
-  if ($key === 'claim_link') {
-    $message['subject'] = $params['subject'] ?? 'Claim your tickets on MyEventLane';
-    // Core MailManager sends text/plain by default; many SMTP transports accept basic HTML.
-    // Keep it simple & robust; you can swap to MailSystem+HTMLMail later.
-    $body = [];
-    $body[] = "Hi there,";
-    $body[] = "";
-    $body[] = "Tap the link below to claim your tickets and create/save your account:";
-    $body[] = $params['link'];
-    $body[] = "";
-    $body[] = "This is a one-time sign-in link and will expire in 24 hours.";
-    $body[] = "";
-    $body[] = "— MyEventLane";
-    $message['body'] = implode("\n", $body);
+  switch ($key) {
+    case 'claim_link':
+      $subject = $params['subject'] ?? 'Claim your tickets on MyEventLane';
+      $link    = $params['link'] ?? '';
+
+      $message['subject'] = $subject;
+
+      // Body must be an array of strings for Drupal mail.
+      $message['body'] = [
+        "Hi there,",
+        "",
+        "Tap the link below to claim your tickets and create/save your account:",
+        $link,
+        "",
+        "This is a one-time sign-in link and will expire in 24 hours.",
+        "",
+        "— MyEventLane",
+      ];
+      break;
+  }
+}
+
+/**
+ * Implements hook_mail_alter().
+ *
+ * Normalize recipient formats for active mailer:
+ * - symfony_mailer_lite expects string recipients.
+ * - easy_email_override expects array recipients.
+ * If both are enabled, we prioritize Symfony Mailer Lite (strings),
+ * because it's the one actually throwing the error in your stack.
+ */
+function mel_auth_claim_mail_alter(&$message) {
+  $modules = \Drupal::moduleHandler();
+  $symfony_lite = $modules->moduleExists('symfony_mailer_lite');
+  $easy_override = $modules->moduleExists('easy_email_override');
+
+  // Ensure headers array exists.
+  if (!isset($message['headers']) || !is_array($message['headers'])) {
+    $message['headers'] = [];
+  }
+
+  if ($symfony_lite) {
+    // ---- Symfony Mailer Lite wants strings ----
+    if (isset($message['to']) && is_array($message['to'])) {
+      $message['to'] = implode(', ', array_values(array_filter($message['to'])));
+    } elseif (!isset($message['to'])) {
+      $message['to'] = '';
+    }
+
+    foreach (['cc', 'bcc'] as $hdr) {
+      if (!empty($message['headers'][$hdr]) && is_array($message['headers'][$hdr])) {
+        $message['headers'][$hdr] = implode(', ', array_values(array_filter($message['headers'][$hdr])));
+      }
+    }
+  }
+  elseif ($easy_override) {
+    // ---- Easy Email override wants arrays ----
+    if (isset($message['to']) && is_string($message['to'])) {
+      $parts = array_values(array_filter(array_map('trim', explode(',', $message['to'])), static fn($v) => $v !== ''));
+      $message['to'] = $parts;
+    } elseif (!isset($message['to'])) {
+      $message['to'] = [];
+    }
+
+    foreach (['cc', 'bcc'] as $hdr) {
+      if (!empty($message['headers'][$hdr]) && is_string($message['headers'][$hdr])) {
+        $message['headers'][$hdr] = array_values(array_filter(array_map('trim', explode(',', $message['headers'][$hdr]))));
+      }
+    }
+  }
+
+  // Body should always be an array (some senders set string).
+  if (isset($message['body']) && is_string($message['body'])) {
+    $message['body'] = [$message['body']];
   }
 }

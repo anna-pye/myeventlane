@@ -1,0 +1,5 @@
+services:
+  myeventlane_messaging.commands:
+    class: Drupal\myeventlane_messaging\Commands\MessagingCommands
+    tags:
+      - { name: drush.command }

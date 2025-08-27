@@ -31,6 +31,17 @@
 @use 'components/layout';
 @use 'card-actions';
 @use 'mel-auth';
+@use 'auth';
+@use 'thankyou';
+@use 'recommend';
+@use 'add_to_cart';
+@use 'dashboard-tabs';
+@use 'boosted-badge';
+@use 'boost';
+@use 'components/cards';
+@use 'components/ticket-card';
+@use 'layout/centered-pages';
+@use 'components/tickets';
 
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');

@@ -1,0 +1,6 @@
+<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="160" rx="16" ry="16" fill="#fef5ec"/>
+  <g fill="#f26d5b" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">
+    <text x="80" y="90">No Events</text>
+  </g>
+</svg>

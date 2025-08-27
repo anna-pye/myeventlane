@@ -1,0 +1,30 @@
+<?php
+
+
+/**
+ * Implements hook_theme().
+ *
+ * Use 'variables' so templates receive plain variables like {{ title }},
+ * {{ tickets }}, {{ product_title }}, etc. (NOT 'elements[...]').
+ */
+function myeventlane_tickets_theme(): array {
+  return [
+    'myeventlane_ticket_list' => [
+      'variables' => [
+        'title' => NULL,
+        'tickets' => [],
+        'empty' => NULL,
+      ],
+      'template' => 'myeventlane-ticket-list',
+    ],
+    'myeventlane_ticket_card' => [
+      'variables' => [
+        'product_title'   => NULL,
+        'variation_title' => NULL,
+        'price'           => NULL,
+        'add_to_cart_form'=> NULL,
+      ],
+      'template' => 'myeventlane-ticket-card',
+    ],
+  ];
+}

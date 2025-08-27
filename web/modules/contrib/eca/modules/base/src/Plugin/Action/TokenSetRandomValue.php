@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\eca\Plugin\Action\ConfigurableActionBase;
 use Drupal\eca\Plugin\ECA\PluginFormTrait;
-use Random\RandomException;
 
 /**
  * Action to set a random token value.
@@ -76,7 +75,7 @@ class TokenSetRandomValue extends ConfigurableActionBase {
         try {
           $value = random_bytes((int) $length);
         }
-        catch (RandomException) {
+        catch (\Exception) {
           $value = '';
         }
         break;
@@ -99,7 +98,7 @@ class TokenSetRandomValue extends ConfigurableActionBase {
         try {
           $value = random_int($min, $max);
         }
-        catch (RandomException) {
+        catch (\Exception) {
           $value = '';
         }
         break;

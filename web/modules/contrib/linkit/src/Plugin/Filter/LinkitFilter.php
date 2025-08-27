@@ -4,6 +4,7 @@ namespace Drupal\linkit\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Utility\Error;
@@ -51,6 +52,13 @@ class LinkitFilter extends FilterBase implements ContainerFactoryPluginInterface
   protected $logger;
 
   /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs a LinkitFilter object.
    *
    * @param array $configuration
@@ -65,13 +73,16 @@ class LinkitFilter extends FilterBase implements ContainerFactoryPluginInterface
    *   The substitution manager.
    * @param \Psr\Log\LoggerInterface $logger
    *   The logger.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityRepositoryInterface $entity_repository, SubstitutionManagerInterface $substitution_manager, LoggerInterface $logger) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityRepositoryInterface $entity_repository, SubstitutionManagerInterface $substitution_manager, LoggerInterface $logger, ModuleHandlerInterface $module_handler) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->entityRepository = $entity_repository;
     $this->substitutionManager = $substitution_manager;
     $this->logger = $logger;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -84,7 +95,8 @@ class LinkitFilter extends FilterBase implements ContainerFactoryPluginInterface
       $plugin_definition,
       $container->get('entity.repository'),
       $container->get('plugin.manager.linkit.substitution'),
-      $container->get('logger.factory')->get('linkit')
+      $container->get('logger.factory')->get('linkit'),
+      $container->get('module_handler')
     );
   }
 
@@ -195,7 +207,7 @@ class LinkitFilter extends FilterBase implements ContainerFactoryPluginInterface
       '#title' => $this->t('Automatically set the <code>title</code> attribute to that of the (translated) referenced content'),
       '#default_value' => $this->settings['title'],
     ];
-    if (\Drupal::moduleHandler()->moduleExists('media')) {
+    if ($this->moduleHandler->moduleExists('media')) {
       $substitution_options = $this->substitutionManager->getApplicablePluginsOptionList('media');
       $form['media_substitution'] = [
         '#type' => 'select',

@@ -3,17 +3,20 @@ services:
     parent: logger.channel_base
     arguments: ['mel_auth_claim']
 
-  Drupal\mel_auth_claim\Service\MelAuthClaimService:
-    class: 'Drupal\mel_auth_claim\Service\MelAuthClaimService'
+  mel_auth_claim.claim_service:
+    class: 'Drupal\mel_auth_claim\Service\ClaimService'
     arguments:
-      - '@symfony_mailer.mailer'          # Using Symfony Mailer Lite
-      - '@config.factory'
-      - '@renderer'
-      - '@datetime.time'
-      - '@logger.channel.mel_auth_claim'
-      - '@keyvalue'
+      - '@database'                 # Drupal\Core\Database\Connection
+      - '@plugin.manager.mail'      # Drupal\Core\Mail\MailManagerInterface
+      - '@language_manager'         # Drupal\Core\Language\LanguageManagerInterface
+      - '@renderer'                 # Drupal\Core\Render\RendererInterface
+      - '@logger.channel.mel_auth_claim'  # Psr\Log\LoggerInterface
+      - '@current_user'             # Drupal\Core\Session\AccountProxyInterface
+      - '@entity_type.manager'      # Drupal\Core\Entity\EntityTypeManagerInterface
+      - '@datetime.time'            # Drupal\Core\Datetime\TimeInterface
     public: true
 
+  # Optional convenience alias to your preferred id.
   mel_auth_claim.service:
-    alias: 'Drupal\mel_auth_claim\Service\MelAuthClaimService'
+    alias: 'mel_auth_claim.claim_service'
     public: true

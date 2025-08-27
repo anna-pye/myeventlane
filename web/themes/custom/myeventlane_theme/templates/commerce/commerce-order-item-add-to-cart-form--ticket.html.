@@ -1,0 +1,37 @@
+{# MyEventLane — Add‑to‑Cart form for ticket variations #}
+{{ attach_library('myeventlane_theme/mel_tickets') }}
+
+<div class="mel-ticket-card">
+  <div class="mel-ticket-card__header">
+    <h3 class="mel-ticket-card__title">
+      {{ form['#product'] is defined ? form['#product'].label : 'Ticket' }}
+    </h3>
+  </div>
+
+  <div class="mel-ticket-card__meta">
+    {% if form.price__formatted is defined %}
+      <div class="mel-ticket-card__row">
+        <span class="mel-ticket-card__label">Price</span>
+        <span class="mel-ticket-card__value">{{ form.price__formatted }}</span>
+      </div>
+    {% endif %}
+
+    {% if form.attributes is defined %}
+      <div class="mel-ticket-card__row">
+        <span class="mel-ticket-card__label">Type</span>
+        <span class="mel-ticket-card__value">{{ form.attributes }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="mel-ticket-card__cta">
+    {% if form.quantity is defined %}
+      <div class="mel-ticket-card__qty">{{ form.quantity }}</div>
+    {% endif %}
+    <div class="mel-ticket-card__actions">{{ form.actions }}</div>
+  </div>
+
+  <div class="visually-hidden">
+    {{ form|without('price__formatted','attributes','quantity','actions') }}
+  </div>
+</div>

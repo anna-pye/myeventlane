@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Safe Views integration for MyEventLane recommendations.
+ */
+
+/** Check that a DB table exists. */
+function _myeventlane_recommend_table_exists(string $table): bool {
+  return $table !== '' && \Drupal::database()->schema()->tableExists($table);
+}
+
+/** Implements hook_views_data(). */
+function myeventlane_recommend_views_data(): array {
+  // No-op by default. Only add entries for tables you VERIFY exist.
+  $data = [];
+
+  // Example (disabled): if you ever add handlers on nodes, guard it:
+  // $base = 'node_field_data';
+  // if (_myeventlane_recommend_table_exists($base)) {
+  //   $data[$base]['myeventlane_recommend_placeholder'] = [
+  //     'title' => t('MyEventLane recommend (placeholder)'),
+  //     'help' => t('Reserved; no-op.'),
+  //     'field' => ['id' => 'string'],
+  //   ];
+  // }
+
+  return $data;
+}
+
+/** Implements hook_views_data_alter(). */
+function myeventlane_recommend_views_data_alter(array &$data): void {
+  // Only alter if both sides exist. Otherwise bail silently.
+  $from = 'commerce_product_variation_field_data'; // example
+  $to   = 'node_field_data';                        // example
+
+  if (!isset($data[$from], $data[$to])) {
+    return;
+  }
+  if (
+    !_myeventlane_recommend_table_exists($from) ||
+    !_myeventlane_recommend_table_exists($to)
+  ) {
+    return;
+  }
+
+  // Example relationship (disabled):
+  // $data[$from]['myeventlane_event_rel'] = [
+  //   'title' => t('Event (node)'),
+  //   'help' => t('Variation → Event node.'),
+  //   'relationship' => [
+  //     'id' => 'standard',
+  //     'base' => $to,
+  //     'base field' => 'nid',
+  //     'relationship field' => 'field_event_target_id',
+  //     'label' => t('Event'),
+  //   ],
+  // ];
+}

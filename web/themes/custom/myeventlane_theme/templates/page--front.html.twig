@@ -48,6 +48,9 @@
       </section>
       {% if page.content %}
         <div id="content" class="layout-content">
+        {# Use the Block display from your View. Change 'block_2' if your display id differs. #}
+          {{ drupal_view('trending_events','block_2') }}
+          
           {{ page.content }}
         </div>
         {% endif %}

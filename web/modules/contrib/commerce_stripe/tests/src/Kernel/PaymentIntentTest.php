@@ -34,7 +34,7 @@ class PaymentIntentTest extends StripeIntegrationTestBase {
    * @param string $confirmed_status
    *   The confirmed payment intent status.
    * @param bool $payment_received
-   *   WHether the payment is received.
+   *   Whether the payment is received.
    *
    * @dataProvider dataProviderCreatePaymentIntent
    */
@@ -273,7 +273,7 @@ class PaymentIntentTest extends StripeIntegrationTestBase {
    * @return \Generator
    *   The test data.
    */
-  public function dataProviderCreatePaymentIntent() {
+  public static function dataProviderCreatePaymentIntent() {
     // 3DS 2 authentication must be completed for the payment to be successful.
     yield [
       'pm_card_threeDSecure2Required',
@@ -330,7 +330,7 @@ class PaymentIntentTest extends StripeIntegrationTestBase {
    * @return \Generator
    *   The test data.
    */
-  public function dataProviderOrderSync() {
+  public static function dataProviderOrderSync() {
     yield [FALSE];
     yield [TRUE];
   }

@@ -1,5 +1,9 @@
-boost:
+boost_ui:
   version: 1.x
   css:
-    theme:
-      css/boost-badge.css: {}
+    component:
+      css/styles.css: {}
+  js:
+    js/boost-ui.js: {}
+  dependencies:
+    - core/drupal

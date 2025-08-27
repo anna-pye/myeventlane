@@ -1,5 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * @file
+ * Install hooks for myeventlane_rsvp.
+ */
+
 /**
  * Implements hook_schema().
  */
@@ -9,54 +16,84 @@ function myeventlane_rsvp_schema() {
     'fields' => [
       'id' => [
         'type' => 'serial',
-        'unsigned' => TRUE,
         'not null' => TRUE,
-        'description' => 'Primary Key: Unique RSVP ID.',
       ],
       'event_nid' => [
         'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Related event node id.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
         'not null' => FALSE,
-        'description' => 'Event node ID.',
+        'description' => 'User id of submitter (if logged in).',
       ],
       'first_name' => [
         'type' => 'varchar',
         'length' => 128,
         'not null' => FALSE,
-        'description' => 'First name of attendee.',
       ],
       'last_name' => [
         'type' => 'varchar',
         'length' => 128,
         'not null' => FALSE,
-        'description' => 'Last name of attendee.',
       ],
       'email' => [
         'type' => 'varchar',
-        'length' => 255,
-        'not null' => FALSE,
-        'description' => 'Attendee email address.',
-      ],
-      'extra_answers' => [
-        'type' => 'text',
-        'not null' => FALSE,
-        'description' => 'JSON-encoded answers to extra questions.',
+        'length' => 190,
+        'not null' => TRUE,
       ],
       'comments' => [
-        'type' => 'text',
+        'type' => 'varchar',
+        'length' => 512,
         'not null' => FALSE,
-        'description' => 'Any comments or extra info.',
+      ],
+      'status' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => 'active',
+      ],
+      'cancel_reason' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'cancelled_by' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'langcode' => [
+        'type' => 'varchar',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => 'en',
       ],
       'created' => [
         'type' => 'int',
+        'unsigned' => TRUE,
         'not null' => TRUE,
-        'description' => 'UNIX timestamp when RSVP was created.',
+        'default' => 0,
+      ],
+      'changed' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
       ],
     ],
     'primary key' => ['id'],
     'indexes' => [
       'event_nid' => ['event_nid'],
+      'uid' => ['uid'],
       'email' => ['email'],
+      'status' => ['status'],
+      'changed' => ['changed'],
     ],
   ];
+
   return $schema;
 }

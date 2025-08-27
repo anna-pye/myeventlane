@@ -1,0 +1,18 @@
+name: 'MyEventLane Commerce'
+type: module
+description: 'Ticket variations + vendor-friendly ticket UX for MyEventLane.'
+package: 'MyEventLane'
+core_version_requirement: ^11
+version: 1.x-dev
+
+dependencies:
+  - drupal:commerce
+  - drupal:commerce_product
+  - drupal:commerce_price
+  - drupal:commerce_order
+  - drupal:commerce_checkout
+  - drupal:commerce_payment
+  - drupal:user
+  - drupal:system
+  - drupal:token
+  - drupal:pathauto

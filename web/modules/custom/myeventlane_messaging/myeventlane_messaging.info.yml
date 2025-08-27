@@ -1,0 +1,12 @@
+name: 'MyEventLane Messaging'
+type: module
+description: 'Templated emails / messages for MyEventLane.'
+core_version_requirement: ^11
+package: 'MyEventLane'
+dependencies:
+  - drupal:system
+  - drupal:user
+  - drupal:node
+  - drupal:datetime
+  - mailsystem:mailsystem
+  - symfony_mailer_lite:symfony_mailer_lite

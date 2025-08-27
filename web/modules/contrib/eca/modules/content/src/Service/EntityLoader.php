@@ -321,7 +321,6 @@ class EntityLoader {
           if (is_array($properties) && !empty($properties)) {
             $storage = $this->entityTypeManager->getStorage($entity_type);
             $query = $storage->getQuery();
-            // @phpstan-ignore-next-line
             $query->accessCheck(FALSE);
             foreach ($properties as $name => $value) {
               // Cast scalars to array so we can consistently use an IN
