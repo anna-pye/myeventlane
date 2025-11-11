@@ -1,0 +1,22 @@
+uuid: e3c6c062-491c-4873-9e93-73700385215a
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bootstrap5_admin
+_core:
+  default_config_hash: DTGAXD4lKvC1vtcAECCf-z-oStQodQM2CCbmdUIZbPQ
+id: bootstrap5_admin_powered_by_drupal
+theme: bootstrap5_admin
+region: footer
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

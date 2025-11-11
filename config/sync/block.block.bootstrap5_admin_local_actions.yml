@@ -1,0 +1,20 @@
+uuid: aacbe390-cc5f-4d6e-888d-612182445a4e
+langcode: en
+status: true
+dependencies:
+  theme:
+    - bootstrap5_admin
+_core:
+  default_config_hash: '-Yb5Mo5NM-k0CtYVVgFjdHaE-DGZ5Jvxdkmk6ZQ3URY'
+id: bootstrap5_admin_local_actions
+theme: bootstrap5_admin
+region: content
+weight: -2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }
