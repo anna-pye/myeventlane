@@ -1,4 +1,4 @@
-uuid: 3e300fdc-99d4-4bb9-8ba4-32269e248903
+uuid: 0d993cdc-888c-4878-9241-cc3992b0f4ba
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - block_content
     - user
 _core:
-  default_config_hash: M40v7fFSz1d3AWG7BVYgglHAfF2lD5dzrjcEUZO-9OM
+  default_config_hash: 04nFIsNzLdUjlangTCvxrNUJ9vRQldlR9gekgNrRsOM
 id: block_content
 label: 'Content blocks'
 module: views
@@ -317,17 +317,6 @@ display:
           empty: true
           content: 'There are no content blocks available.'
           tokenize: false
-        block_content_listing_empty:
-          id: block_content_listing_empty
-          table: block_content
-          field: block_content_listing_empty
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: block_content
-          plugin_id: block_content_listing_empty
-          label: ''
-          empty: true
       sorts: {  }
       arguments: {  }
       filters:
