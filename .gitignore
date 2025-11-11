@@ -1,0 +1,61 @@
+# ------------------------------
+# MyEventLane / Drupal 11 .gitignore
+# ------------------------------
+
+# Composer / vendor
+/vendor/
+composer.lock
+
+# Core scaffolding
+/web/core/
+/web/profiles/contrib/
+/web/libraries/
+/web/modules/contrib/
+/web/themes/contrib/
+
+# Local settings
+/web/sites/default/settings.local.php
+/web/sites/default/settings.ddev.php
+/web/sites/default/services.yml
+/web/sites/development.services.yml
+/web/sites/example.settings.local.php
+/web/sites/*/files/php/
+/web/sites/*/files/styles/
+/web/sites/*/files/css/
+/web/sites/*/files/js/
+/web/sites/*/files/config_*/
+/web/sites/*/files/tmp/
+/web/sites/*/files/private/
+/web/sites/*/files/translations/
+/web/sites/*/files/sync_dupes/
+/web/sites/*/settings.php.bak
+/web/sites/*/services.yml.bak
+
+# Config splits
+/config/dev/
+/config/prod/
+
+# DDEV and Docker noise
+/.ddev/.importdb/
+.ddev/db_snapshots/
+/.ddev/ngrok/
+*.sql
+*.sql.gz
+
+# IDE / OS clutter
+.idea/
+.vscode/
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Logs & cache
+/web/sites/*/files/*.log
+/web/sites/*/files/*.sql
+/web/sites/*/files/tmp/
+web/sites/default/files/.ht.sqlite
+
+# Temporary build or sync folders
+/web/tmp/
+/tmp/
