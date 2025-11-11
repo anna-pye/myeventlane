@@ -1,0 +1,23 @@
+uuid: 10169697-ad7f-4dde-95c2-bfe65f0e31df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ticket_limit
+    - node.type.event
+id: node.event.field_ticket_limit
+field_name: field_ticket_limit
+entity_type: node
+bundle: event
+label: 'Ticket Limit'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

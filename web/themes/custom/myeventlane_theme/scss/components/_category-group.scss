@@ -1,0 +1,60 @@
+
+
+@use "../settings/variables" as vars;
+
+
+.mel-category-group {
+  margin-bottom: 4rem;
+
+  .category-title {
+    display:block;
+    max-width: 100%;
+    background: vars.$color-bg-muted;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: vars.$text-color-main;
+    box-shadow: 0 2px 6px vars.$color-shadow;
+    border-radius: vars.$radius-medium;
+    
+    a {
+      padding-left: 20px;
+      text-decoration: none;
+      color: vars.$text-color-main;
+    }
+  }
+  .event-card-wrapper {
+    padding:20px;
+  }
+
+  .category-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .event-card {
+      flex: 0 1 calc(33.333% - 1rem);
+
+      @media (max-width: 992px) {
+        flex: 0 1 calc(50% - 1rem);
+      }
+
+      @media (max-width: 576px) {
+        flex: 0 1 100%;
+      }
+    }
+  }
+}
+
+.category-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.category-events-grid .views-row {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}

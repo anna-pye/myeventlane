@@ -1,0 +1,23 @@
+
+@use "settings/variables" as vars;
+
+
+.vendor-analytics-wrapper {
+  margin: 24px 0;
+  background: #fef5ec;
+  padding: 16px;
+  border-radius: 16px;
+
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #293241;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .recharts-wrapper {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+  }
+}

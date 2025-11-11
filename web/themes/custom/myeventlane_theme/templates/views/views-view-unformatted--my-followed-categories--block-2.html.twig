@@ -1,0 +1,19 @@
+{# Grouped view override for My Followed Categories - Block 2 #}
+
+<div class="mel-category-groups">
+  {% for group in rows %}
+    <div class="mel-category-group">
+      {% if group.group %}
+        <h2 class="category-title">{{ group.group }}</h2>
+      {% endif %}
+
+      <div class="category-events-grid">
+        {% for row in group.content %}
+          <div{{ row.attributes.addClass('event-card') }}>
+            {{ row.content }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

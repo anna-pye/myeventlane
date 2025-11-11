@@ -1,0 +1,59 @@
+uuid: 6499bd28-d776-4fca-b408-ac09880add2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.attendee_extra_field.field_attendee_extra_field
+    - field.field.paragraph.attendee_extra_field.field_field_label
+    - field.field.paragraph.attendee_extra_field.field_field_type
+    - field.field.paragraph.attendee_extra_field.field_options
+    - field.field.paragraph.attendee_extra_field.field_required
+    - paragraphs.paragraphs_type.attendee_extra_field
+  module:
+    - options
+id: paragraph.attendee_extra_field.default
+targetEntityType: paragraph
+bundle: attendee_extra_field
+mode: default
+content:
+  field_attendee_extra_field:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_field_label:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_field_type:
+    type: list_key
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_options:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_required:
+    type: boolean
+    label: inline
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden: {  }

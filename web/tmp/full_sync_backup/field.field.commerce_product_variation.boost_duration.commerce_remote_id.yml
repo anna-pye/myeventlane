@@ -1,0 +1,19 @@
+uuid: ac5d3c25-1107-4bd3-842f-abb8661a558b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.boost_duration
+    - field.storage.commerce_product_variation.commerce_remote_id
+id: commerce_product_variation.boost_duration.commerce_remote_id
+field_name: commerce_remote_id
+entity_type: commerce_product_variation
+bundle: boost_duration
+label: 'Remote ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

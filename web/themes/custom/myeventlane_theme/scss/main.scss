@@ -1,0 +1,223 @@
+/*// scss/main.scss*/
+
+/* ------------------------------------------------------------
+   main.scss – MyEventLane Theme
+   ------------------------------------------------------------ */
+
+/* 1. Core Sass modules */
+@use "sass:math";
+@use "sass:map";
+@use "sass:list";
+
+/* 2. Variables and Bootstrap */
+@use "settings/variables";
+@use "../css/bootstrap.min.css" as *;
+
+/* 3. Theme partials */
+@use "settings/mixins";
+@use "base/reset";
+@use "base/typography";
+@use "base/utilities";
+
+/* 4. Layout */
+@use "layout/header";
+@use "layout/footer";
+@use "layout/grid";
+@use "layout/spacing";
+@use "layout/taxonomy";
+
+/* 5. Components */
+@use "components/buttons";
+@use "components/cards";
+@use "components/forms";
+@use "components/modals";
+@use "components/menu";
+@use "components/messages";
+@use "components/flag";
+@use "components/followed-categories";
+@use "components/category-group";
+@use "components/attendee-dashboard";
+
+/* 6. Pages */
+@use "pages/homepage";
+@use "pages/event";
+@use "pages/cart";
+@use "pages/checkout";
+@use "pages/my-events";
+@use "pages/my-profile";
+@use "pages/rsvp-form";
+@use "pages/dashboard-tabs";
+@use "pages/dashboard_card";
+@use "pages/dashboard_empty";
+@use "pages/dashboard_stats";
+
+/* 7. Dashboard & Vendor */
+@use "dashboard/dashboard";
+@use "dashboard/attendees";
+@use "vendor_dashboard";
+@use "vendor-analytics";
+
+/* 8. Features */
+@use "boost";
+@use "boosted";
+@use "boosted-badge";
+@use "ticket";
+@use "ticket-matrix";
+@use "mel-auth";
+@use "stepper";
+@use "thankyou";
+@use "recommend";
+
+/* 9. Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+/*// 4. Base styles:*/
+
+/* TEMP: hide global system messages area printed by the page layout */
+body .layout-container > [data-drupal-messages] { display: none !important; }
+
+.page-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48 24 48;
+  }
+
+body,
+.main-content,
+.section,
+.page-wrapper {
+  background: #fef5ec !important;
+}
+
+.section,
+.hero-section,
+.featured-events-section,
+.event-list-section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .section,
+  .hero-section,
+  .featured-events-section,
+  .event-list-section {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+.event-list,
+.grid,
+.event-grid {
+  gap: 16px;
+  row-gap: 16px;
+  column-gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+body {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  background-color: #fef5ec;
+  color: #293241;
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.category-filters a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+.filter-pill {
+  text-decoration: none;
+  background: #f5c04c;
+  border-radius: 999px;
+  color: white;
+  padding: 12px 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  
+}
+
+.my-custom-cart-form form {
+  padding: 16px;
+  background: #fef5ec;
+  // etc.
+}
+
+.my-custom-cart-form input[type="number"],
+.my-custom-cart-form select,
+.my-custom-cart-form .form-item {
+  // styling
+}
+
+
+.mel-atc-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  padding: 24px
+}
+
+.mel-options-list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  // Radios as rows
+  .form-radios > .form-item,
+  .form-type-radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border: 1px solid #f4f4f4;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  input[type="radio"] {
+    margin-right: 12px;
+  }
+
+  label {
+    font-weight: 600;
+    color: #293241;
+  }
+}
+
+.mel-stepper__input input[type="number"] {
+  min-width: 80px;
+  height: 40px;
+  border-radius: 999px;
+}
+
+
+.mel-btn.mel-btn--primary,
+.button--primary {
+  background: #f26d5b;
+  border-radius: 999px;
+  color: white;
+  padding: 12px 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+
+.analytics-chart {
+  max-width: 100%;
+  height: 300px;
+  margin-top: 1rem;
+}
+

@@ -1,0 +1,24 @@
+{#
+  @file
+  Custom checkout pane template for attendee info (Paragraphs).
+  Path: themes/custom/myeventlane_theme/templates/commerce/checkout/attendee-info-pane.html.twig
+#}
+
+{# 📦 Attach custom styles or JavaScript if needed #}
+{{ attach_library('myeventlane_theme/cart') }}
+
+<div class="mel-attendee-pane">
+  {% if tickets is defined and tickets|length %}
+    {% for ticket in tickets %}
+      {{ ticket }}
+    {% else %}
+      <div class="mel-attendee-empty">
+        <p>{{ 'No ticket forms to show.'|t }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="mel-attendee-empty">
+      <p>{{ 'No ticket data available.'|t }}</p>
+    </div>
+  {% endif %}
+</div>

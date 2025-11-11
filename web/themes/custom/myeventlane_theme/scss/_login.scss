@@ -1,0 +1,179 @@
+/* themes/custom/myeventlane_theme/scss/_login.scss */
+@use "settings/variables" as vars;
+
+.mel-auth {
+  background: vars.$color-bg-offwhite;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$spacing-xl;
+
+  .mel-card {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 8px 24px vars.$color-shadow;
+    padding: vars.$spacing-2xl vars.$spacing-xl;
+    border: vars.$border-light;
+  }
+
+  .mel-head {
+    text-align: center;
+    margin-bottom: vars.$spacing-lg;
+
+    img {
+      height: 48px;
+      width: auto;
+      display: inline-block;
+      margin-bottom: vars.$spacing-sm;
+    }
+
+    .mel-title {
+      font-size: vars.$font-size-h2;
+      font-weight: vars.$font-weight-bold;
+      color: vars.$text-color-main;
+      margin: 0 0 vars.$spacing-xs;
+    }
+
+    .mel-sub {
+      font-size: vars.$font-size-body;
+      color: vars.$color-muted-text;
+      margin: 0;
+    }
+  }
+
+  /* Form area (scoped so it can't bleed) */
+  .mel-form {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-lg;
+
+    label {
+      display: inline-block;
+      font-size: vars.$font-size-small;
+      font-weight: vars.$font-weight-semibold;
+      color: vars.$text-color-main;
+      margin-bottom: vars.$spacing-xs;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: vars.$spacing-lg vars.$spacing-xl;
+      border: vars.$border-light;
+      border-radius: vars.$radius-small;
+      font-size: vars.$font-size-body;
+      color: vars.$text-color-main;
+      background: #fff;
+      transition: border-color .15s ease, box-shadow .15s ease;
+
+      &::placeholder { color: vars.$color-placeholder; }
+
+      &:focus {
+        outline: 2px solid transparent;
+        border-color: vars.$color-outline-focus;
+        box-shadow: 0 0 0 3px color.change(vars.$color-outline-focus, $alpha: .25);
+      }
+    }
+
+    /* Primary submit */
+    .form-actions .button,
+    .form-actions .button--primary,
+    input[type="submit"] {
+      width: 100%;
+      border: 0;
+      border-radius: vars.$radius-pill;
+      background: vars.$color-primary;
+      color: #fff;
+      padding: vars.$spacing-lg vars.$spacing-xl;
+      font-size: vars.$font-size-body;
+      font-weight: vars.$font-weight-semibold;
+      min-height: 44px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px color.change(vars.$color-primary, $alpha: .28);
+      transition: transform .06s ease, box-shadow .15s ease, background .15s ease;
+
+      &:hover { background: color.adjust(vars.$color-primary, $lightness: -7%); }
+      &:active { transform: translateY(1px); }
+      &:focus-visible {
+        outline: 3px solid color.change(vars.$color-outline-focus, $alpha:.45);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  /* Optional: “or” divider + social buttons (still scoped) */
+  .mel-or {
+    position: relative;
+    text-align: center;
+    margin: vars.$spacing-xl 0 vars.$spacing-md;
+    color: vars.$color-muted-text;
+    font-size: vars.$font-size-small;
+
+    &::before, &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: vars.$color-bg-muted;
+    }
+    &::before { left: 0; }
+    &::after  { right: 0; }
+    > span { background: #fff; padding: 0 vars.$spacing-md; }
+  }
+
+  .mel-social {
+    display: grid;
+    gap: vars.$spacing-sm;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: vars.$radius-pill;
+      text-decoration: none;
+      font-weight: vars.$font-weight-semibold;
+      padding: vars.$spacing-md vars.$spacing-xl;
+      border: vars.$border-light;
+      color: vars.$text-color-main;
+      background: #fff;
+      transition: box-shadow .15s ease, transform .06s ease;
+
+      &:hover { box-shadow: 0 6px 16px color.change(#000, $alpha: .06); }
+      &:active { transform: translateY(1px); }
+      &:focus-visible {
+        outline: 3px solid color.change(vars.$color-outline-focus, $alpha:.45);
+        outline-offset: 2px;
+      }
+
+      &.apple    { background: #000; color: #fff; border-color: transparent; }
+      &.facebook { border-color: vars.$color-accent; }
+      &.google   { border-color: vars.$color-primary; }
+    }
+  }
+
+  .mel-signup {
+    text-align: center;
+    margin-top: vars.$spacing-lg;
+    font-size: vars.$font-size-small;
+    color: vars.$color-muted-text;
+
+    a {
+      color: vars.$color-primary;
+      font-weight: vars.$font-weight-semibold;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+/* Mobile padding tighten */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-auth { padding: vars.$spacing-lg; }
+  .mel-auth .mel-card { padding: vars.$spacing-xl vars.$spacing-lg; }
+}

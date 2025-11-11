@@ -1,0 +1,17 @@
+{# Wrapper only. The form and rows render via the table template. #}
+<section class="mel-cart">
+{# Debug test #}
+{% if items %}
+  <div>✅ Items exist in cart</div>
+{% endif %}
+
+{% if items[0].ticket_holders is defined %}
+  <div>✅ Ticket holders form exists</div>
+{% else %}
+  <div>❌ No ticket holders form yet</div>
+{% endif %}
+  <div class="layout-wrapper">
+    <h1 class="mel-cart-title">Your Cart</h1>
+    {{ rows }}
+  </div>
+</section>

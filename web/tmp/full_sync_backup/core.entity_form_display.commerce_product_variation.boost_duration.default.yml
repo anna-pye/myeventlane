@@ -1,0 +1,65 @@
+uuid: 4170df80-7307-4b62-9815-ec0a0ed89836
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.boost_duration
+    - field.field.commerce_product_variation.boost_duration.commerce_remote_id
+    - field.field.commerce_product_variation.boost_duration.field_boost_days
+    - field.field.commerce_product_variation.boost_duration.field_target_event
+  module:
+    - commerce_price
+id: commerce_product_variation.boost_duration.default
+targetEntityType: commerce_product_variation
+bundle: boost_duration
+mode: default
+content:
+  commerce_stock_always_in_stock:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_boost_days:
+    type: number
+    weight: 0
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  price:
+    type: commerce_price_default
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  sku:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  commerce_remote_id: true
+  created: true
+  field_target_event: true
+  list_price: true
+  uid: true

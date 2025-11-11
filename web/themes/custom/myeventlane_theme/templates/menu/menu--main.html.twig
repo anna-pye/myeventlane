@@ -1,0 +1,39 @@
+{#
+ * Custom Bootstrap 5 compatible main menu
+ * Place this in: myeventlane_theme/templates/menu/menu--main.html.twig
+#}
+
+{{ attach_library('myeventlane_theme/global') }}
+
+{% macro render_menu(items, attributes, menu_level) %}
+  {% import _self as macros %}
+  {% if items %}
+    <ul class="{{ menu_level == 0 ? 'navbar-nav justify-content-end pe-3' : 'dropdown-menu' }}">
+      {% for item in items %}
+        {% set is_active = item.in_active_trail ? ' active' : '' %}
+        {% set has_children = item.below is not empty %}
+        {% set classes = [
+          'nav-item',
+          has_children ? 'dropdown' : '',
+          is_active
+        ] %}
+        <li{{ item.attributes.addClass(classes) }}>
+          {% if has_children %}
+            <a href="{{ item.url }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ item.title }}
+            </a>
+            {{ macros.render_menu(item.below, attributes, menu_level + 1) }}
+          {% else %}
+            <a href="{{ item.url }}" class="nav-link">
+              {{ item.title }}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+{# Call macro #}
+{% import _self as macros %}
+{{ macros.render_menu(items, attributes, 0) }}

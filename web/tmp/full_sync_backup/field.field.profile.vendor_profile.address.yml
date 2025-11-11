@@ -1,0 +1,25 @@
+uuid: 9f9fb85d-fb40-4813-867f-fdd7c9444417
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.address
+    - profile.type.vendor_profile
+  module:
+    - address
+id: profile.vendor_profile.address
+field_name: address
+entity_type: profile
+bundle: vendor_profile
+label: Address
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: null
+settings:
+  available_countries: {  }
+  langcode_override: null
+  field_overrides: {  }
+  fields: {  }
+field_type: address

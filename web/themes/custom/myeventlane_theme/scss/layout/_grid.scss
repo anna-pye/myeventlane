@@ -1,0 +1,27 @@
+@use "../settings/variables" as vars;
+
+
+.grid {
+  display: grid;
+  gap: vars.$spacing-lg;
+
+  &--2col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &--3col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--responsive {
+    grid-template-columns: 1fr;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

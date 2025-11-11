@@ -1,0 +1,67 @@
+/**
+ * Payment method icon list.
+ */
+.payment-method-icon-list {
+  margin: 0 0 1em;
+  padding: 0;
+  font-size: 0;
+}
+
+.payment-method-icon-list .payment-method-icon {
+  position: relative;
+  width: 40px;
+  height: 25px;
+  margin: 0 10px 10px 0;
+  border-radius: 4px;
+  background-size: 40px 25px;
+  box-shadow: 0 0 0 1px rgb(0, 0, 0, 0.1);
+}
+
+@media all and (min-width: 851px) {
+  .payment-method-icon-list .payment-method-icon {
+    width: 54px;
+    height: 34px;
+    margin: 0 15px 15px 0;
+    background-size: 54px 34px;
+  }
+}
+
+.payment-method-icon-list .payment-method-icon:first-child {
+  margin-left: 0;
+}
+
+.payment-method-icon--applepay {
+  background-image: url(../images/applepay.svg);
+}
+
+.payment-method-icon--googlepay {
+  background-image: url(../images/googlepay.svg);
+}
+
+.payment-method-icon--us_bank_account {
+  background-image: url(../images/us-bank-account.svg);
+}
+
+.payment-method-icon--amazon_pay {
+  background-image: url(../images/amazon-pay.svg);
+}
+
+.payment-method-icon--cashapp {
+  background-image: url(../images/cash-app.svg);
+}
+
+.payment-method-icon--klarna {
+  background-image: url(../images/klarna.svg);
+}
+
+.payment-method-icon--affirm {
+  background-image: url(../images/affirm.svg);
+}
+
+.payment-method-icon--alipay {
+  background-image: url(../images/alipay.svg);
+}
+
+.payment-method-icon--wechat_pay {
+  background-image: url(../images/wechat_pay.svg);
+}

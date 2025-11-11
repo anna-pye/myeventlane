@@ -1,0 +1,18 @@
+
+@use "../settings/variables" as vars;
+@use "../settings/mixins";
+
+.mel-stack > * + * {
+  margin-top: vars.$spacing-md;
+}
+
+.mel-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: vars.$radius-pill;
+  background-color: vars.$color-primary;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  @include mixins.transition(all);
+}

@@ -1,0 +1,69 @@
+uuid: cdee7f35-ebaa-4a05-b3c5-7d31e73ef697
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.default
+    - field.field.commerce_order_item.default.field_ticket_holder
+  module:
+    - commerce_price
+  enforced:
+    module:
+      - commerce_product
+_core:
+  default_config_hash: a-MK2hTebnM3YwCg08ZKg7ItNkBUOsu3am_y0HIjTw8
+id: commerce_order_item.default.default
+targetEntityType: commerce_order_item
+bundle: default
+mode: default
+content:
+  field_ticket_holder:
+    type: entity_reference_entity_view
+    label: inline
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  purchased_entity:
+    type: entity_reference_entity_view
+    label: inline
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  quantity:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  total_price:
+    type: commerce_price_default
+    label: inline
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  unit_price:
+    type: commerce_price_default
+    label: inline
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden:
+  adjustments: true
+  created: true

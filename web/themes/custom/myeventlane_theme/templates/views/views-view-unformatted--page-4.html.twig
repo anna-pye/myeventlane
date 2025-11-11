@@ -1,0 +1,102 @@
+{{ attach_library('myeventlane_theme/global') }}
+
+
+{% block content %}
+<div class="taxonomy-page layout-container">
+  <main role="main" class="taxonomy-main">
+    <div class="page-inner">
+
+    <section class="mini-hero">
+      <div class="mini-hero__text">
+        <h2 class="mini-hero__tagline">Your Lane to<br><span>Great Events</span></h2>
+        <p class="mini-hero__subtitle">Discover, connect, and support local creators</p>
+    </section>
+
+      {# ---------------- CATEGORY FILTERS ---------------- #}
+      {% if event_category_terms is defined and event_category_terms|length > 0 %}
+        <div class="category-filters" role="navigation" aria-label="Event Categories">
+          <a href="/events" class="filter-pill filter-yellow">All Events</a>
+
+          {% for term in event_category_terms %}
+            {% set raw_name = term.name.value %}
+            {% set slug = raw_name|lower|replace({
+              ' ': '-',
+              '+': '',
+              '/': '',
+              '&': 'and'
+            }) %}
+            {% set class =
+              slug matches '/music/' ? 'filter-blue' :
+              slug matches '/arts/' ? 'filter-yellow' :
+              slug matches '/workshop/' ? 'filter-coral' :
+              slug matches '/lgbtqi/' ? 'filter-purple' :
+              slug matches '/movie/' ? 'filter-gray' :
+              'filter-default'
+            %}
+              <a
+                href="{{ term.url }}"
+                class="filter-pill {{ term.class }}{% if term.id == term_id %} is-active{% endif %}"
+              >
+                {{ term.name }}
+              </a>
+         
+          {% endfor %}
+        </div>
+      {% endif %}
+
+       <form class="search-form" action="/events" method="get" role="search">
+          <div class="search-form__group">
+            <input
+              type="text"
+              name="keywords"
+              class="search-form__input"
+              placeholder="Search events..."
+              aria-label="Search events"
+            />
+            <button type="submit" class="search-form__button">Search</button>
+          </div>
+        </form>
+      </div>
+
+      {# ---------------- CATEGORY HEADER ---------------- #}
+      <section class="taxonomy-hero {{ category_class }}">
+        <h1 class="taxonomy-title">{{ term_name }}</h1>
+        {% if term_description %}
+          <p class="taxonomy-description">{{ term_description }}</p>
+        {% endif %}
+      </section>
+
+      {# ---------------- BOOSTED EVENTS ---------------- #}
+      {% set boosted = drupal_view('boosted_events', 'block_1') %}
+      {% if boosted %}
+        <section class="boosted-events">
+          <h2 class="section-title">Featured in This Category</h2>
+          <div class="event-grid">
+            {{ boosted }}
+          </div>
+        </section>
+      {% endif %}
+
+      {# ---------------- EVENT GRID ---------------- #}
+      <section class="taxonomy-events">
+        {% if content %}
+          <div class="event-grid">
+            {{ content }}
+          </div>
+        {% else %}
+          <p class="no-events">No events found in this category.</p>
+        {% endif %}
+      </section>
+
+    </div>
+  </main>
+
+  {% if page.footer %}
+    <footer class="site-footer">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% include '@myeventlane_theme/partials/footer.html.twig' %}

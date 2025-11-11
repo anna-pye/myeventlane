@@ -1,0 +1,23 @@
+{# page--rsvp--edit.html.twig #}
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <a href="/" class="dashboard-logo">
+      <img src="/themes/custom/myeventlane_theme/assets/MyEventLane_Logo_Transparent.png" alt="MyEventLane logo" width="150"/>
+    </a>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="/my-profile" {% if app.request.attributes.get('_route') == 'my_profile' %}class="active"{% endif %}>Dashboard</a></li>
+        <li><a href="/my-profile/tickets">Tickets</a></li>
+        <li><a href="/my-profile/rsvps">RSVPs</a></li>
+        <li><a href="/my-profile/settings">Account Settings</a></li>
+        <li><a href="/user/logout">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main class="dashboard-main">
+    <h1 class="dashboard-title">Edit RSVP</h1>
+    <div class="dashboard-card">
+      {{ page.content }}
+    </div>
+  </main>
+</div>

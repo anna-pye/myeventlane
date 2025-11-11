@@ -1,0 +1,10 @@
+uuid: afa7ec62-17ae-4932-80cd-5d23ae6fe393
+langcode: en
+status: true
+dependencies: {  }
+id: ticket
+label: 'Ticket Variation'
+traits: {  }
+locked: false
+orderItemType: default
+generateTitle: false

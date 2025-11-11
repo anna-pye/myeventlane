@@ -1,0 +1,40 @@
+{#
+  MyEventLane — Register Form override
+  Triggered for route /user/register (theme hook: user_register_form)
+#}
+{{ attach_library('myeventlane_theme/forms') }}
+
+<main class="auth-wrapper" role="main" aria-labelledby="register-title">
+  <section class="auth-card" role="form" aria-describedby="register-desc">
+    <div class="auth-logo">
+      <img src="/themes/custom/myeventlane_theme/assets/MyEventLane_Logo_Transparent.png" alt="MyEventLane logo" />
+    </div>
+
+    <h1 id="register-title" class="auth-title">Create your account</h1>
+    <p id="register-desc" class="auth-subtitle">Start hosting or grabbing tickets in seconds.</p>
+
+    {{ status_messages }}
+
+    <div class="auth-form">
+      {{ form.form_build_id }}
+      {{ form.form_token }}
+      {{ form.form_id }}
+
+      {% if form.name is defined %}<div class="form-item">{{ form.name }}</div>{% endif %}
+      {% if form.mail is defined %}<div class="form-item">{{ form.mail }}</div>{% endif %}
+      {% if form.pass is defined %}<div class="form-item">{{ form.pass }}</div>{% endif %}
+
+      {# Extra fields: captcha, terms, timezone, etc. #}
+      {{ form|without('form_build_id','form_token','form_id','actions','name','mail','pass') }}
+
+      <div class="form-actions auth-actions">
+        {{ form.actions }}
+      </div>
+    </div>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a href="{{ path('user.login') }}">Log in</a>
+    </p>
+  </section>
+</main>

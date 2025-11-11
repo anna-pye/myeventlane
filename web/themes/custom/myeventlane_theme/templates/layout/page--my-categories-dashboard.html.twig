@@ -1,0 +1,37 @@
+{% include '@myeventlane_theme/partials/header.html.twig' %}
+
+
+<div class="my-categories">
+  <h1>💖 Your Followed Categories</h1>
+
+  {% if categories is empty %}
+    <p>You’re not following any categories yet.</p>
+  {% endif %}
+
+  {% for category in categories %}
+    <div class="category-card">
+      <h2>
+        <a href="{{ category.url }}">{{ category.name }}</a>
+        <span class="count">💖 {{ category.follower_count }}</span>
+      </h2>
+
+      {% if category.events %}
+        <ul class="new-events">
+          {% for event in category.events %}
+            <li>
+              <a href="{{ event.url }}">{{ event.title }}</a>
+              <span class="event-date">{{ event.date }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No new events this week.</p>
+      {% endif %}
+
+      <form action="/flag/unflag/follow_category/taxonomy_term/{{ category.id }}" method="post">
+        <input type="hidden" name="destination" value="/my-categories" />
+        <button class="unfollow-btn">💔 Unfollow</button>
+      </form>
+    </div>
+  {% endfor %}
+</div>

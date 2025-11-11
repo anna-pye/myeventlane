@@ -1,0 +1,34 @@
+# Schema for the configuration files of the Modeler API module.
+modeler_api.settings:
+  type: config_object
+  label: 'Modeler API settings'
+  mapping:
+    owner_modeler:
+      type: sequence
+      label: 'Owner IDs'
+      sequence:
+        type: sequence
+        label: 'Modeler IDs'
+        sequence:
+          type: mapping
+          mapping:
+            theme:
+              type: string
+              label: 'Theme'
+            storage:
+              type: string
+              label: 'Storage Mode'
+              constraints:
+                Choice:
+                  callback: '\Drupal\modeler_api\Form\Settings::validStorageOptions'
+
+modeler_api.data_model.*:
+  type: config_entity
+  label: Model
+  mapping:
+    id:
+      type: string
+      label: ID
+    data:
+      type: string
+      label: Data

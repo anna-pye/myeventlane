@@ -1,0 +1,98 @@
+<div class="mel-dashboard-section mel-attendee-section">
+  <div class="mel-section-header" style="text-align: left;">
+    <h2>🎟️ Attendee Answers</h2>
+    <p class="mel-sub">Responses from your ticket holders across all events</p>
+  </div>
+
+  {% set grouped = {} %}
+
+  {% for row in view.result %}
+    {% set event = row._relationship_entities['field_event'] ?? null %}
+    {% set ticket = row._relationship_entities['commerce_product_variation'] ?? null %}
+    {% set question = row._relationship_entities['field_attendee_questions'] ?? null %}
+
+    {% set event_title = event ? event.getTitle() : 'Unknown Event' %}
+    {% set event_url = event ? path('entity.node.canonical', {'node': event.id()}) : '#' %}
+    {% set event_image = event.field_image.entity.uri.value ?? null %}
+    {% set ticket_title = ticket ? ticket.getTitle() : 'Unknown Ticket Type' %}
+
+    {% if grouped[event_title] is not defined %}
+      {% set grouped = grouped|merge({ (event_title): {
+        '_event': event,
+        '_url': event_url,
+        '_image': event_image,
+        '_tickets': {}
+      }}) %}
+    {% endif %}
+
+    {% set tickets = grouped[event_title]._tickets|default({}) %}
+
+    {% if tickets[ticket_title] is not defined %}
+      {% set tickets = tickets|merge({ (ticket_title): [] }) %}
+    {% endif %}
+
+    {% set updated_attendees = tickets[ticket_title]|merge([row]) %}
+    {% set grouped = grouped|merge({
+      (event_title): grouped[event_title]|merge({
+        '_tickets': tickets|merge({
+          (ticket_title): updated_attendees
+        })
+      })
+    }) %}
+  {% endfor %}
+
+  {% for event_title, group in grouped %}
+    <div class="mel-event-card">
+      <div class="mel-event-header">
+        <div class="mel-event-meta" style="display: flex; align-items: center; gap: 1rem;">
+          {% if group._image %}
+            <img src="{{ file_url(group._image)|image_style('thumbnail') }}"
+                 alt="Event image"
+                 style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+          {% endif %}
+          <h3>
+            {% if group._url %}
+              <a href="{{ group._url }}">{{ event_title }}</a>
+            {% else %}
+              {{ event_title }}
+            {% endif %}
+          </h3>
+        </div>
+
+        <div class="mel-event-tools" style="display: flex; align-items: center; gap: 1rem;">
+          <span class="mel-event-count">{{ group._tickets|length }} ticket types</span>
+          <a href="/dashboard/attendees/export?download_csv={{ event_title|url_encode }}" class="mel-csv-btn">
+            ⬇ Download CSV
+          </a>
+        </div>
+      </div>
+
+      {% for ticket_title, attendees in group._tickets %}
+        <div class="mel-ticket-block">
+          <h4 class="mel-ticket-title"><span class="emoji">🎟️</span> {{ ticket_title }}</h4>
+          <table class="mel-table mel-attendee-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Question</th>
+                <th>Answer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in attendees %}
+                {% set q = row._relationship_entities['field_attendee_questions'] ?? null %}
+                <tr>
+                  <td>{{ row._entity.field_first_name.value }} {{ row._entity.field_last_name.value }}</td>
+                  <td>{{ row._entity.field_email.value }}</td>
+                  <td>{{ q ? q.field_field_label.value : '–' }}</td>
+                  <td>{{ q ? q.field_attendee_extra_field.value : '–' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>

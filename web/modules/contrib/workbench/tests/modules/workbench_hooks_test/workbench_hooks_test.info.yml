@@ -1,0 +1,12 @@
+name: Workbench block test
+description: Test code for workbench
+type: module
+core_version_requirement: ^10 || ^11
+hidden: true
+dependencies:
+  - workbench:workbench
+
+# Information added by Drupal.org packaging script on 2024-10-28
+version: '8.x-1.6'
+project: 'workbench'
+datestamp: 1730131324

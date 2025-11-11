@@ -1,0 +1,19 @@
+uuid: 1c10fc57-c24e-4f3d-8c46-1a310e84c04d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_first_name
+    - paragraphs.paragraphs_type.attendee_answer
+id: paragraph.attendee_answer.field_first_name
+field_name: field_first_name
+entity_type: paragraph
+bundle: attendee_answer
+label: 'First Name'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

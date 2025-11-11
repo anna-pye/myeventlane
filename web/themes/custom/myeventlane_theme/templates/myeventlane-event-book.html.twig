@@ -1,0 +1,16 @@
+<article class="mel-event-card mel-card">
+  <header class="mel-event__header">
+    {% if hero_url %}
+      <img class="mel-event-thumb" src="{{ hero_url }}" alt="">
+    {% endif %}
+    <div>
+      <h1 class="mel-title">{{ title }}</h1>
+      {% if event_date_text %}<p class="mel-subtitle">{{ event_date_text }}</p>{% endif %}
+      {% if venue_text %}<p class="mel-subtitle">{{ venue_text }}</p>{% endif %}
+    </div>
+  </header>
+
+  <section class="mel-ticket-matrix-card mel-card">
+    {{ matrix_form }}
+  </section>
+</article>

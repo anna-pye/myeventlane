@@ -1,0 +1,21 @@
+uuid: 8eb09287-1b0e-446c-bd1e-df048da6fd8f
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_order
+id: commerce_order.commerce_remote_id
+field_name: commerce_remote_id
+entity_type: commerce_order
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

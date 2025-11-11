@@ -1,0 +1,11 @@
+conditional_fields:
+  js:
+    js/conditional_fields.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.states
+
+admin:
+  css:
+    component:
+      css/conditional_fields.admin.css: {}

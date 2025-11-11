@@ -1,0 +1,191 @@
+@use "../settings/variables" as vars;
+
+
+// ===== Dashboard Layout =====
+
+.event-card--boosted {
+  border: 2px solid vars.$color-highlight;
+  box-shadow: 0 0 10px (vars.$color-highlight -0.5);
+}
+
+.mel-boost-status {
+  background: vars.$color-highlight;
+  color: vars.$text-color-main;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  border-radius: vars.$radius-small;
+  margin-bottom: vars.$spacing-sm;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.mel-boost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mel-boost-expiry {
+  display: block;
+  font-size: 13px;
+  color: vars.$color-muted-text;
+  margin-top: 4px;
+}
+
+.vendor-dashboard-grid {
+  display: grid;
+  gap: vars.$spacing-xl;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.dashboard-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: vars.$spacing-xl;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 vars.$spacing-lg;
+
+  .dashboard-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+  }
+
+  .dashboard-main {
+    flex: 1;
+    min-width: 0;
+
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: vars.$spacing-lg;
+
+      .event-card {
+        background: #fff;
+        border-radius: vars.$radius-medium;
+        box-shadow: 0 2px 6px vars.$color-shadow;
+        padding: vars.$spacing-lg;
+        position: relative;
+        text-align: left;
+
+        img {
+          width: 100%;
+          border-radius: vars.$radius-small;
+          margin-bottom: vars.$spacing-md;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: vars.$font-size-body;
+          color: vars.$text-color-main;
+          font-weight: vars.$font-weight-bold;
+        }
+
+        p {
+          color: vars.$color-muted-text;
+          font-size: vars.$font-size-small;
+          margin: vars.$spacing-xs 0;
+        }
+
+        .rsvp-badge {
+          background-color: vars.$color-primary;
+          color: white;
+          padding: vars.$spacing-sm vars.$spacing-md;
+          border-radius: vars.$radius-pill;
+          font-size: vars.$font-size-small;
+          position: absolute;
+          bottom: vars.$spacing-lg;
+          right: vars.$spacing-lg;
+          font-weight: vars.$font-weight-semibold;
+        }
+      }
+    }
+  }
+}
+
+.mel-boost-badge-card {
+  background-color: vars.$color-highlight;
+  color: vars.$text-color-main;
+  display: inline-block;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  border-radius: vars.$radius-pill;
+  font-weight: 600;
+  margin-bottom: vars.$spacing-sm;
+  font-size: 14px;
+}
+
+.mel-boost-expiry {
+  font-size: 14px;
+  color: vars.$color-muted-text;
+}
+
+// ===== Sidebar Navigation =====
+.sidebar-nav {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(44, 44, 99, 0.06);
+  padding: 32px 18px;
+  margin-bottom: vars.$spacing-md;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 18px;
+  }
+
+  a {
+    color: vars.$color-primary;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 8px 10px;
+    display: block;
+    transition: background 0.2s;
+
+    &.active,
+    &:focus,
+    &:hover {
+      background: #fff3ee;
+      color: #222;
+    }
+  }
+}
+
+// ===== Responsive (Mobile First) =====
+@media (max-width: 900px) {
+  .dashboard-layout {
+    flex-direction: column;
+    gap: vars.$spacing-md;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    padding: vars.$spacing-md vars.$spacing-sm;
+    margin-bottom: vars.$spacing-md;
+  }
+
+  .sidebar-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: vars.$spacing-sm;
+  }
+
+  .dashboard-main .card-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .dashboard-main .card-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .dashboard-main .card-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

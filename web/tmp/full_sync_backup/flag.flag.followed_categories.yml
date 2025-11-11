@@ -1,0 +1,30 @@
+uuid: 94c51d88-23f3-4c78-b9db-e0908e1d36b5
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: followed_categories
+label: 'Followed Categories'
+bundles:
+  - event_category
+entity_type: taxonomy_term
+global: false
+flag_short: 'Follow this Category'
+flag_long: ''
+flag_message: ''
+unflag_short: 'Unfollow this Category'
+unflag_long: ''
+unflag_message: ''
+unflag_denied_text: ''
+weight: 0
+flag_type: 'entity:taxonomy_term'
+link_type: ajax_link
+flagTypeConfig:
+  show_in_links:
+    full: full
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  extra_permissions: {  }
+linkTypeConfig: {  }

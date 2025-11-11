@@ -1,0 +1,21 @@
+uuid: 5e4f82c3-45e3-464f-af12-0d798c94db06
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_promo_expires
+    - node.type.event
+  module:
+    - datetime
+id: node.event.field_promo_expires
+field_name: field_promo_expires
+entity_type: node
+bundle: event
+label: 'Promotion expires'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

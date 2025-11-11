@@ -1,0 +1,23 @@
+uuid: d160d5b0-b745-4793-acbb-3d5699a86c88
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.commerce_product_variation.field_show_remaining
+    - commerce_product.commerce_product_variation_type.ticket
+id: commerce_product_variation.ticket.field_show_remaining
+field_name: field_show_remaining
+entity_type: commerce_product_variation
+bundle: ticket
+label: 'Show remaining tickets'
+description: 'Display remaining ticket quantity to customers.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Show
+  off_label: Hide
+field_type: boolean

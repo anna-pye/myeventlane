@@ -1,0 +1,207 @@
+@use "../settings/variables" as vars;
+
+
+.taxonomy-page {
+  background-color: vars.$color-bg-offwhite;
+  font-family: vars.$font-family-main;
+  padding: vars.$spacing-3xl 0;
+
+  .layout-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 vars.$spacing-xl;
+
+    @media (max-width: vars.$breakpoint-md) {
+      padding: 0 vars.$spacing-lg;
+    }
+  }
+}
+
+.taxonomy-main {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-2xl;
+
+  .page-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 24px 48px;
+      }
+}
+
+.taxonomy-hero {
+  padding: vars.$spacing-3xl vars.$spacing-xl;
+  border-radius: vars.$radius-medium;
+  text-align: center;
+  color: vars.$text-color-main;
+  margin-bottom: vars.$spacing-xl;
+
+  &.theme-blue {
+    background-color: vars.$color-accent;
+    color: #fff;
+  }
+
+  &.theme-yellow {
+    background-color: vars.$color-highlight;
+    color: #000;
+  }
+
+  &.theme-coral {
+    background-color: vars.$color-primary;
+    color: #fff;
+  }
+
+  &.theme-purple {
+    background-color: #a678f2;
+    color: #fff;
+  }
+
+  &.theme-gray {
+    background-color: #ccc;
+    color: #000;
+  }
+
+  &.theme-default {
+    background-color: vars.$color-bg-offwhite;
+  }
+
+  .taxonomy-title {
+    font-size: vars.$font-size-h1;
+    font-weight: vars.$font-weight-bold;
+    margin-bottom: vars.$spacing-sm;
+  }
+
+  .taxonomy-description {
+    max-width: 680px;
+    margin: 0 auto;
+    font-size: vars.$font-size-body;
+    color: inherit;
+  }
+}
+
+.mini-hero {
+  text-align: left; // ✅ Align text left
+  margin-top: vars.$spacing-lg; // ✅ Reduce top space
+  margin-bottom: vars.$spacing-xl;
+
+  &__text {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 vars.$spacing-md;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @media (max-width: vars.$breakpoint-md) {
+      padding: 0 vars.$spacing-sm;
+    }
+  }
+
+  &__tagline {
+    font-size: 28px;
+    font-weight: vars.$font-weight-bold;
+    line-height: 1.2;
+    color: vars.$text-color-main;
+    margin-bottom: vars.$spacing-sm;
+
+    span {
+      color: vars.$color-primary;
+    }
+  }
+
+  &__subtitle {
+    font-size: vars.$font-size-body;
+    color: vars.$color-muted-text;
+    margin-top: 0;
+    margin-bottom: vars.$spacing-lg;
+  }
+}
+
+// Reuse your search form styling
+.search-form {
+  width: 100%;
+  max-width: 480px;
+
+  &__group {
+    display: flex;
+    align-items: stretch;
+    border-radius: vars.$radius-pill;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: vars.$color-shadow;
+  }
+
+  &__input {
+    flex: 1;
+    padding: vars.$spacing-sm vars.$spacing-md;
+    border: none;
+    font-size: vars.$font-size-body;
+    outline: none;
+    min-height: 44px;
+
+    &::placeholder {
+      color: vars.$color-placeholder;
+    }
+
+    &:focus {
+      outline: 2px solid vars.$color-outline-focus;
+    }
+  }
+
+  &__button {
+    background-color: vars.$color-primary;
+    color: white;
+    padding: 0 vars.$spacing-lg;
+    font-size: vars.$font-size-body;
+    font-weight: vars.$font-weight-semibold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: vars.$color-primary;
+    }
+  }
+}
+
+.boosted-events {
+  margin-bottom: vars.$spacing-2xl;
+
+  .section-title {
+    font-size: vars.$font-size-h2;
+    font-weight: vars.$font-weight-bold;
+    margin-bottom: vars.$spacing-lg;
+    color: vars.$text-color-main;
+  }
+
+  .event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: vars.$spacing-lg;
+  }
+}
+
+@media (max-width: vars.$breakpoint-md) {
+  .mini-hero__text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .search-form {
+    margin: 0 auto;
+  }
+}
+
+.taxonomy-events .event-grid {
+  display: grid;
+  gap: vars.$spacing-lg;
+  padding: vars.$spacing-lg 0;
+}
+
+.no-events {
+  max-width: 1240px;
+  text-align: center;
+  color: vars.$color-muted-text;
+  font-style: italic;
+  padding: vars.$spacing-xl;
+}

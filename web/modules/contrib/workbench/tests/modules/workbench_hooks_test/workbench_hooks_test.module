@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Module hooks test.
+ */
+
+/**
+ * Implements hook_workbench_block().
+ */
+function workbench_hooks_test_workbench_block() {
+  return [
+    'Test block content',
+  ];
+}

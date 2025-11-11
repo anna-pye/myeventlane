@@ -1,0 +1,21 @@
+uuid: 19691669-aeed-4d8d-825f-4d40a47cb8db
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_stripe_connected
+    - node.type.vendor_store
+id: node.vendor_store.field_stripe_connected
+field_name: field_stripe_connected
+entity_type: node
+bundle: vendor_store
+label: 'Stripe Connected?'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

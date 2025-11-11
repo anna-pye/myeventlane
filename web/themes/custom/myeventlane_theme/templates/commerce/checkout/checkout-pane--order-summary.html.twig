@@ -1,0 +1,19 @@
+{#
+  @file
+  Custom Checkout Order Summary pane.
+  Path: themes/custom/myeventlane_theme/templates/commerce/checkout/checkout-pane--order-summary.html.twig
+#}
+
+<div class="mel-sidebar-box">
+  <div class="mel-sidebar-header">
+    <h2>📦 <strong>{{ 'Order Summary'|t }}</strong></h2>
+  </div>
+
+  <div class="mel-sidebar-body">
+    {% if content is defined %}
+      {{ content }}
+    {% else %}
+      <p>{{ 'No order summary available.'|t }}</p>
+    {% endif %}
+  </div>
+</div>

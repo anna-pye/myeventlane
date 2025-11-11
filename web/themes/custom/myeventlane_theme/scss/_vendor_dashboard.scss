@@ -1,0 +1,93 @@
+
+@use "settings/variables" as vars;
+
+
+.mel-card-wrapper {
+  margin-bottom: 2rem;
+}
+
+.mel-event-card {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.mel-event-image {
+  flex: 0 0 120px;
+  height: 120px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mel-no-image {
+    color: #aaa;
+    font-size: 0.85rem;
+  }
+}
+
+.mel-event-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mel-event-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.mel-event-meta {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+
+  strong {
+    font-weight: 600;
+    display: inline-block;
+    min-width: 100px;
+  }
+}
+
+.mel-event-buttons {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  a,
+  .button {
+    background-color: #f26d5b;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: #e95645;
+    }
+  }
+}

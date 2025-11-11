@@ -1,0 +1,32 @@
+# Schema for the views plugins of the flag module.
+
+views.filter.flag_filter:
+  type: views.filter.boolean
+  label: 'Flag filter'
+
+views.relationship.flag_relationship:
+  type: views_relationship
+  label: 'Display options for flag relationship'
+  mapping:
+    flag:
+      type: string
+      label: 'The flag'
+    user_scope:
+      type: string
+      label: 'The user scope'
+
+views.field.flag_flagged:
+  type: views_field
+  mapping:
+    type:
+      type: string
+      label: 'Type'
+    type_custom_true:
+      type: string
+      label: 'Custom true text'
+    type_custom_false:
+      type: string
+      label: 'Custom false text'
+    not:
+      type: boolean
+      label: 'Reverse'

@@ -1,0 +1,25 @@
+social_auth_apple.settings:
+  type: config_object
+  label: 'Social Auth Apple settings'
+  mapping:
+    client_id:
+      type: string
+      label: 'Client ID'
+    team_id:
+      type: string
+      label: 'Team ID'
+    key_file_id:
+      type: string
+      label: 'Key file ID'
+    key_file_path:
+      type: string
+      label: 'Key file path'
+    redirect_uri:
+      type: string
+      label: 'Key file path'
+    scopes:
+      type: string
+      label: 'Scopes to be requested'
+    endpoints:
+      type: string
+      label: 'API endpoints to be requested'

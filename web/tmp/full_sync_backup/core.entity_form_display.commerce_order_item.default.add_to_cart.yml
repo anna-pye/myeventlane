@@ -1,0 +1,67 @@
+uuid: 4689b86e-da32-4c00-a5f1-f7d1276a474b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.default
+    - core.entity_form_mode.commerce_order_item.add_to_cart
+    - field.field.commerce_order_item.default.field_ticket_holder
+  module:
+    - commerce_price
+    - commerce_product
+    - inline_entity_form
+  enforced:
+    module:
+      - commerce_cart
+      - commerce_product
+_core:
+  default_config_hash: 8dIszGyXfy-kBaUEuUEQjWjRVtfq6f8cCI0QUHIlJdc
+id: commerce_order_item.default.add_to_cart
+targetEntityType: commerce_order_item
+bundle: default
+mode: add_to_cart
+content:
+  field_ticket_holder:
+    type: inline_entity_form_simple
+    weight: 0
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  purchased_entity:
+    type: commerce_product_variation_attributes
+    weight: 1
+    region: content
+    settings:
+      hide_single: false
+    third_party_settings: {  }
+  quantity:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  total_price:
+    type: commerce_price_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  unit_price:
+    type: commerce_price_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  adjustments: true
+  created: true
+  status: true
+  uid: true

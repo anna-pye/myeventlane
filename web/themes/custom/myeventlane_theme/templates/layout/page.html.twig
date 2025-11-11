@@ -1,0 +1,38 @@
+{# themes/custom/myeventlane_theme/templates/layout/page.html.twig #}
+{{ attach_library('myeventlane_theme/global') }}
+
+{% include "@myeventlane_theme/partials/header.html.twig" %}
+
+<div id="page-wrapper" class="layout-container">
+
+     {% if page.header %}
+      <header role="banner">
+        {{ page.header }}
+      </header>
+    {% endif %}
+
+  <main id="main-content" role="main">
+    <a id="main-content" tabindex="-1"></a>
+
+    {% set has_matrix = attributes ? (attributes['data-mel-matrix'] is defined) : false %}
+    {% if not has_matrix %}
+      {{ page.messages }}
+        {% endif %}
+        {{ page.content }}
+     </main>
+
+    {% if page.sidebar %}
+      <aside class="sidebar">
+        {{ page.sidebar }}
+      </aside>
+    {% endif %}
+
+      {% if page.footer %}
+        <footer id="footer" role="contentinfo">
+          {{ page.footer }}
+        </footer>
+      {% endif %}
+
+    </div>
+
+{% include '@myeventlane_theme/includes/html-bottom.html.twig' %}

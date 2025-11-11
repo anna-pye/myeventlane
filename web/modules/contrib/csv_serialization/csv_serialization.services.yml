@@ -1,0 +1,5 @@
+services:
+  csv_serialization.encoder.csv:
+    class: Drupal\csv_serialization\Encoder\CsvEncoder
+    tags:
+      - { name: encoder, format: csv }

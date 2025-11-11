@@ -1,0 +1,24 @@
+uuid: 179ca5aa-7d05-4ebc-ab2f-0fabb46970e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_stripe_account_id
+    - profile.type.vendor_profile
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.vendor_profile.field_stripe_account_id
+field_name: field_stripe_account_id
+entity_type: profile
+bundle: vendor_profile
+label: 'Stripe Account ID '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

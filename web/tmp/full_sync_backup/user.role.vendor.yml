@@ -1,0 +1,65 @@
+uuid: 56704fc7-1a7b-4803-992a-53fd08af8275
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event
+    - node.type.vendor_store
+  module:
+    - commerce_order
+    - commerce_price
+    - commerce_product
+    - commerce_store
+    - commerce_stripe
+    - dashboard
+    - file
+    - flag
+    - node
+    - profile
+    - system
+id: vendor
+label: Vendor
+weight: -7
+is_admin: false
+permissions:
+  - 'access commerce_store overview'
+  - 'access content'
+  - 'access user profiles'
+  - 'administer commerce_store'
+  - 'administer dashboard'
+  - 'administer flaggings'
+  - 'change own username'
+  - 'create commerce_product_attribute'
+  - 'create default commerce_order'
+  - 'create default commerce_product'
+  - 'create event content'
+  - 'create online commerce_store'
+  - 'create ticket commerce_product'
+  - 'create vendor_store content'
+  - 'delete own boost_upgrade commerce_product'
+  - 'delete own default commerce_product'
+  - 'delete own event content'
+  - 'delete own files'
+  - 'delete own ticket commerce_product'
+  - 'edit own event content'
+  - 'edit own vendor_store content'
+  - 'revert vendor_store revisions'
+  - 'unlock orders'
+  - 'update default commerce_order'
+  - 'update own boost_upgrade commerce_product'
+  - 'update own customer profile'
+  - 'update own default commerce_product'
+  - 'update own online commerce_store'
+  - 'update own ticket commerce_product'
+  - 'view any customer profile'
+  - 'view any profile'
+  - 'view boost_upgrade commerce_product'
+  - 'view commerce_currency'
+  - 'view commerce_product'
+  - 'view commerce_store'
+  - 'view own commerce_order'
+  - 'view own customer profile'
+  - 'view own profile'
+  - 'view own unpublished commerce_product'
+  - 'view own unpublished profile'
+  - 'view stripe dashboard links'

@@ -1,0 +1,31 @@
+{#
+ * Theme override for a view template (unformatted).
+ * View: commerce_cart_form
+ * Display: block_1
+#}
+
+<div class="mel-cart-container">
+  {% if title %}
+    <h2 class="mel-cart-page-title">🛒 {{ title }}</h2>
+  {% endif %}
+
+  {% set grouped = {} %}
+  {% for row in rows %}
+    {% set event_title = row.fields.title_1.content|render %}
+    {% if event_title not in grouped %}
+      {% set grouped = grouped|merge({ (event_title): [row] }) %}
+    {% else %}
+      {% set grouped = grouped|merge({ (event_title): grouped[event_title]|merge([row]) }) %}
+    {% endif %}
+  {% endfor %}
+
+  {% for event_title, items in grouped %}
+    <div class="mel-cart-event-wrap">
+      <h3 class="mel-cart-event-title">{{ event_title }}</h3>
+
+      {% for row in items %}
+        {{ row.content }}
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>

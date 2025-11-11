@@ -1,0 +1,27 @@
+uuid: 7a3d89b4-7b16-418c-848e-3db61c61a731
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_ticket_type
+field_name: field_ticket_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: RSVP
+      label: RSVP
+    -
+      value: Paid
+      label: Paid
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

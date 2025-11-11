@@ -1,0 +1,119 @@
+@use "../settings/variables" as vars;
+
+/* ===========================
+   MEL Status & Error Messages
+   =========================== */
+
+/* Container */
+.mel-messages-anchor {
+  margin: vars.$spacing-md 0 vars.$spacing-lg;
+  position: relative;
+}
+
+/* Base message box */
+.mel-message,
+[data-drupal-messages] > div {
+  border-radius: vars.$radius-small;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  margin: vars.$spacing-sm 0;
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+  font-size: vars.$font-size-body;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1.4;
+  box-shadow: 0 4px 16px vars.$color-shadow;
+  border: vars.$border-light;
+  background: vars.$color-bg-offwhite;
+  color: vars.$text-color-main;
+}
+
+/* Message lists */
+.mel-message ul,
+.mel-messages-anchor .messages__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Variants */
+.mel-message--status,
+[data-drupal-messages] [role="contentinfo"] {
+  background: vars.$color-bg-offwhite;
+  border-left: 0.5px solid vars.$color-primary;
+  color: vars.$text-color-main;
+}
+
+.mel-message--warning,
+[data-drupal-messages] [aria-label="Warning message"] {
+  background:  (vars.$color-highlight  40%);
+  border-left: 5px solid vars.$color-highlight;
+  color: vars.$text-color-main;
+}
+
+.mel-message--error,
+[data-drupal-messages] [aria-label="Error message"] {
+  background:  (vars.$color-primary 45%);
+  border-left: 5px solid  (vars.$color-primary -5%);
+  color:  (vars.$color-primary -30%);
+}
+
+/* Close button */
+.mel-message .messages__close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: vars.$spacing-sm;
+  right: vars.$spacing-sm;
+  width: vars.$spacing-2xl;   // 32px
+  height: vars.$spacing-2xl;  // 32px
+  border-radius: vars.$radius-pill;
+  transition: background .2s ease;
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Subtle toast-in animation */
+.mel-message {
+  transform: translateY(vars.$spacing-sm);
+  opacity: 0;
+  transition: transform .25s ease, opacity .25s ease, box-shadow .25s ease;
+  &.mel-toast--show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* MEL message styling (shared) */
+.mel-messages-anchor { margin: 12px 0 16px; }
+.mel-message-container { margin-bottom: 16px; }
+
+/* Style the Drupal messages inside our anchor */
+.mel-messages-anchor [data-drupal-messages] { margin: 0; }
+
+.mel-messages-anchor .messages {
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+  font-weight: 500;
+  border: 1px solid #f1efe8;
+  background: #fff;
+  color: #293241;
+  transform: translateY(-6px);
+  opacity: 0;
+  transition: transform .25s ease, opacity .25s ease, box-shadow .25s ease;
+}
+.mel-messages-anchor .messages.mel-toast--show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mel-messages-anchor .messages__list { margin: 0; padding: 0; list-style: none; }
+.mel-messages-anchor .messages__item + .messages__item { margin-top: 6px; }
+
+/* Variants */
+.mel-messages-anchor .messages--status  { background: #fef5ec; border-color: #f7e6d9; color: #293241; }
+.mel-messages-anchor .messages--warning { background: #fff7e6; border-color: #ffe2a6; color: #6b4f00; }
+.mel-messages-anchor .messages--error   { background: #fff0f0; border-color: #ffc9c9; color: #7d1d1d; }

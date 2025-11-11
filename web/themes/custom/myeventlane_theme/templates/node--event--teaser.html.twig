@@ -1,0 +1,92 @@
+{# web/themes/custom/myeventlane_theme/templates/node--event--teaser.html.twig #}
+{# ------------------------------------------------------------
+ #  MyEventLane – Event Card (Teaser)
+ #  Keeps original logic but matches brand mockup (rounded, pastel, badges)
+ # ------------------------------------------------------------ #}
+
+{% set start_raw = node.field_event_date.value
+  ?? node.field_event_date.0.value
+  ?? node.field_start_date.value
+  ?? node.field_start_date.0.value
+  ?? null %}
+{% set start_ts = start_raw ? (start_raw|date('U')) : 0 %}
+{% set promo_expiry_ts = node.field_promo_expiry.value ? (node.field_promo_expiry.value|date('U')) : 0 %}
+{% set now_ts = "now"|date('U') %}
+
+<article class="event-card">
+  <div class="event-card__media">
+    {% if node.field_image.entity %}
+      <img
+        src="{{ file_url(node.field_image.entity.uri.value) }}"
+        alt="{{ node.field_image.alt|default(label) }}"
+        class="event-card__image"
+      />
+    {% else %}
+      <div class="event-card__placeholder"></div>
+    {% endif %}
+
+    {# Date badge (top-left) #}
+    {% if start_ts %}
+      <div class="event-card__date-badge">
+        <div class="month">{{ start_ts|format_date('custom', 'M') }}</div>
+        <div class="day">{{ start_ts|format_date('custom', 'd') }}</div>
+      </div>
+    {% endif %}
+
+    {# Boosted badge (top-right) #}
+    {% if mel_is_boosted %}
+      <div class="event-card__boost-badge" aria-label="Boosted">
+        🌟 Boosted
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="event-card__body">
+    <h3 class="event-card__title">
+      <a href="{{ url }}">{{ label }}</a>
+    </h3>
+
+    <div class="event-card__meta">
+      <div class="date">{{ start_ts ? (start_ts|format_date('custom', 'F j, Y')) : 'Date TBC' }}</div>
+      {% if node.field_venue.value %}
+        <div class="location">{{ node.field_venue.value }}</div>
+      {% endif %}
+    </div>
+
+    {% if node.field_category %}
+      <div class="event-card__categories">
+        {% for term in node.field_category %}
+          {% set raw_name = term.entity.name.value %}
+          {% set slug = raw_name|lower|replace({
+            ' ': '-',
+            '+': '',
+            '/': '',
+            '&': 'and'
+          }) %}
+          {% set class =
+            slug matches '/music/' ? 'filter-blue' :
+            slug matches '/arts/' ? 'filter-yellow' :
+            slug matches '/workshop/' ? 'filter-coral' :
+            slug matches '/lgbtqi/' ? 'filter-purple' :
+            'filter-default'
+          %}
+          <a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': term.target_id}) }}"
+             class="category-chip {{ class }}">
+            {{ raw_name }}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="event-card__cta">
+      {% set ticket_type = node.field_ticket_type.value|lower %}
+      {% if ticket_type == 'rsvp' %}
+        <a href="{{ url }}" class="btn btn-yellow">RSVP Now</a>
+      {% elseif ticket_type == 'free' %}
+        <a href="{{ url }}" class="btn btn-outline">Free</a>
+      {% else %}
+        <a href="{{ url }}" class="btn btn-yellow">Buy Tickets</a>
+      {% endif %}
+    </div>
+  </div>
+</article>

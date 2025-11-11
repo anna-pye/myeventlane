@@ -1,0 +1,20 @@
+uuid: 3d20f049-8e5c-47d7-afde-85a571aaa580
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_order
+    - paragraphs
+id: commerce_order_item.field_ticket_holder
+field_name: field_ticket_holder
+entity_type: commerce_order_item
+type: entity_reference
+settings:
+  target_type: paragraph
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

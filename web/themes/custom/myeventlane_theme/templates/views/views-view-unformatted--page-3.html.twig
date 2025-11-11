@@ -1,0 +1,12 @@
+<div class="layout-wrapper">
+  {# Custom view template for frontpage view (page_1) #}
+  <section class="mel-event-card mel-card ">
+    {% for row in rows %}
+      <div class="event-card-wrapper card-{{ loop.index }}">
+       {% if row.content.field_event_date.0['#markup'] is defined %}
+        {{ row.content.field_event_date.0['#markup']|date('d M Y') }}
+      {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+</div>

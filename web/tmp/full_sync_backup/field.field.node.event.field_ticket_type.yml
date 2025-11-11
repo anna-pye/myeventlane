@@ -1,0 +1,21 @@
+uuid: 91b06fc6-9d70-49df-84ca-67167a6a511f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ticket_type
+    - node.type.event
+  module:
+    - options
+id: node.event.field_ticket_type
+field_name: field_ticket_type
+entity_type: node
+bundle: event
+label: 'Ticket Type'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

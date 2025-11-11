@@ -1,0 +1,242 @@
+@use "../settings/variables" as vars;
+
+
+.mel-profile {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: vars.$spacing-xl;
+
+  .mel-title {
+    font-family: vars.$font-family-main, vars.$font-family-fallback;
+    font-size: vars.$font-size-h2;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+    margin: 0 0 vars.$spacing-md;
+  }
+
+  .mel-profile__body {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 8px vars.$color-shadow;
+    padding: vars.$spacing-xl;
+  }
+
+  .mel-empty {
+    text-align: center;
+    color: vars.$color-muted-text;
+    padding: vars.$spacing-xl 0;
+  }
+}
+
+/* account menu highlight (optional) */
+.menu-item--my-profile > a {
+  border-radius: vars.$radius-small;
+  padding: 6px 10px;
+}
+
+
+/* ---------- Base layout tweaks ---------- */
+.layout-wrapper {
+  padding-inline: vars.$spacing-xl;
+  padding-bottom: vars.$spacing-3xl;
+  background: vars.$color-bg-offwhite;
+}
+
+.my-profile-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: vars.$spacing-3xl;
+}
+
+/* Sidebar (desktop) */
+.sidebar {
+  background: #fff;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 6px 24px vars.$color-shadow;
+  padding: vars.$spacing-xl;
+
+  .logo {
+    display: block;
+    width: 138px;
+    height: auto;
+    margin-bottom: vars.$spacing-xl;
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li + li {
+      margin-top: vars.$spacing-lg;
+    }
+
+    a {
+      display: inline-block;
+      padding: vars.$spacing-sm vars.$spacing-lg;
+      border-radius: vars.$radius-pill;
+      color: vars.$text-color-main;
+      text-decoration: none;
+    }
+
+    a.active {
+      background: color-mix(in oklab, vars.$color-primary 15%, white);
+      font-weight: vars.$font-weight-semibold;
+    }
+  }
+}
+
+/* Main column */
+.dashboard-content {
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: vars.$spacing-2xl;
+
+    h1 {
+      margin: 0;
+      font-size: vars.$font-size-h2;
+      font-weight: vars.$font-weight-bold;
+      color: vars.$text-color-main;
+    }
+
+    .top-avatar .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 10px vars.$color-shadow;
+    }
+  }
+
+  .section-block {
+    margin-bottom: vars.$spacing-3xl;
+
+    h2 {
+      margin: 0 0 vars.$spacing-xl;
+      font-size: vars.$font-size-h3;
+      font-weight: vars.$font-weight-semibold;
+      color: vars.$text-color-main;
+    }
+  }
+
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: vars.$spacing-2xl;
+  }
+
+  .event-card {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 8px 32px vars.$color-shadow;
+    padding: vars.$spacing-xl;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: vars.$radius-medium;
+      margin-bottom: vars.$spacing-lg;
+    }
+
+    h3 {
+      margin: 0 0 vars.$spacing-sm;
+      font-size: vars.$font-size-h3;
+      color: vars.$text-color-main;
+    }
+
+    p {
+      margin: 0 0 vars.$spacing-md;
+      color: vars.$text-color-main;
+      opacity: .9;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: vars.$spacing-md;
+
+      /* Buttons look */
+      a.btn-secondary {
+        display: inline-block;
+        padding: vars.$spacing-sm vars.$spacing-lg;
+        border-radius: vars.$radius-pill;
+        border: 1px solid vars.$color-accent;
+        color: vars.$color-accent;
+        text-decoration: none;
+        line-height: 1;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+/* ---------- Mobile layout (≤ 768px) ---------- */
+@media (max-width: vars.$breakpoint-md) {
+  .my-profile-layout {
+    grid-template-columns: 1fr;
+    gap: vars.$spacing-2xl;
+  }
+
+  /* Turn the sidebar into a horizontal pill-tab bar */
+  .sidebar {
+    padding: vars.$spacing-lg vars.$spacing-lg;
+    position: sticky;
+    top: 0; /* sits under your header */
+    z-index: 5;
+    background: vars.$color-bg-offwhite; /* blend with page */
+    box-shadow: none;
+
+    .logo {
+      display: none; /* hide big logo to save space */
+    }
+
+    nav ul {
+      display: flex;
+      gap: vars.$spacing-lg;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: vars.$spacing-sm;
+      background: #fff;
+      border-radius: vars.$radius-medium;
+      box-shadow: 0 6px 24px vars.$color-shadow;
+
+      /* remove vertical item spacing from desktop */
+      li + li { margin-top: 0; }
+
+      a {
+        padding: vars.$spacing-sm vars.$spacing-xl;
+        font-weight: vars.$font-weight-semibold;
+      }
+
+      a.active {
+        background: vars.$color-bg-muted;
+        box-shadow: inset 0 0 0 2px color-mix(in oklab, vars.$color-primary 40%, transparent);
+      }
+    }
+  }
+
+  .dashboard-content .top-bar {
+    margin-top: 0;
+    h1 { font-size: 24px; }
+    .top-avatar .avatar { width: 40px; height: 40px; }
+  }
+
+  .dashboard-content .card-row {
+    grid-template-columns: 1fr; /* stack cards */
+    gap: vars.$spacing-xl;
+  }
+
+  .event-card .card-actions a.btn-secondary {
+    padding: vars.$spacing-sm vars.$spacing-md;
+    font-size: vars.$font-size-small;
+  }
+}
+
+/* ---------- Small-screen polish (≤ 576px) ---------- */
+@media (max-width: vars.$breakpoint-sm) {
+  .layout-wrapper { padding-inline: vars.$spacing-lg; }
+  .dashboard-content .top-bar h1 { font-size: 22px; }
+}

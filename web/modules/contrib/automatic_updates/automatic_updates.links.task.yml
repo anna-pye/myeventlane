@@ -1,0 +1,11 @@
+automatic_updates.report_update:
+  route_name: automatic_updates.update_form
+  base_route: system.admin_reports
+  title: Update
+  weight: 10
+
+automatic_updates.module_update:
+  route_name: automatic_updates.update_form
+  base_route: system.modules_list
+  title: Update
+  weight: 10

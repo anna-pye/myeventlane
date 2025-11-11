@@ -1,0 +1,19 @@
+uuid: 144027f3-9a49-40c5-a807-be1471c16a32
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_stripe_account_id
+field_name: field_stripe_account_id
+entity_type: profile
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

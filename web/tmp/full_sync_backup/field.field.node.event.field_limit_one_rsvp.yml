@@ -1,0 +1,21 @@
+uuid: 5e5799fd-6041-4f68-8f85-84ae1b0df324
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_limit_one_rsvp
+    - node.type.event
+id: node.event.field_limit_one_rsvp
+field_name: field_limit_one_rsvp
+entity_type: node
+bundle: event
+label: 'Limit One RSVP'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

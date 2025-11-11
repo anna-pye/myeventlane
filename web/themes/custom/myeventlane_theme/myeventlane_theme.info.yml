@@ -1,0 +1,16 @@
+name: "MyEventLane Theme"
+type: theme
+description: "Rebuilt custom Drupal 11 theme using Vite + SCSS."
+core_version_requirement: "^11"
+package: "Custom"
+base theme: "bootstrap5"
+version: "1.0"
+libraries:
+  - myeventlane_theme/global
+
+regions:
+  header: "Header"
+  primary_menu: "Primary menu"
+  content: "Content"
+  sidebar: "Sidebar"
+  footer: "Footer"

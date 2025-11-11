@@ -1,0 +1,59 @@
+uuid: 87d23c54-8745-4556-b663-ef24fee2307e
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.boost_upgrade
+  module:
+    - commerce
+    - inline_entity_form
+id: commerce_product.boost_upgrade.default
+targetEntityType: commerce_product
+bundle: boost_upgrade
+mode: default
+content:
+  stores:
+    type: commerce_entity_select
+    weight: 2
+    region: content
+    settings:
+      hide_single_entity: true
+      autocomplete_threshold: 7
+      autocomplete_size: 60
+      autocomplete_placeholder: ''
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  variations:
+    type: inline_entity_form_complex
+    weight: 1
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+      removed_reference: optional
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  publish_on: true
+  publish_state: true
+  status: true
+  uid: true
+  unpublish_on: true
+  unpublish_state: true

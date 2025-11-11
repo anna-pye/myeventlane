@@ -1,0 +1,590 @@
+
+@use "../settings/variables" as *;
+
+.cart-page {
+  background: $color-bg-offwhite;
+  min-height: 100%;
+  padding: $spacing-xl $spacing-lg;
+
+  .cart-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    gap: $spacing-xl;
+
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: 1.5fr .8fr;
+      align-items: start;
+    }
+  }
+
+  .cart-card {
+    background: #fff;
+    border-radius: $radius-medium;
+    box-shadow: 0 6px 24px $color-shadow;
+    padding: $spacing-xl;
+  }
+
+  .cart-line {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    border: $border-light;
+    border-radius: $radius-small;
+
+    & + .cart-line {
+      margin-top: $spacing-md;
+    }
+
+    .title {
+      font-weight: $font-weight-semibold;
+      color: $text-color-main;
+    }
+
+    .meta {
+      color: $color-muted-text;
+      font-size: $font-size-small;
+    }
+
+    .price {
+      color: $color-primary;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .totals {
+    display: grid;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      color: $text-color-main;
+
+      &.grand {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-h3;
+      }
+
+      .fee {
+        color: $color-muted-text;
+      }
+    }
+  }
+
+  .cart-actions {
+    margin-top: $spacing-xl;
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+
+    .btn-primary {
+      background: $color-primary;
+      color: #fff;
+      border-radius: $radius-pill;
+      padding: 12px 22px;
+    }
+  }
+}
+
+// ---------------------
+// Checkout Layout
+// ---------------------
+
+.mel-checkout-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-3xl;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: $spacing-3xl;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    padding: $spacing-xl;
+  }
+}
+
+.mel-checkout-main {
+  flex: 1 1 600px;
+
+  > * + * {
+    margin-top: $spacing-3xl;
+  }
+
+  h2 {
+    font-size: $font-size-h2;
+    font-weight: $font-weight-bold;
+    color: $text-color-main;
+    margin-bottom: $spacing-lg;
+  }
+
+  .checkout-step {
+    margin-bottom: $spacing-2xl;
+
+    &__field-wrapper {
+      margin-bottom: $spacing-lg;
+
+      label {
+        display: block;
+        font-size: $font-size-small;
+        font-weight: $font-weight-semibold;
+        color: $text-color-main;
+        margin-bottom: $spacing-xs;
+      }
+
+      input {
+        width: 100%;
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-body;
+        border: $border-light;
+        border-radius: $radius-small;
+        font-family: $font-family-main;
+
+        &:focus {
+          outline: 2px solid $color-outline-focus;
+        }
+
+        &::placeholder {
+          color: $color-placeholder;
+        }
+      }
+    }
+  }
+
+  .checkout-actions {
+    margin-top: $spacing-xl;
+
+    .button {
+      background-color: $color-primary;
+      color: white;
+      font-weight: $font-weight-bold;
+      padding: $spacing-md $spacing-xl;
+      border-radius: $radius-pill;
+      border: none;
+      cursor: pointer;
+      font-family: $font-family-main;
+      font-size: $font-size-body;
+
+      &:hover {
+        background-color: ($color-primary -5%);
+      }
+    }
+  }
+}
+
+.mel-checkout-sidebar {
+  flex: 1 1 300px;
+  max-width: 360px;
+  background-color: $color-bg-muted;
+  padding: $spacing-xl;
+  border-radius: $radius-medium;
+  font-family: $font-family-main;
+
+  .mel-sidebar-header {
+    font-size: $font-size-h3;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+    color: $text-color-main;
+  }
+
+  .mel-sidebar-body {
+    padding-top: $spacing-md;
+    font-size: $font-size-small;
+    line-height: 1.5;
+
+    strong {
+      font-weight: 600;
+    }
+
+    a {
+      color: var(--primary-purple);
+      font-weight: 900;
+      text-decoration: none;
+
+      &:hover,
+      &:visited {
+        text-decoration: none;
+      }
+    }
+
+    p {
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  .mel-sidebar-box {
+    background: #f9f9fb;
+    border-radius: $radius-medium;
+    padding: $spacing-xl;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// src/scss/_checkout.scss
+
+.mel-sidebar-summary {
+  font-family: var(--font-inter);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+
+  strong {
+    font-weight: 600;
+    color: var(--primary-purple);
+    display: block;
+    margin-top: 1rem;
+  }
+}
+
+.ticket-summary-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.2rem 0;
+  border-bottom: 1px dashed #ddd;
+
+  strong {
+    font-weight: 600;
+    font-size: $font-size-body;
+  }
+
+  a {
+    color: var(--primary-purple);
+    text-decoration: none;
+
+    &:hover{
+      color: red;
+      text-decoration: none;
+    }
+    &:visited {
+      text-decoration: none;
+    }
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.mel-order-total {
+  border-top: 1px solid #ccc;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-coral);
+}
+
+// ---------------------
+// Cards (Section Styles)
+// ---------------------
+
+.mel-checkout-section {
+  background: #fff;
+  border-radius: $radius-medium;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: $spacing-2xl;
+  border: $border-light;
+  margin-bottom: 0; // Removed for consistent spacing
+
+  &.mel-ticket-info {
+    background: #fffaf5;
+    border-left: 6px solid $color-primary;
+  }
+
+  &.mel-payment-info {
+    background: #f8f9ff;
+    border-left: 6px solid $color-accent;
+  }
+
+  &.mel-summary-info {
+    background: #f9f9f9;
+    border-left: 6px solid $color-muted-text;
+  }
+
+  .mel-section-heading {
+    font-size: $font-size-h2;
+    margin-bottom: $spacing-sm;
+    color: $text-color-main;
+  }
+
+  .mel-section-intro {
+    font-size: $font-size-body;
+    color: $color-muted-text;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.mel-ticket-info {
+  background: #fff;
+  padding: $spacing-2xl;
+  border-radius: $radius-medium;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: $spacing-2xl;
+
+  .mel-section-heading {
+    font-size: $font-size-h2;
+    font-weight: $font-weight-bold;
+    color: $text-color-main;
+    margin-bottom: $spacing-sm;
+  }
+
+  .mel-section-intro {
+    font-size: $font-size-small;
+    color: $color-muted-text;
+    margin-bottom: $spacing-xl;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 $spacing-xl 0;
+  }
+
+  legend {
+    font-weight: $font-weight-semibold;
+    color: $color-accent;
+    font-size: $font-size-body;
+    margin-bottom: $spacing-md;
+  }
+
+  .form-item {
+    margin-bottom: $spacing-lg;
+
+    label {
+      font-weight: $font-weight-regular;
+      margin-bottom: $spacing-xs;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: $spacing-sm $spacing-md;
+      border: $border-light;
+      border-radius: $radius-small;
+      background: $color-bg-muted;
+      transition: border-color 0.2s ease-in-out;
+
+      &:focus {
+        border-color: $color-accent;
+        outline: none;
+        background: #fff;
+      }
+    }
+  }
+}
+
+// ---------------------
+// Order Summary
+// ---------------------
+
+.mel-order-summary {
+  background: #f8f9fb;
+  border-radius: $radius-medium;
+  padding: $spacing-xl;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    font-size: $font-size-h2;
+    font-weight: $font-weight-bold;
+    color: $text-color-main;
+    margin: $spacing-lg 0;
+    align-items: center;
+
+    .emoji {
+      margin-right: $spacing-sm;
+    }
+  }
+}
+
+.mel-order-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 $spacing-xl;
+
+  .mel-order-item {
+    margin-bottom: $spacing-lg;
+
+    .mel-order-title {
+      font-weight: $font-weight-semibold;
+      color: $text-color-main;
+
+      .mel-ticket-badge {
+        font-size: $font-size-small;
+        background: #e5eaff;
+        color: $color-accent;
+        padding: 0.15rem 0.5rem;
+        border-radius: $radius-pill;
+        margin-left: $spacing-sm;
+      }
+    }
+
+    .mel-order-meta {
+      font-size: $font-size-small;
+      color: $color-muted-text;
+      margin-top: $spacing-xs;
+    }
+  }
+}
+
+.mel-order-totals {
+  .mel-total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-sm;
+
+    &.total {
+      font-weight: $font-weight-bold;
+      font-size: $font-size-body;
+      border-top: 1px solid $color-disabled;
+      padding-top: $spacing-sm;
+    }
+  }
+}
+
+
+// ---------------------
+// Tickets Groups
+// ---------------------
+
+.grouped-order-summary {
+  margin-top: 1rem;
+  th, td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  th {
+    background: #fef5ec;
+    font-weight: bold;
+  }
+
+  td {
+    border-bottom: 1px solid #eee;
+  }
+
+  caption {
+    caption-side: top;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.mel-ticket-type {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fffefb;
+}
+
+
+// ---------------------
+// Ticket Holder Forms
+// ---------------------
+
+.ticket-holder-panel {
+  background: #fffefb;
+  border: 1px solid #f2e4d9;
+  border-left: 6px solid $color-primary;
+  border-radius: $radius-medium;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+  h3 {
+    font-size: $font-size-h3;
+    font-weight: $font-weight-semibold;
+    color: $text-color-main;
+    margin-bottom: $spacing-md;
+
+    .emoji {
+      margin-right: $spacing-sm;
+    }
+  }
+
+  .form-item {
+    margin-bottom: $spacing-md;
+
+    label {
+      font-size: $font-size-small;
+      font-weight: $font-weight-semibold;
+      color: $text-color-main;
+      display: block;
+      margin-bottom: $spacing-xs;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: $spacing-sm $spacing-md;
+      font-size: $font-size-body;
+      border: $border-light;
+      border-radius: $radius-small;
+      font-family: $font-family-main;
+
+      &:focus {
+        outline: 2px solid $color-outline-focus;
+        background: #fff;
+      }
+    }
+  }
+
+  .vendor-question {
+    background: #fef5ec;
+    border: 1px dashed $color-muted-text;
+    padding: $spacing-md;
+    border-radius: $radius-small;
+    margin-top: $spacing-md;
+    font-size: $font-size-small;
+
+    label {
+      font-weight: $font-weight-regular;
+      color: $text-color-main;
+    }
+  }
+}
+
+
+.mel-ticket-holder {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #fdfdfd;
+}
+
+
+// ---------------------
+// Global Form Inputs
+// ---------------------
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-small;
+  border: $border-light;
+
+  &:focus {
+    outline: 2px solid $color-outline-focus;
+  }
+}
+
+// ---------------------
+// Mobile Sticky Button
+// ---------------------
+
+@media (max-width: $breakpoint-md) {
+  .mel-btn--primary {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    }
+  }

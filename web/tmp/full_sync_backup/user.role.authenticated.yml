@@ -1,0 +1,46 @@
+uuid: 37c07b82-8a45-4d1d-aa8c-7b1135cf4248
+langcode: en
+status: true
+dependencies:
+  config:
+    - dashboard.dashboard.welcome
+  module:
+    - captcha
+    - coffee
+    - commerce_checkout
+    - commerce_order
+    - commerce_payment
+    - commerce_product
+    - dashboard
+    - file
+    - flag
+    - klaro
+    - media
+    - node
+    - system
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: -9
+is_admin: false
+permissions:
+  - 'access checkout'
+  - 'access coffee'
+  - 'access content'
+  - 'administer flaggings'
+  - 'delete own files'
+  - 'flag bookmark'
+  - 'flag followed_categories'
+  - 'flag following'
+  - 'manage own commerce_payment_method'
+  - 'skip CAPTCHA'
+  - 'unflag bookmark'
+  - 'unflag followed_categories'
+  - 'unflag following'
+  - 'use klaro'
+  - 'view commerce_product'
+  - 'view media'
+  - 'view own commerce_order'
+  - 'view own unpublished content'
+  - 'view welcome dashboard'

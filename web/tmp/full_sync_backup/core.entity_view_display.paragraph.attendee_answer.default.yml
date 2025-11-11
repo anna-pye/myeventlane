@@ -1,0 +1,52 @@
+uuid: 4f4aced8-7076-4854-9bba-af19a167cd09
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.attendee_answer.field_attendee_questions
+    - field.field.paragraph.attendee_answer.field_attendee_responses
+    - field.field.paragraph.attendee_answer.field_email
+    - field.field.paragraph.attendee_answer.field_first_name
+    - field.field.paragraph.attendee_answer.field_last_name
+    - paragraphs.paragraphs_type.attendee_answer
+  module:
+    - entity_reference_revisions
+id: paragraph.attendee_answer.default
+targetEntityType: paragraph
+bundle: attendee_answer
+mode: default
+content:
+  field_attendee_questions:
+    type: entity_reference_revisions_entity_view
+    label: visually_hidden
+    settings:
+      view_mode: preview
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_email:
+    type: email_mailto
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_attendee_responses: true

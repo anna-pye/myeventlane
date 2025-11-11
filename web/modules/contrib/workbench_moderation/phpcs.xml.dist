@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="drupal-project">
+  <description>PHP CodeSniffer configuration for forum project.</description>
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml"/>
+  <arg name="extensions" value="php,inc,module,install,info,test,profile,theme"/>
+  <rule ref="Drupal.Commenting.DocComment.MissingShort">
+    <severity>0</severity>
+  </rule>
+
+  <!-- We can leave the following to PHPstan. -->
+  <rule ref="Drupal.Commenting.VariableComment.MissingVar">
+    <severity>0</severity>
+  </rule>
+</ruleset>

@@ -1,0 +1,25 @@
+uuid: c8bc0f2a-7697-4ac7-b482-af2fa6e69201
+langcode: en
+status: true
+dependencies:
+  module:
+    - scheduler
+third_party_settings:
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: false
+    publish_past_date: error
+    publish_past_date_created: false
+    publish_required: false
+    publish_revision: false
+    publish_touch: false
+    show_message_after_update: true
+    unpublish_enable: false
+    unpublish_required: false
+    unpublish_revision: false
+name: 'Event Category'
+vid: event_category
+description: 'Event Category'
+weight: 0
+new_revision: false

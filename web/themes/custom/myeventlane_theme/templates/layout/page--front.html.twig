@@ -1,0 +1,127 @@
+{# ------------------------------------------------------------
+ #  MyEventLane – Homepage
+ #  Uses taxonomy vocabulary "event_category"
+ #  Includes Hero, Filters, Search, and Featured Events grid
+ # ------------------------------------------------------------ #}
+
+{{ attach_library('myeventlane_theme/global') }}
+
+{% include '@myeventlane_theme/partials/header.html.twig' %}
+
+{% block content %}
+<div class="homepage layout-container">
+  <main role="main" class="homepage-main">
+    <div class="page-inner">
+
+      {# ---------------- HERO ---------------- #}
+      <section class="hero">
+        <div class="hero__text">
+          <h1 class="hero__tagline">Your Lane to <br><span>Great Events</span></h1>
+          <p class="hero__subtitle">Discover, connect, and support local creators</p>
+
+          <div class="hero__logo">
+            <img src="/themes/custom/myeventlane_theme/assets/branding/MyEventLane_Logo_Transparent.png" alt="MyEventLane Logo" />
+          </div>
+
+         
+
+          {# ---------------- CATEGORY FILTERS ---------------- #}
+          {% set current_category = app.request.query.get('event_category') %}
+            <div class="category-filters" role="navigation" aria-label="Event Categories">
+              <a href= "/events"
+                class="filter-pill filter-yellow{% if not current_slug %} is-active{% endif %}"
+              >All Events</a>
+
+              {% for term in event_category_terms %}
+                {% set raw_name = term.name %}
+                {% set slug = raw_name|lower|replace({
+                  ' ': '-',
+                  '+': '',
+                  '/': '',
+                  '&': 'and'
+                }) %}
+
+                {% set class =
+                  slug matches '/music/' ? 'filter-blue' :
+                  slug matches '/arts/' ? 'filter-yellow' :
+                  slug matches '/workshop/' ? 'filter-coral' :
+                  slug matches '/lgbtqi/' ? 'filter-purple' :
+                  slug matches '/movie/' ? 'filter-gray' :
+                  'filter-default'
+                %}
+
+                <a
+                  href="{{ term.url }}"
+                  class="filter-pill {{ class }}{% if slug == current_slug %} is-active{% endif %}"
+                  aria-label="Filter by {{ term.name }}"
+                >{{ term.name }}</a>
+              {% endfor %}
+            </div>
+      </section>
+
+       {# ---------------- SEARCH ---------------- #}
+         <div class="hero__search">
+          <form class="search-form" action="/events" method="get" role="search">
+            <div class="search-form__group">
+              <input
+                type="text"
+                name="keywords"
+                class="search-form__input"
+                placeholder="Search events..."
+                aria-label="Search events"
+              />
+              <button type="submit" class="search-form__button">Search</button>
+            </div>
+          </form>
+        </div>
+
+      {# ---------------- FEATURED EVENTS ---------------- #}
+      <section class="featured-events">
+        <div class="featured-events-header">
+          <h2 class="section-title">Featured Events</h2>
+          <a href="/node/add/event" class="btn btn-primary">Create an Event</a>
+        </div>
+
+        {% set featured = drupal_view('latest', 'block_2') %}
+        {% if featured %}
+          <div class="event-grid event-listings">
+            {{ featured }}
+          </div>
+        {% else %}
+          <p class="no-events">No featured events available.</p>
+        {% endif %}
+      </section>
+
+      {# ---------------- TRENDING EVENTS ---------------- #}
+      <section class="trending-events">
+        <h2 class="section-title">Trending Events</h2>
+        {% set trending = drupal_view('trending_events', 'block_2') %}
+        {% if trending %}
+          <div class="event-grid">
+            {{ trending }}
+          </div>
+        {% endif %}
+      </section>
+
+      {# ---------------- CALENDAR PLACEHOLDER ---------------- #}
+      <section class="events-calendar">
+        <h2 class="section-title">Events Calendar</h2>
+        <div class="calendar-placeholder">
+          <p>Calendar view coming soon</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  {% if page.footer %}
+    <footer class="site-footer">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+</div>
+
+
+{% include '@myeventlane_theme/partials/footer.html.twig' %}
+
+{% endblock %}

@@ -1,0 +1,42 @@
+uuid: 2debce03-83ac-45fb-a1fa-3c84482e84a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.ticket
+  module:
+    - inline_entity_form
+id: commerce_product.ticket.default
+targetEntityType: commerce_product
+bundle: ticket
+mode: default
+content:
+  variations:
+    type: inline_entity_form_complex
+    weight: 0
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+      removed_reference: delete
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  publish_on: true
+  publish_state: true
+  status: true
+  stores: true
+  title: true
+  uid: true
+  unpublish_on: true
+  unpublish_state: true

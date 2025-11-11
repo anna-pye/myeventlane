@@ -1,0 +1,626 @@
+@use "../settings/variables" as vars;
+
+
+/* =========================================================
+   MyEventLane — Cart styles (consolidated)
+   - Outer white card (.mel-cart)
+   - Event cards grouped in list
+   - Variation rows with 1/3 inset controls
+   - Brand stepper (+/-) wired to JS (data-mel-stepper)
+   - Actions & responsive
+========================================================= */
+
+/* ---------------------------------
+   Page/container
+---------------------------------- */
+.mel-cart {
+  max-width: 960px;
+  margin: 10px auto 0px;
+  background: #fff; /* Outer white card */
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 10px 24px vars.$color-shadow;
+  padding: vars.$spacing-xl;
+}
+
+.mel-cart-list {
+  display: grid;
+  gap: vars.$spacing-xl;
+}
+
+  .mel-cart-title{
+    background-color: #fef5ec;
+    padding: 16px 32px;
+    border-bottom: 1px solid #f4f4f4;
+    font-family: vars.$font-family-main;
+    font-size: vars.$font-size-h1;
+    color: vars.$color-primary;
+
+    .site-header__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+  }
+
+/* ---------------------------------
+   Event card
+---------------------------------- */
+.mel-cart-card {
+  background: #fff;
+  border-radius: vars.$radius-medium;
+  border: 1px solid vars.$border-light-color;
+  box-shadow: 0 6px 14px vars.$color-shadow;
+
+  &__main { padding: vars.$spacing-lg; }
+
+  &__head {
+    display: grid;
+    grid-template-columns: 88px 1fr; /* image + title/meta */
+    gap: vars.$spacing-lg;
+    align-items: center;
+    margin-bottom: vars.$spacing-md;
+  }
+
+  &__media img {
+    width: 88px; height: 88px;
+    object-fit: cover;
+    border-radius: 50px;
+    display: block;
+    background: vars.$color-bg-muted;
+  }
+
+  &__titles { display: flex; flex-direction: column; gap: 4px; }
+
+  &__event {
+    margin: 0;
+    font-size: 20px;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+  }
+
+  &__meta {
+    display: flex;
+    gap: vars.$spacing-md;
+    font-size: vars.$font-size-small;
+    color: vars.$color-muted-text;
+
+    span {
+      background: vars.$color-bg-muted;
+      padding: 2px 8px;
+      border-radius: vars.$radius-pill;
+    }
+  }
+
+  &__body { display: grid; padding-left: 100px;}
+}
+
+
+
+.order-total-line {
+      padding-top: 20px;
+
+      &__subtotal {
+      
+      font-size: vars.$font-size-body;
+      }
+
+      &__total{
+      font-size: vars.$font-size-h3;
+      }
+}
+
+.mel-cart-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: vars.$font-size-small;
+  color: vars.$color-muted-text;
+
+  .mel-meta__sep,
+  .mel-meta__comma { opacity: .6; }
+}
+
+/* ---------------------------------
+   Variation row
+   - controls “1/3 in” using 1fr / 2fr grid
+---------------------------------- */
+.mel-cart-line {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* info left, controls indented */
+  gap: vars.$spacing-xl;
+  align-items: center;
+  padding: vars.$spacing-md 0;
+  border-top: 1px solid vars.$border-light-color;
+
+  &:first-child { border-top: 0; }
+}
+
+.mel-cart-line__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .mel-cart-card__variation {
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$text-color-main;
+  }
+
+  .mel-cart-card__unit span {
+    margin-right: 4px;
+    color: vars.$color-muted-text;
+  }
+}
+
+.mel-cart-line__controls {
+  display: flex;
+  gap: vars.$spacing-lg;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .mel-cart-card__total span {
+    margin-right: 4px;
+    color: vars.$color-muted-text;
+  }
+
+  .mel-cart-card__remove a,
+  .mel-cart-card__remove input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 vars.$spacing-md;
+    border: 1px solid vars.$border-light-color;
+    border-radius: vars.$radius-pill;
+    background: #fff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+/* ---------------------------------
+   Quantity stepper (brand color)
+   - matches JS: wrapper uses [data-mel-stepper] / [data-mel-qty]
+---------------------------------- */
+$stepper-accent: #f5041c; /* you wrote #f504lc; assuming 1c */
+
+.mel-qty,
+[data-mel-qty] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f4f4f4;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+
+  /* kill extra spacing from Drupal wrappers */
+  .form-item,
+  .js-form-type-number,
+  .form-number { margin: 0 !important; }
+
+  /* the +/- buttons we inject in Twig */
+  .mel-step {
+    width: 32px; height: 32px;
+    border-radius: vars.$radius-small;
+    border: 1px solid $stepper-accent;
+    background: #fff;
+    color: $stepper-accent;
+    font-weight: vars.$font-weight-semibold;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform .05s ease, filter .15s ease;
+    &:hover { filter: brightness(0.98); }
+    &:active { transform: translateY(1px); }
+    &:disabled { opacity: .45; cursor: not-allowed; }
+  }
+
+  input[type="number"],
+  select {
+    min-width: 64px;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: vars.$radius-small;
+    border: 1px solid vars.$border-light-color;
+    background: #fff;
+    text-align: center;
+    font: 700 16px/1.1 'Nunito', sans-serif;
+    color: #293241 !important;
+    -webkit-text-fill-color: #293241;
+
+    /* hide native spinners */
+    appearance: textfield;
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  }
+}
+
+/* ---------------------------------
+   Actions
+---------------------------------- */
+.mel-cart-actions {
+  display: flex;
+  gap: vars.$spacing-md;
+  align-items: center;
+  margin-top: vars.$spacing-xl;
+  text-align: right;
+
+  .mel-btn--ghost {
+    padding: 10px 16px;
+    background: #fff;
+    color: vars.$text-color-main;
+    border: 1px solid vars.$border-light-color;
+    border-radius: vars.$radius-pill;
+    text-decoration: none;
+  }
+
+  .button--secondary {
+    border: 1px solid vars.$color-accent;
+    color: vars.$color-accent;
+    background: transparent;
+    border-radius: vars.$radius-pill;
+    padding: 12px 24px;
+    font-weight: vars.$font-weight-semibold;
+  }
+}
+
+/* ---------------------------------
+   View footer (totals & buttons)
+---------------------------------- */
+.view-commerce-cart-form {
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: vars.$spacing-md;
+    margin-top: vars.$spacing-xl;
+
+    input[name$="[submit]"] {
+      background: #fff;
+      border: 1px solid vars.$border-light-color;
+      border-radius: vars.$radius-pill;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    input[name$="[checkout]"] {
+      background: vars.$color-primary;
+      color: #fff;
+      border: 0;
+      border-radius: vars.$radius-pill;
+      padding: 14px 24px;
+      font-weight: vars.$font-weight-semibold;
+      box-shadow: 0 8px 18px vars.$color-shadow;
+    }
+  }
+}
+
+/* Variation heading spacing */
+.mel-cart-card__variation { margin-bottom: 2px; font-weight: vars.$font-weight-semibold; }
+
+/* Footer form buttons */
+.view-commerce-cart-form .form-actions {
+  display: flex; gap: vars.$spacing-md; flex-wrap: wrap; margin-top: vars.$spacing-xl;
+}
+.view-commerce-cart-form .form-actions input[name$="[submit]"],
+.view-commerce-cart-form .form-actions input[name="op"] {
+  background: transparent; color: vars.$color-accent;
+  border: 1px solid vars.$color-accent; border-radius: vars.$radius-pill;
+  padding: 12px 20px; font-weight: vars.$font-weight-semibold; cursor: pointer;
+}
+.view-commerce-cart-form .form-actions input[name$="[checkout]"] {
+  background: vars.$color-primary; color:#fff; border:0; border-radius: vars.$radius-pill;
+  padding: 14px 24px; font-weight: vars.$font-weight-semibold;
+  box-shadow: 0 8px 20px rgba(242,109,91,.32);
+}
+/* Variation heading spacing so it sits above Unit nicely */
+.mel-cart-card__variation {
+  font-weight: vars.$font-weight-semibold;
+  color: vars.$text-color-main;
+  margin-bottom: 2px;
+}
+
+/* Style Update + Checkout buttons printed by the view footer form */
+.view-commerce-cart-form .form-actions {
+  display: flex;
+  gap: vars.$spacing-md;
+  flex-wrap: wrap;
+  margin-top: vars.$spacing-xl;
+}
+
+.view-commerce-cart-form .form-actions input[name$="[submit]"],
+.view-commerce-cart-form .form-actions input[name="op"] {
+  /* "Update cart" */
+  background: transparent;
+  color: vars.$color-accent;
+  border: 1px solid vars.$color-accent;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  cursor: pointer;
+}
+
+.view-commerce-cart-form .form-actions input[name$="[checkout]"] {
+  /* "Checkout" */
+  background: vars.$color-primary;
+  color: #fff;
+  border: 0;
+  border-radius: vars.$radius-pill;
+  padding: 14px 24px;
+  font-weight: vars.$font-weight-semibold;
+  box-shadow: 0 8px 20px rgba(242,109,91,.32);
+}
+
+/* keep totals readable on small screens */
+@media (max-width: vars.$breakpoint-md) {
+  .view-commerce-cart-form .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .view-commerce-cart-form .form-actions input[name$="[checkout]"] {
+    width: 100%;
+  }
+}
+
+/* Variation spacing so 🎟️ sits nicely above Unit */
+.mel-cart-card__variation { margin-bottom: 2px; font-weight: vars.$font-weight-semibold; }
+
+/* Footer buttons */
+.view-commerce-cart-form .form-actions {
+  display: flex; gap: vars.$spacing-md; flex-wrap: wrap; margin-top: vars.$spacing-xl;
+}
+
+/* Update cart (various module/name combos) */
+.view-commerce-cart-form .form-actions
+  input[name$="[submit]"],
+  .view-commerce-cart-form .form-actions input[name="op"],
+  .view-commerce-cart-form .form-actions input[value="Update cart"] {
+  background: transparent;
+  color: vars.$color-accent;
+  border: 1px solid vars.$color-accent;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  cursor: pointer;
+}
+
+/* Checkout */
+.view-commerce-cart-form .form-actions
+  input[name$="[checkout]"],
+  .view-commerce-cart-form .form-actions #edit-checkout,
+  .view-commerce-cart-form .form-actions input[value="Checkout"] {
+  background: vars.$color-primary;
+  color: #fff;
+  border: 0;
+  border-radius: vars.$radius-pill;
+  padding: 14px 24px;
+  font-weight: vars.$font-weight-semibold;
+  box-shadow: 0 8px 20px rgba(242,109,91,.32);
+}
+
+/* ===========================
+   Cart footer actions — robust targeting
+   Matches by id, data-drupal-selector, and value text.
+=========================== */
+.mel-cart .form-actions {
+  display: flex;
+  gap: vars.$spacing-md;
+  flex-wrap: wrap;
+  margin-top: vars.$spacing-xl;
+}
+
+/* "Update cart" (ghost) */
+.mel-cart .form-actions #edit-submit,
+.mel-cart .form-actions [data-drupal-selector="edit-submit"],
+.mel-cart .form-actions input.button.form-submit[value="Update cart"] {
+  background: transparent !important;
+  color: vars.$color-accent !important;
+  border: 1px solid vars.$color-accent !important;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+/* "Checkout" (primary) */
+.mel-cart .form-actions #edit-checkout,
+.mel-cart .form-actions [data-drupal-selector="edit-checkout"],
+.mel-cart .form-actions input.button.form-submit[value="Checkout"] {
+  background: vars.$color-primary !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: vars.$radius-pill;
+  padding: 14px 24px;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1;
+  box-shadow: 0 8px 20px rgba(242,109,91,.32);
+  cursor: pointer;
+}
+
+/* ===========================
+   Empty cart button
+=========================== */
+.mel-cart-actions #edit-empty-cart,
+.mel-cart-actions .empty-cart-button {
+  background: transparent;
+  color: #f5041c; /* strong red to signal destructive action */
+  border: 1px solid #f5041c;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+
+  &:hover {
+    background: #f5041c;
+    color: #fff;
+  }
+}
+
+/* Mobile: full width */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-cart-actions #edit-empty-cart,
+  .mel-cart-actions .empty-cart-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* Small screens: make checkout full-width for thumb-friendly tap */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-cart .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mel-cart .form-actions #edit-checkout,
+  .mel-cart .form-actions [data-drupal-selector="edit-checkout"],
+  .mel-cart .form-actions input.button.form-submit[value="Checkout"] {
+    width: 100%;
+  }
+}
+
+/* Actions row (Commerce renders #edit-actions) */
+.mel-cart #edit-actions.form-actions {
+  display: flex;
+  gap: vars.$spacing-md;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: vars.$spacing-xl;
+}
+
+/* Continue (ghost primary) */
+.mel-cart #edit-actions .mel-continue-btn {
+  border: 1px solid vars.$color-accent;
+  color: vars.$color-accent;
+  background: transparent;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* Update cart (ghost neutral) */
+.mel-cart #edit-actions #edit-submit,
+.mel-cart #edit-actions [data-drupal-selector="edit-submit"] {
+  background: transparent;
+  color: vars.$color-muted-text;
+  border: 1px solid vars.$color-muted-text;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1;
+}
+
+/* Checkout (brand primary) */
+.mel-cart #edit-actions #edit-checkout,
+.mel-cart #edit-actions [data-drupal-selector="edit-checkout"] {
+  background: vars.$color-primary;
+  color: #fff;
+  border: 0;
+  border-radius: vars.$radius-pill;
+  padding: 14px 24px;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1;
+  box-shadow: 0 8px 20px rgba(242,109,91,.32);
+}
+
+/* Empty cart (destructive ghost) */
+.mel-cart #edit-actions #edit-empty-cart,
+.mel-cart #edit-actions .empty-cart-button {
+  background: transparent;
+  color: #f5041c;
+  border: 1px solid #f5041c;
+  border-radius: vars.$radius-pill;
+  padding: 12px 20px;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.mel-cart #edit-actions #edit-empty-cart:hover,
+.mel-cart #edit-actions .empty-cart-button:hover {
+  background: #f5041c;
+  color: #fff;
+}
+
+/* Mobile: stack full width */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-cart #edit-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mel-cart #edit-actions .mel-continue-btn,
+  .mel-cart #edit-actions #edit-submit,
+  .mel-cart #edit-actions #edit-checkout,
+  .mel-cart #edit-actions #edit-empty-cart,
+  .mel-cart #edit-actions .empty-cart-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Footer card (totals + actions) */
+.mel-cart-card--footer {
+  margin-top: vars.$spacing-xl;
+}
+.mel-cart-card [data-mel-continue] { display: none !important; }
+.mel-cart-card--footer [data-mel-continue] { display: inline-flex !important; }
+
+/* Totals that Commerce prints in the footer (#order-total-summary) */
+.mel-cart-card--footer [data-drupal-selector="order-total-summary"],
+.mel-cart-card--footer .order-total-line__subtotal,
+.mel-cart-card--footer .order-total-line__total {
+  display: block;
+  text-align: right;
+}
+
+.mel-cart-card--footer .order-total-line {
+  display: flex;
+  justify-content: flex-end;
+  gap: vars.$spacing-sm;
+  font-weight: vars.$font-weight-semibold;
+}
+
+.mel-cart-card--footer .order-total-line__total {
+  font-size: 18px;
+}
+
+/* Space the actions from the totals */
+.mel-cart-card--footer #edit-actions.form-actions {
+  margin-top: vars.$spacing-lg;
+}
+
+/* Make sure nothing “floats” past the footer card */
+.mel-cart-card--footer::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* Hide any stray continue-button that might render inside cards */
+.mel-cart-card [data-mel-continue] { display: none !important; }
+
+/* ---------------------------------
+   Responsive
+---------------------------------- */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-cart-card__head { grid-template-columns: 72px 1fr; }
+  .mel-cart-line { grid-template-columns: 1fr; }
+  .mel-cart-actions { justify-content: flex-start; }
+  .view-commerce-cart-form .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    input[name$="[checkout]"] {
+      width: 100%;
+      padding: 16px 28px;
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+uuid: 7bb3a928-7a8c-45cf-9f82-51b36e952a89
+langcode: en
+status: true
+dependencies: {  }
+third_party_settings:
+  commerce_order:
+    customer_profile_type: false
+id: administrator
+label: Administrator
+display_label: Administrator
+multiple: true
+registration: false
+roles:
+  authenticated: authenticated
+  content_editor: content_editor
+  vendor: vendor
+  administrator: administrator
+  customer: customer
+allow_revisions: false
+new_revision: false

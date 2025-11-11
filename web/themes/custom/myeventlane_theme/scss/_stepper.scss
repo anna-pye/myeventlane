@@ -1,0 +1,114 @@
+@use "settings/variables" as vars;
+
+
+// -------- Stepper ( + / - ) --------
+.mel-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  padding: 4px;
+  border-radius: 999px;
+  background: vars.$color-bg-muted;           // soft pill
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+}
+
+.mel-qty-btn {
+  --tap-size: 40px;
+  width: var(--tap-size);
+  height: var(--tap-size);
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0,0,0,.08);
+  background: #fff;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: transform .08s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+
+  &:hover { box-shadow: 0 6px 18px rgba(0,0,0,.10); }
+  &:active { transform: translateY(1px) scale(.98); }
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(242,109,91,.35);  // brand focus halo
+  }
+
+  &.is-disabled,
+  &:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    background: #f6f6f7;
+  }
+}
+
+/* Icon glyphs (you can also keep text + / - in the markup) */
+.mel-qty-btn--minus::before { content: "–"; font-size: 18px; }
+.mel-qty-btn--plus::before  { content: "+"; font-size: 18px; }
+
+.mel-stepper__input {
+  min-width: 2.4ch;
+  text-align: center;
+  font-weight: vars.$font-weight-semibold;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 10px;
+  padding: 6px 10px;
+  height: 40px;
+}
+
+/* Row layout polish */
+.mel-ticket-row {
+  display: grid;
+  grid-template-columns: 1fr auto;            // left: label/price, right: stepper
+  align-items: center;
+  gap: vars.$spacing-md;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  border: 1px solid #f2f2f4;
+  border-radius: vars.$radius-medium;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+
+  &:hover { box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+}
+
+.mel-ticket-row__left {
+  display: flex; flex-direction: column;
+  .mel-ticket-type { font-weight: 600; color: #293241; }
+  .mel-ticket-price { font-size: 14px; color: vars.$color-accent; opacity: .95; }
+}
+
+/* Add-to-cart bar */
+.mel-ticket-matrix__actions {
+  margin-top: vars.$spacing-md;
+  display: flex;
+  justify-content: flex-start;
+}
+.mel-ticket-matrix__actions .button,
+.mel-pinned-submit {
+  border-radius: 999px;
+  background: vars.$color-primary;
+  color: #fff;
+  padding: 12px 22px;
+  font-weight: vars.$font-weight-semibold;
+  transition: transform .08s ease, box-shadow .18s ease;
+}
+.mel-ticket-matrix__actions .button:hover,
+.mel-pinned-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.12);
+}
+
+/* Mobile tweaks */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-ticket-row {
+    grid-template-columns: 1fr;               // stack
+    gap: vars.$spacing-sm;
+  }
+  .mel-stepper {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .mel-qty-btn { --tap-size: 44px; }          // larger tap targets on mobile
+  .mel-stepper__input { flex: 0 0 56px; }
+}

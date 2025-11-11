@@ -1,0 +1,19 @@
+uuid: 588d6daf-eafb-4edf-a43d-29fe4f7416cf
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_vendor_description
+field_name: field_vendor_description
+entity_type: profile
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

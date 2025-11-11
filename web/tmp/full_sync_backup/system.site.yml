@@ -1,0 +1,13 @@
+langcode: en
+uuid: E2800135-3748-4E8D-BD4B-F99202981424
+name: 'My Event Lane'
+mail: admin@myeventlane.com.au
+slogan: ''
+page:
+  403: /user/login
+  404: ''
+  front: /home-view
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: ''

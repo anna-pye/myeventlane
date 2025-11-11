@@ -1,0 +1,10 @@
+uuid: 48ba7dc1-8ffe-448c-a830-35aa122ea7b8
+langcode: en
+status: true
+dependencies: {  }
+id: boost_duration
+label: 'Boost Duration'
+traits: {  }
+locked: false
+orderItemType: boost
+generateTitle: false

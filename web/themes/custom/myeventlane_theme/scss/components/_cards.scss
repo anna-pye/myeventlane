@@ -1,0 +1,102 @@
+
+@use "../settings/variables" as vars;
+
+/* Grid helper */
+.mel-grid {
+  display: grid;
+  gap: vars.$spacing-xl;
+}
+.mel-grid--gap-lg   { gap: vars.$spacing-lg; }
+.mel-grid--gap-xl   { gap: vars.$spacing-xl; }
+.mel-grid--1        { grid-template-columns: 1fr; }
+.mel-grid--2        { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mel-grid--3        { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: vars.$breakpoint-md) {
+  .mel-grid--2,
+  .mel-grid--3 { grid-template-columns: 1fr; }
+}
+
+/* Base card */
+.mel-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: vars.$border-light;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 4px 16px vars.$color-shadow;
+  overflow: hidden;
+  transition: transform .08s ease, box-shadow .16s ease;
+
+  &:hover { transform: translateY(-2px); box-shadow: 0 8px 24px vars.$color-shadow; }
+}
+
+.mel-card__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.mel-card__body {
+  padding: vars.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-sm;
+}
+
+.mel-card__title {
+  margin: 0;
+  font-size: vars.$font-size-h3;
+  font-weight: vars.$font-weight-bold;
+  color: vars.$text-color-main;
+  letter-spacing: -0.01em;
+}
+
+.mel-card__meta {
+  color: vars.$color-navy;
+  font-weight: vars.$font-weight-semibold;
+}
+
+.mel-card__desc {
+  margin: 0;
+  color: vars.$color-muted-text;
+  font-size: vars.$font-size-small;
+}
+
+.mel-card__actions {
+  margin-top: auto;
+  padding: 0 vars.$spacing-lg vars.$spacing-lg;
+}
+
+/* Floating Boosted chip for image areas */
+.mel-boost-chip {
+  position: absolute;
+  top: vars.$spacing-md;
+  right: vars.$spacing-md;
+  padding: vars.$spacing-xs vars.$spacing-md;
+  border-radius: vars.$radius-pill;
+  background: vars.$color-primary;
+  color: #fff;
+  font-weight: vars.$font-weight-semibold;
+  font-size: vars.$font-size-small;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  box-shadow: 0 2px 8px vars.$color-shadow;
+  z-index: 3;
+
+  .spark { width: 8px; height: 8px; border-radius: 50%; background: #fff; opacity: .95; }
+}
+
+/* Plan variant (for Boost plans) */
+.mel-card--plan .mel-card__meta .mel-price {
+  font-weight: vars.$font-weight-bold;
+}
+
+/* Ensure image wrappers can host overlay */
+.event-card__media,
+.event-hero,
+.node--type-event .field--name-field_image,
+.node--type-event .field--name-field_event_banner {
+  position: relative;
+}

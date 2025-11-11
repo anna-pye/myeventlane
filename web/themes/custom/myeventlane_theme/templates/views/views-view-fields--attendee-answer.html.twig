@@ -1,0 +1,16 @@
+<div class="mel-card-body">
+  <div class="mel-attendee-header">
+    <div class="mel-name-email">
+      <strong>{{ fields.field_first_name.content }} {{ fields.field_last_name.content }}</strong>
+      <div class="mel-email">{{ fields.field_email.content }}</div>
+    </div>
+    {% if fields.field_ticket_type is defined %}
+      <span class="mel-ticket-type">{{ fields.field_ticket_type.content }}</span>
+    {% endif %}
+  </div>
+
+  <div class="mel-question-block">
+    <div class="mel-question">{{ fields.field_field_label.content }}</div>
+    <div class="mel-answer">{{ fields.field_attendee_extra_field.content }}</div>
+  </div>
+</div>

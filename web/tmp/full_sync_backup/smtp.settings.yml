@@ -1,0 +1,22 @@
+_core:
+  default_config_hash: JqYNByWeXZGynyqoPRWQIjp3VcQhuoyq5WlM-7YzBvI
+smtp_on: false
+smtp_host: ' https://mailhog-myeventlane.au.ngrok.io'
+smtp_hostbackup: ''
+smtp_port: '25'
+smtp_protocol: standard
+smtp_autotls: true
+smtp_timeout: 30
+smtp_username: annatpye@gmail.com
+smtp_password: Marl$$132
+smtp_from: anna_pye@icloud.com
+smtp_fromname: anna_pye@icloud.com
+smtp_client_hostname: ''
+smtp_client_helo: ''
+smtp_allowhtml: true
+smtp_test_address: anna_pye@icloud.com
+smtp_reroute_address: anna_pye@icloud.com
+smtp_debugging: true
+smtp_debug_level: 1
+prev_mail_system: php_mail
+smtp_keepalive: false

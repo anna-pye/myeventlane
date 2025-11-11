@@ -1,0 +1,31 @@
+uuid: cf892dcd-7234-471e-9f10-1c3d01a8522e
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.event_category
+  module:
+    - text
+id: taxonomy_term.event_category.default
+targetEntityType: taxonomy_term
+bundle: event_category
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  flag_follow_category:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  flag_followed_categories:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden: {  }

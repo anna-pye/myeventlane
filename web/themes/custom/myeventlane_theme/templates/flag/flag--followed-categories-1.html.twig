@@ -1,0 +1,48 @@
+{{ attach_library('flag/flag.link') }}
+{{ attach_library('myeventlane_theme/global') }}
+
+{#
+/**
+ * Custom template for the "followed_categories" flag.
+ * This maintains the default AJAX structure and adds:
+ * - Logged-out prompt
+ * - Follower count
+ */
+#}
+
+{# Determine the flag action class #}
+{% set action_class = action == 'unflag' ? 'action-unflag' : 'action-flag' %}
+
+{# Set CSS classes for the flag wrapper #}
+{% set classes = [
+  'flag',
+  'flag-' ~ flag.id()|clean_class,
+  'js-flag-' ~ flag.id()|clean_class ~ '-' ~ flaggable.id(),
+  action_class
+] %}
+
+{# Add nofollow for bots #}
+{% set attributes = attributes.setAttribute('rel', 'nofollow') %}
+
+<div{{ attributes.addClass(classes) }}>
+  {% if logged_in %}
+    {% if title %}
+      <a{{ attributes }}>{{ title }}</a>
+    {% else %}
+      <span>{{ unflag_denied_text }}</span>
+    {% endif %}
+  {% else %}
+    <div class="follow-category-wrapper">
+      <a href="/user/login" class="follow-btn follow-btn--login">
+        💖 Follow this category
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+{# Follow count below the flag link #}
+{% if follower_count is defined %}
+  <div class="follow-count">
+    💖 {{ follower_count }} {{ follower_count == 1 ? 'person follows' : 'people follow' }} this category
+  </div>
+{% endif %}

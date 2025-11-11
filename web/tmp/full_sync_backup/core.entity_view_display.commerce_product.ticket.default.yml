@@ -1,0 +1,33 @@
+uuid: d2b048c0-6b5f-431f-9079-cc65811ca2db
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.ticket
+  module:
+    - commerce_product
+id: commerce_product.ticket.default
+targetEntityType: commerce_product
+bundle: ticket
+mode: default
+content:
+  title:
+    type: string
+    label: visually_hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+  variations:
+    type: commerce_add_to_cart
+    label: visually_hidden
+    settings:
+      combine: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  created: true
+  stores: true
+  uid: true

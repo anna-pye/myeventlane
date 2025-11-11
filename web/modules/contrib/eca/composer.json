@@ -1,0 +1,30 @@
+{
+  "name": "drupal/eca",
+  "license": "GPL-2.0-or-later",
+  "type": "drupal-module",
+  "description": "Event, Conditions, Actions - powerful, versatile, and user-friendly rules engine for Drupal",
+  "support": {
+    "issues": "https://drupal.org/project/issues/eca",
+    "source": "https://drupal.org/project/eca"
+  },
+  "require": {
+    "php": ">=8.3",
+    "ext-json": "*",
+    "dragonmantank/cron-expression": "^3.1",
+    "drupal/core": "^11.2",
+    "drupal/modeler_api": "^1.0"
+  },
+  "require-dev": {
+    "drupal/ai": "1.2.x-dev",
+    "drupal/ai_agents": "1.2.x-dev",
+    "drupal/entity_reference_revisions": "^1.12",
+    "drupal/inline_entity_form": "^3.0",
+    "drupal/paragraphs": "^1.18",
+    "drupal/project_browser": "^2.0",
+    "drupal/token": "^1.15",
+    "drupal/webform": "^6.3"
+  },
+  "conflict": {
+    "drush/drush": "<12.5.1"
+  }
+}

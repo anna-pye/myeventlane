@@ -1,0 +1,22 @@
+@use "../settings/variables" as vars;
+
+
+.spacer-xs {
+  margin-bottom: vars.$spacing-xs;
+}
+
+.spacer-sm {
+  margin-bottom: vars.$spacing-sm;
+}
+
+.spacer-md {
+  margin-bottom: vars.$spacing-md;
+}
+
+.spacer-lg {
+  margin-bottom: vars.$spacing-lg;
+}
+
+.spacer-xl {
+  margin-bottom: vars.$spacing-xl;
+}

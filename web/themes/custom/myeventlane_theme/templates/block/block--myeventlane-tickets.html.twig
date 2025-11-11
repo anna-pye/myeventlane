@@ -1,0 +1,9 @@
+{#
+  Renders whatever the block plugin returns without filtering.
+  Do NOT wrap the form’s render array in an extra <form> or {{- ... -}} trim tags.
+#}
+<div class="mel-ticket-card">
+  <div class="mel-ticket-card__body">
+    {{ content }} {# <- IMPORTANT: pass through untouched #}
+  </div>
+</div>

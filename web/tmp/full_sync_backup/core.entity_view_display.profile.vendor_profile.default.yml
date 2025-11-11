@@ -1,0 +1,55 @@
+uuid: c37a5dc0-e2d0-4475-b926-a3942f028bb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.vendor_profile.address
+    - field.field.profile.vendor_profile.field_profile_image
+    - field.field.profile.vendor_profile.field_stripe_account_id
+    - field.field.profile.vendor_profile.field_vendor_description
+    - profile.type.vendor_profile
+  module:
+    - address
+    - svg_image
+id: profile.vendor_profile.default
+targetEntityType: profile
+bundle: vendor_profile
+mode: default
+content:
+  address:
+    type: address_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_profile_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_stripe_account_id:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_vendor_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

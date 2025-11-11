@@ -1,0 +1,227 @@
+@use "settings/variables" as vars;
+
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 32px;
+
+  .filter-pill {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #ccc; // default fallback
+
+      &.filter-yellow { background-color: #f5c04c; }
+      &.filter-purple { background-color: #9a6ef2; }
+      &.filter-coral  { background-color: #f26d5b; }
+      &.filter-blue   { background-color: #8e9cff; }
+      &.filter-gray   { background-color: #9aa0b2 !important; }
+      &.filter-default { background-color: #9aa0b2; }
+
+    &:hover {
+      filter: brightness(0.95);
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      filter: brightness(0.92);
+    }
+  }
+}
+
+.homepage 
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .filter-pill{
+      display: inline-block;
+      margin: 0 0.5rem 0.5rem 0;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+
+      &.filter-yellow { background-color: #f5c04c; }
+      &.filter-purple { background-color: #9a6ef2; }
+      &.filter-coral  { background-color: #f26d5b; }
+      &.filter-blue   { background-color: #8e9cff; }
+      &.filter-gray   { background-color: #9aa0b2 !important; }
+      &.filter-default { background-color: #9aa0b2; }
+
+      &:hover {
+        filter: brightness(0.95);
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.92);
+      }
+    }
+  }
+
+  // EVENT TAG CHIPS
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .filter-pill{
+      display: inline-block;
+      margin: 0 0.5rem 0.5rem 0;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+
+      &.filter-yellow { background-color: #f5c04c; }
+      &.filter-purple { background-color: #9a6ef2; }
+      &.filter-coral  { background-color: #f26d5b; }
+      &.filter-blue   { background-color: #8e9cff; }
+      &.filter-gray   { background-color: #9aa0b2 !important; }
+      &.filter-default { background-color: #9aa0b2; }
+
+      &:hover {
+        filter: brightness(0.95);
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.92);
+      }
+    }
+  }
+
+  // Animation keyframes
+@keyframes pillPop {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+  80% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.follow-btn {
+  background: none;
+  border: 2px solid vars.$color-accent;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: vars.$color-accent;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: lighten(vars.$color-accent, 45%);
+  }
+
+  &.is-following {
+    background-color: vars.$color-accent;
+    color: white;
+    border-color: vars.$color-accent;
+
+    &:hover {
+      background-color: darken(vars.$color-accent, 5%);
+    }
+  }
+}
+
+a.flag-follow-category,
+a.unflag-follow-category {
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 1rem;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 2px solid #f26d5b;
+  color: #f26d5b;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background: #f26d5b;
+    color: white;
+  }
+}
+
+.main-menu {
+  display: flex;
+  list-style: none;
+  gap: vars.$spacing-md;
+
+  li {
+    position: relative;
+
+    .nav-link {
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: vars.$text-color-main;
+
+      &:hover {
+        background-color: vars.$color-bg-offwhite
+      }
+    }
+
+    &.nav-dropdown {
+      .dropdown-toggle::after {
+        content: '▾';
+        margin-left: 6px;
+        font-size: 0.8em;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        border-radius: 6px;
+        padding: vars.$spacing-sm;
+        min-width: 180px;
+        z-index: 100;
+
+        li {
+          margin: 4px 0;
+        }
+
+        .nav-link {
+          display: block;
+          padding: 6px 10px;
+          color: vars.$text-color-main;
+
+          &:hover {
+            background-color: vars.$color-bg-offwhite
+          }
+        }
+      }
+
+      &:hover .dropdown-menu {
+        display: block;
+      }
+    }
+  }
+}

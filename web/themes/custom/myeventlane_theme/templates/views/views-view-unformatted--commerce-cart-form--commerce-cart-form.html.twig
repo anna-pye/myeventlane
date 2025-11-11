@@ -1,0 +1,24 @@
+<div class="mel-cart-list">
+  {% for row in rows %}
+    <article class="mel-cart-card">
+      <div class="mel-cart-card__main">
+        <h3 class="mel-cart-card__title"></h3>
+
+        <div class="mel-cart-card__controls">
+          <div class="mel-qty" data-mel-qty>
+            {{ row.content['edit_quantity'] }}
+          </div>
+          <div class="mel-cart-card__unit">
+            <span>Unit:</span> {{ row.content['unit_price__number'] }}
+          </div>
+          <div class="mel-cart-card__total">
+            <span>Total:</span> {{ row.content['total_price__number'] }}
+          </div>
+          <div class="mel-cart-card__remove">
+            {{ row.content['remove_button'] }}
+          </div>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+</div>

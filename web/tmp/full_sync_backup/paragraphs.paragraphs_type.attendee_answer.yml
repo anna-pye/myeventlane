@@ -1,0 +1,10 @@
+uuid: 8c030f9e-87bf-44ba-a5bf-730eaa5c4979
+langcode: en
+status: true
+dependencies: {  }
+id: attendee_answer
+label: 'Attendee Info'
+icon_uuid: null
+icon_default: null
+description: "field_first_name, \r\nfield_last_name, \r\nfield_email"
+behavior_plugins: {  }

@@ -1,0 +1,6 @@
+{% set label = fields.title.content ?: fields.title_1.content %}
+<div class="ticket-line">
+  <div class="ticket-line__title">{{ fields.title.content }}</div>
+  <div class="ticket-line__price">{{ fields.price.content }}</div>
+  <div class="ticket-line__form">{{ fields.add_to_cart_form.content }}</div>
+</div>

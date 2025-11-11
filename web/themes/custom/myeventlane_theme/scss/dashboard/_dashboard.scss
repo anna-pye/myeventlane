@@ -1,0 +1,491 @@
+@use "../settings/variables" as vars;
+
+
+// ─── Dashboard Wrapper ──────────────────────────────
+.mel-dashboard-wrapper {
+  background: #faf7f4;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+// ─── Intro Section (Title + Tabs + Create Button) ───
+.vendor-hero {
+  text-align: left;
+  margin-bottom: 32px;
+
+  .vendor-hero__tagline {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    color: #293241;
+    span { color: #f26d5b; }
+  }
+
+  .vendor-hero__subtitle {
+    font-size: 18px;
+    color: #5c6783;
+    font-weight: 500;
+  }
+}
+
+.mel-dashboard-intro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  h1.mel-dashboard-heading {
+    font-family: vars.$font-family-main;
+    font-size: 2rem;
+    font-weight: 700;
+    color: vars.$text-color-main;
+    margin-bottom: 1.5rem;
+  }
+
+  .mel-dashboard-tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .mel-dashboard-tab-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      a {
+        padding: 0.75rem 1.25rem;
+        background-color: vars.$color-bg-muted;
+        border-radius: vars.$radius-pill;
+        text-decoration: none;
+        font-weight: 600;
+        color: vars.$text-color-main;
+        transition: background 0.2s ease, color 0.2s ease;
+
+        &:hover {
+          background-color:(vars.$color-bg-muted -6%);
+        }
+
+        &.is-active {
+          background-color: vars.$color-primary;
+          color: #fff;
+        }
+      }
+    }
+
+    .mel-dashboard-create {
+      margin-top: 0.5rem;
+
+      @media (min-width: 640px) {
+        margin-top: 0;
+      }
+
+      .mel-button {
+        font-size: 1rem;
+        padding: 0.6rem 1.6rem;
+        border-radius: vars.$radius-pill;
+        background-color: vars.$color-primary;
+        color: #fff;
+        font-weight: vars.$font-weight-semibold;
+        text-decoration: none;
+        transition: background 0.2s;
+
+        &:hover {
+          background-color: (vars.$color-primary -8%);
+        }
+      }
+    }
+  }
+}
+
+// ─── Bottom Create Button ────────────────────────────
+.mel-create-event-bottom {
+  text-align: center;
+  margin: 3rem 0 2rem;
+
+  .mel-button {
+    font-size: 1rem;
+    padding: 0.6rem 1.8rem;
+    border-radius: vars.$radius-pill;
+    background-color: vars.$color-primary;
+    color: #fff;
+    font-weight: vars.$font-weight-semibold;
+    text-decoration: none;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: (vars.$color-primary -8%);
+    }
+  }
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+}
+
+// ─── Event Card Layout ──────────────────────────────
+.mel-card-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.mel-event-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.mel-event-image img {
+  width: 100px;
+  height: auto;
+  border-radius: vars.$radius-small;
+  object-fit: cover;
+}
+
+.mel-event-content {
+  flex: 1;
+  text-align: left;
+}
+
+.mel-event-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: vars.$text-color-main;
+}
+
+.mel-event-meta {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: #444;
+
+  p {
+    margin: 0.25rem 0;
+  }
+}
+
+.mel-event-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  a,
+  button {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    border-radius: vars.$radius-pill;
+    background: vars.$color-primary;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: (vars.$color-primary -8%);
+    }
+  }
+
+  .view-link {
+    background: transparent;
+    color: vars.$text-color-main;
+    text-decoration: underline;
+    padding: 0.4rem 0;
+  }
+}
+
+.mel-ticket-count {
+  font-size: vars.$font-size-small;
+  font-weight: vars.$font-weight-semibold;
+  color: vars.$color-accent;
+  margin-top: vars.$spacing-xs;
+
+  &.mel-muted {
+    color: vars.$color-muted-text;
+  }
+}
+
+// ─── RSVP Attendee Cards ─────────────────────────────
+.mel-attendee-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.mel-attendee-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0e8e2;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.mel-attendee-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #f3f3f3;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+
+  .mel-name-email {
+    strong {
+      display: block;
+      font-weight: 600;
+      font-size: 1rem;
+      color: vars.$text-color-main;
+    }
+
+    .mel-email {
+      font-size: 0.85rem;
+      color: #6b6b6b;
+    }
+  }
+
+  .mel-ticket-type {
+    background: vars.$color-primary;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+  }
+}
+
+.mel-question-block {
+  .mel-question {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: vars.$color-accent;
+    margin-bottom: 0.25rem;
+  }
+
+  .mel-answer {
+    font-size: 0.95rem;
+    color: vars.$text-color-main;
+  }
+}
+
+// ─── My Categories Dashboard ─────────────────────────────
+.my-categories-page {
+  background-color: vars.$color-bg-offwhite;
+  color: vars.$text-color-main;
+
+  .page-inner {
+    max-width: 1180px;
+    margin: auto;
+    padding: vars.$spacing-xl vars.$spacing-lg;
+  }
+
+  .page-heading {
+    font-size: 1.6rem;
+    font-family: vars.$font-family-main;
+    font-weight: 700;
+    margin-bottom: vars.$spacing-lg;
+    text-align: left;
+  }
+
+  // ─── Stacked Categories Layout ───────────────────────
+
+  .mel-category-group {
+    margin-bottom: vars.$spacing-3xl;
+
+    .category-title {
+      font-size: vars.$font-size-h3;
+      font-weight: vars.$font-weight-bold;
+      color: vars.$text-color-main;
+      margin-bottom: vars.$spacing-md;
+      padding: vars.$spacing-sm vars.$spacing-lg;
+      background-color: vars.$color-bg-muted;
+      border-radius: vars.$radius-pill;
+      display: inline-block;
+    }
+
+    .event-card-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: vars.$spacing-md;
+
+      .event-card-wrapper {
+        display: flex;
+        align-items: flex-start;
+        background: #fff;
+        padding: vars.$spacing-md;
+        border-radius: vars.$radius-medium;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        gap: vars.$spacing-md;
+
+        .views-field-field-image{
+          img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: vars.$radius-small;
+            flex-shrink: 0;
+          }
+        }
+
+        .mel-category-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+
+          .event-title {
+            font-weight: vars.$font-weight-semibold;
+            font-size: vars.$font-size-h3;
+            color: vars.$text-color-main;
+            margin-bottom: 0.3rem;
+          }
+
+          .event-meta {
+            font-size: vars.$font-size-small;
+            color: vars.$color-muted-text;
+
+            p {
+              margin: 0.2rem 0;
+            }
+          }
+
+          .category-badge {
+            font-size: vars.$font-size-extra-small;
+            color: #fff;
+            background: vars.$color-primary;
+            border-radius: vars.$radius-pill;
+            padding: 0.25rem 0.75rem;
+            display: inline-block;
+            margin-top: vars.$spacing-xs;
+            align-self: flex-start;
+          }
+        }
+      }
+    }
+  }
+
+  .my-categories-page {
+    background: vars.$color-bg-offwhite;
+
+    .mel-category-group {
+      margin-bottom: vars.$spacing-xl;
+
+      .mel-category-heading {
+        font-family: vars.$font-family-main;
+        font-size: 1.5rem;
+        margin-bottom: vars.$spacing-lg;
+      }
+
+      .mel-category-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: vars.$spacing-md;
+
+        .mel-event-card {
+          background: white;
+          border-radius: vars.$radius-medium;
+          padding: vars.$spacing-md;
+          display: flex;
+          gap: vars.$spacing-md;
+          box-shadow: vars.$color-shadow;
+
+          .mel-event-thumb img {
+            border-radius: vars.$radius-medium;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+          }
+
+          .mel-event-body {
+            font-family: vars.$font-family-main;
+
+            .mel-event-title {
+              font-weight: 600;
+              color: vars.$text-color-main;
+              margin-bottom: vars.$spacing-xs;
+            }
+
+            .mel-event-date,
+            .mel-event-venue,
+            .mel-event-location {
+              font-size: 0.875rem;
+              color: vars.$color-muted-text;
+            }
+
+          }
+        }
+      }
+    }
+  }
+
+    // ---------------- CTA ----------------
+  .event-card__cta {
+    margin-top: auto;
+
+    .btn {
+      background-color: vars.$color-highlight;
+      color: vars.$text-color-main;
+      font-weight: vars.$font-weight-semibold;
+      font-size: vars.$font-size-small;
+      padding: 8px 20px;
+      border-radius: vars.$radius-pill;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+      text-decoration: none;
+      border: none;
+      display: inline-block;
+      transition: background 0.16s;
+      margin-right: 8px;
+
+      &:hover,
+      &:focus {
+        background-color: (vars.$color-highlight -25%);
+      }
+
+      &.btn-outline {
+        background: none;
+        border: 1px solid vars.$color-muted-text;
+        color: vars.$color-muted-text;
+
+        &:hover {
+          background: vars.$color-muted-text;
+          color: #fff;
+        }
+      }
+    }
+  }
+.my-categories-cta-wrapper {
+  max-width: 720px;
+  margin: 60px auto;
+  text-align: center;
+  padding: vars.$spacing-xl;
+  border-radius: vars.$radius-pill;
+  background-color: vars.$color-primary;
+  box-shadow: vars.$color-shadow;
+
+  .cta-heading {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: vars.$spacing-md;
+  }
+
+  .cta-text {
+    font-size: 1rem;
+    margin-bottom: vars.$spacing-lg;
+    color: vars.$text-color-main;
+  }
+
+  }
+
+}

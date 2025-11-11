@@ -1,0 +1,27 @@
+social_auth_apple.settings_form:
+  path: '/admin/config/social-api/social-auth/apple'
+  defaults:
+    _title: 'Apple user authentication'
+    _form: \Drupal\social_auth_apple\Form\AppleAuthSettingsForm
+    network: 'apple'
+  requirements:
+    _permission: 'administer social api authentication'
+  options:
+    parameters:
+      network:
+        type: network
+
+social_auth_apple.callback:
+  path: '/user/login/apple/callback'
+  defaults:
+    _controller: \Drupal\social_auth_apple\Controller\AppleAuthController::callback
+    network: 'apple'
+  methods: [ POST, GET ]
+  requirements:
+    # Anonymous users can log in, but authenticated users can also associate a new provider.
+    _access: 'TRUE'
+  options:
+    no_cache: TRUE
+    parameters:
+      network:
+        type: network

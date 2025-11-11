@@ -1,0 +1,35 @@
+{
+    "name": "drupal/social_auth_apple",
+    "description": "Social Auth integration for Apple.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "ayalon",
+            "homepage": "https://www.drupal.org/u/ayalon",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Ksandr (kksandr)",
+            "homepage": "https://www.drupal.org/u/kksandr",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://drupal.org/project/social_auth_apple",
+    "support": {
+        "issues": "https://drupal.org/project/issues/social_auth_apple",
+        "source": "https://git.drupalcode.org/project/social_auth_apple"
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url":  "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "php": ">=8",
+        "drupal/social_auth": "^4",
+        "patrickbussmann/oauth2-apple": "^0.3"
+    }
+}

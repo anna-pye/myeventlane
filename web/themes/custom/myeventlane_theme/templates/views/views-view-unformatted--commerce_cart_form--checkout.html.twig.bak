@@ -1,0 +1,14 @@
+{#
+  Force card wrappers even when the display uses "Unformatted list".
+  We DO NOT manipulate render arrays; we only wrap each row's content.
+#}
+{% for row in rows %}
+  {# If row.attributes exists, use it; otherwise start with an empty attribute bag. #}
+  {% set row_attr = (row.attributes is defined) ? row.attributes : create_attribute() %}
+
+  <article{{ row_attr.addClass('mel-cart-card') }}>
+    <div class="mel-cart-card__main">
+      {{ row.content }}
+    </div>
+  </article>
+{% endfor %}

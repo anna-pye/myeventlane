@@ -1,0 +1,26 @@
+{#
+  Renders one Event group with a header + its rows.
+
+  ❗️View requirements (one-time):
+  - Format → Table → “Grouping field Nr. 1” = the Event Title field (the node title via the
+    field_event relationship).
+  - On that Event Title field, enable “Rewrite results” and set the rewrite to include the image too,
+    e.g.:
+        [field_image] [title_1]
+    (both fields can be “Excluded from display”.)
+  Then {{ title }} below already contains the image + title markup.
+#}
+
+<section class="mel-cart-group">
+  <header class="mel-cart-group__header">
+    <div class="mel-cart-group__header-inner">
+      {{ title }}
+      {{ row._entity.field_event.entity.field_image.entity|view('1_1_square_small') }}
+    </div>
+  </header>
+
+  <div class="mel-cart-group__rows">
+    {# All the line items for this Event. These come from the row template below. #}
+    {{ rows }}
+  </div>
+</section>

@@ -1,0 +1,22 @@
+uuid: b3a87818-c614-4c68-8a13-8a28030a305d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_attendee_responses
+    - paragraphs.paragraphs_type.attendee_answer
+  module:
+    - text
+id: paragraph.attendee_answer.field_attendee_responses
+field_name: field_attendee_responses
+entity_type: paragraph
+bundle: attendee_answer
+label: 'Extra Responses'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

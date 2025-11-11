@@ -1,0 +1,20 @@
+uuid: 540795d4-7537-43a4-a962-0336720eb6c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_event_capacity
+field_name: field_event_capacity
+entity_type: node
+type: integer
+settings:
+  unsigned: true
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

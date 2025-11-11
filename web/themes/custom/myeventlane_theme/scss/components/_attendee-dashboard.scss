@@ -1,0 +1,83 @@
+
+@use "../settings/variables" as *;
+
+.mel-dashboard-section {
+  padding: $spacing-2xl $spacing-xl;
+
+  .mel-section-header {
+    margin-bottom: $spacing-xl;
+
+    h2 {
+      font-size: $font-size-h2;
+      font-weight: $font-weight-bold;
+      color: $text-color-main;
+      margin-bottom: $spacing-sm;
+    }
+
+    .mel-sub {
+      font-size: $font-size-body;
+      color: $color-muted-text;
+    }
+  }
+
+  .mel-event-card {
+    background-color: $color-bg-offwhite;
+    border-radius: $radius-medium;
+    padding: $spacing-xl;
+    margin-bottom: $spacing-2xl;
+    box-shadow: 0 2px 6px $color-shadow;
+
+    .mel-event-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-md;
+
+      h3 {
+        font-size: $font-size-h3;
+        font-weight: $font-weight-semibold;
+        color: $text-color-main;
+      }
+
+      .mel-event-count {
+        font-size: $font-size-small;
+        color: $color-muted-text;
+      }
+    }
+
+    .mel-ticket-block {
+      margin-top: $spacing-lg;
+
+      .mel-ticket-title {
+        font-size: $font-size-body;
+        font-weight: $font-weight-bold;
+        color: $color-accent;
+        margin-bottom: $spacing-sm;
+      }
+
+      .mel-attendee-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: $spacing-sm;
+
+        th,
+        td {
+          padding: $spacing-sm $spacing-md;
+          text-align: left;
+          font-size: $font-size-small;
+          border-bottom: 1px solid $border-light-color;
+        }
+
+        th {
+          font-weight: $font-weight-semibold;
+          color: $text-color-main;
+          background-color: $color-bg-muted;
+        }
+
+        td {
+          color: $text-color-main;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+commerce_stock_local.prepare_module_uninstall:
+  path: '/admin/modules/uninstall/commerce_stock_local'
+  defaults:
+    _form: '\Drupal\commerce_stock_local\Form\PrepareUninstallForm'
+    _title_callback: '\Drupal\commerce_stock_local\Form\PrepareUninstallForm::formTitle'
+  requirements:
+    _permission: 'administer modules'
+commerce_stock_local.ls_config_form:
+  path: '/admin/commerce/config/stock/local_stock_config'
+  defaults:
+    _form: '\Drupal\commerce_stock_local\Form\CronConfigForm'
+    _title: 'Local Stock Configuration'
+  requirements:
+    _permission: 'administer commerce stock'

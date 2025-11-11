@@ -1,0 +1,11 @@
+_core:
+  default_config_hash: 0BvXHTsvWWNz4KaJTBLy7JM8MTwQs9GWZKNp2E-sf68
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce
+id: vendor
+label: 'Vendor Store'
+description: 'Store type for individual event vendors.'
+addressType: customer

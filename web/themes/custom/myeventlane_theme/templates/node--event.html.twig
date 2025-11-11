@@ -1,0 +1,171 @@
+{# web/themes/custom/myeventlane_theme/templates/node--event.html.twig #}
+{{ attach_library('myeventlane_theme/event_display') }}
+{# at the very top of the file you already have: #}
+{{ attach_library('myeventlane_theme/mel_messages') }}
+
+
+{# ---- Dates / meta ---- #}
+{% set start_raw = node.field_start_date.value ?? null %}
+{% set end_raw   = node.field_end_date.value   ?? null %}
+{% set start_ts  = start_raw ? (start_raw|date('U')) : 0 %}
+{% set end_ts    = end_raw   ? (end_raw|date('U'))   : 0 %}
+
+{# registration_mode is provided by preprocess (rsvp|paid|none). #}
+{% set mode = (registration_mode is defined and registration_mode) ? registration_mode|lower : '' %}
+
+
+<article class="mel-event-card mel-card">
+
+  <header class="mel-event__header">
+    {% if content.field_image %}
+      <div class="mel-hero mel-hero--bleed">
+        {{ content.field_image }}
+      </div>
+    {% endif %}
+    <div class="mel-event__titlewrap">
+      <h1 class="event-title mel-title">{{ label }}</h1>
+      {% if node.uid.entity %}
+        <p class="event-subtitle">by {{ node.uid.entity.display_name.value }}</p>
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="event-meta mel-stack">
+    {% if start_ts %}
+      <div class="event-meta-item">
+        🗓 <strong>Starts:</strong>
+        <time datetime="{{ start_raw }}">{{ start_ts|format_date('custom', 'D, d M Y - H:i') }}</time>
+      </div>
+    {% endif %}
+    {% if end_ts %}
+      <div class="event-meta-item">
+        🏁 <strong>Ends:</strong>
+        <time datetime="{{ end_raw }}">{{ end_ts|format_date('custom', 'D, d M Y - H:i') }}</time>
+      </div>
+    {% endif %}
+
+    <a href="/calendar/ics/{{ node.id() }}"
+       class="mel-button mel-button--ghost"
+       download>
+       📅 Add to Calendar
+    </a>
+
+    {% if node.field_venue.value %}
+      <div class="event-meta-item">📍 <strong>Venue:</strong> {{ node.field_venue.value }}</div>
+    {% endif %}
+    {% if content.field_venue_address %}
+      <div class="event-meta-item">
+        📍 <strong>Address:</strong> {{ content.field_venue_address }}
+      </div>
+      {% endif %}
+  </section>
+
+  {% if node.field_event_discription.value %}
+    <section class="event-description mel-stack">
+      <h2>About this event</h2>
+      {{ node.field_event_discription.value }}
+    </section>
+  {% endif %}
+
+
+{# TEMP: Directly render attached ticket product(s) #}
+ 
+{# ---------------- SIDEBAR ---------------- #}
+
+{% set ticket_choice = (node.field_ticket_type is defined and node.field_ticket_type.value)
+  ? node.field_ticket_type.value|lower
+  : '' %}
+{% set product = node.field_product_target.entity ?? null %}
+{% set variations = product ? product.getVariations() : [] %}
+{% set has_tickets = variations|length > 0 %}
+{% set show_rsvp = ticket_choice == 'rsvp' %}
+{% set show_cart = ticket_choice == 'paid' and has_tickets %}
+
+{# Inline messages for Event pages #}
+<div id="mel-messages-anchor" class="mel-messages-anchor">
+  {{ drupal_block('system_messages_block') }}
+</div>
+
+<aside class="event-sidebar event-sidebar--desktop">
+  {# --- Main CTA area: RSVP / Tickets / Fallback --- #}
+  {% if show_rsvp %}
+    <div class="sidebar-card">
+      <h2 class="sidebar-cta-title">RSVP</h2>
+      {% if node.field_limit_one_rsvp is defined and node.field_limit_one_rsvp.value and user_has_rsvped %}
+        <p class="warning">You’ve already RSVP’d to this event.</p>
+      {% else %}
+        {{ drupal_form('Drupal\\myeventlane_rsvp\\Form\\RSVPSubmissionForm', node.id()) }}
+      {% endif %}
+    </div>
+  {% elseif show_cart %}
+  <div class="sidebar-card">
+    <h2 class="sidebar-cta-title">Tickets</h2>
+    {% if ticket_matrix %}
+      {{ ticket_matrix }}
+      <div class="mel-subtotal-wrap" id="mel-subtotal">
+        SubTotal: $0.00
+      </div>
+    {% else %}
+      <div class="cta-unavailable">Tickets are not available yet.</div>
+    {% endif %}
+  </div>
+
+  {% else %}
+    <div class="cta-unavailable">Attending options will appear here.</div>
+  {% endif %}
+
+   
+</aside>
+
+  {# ===================== Organiser footer ===================== #}
+  <footer class="event-footer mel-stack" aria-labelledby="organizer-heading">
+
+
+
+    {# Boost CTA or status in vendor event footer #}
+    {% if mel_can_boost and not mel_is_boosted %}
+      <div class="mel-boost-inline-cta">
+        <a href="{{ path('myeventlane_boost.bridge_add_to_cart', {'node': node.id}) }}?duration=7"
+           class="mel-button mel-boost">
+         boost
+        </a>
+      </div>
+    {% endif %}
+    {% if mel_is_boosted %}
+      <div class="mel-boost-status">
+        <span class="mel-boost-badge">Boosted</span>
+        {% if mel_boost_expires %}
+          <span class="mel-boost-expiry">
+            Until: {{ mel_boost_expires|date('j M Y') }}<br>
+            {{ mel_boost_days_left }} day{{ mel_boost_days_left == 1 ? '' : 's' }} left
+          </span>
+        {% endif %}
+        <a href="{{ path('myeventlane_boost.bridge_add_to_cart', {'node': node.id}) }}?duration=7"
+           class="button button--ghost">
+          Extend Boost
+        </a>
+      </div>
+    {% endif %}
+
+
+    <h2 id="organizer-heading" class="visually-hidden">Organizer</h2>
+    <div class="event-organizer">
+      {% if node.uid.entity.user_picture.entity.uri.value is defined %}
+        <div class="organizer-avatar">
+          <img
+            src="{{ file_url(node.uid.entity.user_picture.entity.uri.value) }}"
+            alt="{{ node.uid.entity.name.value|default('Organizer') }}" />
+        </div>
+      {% endif %}
+      <div class="organizer-info">
+        <div class="organizer-label">Organiser</div>
+        <div class="organizer-name">
+          <a href="{{ path('entity.user.canonical', {'user': node.uid.target_id}) }}">
+            {{ node.uid.entity.display_name.value|default(node.uid.entity.name.value|default('')) }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</article>

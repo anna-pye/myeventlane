@@ -1,0 +1,43 @@
+commerce_stripe.settings:
+  path: '/admin/commerce/config/stripe'
+  defaults:
+    _form: '\Drupal\commerce_stripe\Form\StripeSettings'
+    _title: 'Stripe settings'
+  requirements:
+    _permission: 'administer commerce stripe'
+
+commerce_stripe.connect.oauth_return:
+  path: '/stripe-connect/oauth/return/{commerce_payment_gateway}'
+  defaults:
+    _controller: '\Drupal\commerce_stripe\Controller\StripeConnectController::oauthReturn'
+    _title: 'Stripe connect OAuth return'
+  requirements:
+    _permission: 'administer commerce_payment_gateway'
+  options:
+    parameters:
+      commerce_payment_gateway:
+        type: 'entity:commerce_payment_gateway'
+
+commerce_stripe.connect.oauth_connect_form:
+  path: '/admin/commerce/config/payment-gateways/manage/{commerce_payment_gateway}/connect'
+  defaults:
+    _form: '\Drupal\commerce_stripe\Form\StripeConnectConfirmationForm'
+    _title: 'Connect with Stripe'
+  requirements:
+    _permission: 'administer commerce stripe'
+  options:
+    parameters:
+      commerce_payment_gateway:
+        type: 'entity:commerce_payment_gateway'
+
+commerce_stripe.connect.oauth_disconnect_form:
+  path: '/admin/commerce/config/payment-gateways/manage/{commerce_payment_gateway}/disconnect'
+  defaults:
+    _form: '\Drupal\commerce_stripe\Form\StripeConnectDisconnectForm'
+    _title: 'Disconnect Stripe'
+  requirements:
+    _permission: 'administer commerce stripe'
+  options:
+    parameters:
+      commerce_payment_gateway:
+        type: 'entity:commerce_payment_gateway'

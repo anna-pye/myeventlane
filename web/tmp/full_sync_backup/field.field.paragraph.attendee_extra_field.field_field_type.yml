@@ -1,0 +1,21 @@
+uuid: 35f049a1-c56d-4668-ab52-9759b20cfea3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_field_type
+    - paragraphs.paragraphs_type.attendee_extra_field
+  module:
+    - options
+id: paragraph.attendee_extra_field.field_field_type
+field_name: field_field_type
+entity_type: paragraph
+bundle: attendee_extra_field
+label: 'Field Type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

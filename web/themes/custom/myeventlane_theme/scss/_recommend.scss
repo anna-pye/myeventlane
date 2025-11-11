@@ -1,0 +1,53 @@
+@use "settings/variables" as vars;
+
+
+.mel-recommend {
+  margin: vars.$spacing-2xl 0;
+  padding: vars.$spacing-xl;
+  background: vars.$color-bg-offwhite;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 6px 24px vars.$color-shadow;
+
+  .mel-recommend__title {
+    font-family: vars.$font-family-main;
+    font-size: vars.$font-size-h2;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+    margin: 0 0 vars.$spacing-lg 0;
+  }
+
+  .view-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: vars.$spacing-xl;
+  }
+
+  // Optional: tweak default teaser card spacing inside this section only.
+  .node--type-event.node--view-mode-teaser {
+    border-radius: vars.$radius-medium;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(41, 50, 65, 0.07);
+    transition: transform .18s ease;
+    &:hover { transform: translateY(-2px); }
+  }
+
+  // CTA button accent inside cards.
+  .button, .btn, a.button {
+    border-radius: vars.$radius-pill;
+    padding: 10px 16px;
+    background: vars.$color-primary;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    font-weight: vars.$font-weight-semibold;
+  }
+}
+
+@media (max-width: vars.$breakpoint-md) {
+  .mel-recommend {
+    padding: vars.$spacing-lg;
+    .mel-recommend__title {
+      font-size: vars.$font-size-h3;
+    }
+  }
+}

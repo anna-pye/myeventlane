@@ -1,0 +1,337 @@
+@use "../settings/variables" as vars;
+
+// ============================================================
+// 🧱 Event Cards — Unified Styles
+// Matches MyEventLane brand mockup while preserving layouts
+// ============================================================
+
+// ------------------------------------------------------------
+// GRID VARIANTS (Dashboard, RSVP, Featured Sections)
+// ------------------------------------------------------------
+.event-card-buffered {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: vars.$spacing-2xl;
+  padding-bottom: vars.$spacing-3xl;
+  background-color: vars.$color-bg-offwhite;
+
+  .card-1,
+  .card-4 {
+    grid-column: span 1;
+  }
+
+  .card-2, .card-3, .card-4, .card-5, .card-6 {
+    grid-column: span 0.5;
+  }
+
+  @media (max-width: vars.$breakpoint-lg) {
+    grid-template-columns: 1fr 1fr;
+    gap: vars.$spacing-xl;
+    padding-bottom: vars.$spacing-2xl;
+
+    .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: vars.$spacing-md;
+    padding-bottom: vars.$spacing-lg;
+
+    .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 {
+      grid-column: span 1;
+    }
+  }
+
+  .event-card-wrapper {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 12px vars.$color-shadow;
+    font-family: vars.$font-family-main;
+    transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    min-height: 260px;
+
+    &:hover {
+      transform: translateY(-5px) scale(1.012);
+      box-shadow: 0 6px 22px rgba(41, 50, 65, 0.11);
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// 🌟 EVENT CARD CORE (used everywhere)
+// ------------------------------------------------------------
+.event-card {
+  background: #ffffff;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 2px 8px vars.$color-shadow;
+  font-family: vars.$font-family-main;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+  overflow: hidden;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px vars.$color-shadow;
+  }
+
+  // ---------------- IMAGE + BADGES ----------------
+  .event-card__media {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: vars.$color-bg-muted;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: vars.$radius-medium vars.$radius-medium 0 0;
+    }
+
+    .event-card__date-badge {
+      position: absolute;
+      top: vars.$spacing-sm;
+      left: vars.$spacing-sm;
+      background-color: vars.$color-highlight;
+      color: white;
+      border-radius: vars.$radius-small;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: vars.$font-weight-bold;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.13);
+      padding: 4px 8px;
+      min-width: 44px;
+      height: 48px;
+      line-height: 1.1;
+      z-index: 2;
+
+      .month {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .day {
+        font-size: 17px;
+        margin-top: -2px;
+      }
+    }
+
+    .event-card__boost-badge {
+      position: absolute;
+      top: vars.$spacing-sm;
+      right: vars.$spacing-sm;
+      background: vars.$color-accent;
+      color: #fff;
+      font-size: vars.$font-size-small;
+      font-weight: vars.$font-weight-semibold;
+      padding: 5px 12px;
+      border-radius: vars.$radius-pill;
+      z-index: 3;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+    }
+  }
+
+  // ---------------- BODY ----------------
+  .event-card__body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .event-card__title {
+    font-size: 18px;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+    margin-bottom: 6px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: vars.$color-primary;
+      }
+    }
+  }
+
+  .event-card__meta {
+    font-size: 13.5px;
+    color: vars.$color-muted-text;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .event-card__tags {
+    margin-bottom: vars.$spacing-md;
+
+    .tag {
+      background: vars.$color-accent;
+      color: white;
+      border-radius: vars.$radius-pill;
+      padding: 3px 10px;
+      font-size: vars.$font-size-small;
+      font-weight: vars.$font-weight-semibold;
+      text-decoration: none;
+      margin-right: 4px;
+      transition: 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .event-card__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+
+    .category-chip {
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+      padding: 6px 12px;
+      border-radius: vars.$radius-pill;
+      line-height: 1;
+      text-decoration: none;
+      transition: 0.2s ease;
+      display: inline-block;
+
+      &.filter-yellow { background-color: #f5c04c; }
+      &.filter-purple { background-color: #9a6ef2; }
+      &.filter-coral  { background-color: #f26d5b; }
+      &.filter-blue   { background-color: #8e9cff; }
+      &.filter-gray   { background-color: #9aa0b2 !important; }
+      &.filter-default { background-color: #9aa0b2; }
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.92);
+      }
+    }
+}
+  // ---------------- CTA ----------------
+  .event-card__cta {
+    margin-top: auto;
+
+    .btn {
+      background-color: vars.$color-highlight;
+      color: vars.$text-color-main;
+      font-weight: vars.$font-weight-semibold;
+      font-size: vars.$font-size-small;
+      padding: 8px 20px;
+      border-radius: vars.$radius-pill;
+      box-shadow: 0 1px 4px rgba(41, 50, 65, 0.10);
+      text-decoration: none;
+      border: none;
+      display: inline-block;
+      transition: background 0.16s;
+      margin-right: 8px;
+
+      &:hover,
+      &:focus {
+        background-color: color.adjust(vars.$color-highlight, $lightness: 25%);
+      }
+
+      &.btn-outline {
+        background: none;
+        border: 1px solid vars.$color-muted-text;
+        color: vars.$color-muted-text;
+
+        &:hover {
+          background: vars.$color-muted-text;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// RSVP + PROFILE VARIANTS
+// ------------------------------------------------------------
+.mel-rsvps-page {
+  margin-top: vars.$spacing-xl;
+}
+
+.mel-section-title {
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: vars.$font-weight-bold;
+  color: vars.$text-color-main;
+  margin: 0 0 vars.$spacing-lg 0;
+}
+
+.mel-rsvp-grid.event-card-buffered {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center;
+  gap: vars.$spacing-2xl;
+  padding-bottom: vars.$spacing-3xl;
+  background-color: vars.$color-bg-offwhite;
+
+  .card-1, .card-2, .card-3, .card-4, .card-5, .card-6 { grid-column: auto !important; }
+  .event-card-wrapper { width: 100%; }
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: vars.$spacing-lg;
+    padding-bottom: vars.$spacing-2xl;
+  }
+}
+
+// ------------------------------------------------------------
+// RECOMMENDED EVENTS + UTILITIES
+// ------------------------------------------------------------
+.mel-reco {
+  margin-top: vars.$spacing-xl;
+}
+
+.mel-reco-title {
+  margin-top: vars.$spacing-2xl;
+}
+
+.mel-reco-grid {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 520px));
+  justify-content: center;
+  gap: vars.$spacing-2xl;
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: vars.$spacing-lg;
+  }
+}
+
+// ------------------------------------------------------------
+// RESPONSIVE IMAGES + FALLBACKS
+// ------------------------------------------------------------
+.event-card__image,
+.event-card__image picture,
+.event-card__image img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: vars.$radius-medium vars.$radius-medium 0 0;
+  background: #e8e8e8;
+}

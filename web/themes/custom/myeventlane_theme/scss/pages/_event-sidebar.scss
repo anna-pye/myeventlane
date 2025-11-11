@@ -1,0 +1,109 @@
+@use "../settings/variables" as vars;
+
+
+// Main content + sidebar wrapper used on full event page
+.event-main-layout {
+  display: grid;
+  gap: vars.$spacing-xl;
+  grid-template-columns: 1fr; // mobile
+
+  @media (min-width: vars.$breakpoint-lg) {
+    grid-template-columns: 2fr 1fr; // content | sidebar
+    align-items: start;
+  }
+}
+
+// Main content column
+.event-main-content {
+  min-width: 0; // prevent overflow
+  display: grid;
+  gap: vars.$spacing-xl;
+}
+
+// Sidebar column
+.event-sidebar {
+  display: grid;
+  gap: vars.$spacing-lg;
+
+  // Panel Card (RSVP / Buy, info blocks)
+  &__panel {
+    background: #fff;
+    border: vars.$border-light;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 12px 0 vars.$color-shadow;
+    padding: vars.$spacing-xl;
+    display: grid;
+    gap: vars.$spacing-md;
+
+    h3 {
+      margin: 0 0 vars.$spacing-sm;
+      font-size: vars.$font-size-h3;
+      font-weight: vars.$font-weight-semibold;
+      color: vars.$text-color-main;
+    }
+
+    .subtext {
+      font-size: vars.$font-size-small;
+      color: vars.$color-muted-text;
+    }
+
+    .rsvp-field,
+    .ticket-field,
+    .donation-field {
+      display: grid;
+      gap: vars.$spacing-sm;
+      margin-bottom: vars.$spacing-md;
+
+      label {
+        font-size: vars.$font-size-small;
+        font-weight: vars.$font-weight-semibold;
+        color: vars.$text-color-main;
+      }
+
+      input,
+      select {
+        width: 100%;
+        font-size: vars.$font-size-body;
+        border-radius: vars.$radius-small;
+        border: 1px solid vars.$color-bg-muted;
+        padding: vars.$spacing-sm vars.$spacing-md;
+        background: #fff;
+        color: vars.$text-color-main;
+
+        &:focus-visible {
+          outline: 2px solid vars.$color-outline-focus;
+          outline-offset: 2px;
+        }
+      }
+
+      .help {
+        font-size: vars.$font-size-small;
+        color: vars.$color-muted-text;
+      }
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: vars.$spacing-sm;
+      align-items: center;
+    }
+  }
+
+  // Sticky on desktop for better UX
+  &--sticky {
+    @media (min-width: vars.$breakpoint-lg) {
+      position: sticky;
+      top: vars.$spacing-2xl;
+    }
+  }
+}
+
+// Optional: hide a desktop-only block on very small devices
+.event-sidebar--desktop {
+  display: none;
+
+  @media (min-width: 376px) {
+    display: block;
+  }
+}

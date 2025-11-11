@@ -1,0 +1,14 @@
+name: 'Social Auth Apple'
+type: module
+description: 'Social Auth integration for Apple.'
+core_version_requirement: ^9.5 || ^10 || ^11
+package: Social
+configure: social_auth_apple.settings_form
+php: 8.0
+dependencies:
+  - social_auth:social_auth
+
+# Information added by Drupal.org packaging script on 2025-05-09
+version: '2.0.1'
+project: 'social_auth_apple'
+datestamp: 1746792056

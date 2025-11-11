@@ -1,0 +1,15 @@
+{% if social_auth_links is not empty %}
+  <div class="mel-social">
+    {% for item in social_auth_links %}
+      <a class="mel-social__btn mel-social__btn--{{ item.id }}" href="{{ item.url }}">
+        {# Simple icon slots; replace with inline SVGs if desired #}
+        <span class="mel-social__icon" aria-hidden="true"></span>
+        <span class="mel-social__label">{{ item.label }}</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="mel-divider">
+    <span>or</span>
+  </div>
+{% endif %}

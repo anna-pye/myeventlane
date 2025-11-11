@@ -1,0 +1,126 @@
+/* web/themes/custom/myeventlane_theme/scss/event-display.scss */
+/* Update this import path to your tokens file location */
+/* e.g. ../_variables or ./_variables */
+/* ------------------------------
+   Layout wrappers
+------------------------------ */
+.mel-page {
+  background: #fef5ec; /* #fef5ec */
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.mel-event-card {
+  width: 100%;
+  max-width: 880px; /* centered card width */
+  background: #fff;
+  border-radius: 16px; /* 16px */
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+}
+
+/* Hero image spans edge-to-edge inside the card with rounded top corners */
+.mel-hero.mel-hero--bleed {
+  margin: calc(-1 * 24px) calc(-1 * 24px) 12px;
+  overflow: hidden;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.mel-hero img,
+.mel-hero picture,
+.mel-hero video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ------------------------------
+   Typography & helpers
+------------------------------ */
+.mel-title {
+  font-size: 36px;
+  color: #293241;
+}
+
+.mel-section-title {
+  font-size: 28px;
+}
+
+.mel-stack > * + * {
+  margin-top: 12px;
+}
+
+.muted {
+  color: #888;
+}
+
+.event-title {
+  margin: 16px 0 8px;
+}
+
+.event-subtitle {
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.event-meta-item {
+  margin: 4px 0;
+}
+
+/* ------------------------------
+   Buttons
+------------------------------ */
+.button--primary {
+  background: #f26d5b; /* #f26d5b */
+  color: #fff;
+  border-radius: 999px;
+  padding: 12px 20px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.button--primary:hover, .button--primary:focus {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+  outline: 3px solid #f26d5b;
+  outline-offset: 2px;
+}
+
+/* Sticky CTA on Book page (mobile-friendly) */
+.mel-sticky-cta {
+  position: sticky;
+  bottom: 0;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ------------------------------
+   Book page specifics
+------------------------------ */
+.mel-book {
+  /* Keep page bg on .mel-page; this is just inner text styles */
+  color: #293241;
+  font-family: "Nunito", sans-serif;
+}
+
+.ticket-product-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.ticket-product-card__title {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.ticket-product-card .ticket-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+/*# sourceMappingURL=event-display.css.map */

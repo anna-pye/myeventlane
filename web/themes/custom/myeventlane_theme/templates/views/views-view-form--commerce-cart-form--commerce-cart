@@ -1,0 +1,16 @@
+{# Cart page: this is the one that actually prints the form #}
+<section class="mel-cart layout-wrapper">
+  <h1 class="mel-cart-title">Your Cart</h1>
+
+  {# The entire Views form (table, totals, actions) #}
+  <div class="mel-cart-form">
+    {{ form }}
+  </div>
+
+  {# Optional grand total wrapper (Commerce already prints totals inside form).
+     Keep this empty span if your JS wants to mirror a grand total. #}
+  <div class="mel-cart-grand" aria-live="polite">
+    <span class="mel-cart-grand__label">Grand total:</span>
+    <span class="mel-cart-grand__value"></span>
+  </div>
+</section>

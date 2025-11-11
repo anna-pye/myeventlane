@@ -1,0 +1,58 @@
+{# themes/custom/myeventlane_theme/templates/partials/header.html.twig #}
+{{ attach_library('myeventlane_theme/global') }}
+
+    <header class="mel-header" role="banner">
+    <div class="page-inner">
+
+    <nav class="navbar navbar-expand-lg bg-transparent py-3">
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+             {# -------- Logo -------- #}
+        <a class="navbar-brand d-flex align-items-center" href="{{ path('<front>') }}" aria-label="MyEventLane homepage">
+          <span class="mel-site-name">MyEventLane</span>
+          <img src="/themes/custom/myeventlane_theme/assets/branding/MyEventLane_Logo_Transparent.png"
+               alt="MyEventLane Logo"
+               height="40"
+               class="mel-logo me-2">
+          
+        </a>
+
+        {# -------- Navbar toggle (mobile) -------- #}
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#melNavbar"
+                aria-controls="melNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        {# -------- Collapsible Menu -------- #}
+        <div class="collapse navbar-collapse justify-content-end" id="melNavbar">
+          {% if page.primary_menu %}
+            <ul class="navbar-nav me-3">
+              {% for item in page.primary_menu %}
+                <li class="nav-item">
+                  {{ item }}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          {# -------- Account Buttons -------- #}
+          {% if logged_in %}
+            <a href="/user" class="btn btn-outline-primary me-2">My Account</a>
+          {% else %}
+            <a href="/user/login" class="btn btn-primary me-2">Login</a>
+          {% endif %}
+
+          {# -------- Create Event -------- #}
+          <a href="/node/add/event" class="btn btn-coral me-2">Create Event</a>
+
+          {# -------- Cart -------- #}
+          <a href="/cart" class="btn btn-light">🛒 Cart</a>
+        </div>
+      </div>
+     </nav>
+
+    </div>
+ </header>

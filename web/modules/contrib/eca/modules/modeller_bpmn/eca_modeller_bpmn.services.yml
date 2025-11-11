@@ -1,0 +1,19 @@
+# These service are declared as placeholders so that sites can upgrade from
+# ECA 2 to ECA 3 with Modeler API, where the update hook will replace
+# eca_modeller_bpmn with modeler_api.
+services:
+  modeler_api.service:
+    class: Drupal\eca_modeller_bpmn\PlaceholderApi
+    arguments:
+      - '@plugin.manager.modeler_api.model_owner'
+      - '@plugin.manager.modeler_api.modeler'
+      - '@config.factory'
+      - '@config.storage.export'
+      - '@file_system'
+      - '@entity_type.manager'
+  plugin.manager.modeler_api.model_owner:
+    class: Drupal\eca_modeller_bpmn\PlaceholderOwner
+    parent: default_plugin_manager
+  plugin.manager.modeler_api.modeler:
+    class: Drupal\eca_modeller_bpmn\PlaceholderModeler
+    parent: default_plugin_manager

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Module file for the Trash Test module.
+ */
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function trash_test_views_data_alter(array &$data) {
+  // Add a reverse relationship: show all entities that reference this entity.
+  $data['trash_test']['referenced_by'] = [
+    'title' => t('Referenced by TrashTestEntity'),
+    'help' => t('Entities that reference this entity via the reference field.'),
+    'relationship' => [
+      'id' => 'standard',
+      'label' => t('Referenced by TrashTestEntity'),
+      'base' => 'trash_test',
+      'base field' => 'reference',
+      'relationship field' => 'id',
+      'entity_type' => 'trash_test_entity',
+    ],
+  ];
+}

@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Module file for the modeler_api module.
+ *
+ * @deprecated in modeler_api:1.0.0 and is removed from modeler_api:2.0.0. It
+ * will then only support Drupal 11.2 and later, so that no BC layer like this
+ * will be required any more.
+ *
+ * @see https://www.drupal.org/project/modeler_api/issues/3532644
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Extension\Extension;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\modeler_api\Hook\EntityHooks;
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * @phpstan-ignore-next-line
+ */
+#[LegacyHook]
+function modeler_api_entity_type_build(array &$entity_types): void {
+  \Drupal::service(EntityHooks::class)->entityTypeBuild($entity_types);
+}
+
+/**
+ * Implements hook_entity_operation().
+ *
+ * @phpstan-ignore-next-line
+ */
+#[LegacyHook]
+function modeler_api_entity_operation(EntityInterface $entity): array {
+  return \Drupal::service(EntityHooks::class)->entityOperation($entity);
+}
+
+/**
+ * Implements hook_config_schema_info_alter().
+ *
+ * @phpstan-ignore-next-line
+ */
+#[LegacyHook]
+function modeler_api_config_schema_info_alter(array &$definitions): void {
+  \Drupal::service(EntityHooks::class)->configSchemaInfoAlter($definitions);
+}
+
+/**
+ * Implements hook_system_info_alter().
+ *
+ * @phpstan-ignore-next-line
+ */
+#[LegacyHook]
+function modeler_api_system_info_alter(array &$info, Extension $file, string $type): void {
+  \Drupal::service(EntityHooks::class)->systemInfoAlter($info, $file, $type);
+}

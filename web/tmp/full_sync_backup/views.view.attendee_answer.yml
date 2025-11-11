@@ -1,0 +1,249 @@
+uuid: d228d9c1-397d-4f9f-862c-53757d02d999
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_attendee_extra_field
+    - field.storage.paragraph.field_email
+    - field.storage.paragraph.field_first_name
+    - field.storage.paragraph.field_last_name
+  module:
+    - commerce_order
+    - commerce_product
+    - node
+    - paragraphs
+    - user
+id: attendee_answer
+label: 'Attendee Answer'
+module: views
+description: 'Displays attendee response data grouped by Event → Ticket Type.'
+tag: ''
+base_table: paragraphs_item_field_data
+base_field: id
+display:
+  default:
+    id: default
+    display_title: Master
+    display_plugin: default
+    position: 0
+    display_options:
+      fields:
+        field_first_name_1:
+          id: field_first_name_1
+          table: paragraph__field_first_name
+          field: field_first_name
+          plugin_id: field
+          label: 'Paragraph: First Name'
+        field_last_name_1:
+          id: field_last_name_1
+          table: paragraph__field_last_name
+          field: field_last_name
+          plugin_id: field
+          label: 'Paragraph: Last Name'
+        field_email_1:
+          id: field_email_1
+          table: paragraph__field_email
+          field: field_email
+          plugin_id: field
+          label: 'Paragraph: Email Address'
+        field_attendee_extra_field_1:
+          id: field_attendee_extra_field_1
+          table: paragraph__field_attendee_extra_field
+          field: field_attendee_extra_field
+          relationship: field_attendee_questions
+          plugin_id: field
+          label: 'Extra field (Answer)'
+        title_1:
+          id: title_1
+          table: node_field_data
+          field: title
+          relationship: field_event
+          plugin_id: field
+          label: 'Event Title'
+        title:
+          id: title
+          table: commerce_product_variation_field_data
+          field: title
+          relationship: commerce_product_variation
+          plugin_id: field
+          label: 'Ticket Type Title'
+      pager:
+        type: some
+        options:
+          items_per_page: 50
+      exposed_form:
+        type: basic
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+      sorts:
+        created:
+          id: created
+          table: paragraphs_item_field_data
+          field: created
+          plugin_id: date
+          order: DESC
+      filters:
+        status:
+          id: status
+          table: paragraphs_item_field_data
+          field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+      style:
+        type: default
+        options: {  }
+      row:
+        type: fields
+      query:
+        type: views_query
+      relationships:
+        reverse__commerce_order_item__field_ticket_holder:
+          id: reverse__commerce_order_item__field_ticket_holder
+          table: paragraphs_item_field_data
+          field: reverse__commerce_order_item__field_ticket_holder
+          plugin_id: entity_reverse
+          required: true
+          label: 'Order item from Ticket Holder'
+        order_id:
+          id: order_id
+          table: commerce_order_item
+          field: order_id
+          relationship: reverse__commerce_order_item__field_ticket_holder
+          plugin_id: standard
+          label: Order
+        commerce_product_variation:
+          id: commerce_product_variation
+          table: commerce_order_item
+          field: commerce_product_variation
+          relationship: reverse__commerce_order_item__field_ticket_holder
+          plugin_id: standard
+          label: 'Product variation'
+        field_event:
+          id: field_event
+          table: commerce_product_variation__field_event
+          field: field_event
+          relationship: commerce_product_variation
+          plugin_id: standard
+          required: true
+          label: 'Event (node)'
+        field_attendee_questions:
+          id: field_attendee_questions
+          table: paragraph__field_attendee_questions
+          field: field_attendee_questions
+          relationship: none
+          group_type: group
+          admin_label: 'field_attendee_questions: Paragraph'
+          plugin_id: standard
+          required: false
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - user.permissions
+      tags:
+        - 'config:field.storage.paragraph.field_attendee_extra_field'
+        - 'config:field.storage.paragraph.field_email'
+        - 'config:field.storage.paragraph.field_first_name'
+        - 'config:field.storage.paragraph.field_last_name'
+  page_1:
+    id: page_1
+    display_title: 'Attendee Dashboard Page'
+    display_plugin: page
+    position: 1
+    display_options:
+      fields:
+        field_first_name_1:
+          id: field_first_name_1
+          table: paragraph__field_first_name
+          field: field_first_name
+          plugin_id: field
+        field_last_name_1:
+          id: field_last_name_1
+          table: paragraph__field_last_name
+          field: field_last_name
+          plugin_id: field
+        field_email_1:
+          id: field_email_1
+          table: paragraph__field_email
+          field: field_email
+          plugin_id: field
+        field_attendee_extra_field_1:
+          id: field_attendee_extra_field_1
+          table: paragraph__field_attendee_extra_field
+          field: field_attendee_extra_field
+          relationship: field_attendee_questions
+          plugin_id: field
+        title_1:
+          id: title_1
+          table: node_field_data
+          field: title
+          relationship: field_event
+          plugin_id: field
+        title:
+          id: title
+          table: commerce_product_variation_field_data
+          field: title
+          relationship: commerce_product_variation
+          plugin_id: field
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      style:
+        type: default
+        options:
+          grouping:
+            -
+              field: title_1
+              rendered: true
+            -
+              field: title
+              rendered: true
+      row:
+        type: fields
+      relationships:
+        reverse__commerce_order_item__field_ticket_holder:
+          id: reverse__commerce_order_item__field_ticket_holder
+          table: paragraphs_item_field_data
+          field: reverse__commerce_order_item__field_ticket_holder
+          plugin_id: entity_reverse
+          required: true
+        order_id:
+          id: order_id
+          table: commerce_order_item
+          field: order_id
+          relationship: reverse__commerce_order_item__field_ticket_holder
+          plugin_id: standard
+        commerce_product_variation:
+          id: commerce_product_variation
+          table: commerce_order_item
+          field: commerce_product_variation
+          relationship: reverse__commerce_order_item__field_ticket_holder
+          plugin_id: standard
+        field_event:
+          id: field_event
+          table: commerce_product_variation__field_event
+          field: field_event
+          relationship: commerce_product_variation
+          plugin_id: standard
+          required: true
+      display_extenders: {  }
+      path: dashboard/attendees
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - user.permissions
+      tags:
+        - 'config:field.storage.paragraph.field_attendee_extra_field'
+        - 'config:field.storage.paragraph.field_email'
+        - 'config:field.storage.paragraph.field_first_name'
+        - 'config:field.storage.paragraph.field_last_name'

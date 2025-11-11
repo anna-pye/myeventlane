@@ -1,0 +1,30 @@
+{#
+  MEL: status messages, clean & themeable.
+  This template renders what the “System messages” block shows.
+  We keep the exact markup Drupal expects, just nicer classes.
+#}
+
+{% if message_list is not empty %}
+  <div data-drupal-messages>
+    {% for type, messages in message_list %}
+      {%
+        set classes = [
+          'messages',
+          'messages--' ~ type
+        ]
+      %}
+      <div role="contentinfo" aria-label="{{ status_headings[type] }}" class="{{ classes|join(' ') }}">
+        <h2 class="visually-hidden">{{ status_headings[type] }}</h2>
+        {% if messages|length > 1 %}
+          <ul class="messages__list">
+            {% for message in messages %}
+              <li class="messages__item">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          {{ messages|first }}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

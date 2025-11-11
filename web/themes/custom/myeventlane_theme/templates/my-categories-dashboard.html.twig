@@ -1,0 +1,118 @@
+{# templates/my‑categories‑dashboard.html.twig #}
+
+<div class="my-categories-page">
+  <div class="page-inner">
+
+    {# ─── HERO ─────────────────────────────────────────────────────── #}
+    <section class="hero hero--dashboard">
+      <div class="hero__text">
+        <h1 class="hero__heading">Your Lane to <br><span>Great Events</span></h1>
+        <p class="hero__tagline">Discover, connect, and support local creators</p>
+
+        <div class="filter-pills">
+          <a href="/events" class="filter-pill filter-yellow">All Events</a>
+          <a href="/arts" class="filter-pill filter-yellow">Arts</a>
+          <a href="/lgbtqi" class="filter-pill filter-purple">LGBTQI+</a>
+          <a href="/movie" class="filter-pill filter-grey">Movie</a>
+          <a href="/music" class="filter-pill filter-indigo">Music</a>
+          <a href="/work_shop" class="filter-pill filter-coral">Workshop</a>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" placeholder="Search events…" />
+          <button class="search-button">Search</button>
+        </div>
+      </div>
+    </section>
+
+    {# ─── SUB‑HERO ─────────────────────────────────────────────────── #}
+    <section class="hero hero--small">
+      <div class="hero__text">
+        <h1 class="page-heading">🍒 Events in Your Followed Categories</h1>
+        <p class="page-subheading">Stay in the loop with events that match your passions.</p>
+      </div>
+    </section>
+
+    {# ─── CATEGORY LISTINGS ───────────────────────────────────────── #}
+    <div class="category-dashboard">
+      {% if categories is not empty %}
+        {% for category in categories %}
+          <div class="category-group">
+            {% set slug = category.label|lower|replace({' ': '-', '+': '', '/': '', '&': 'and'}) %}
+            {% set color_class = 'filter-yellow' %}
+            {% if 'arts' in slug %}
+              {% set color_class = 'filter-yellow' %}
+            {% elseif 'lgbtqi' in slug %}
+              {% set color_class = 'filter-purple' %}
+            {% elseif 'movie' in slug %}
+              {% set color_class = 'filter-grey' %}
+            {% elseif 'music' in slug %}
+              {% set color_class = 'filter-indigo' %}
+            {% elseif 'workshop' in slug %}
+              {% set color_class = 'filter-coral' %}
+            {% endif %}
+
+            <h3 class="category-label">
+              <span class="filter-pill {{ color_class }}">{{ category.label }}</span>
+            </h3>
+
+            <div class="event-card-group">
+              {% for row in category.rows %}
+                <div class="mel-event-card">
+                  {% if row.image %}
+                    <div class="mel-event-card__image">
+                      <img src="{{ row.image }}" alt="{{ row.title|striptags }}" />
+                    </div>
+                  {% endif %}
+                  <div class="mel-event-card__content">
+                    <h4 class="mel-event-card__title">{{ row.title|raw }}</h4>
+                    <div class="mel-event-card__meta">
+                      {% if row.date %}
+                        <div class="mel-event-card__date">📅 {{ row.date }}</div>
+                      {% endif %}
+                      {% if row.venue %}
+                        <div class="mel-event-card__venue">📍 {{ row.venue }}</div>
+                      {% endif %}
+                      {% if row.location %}
+                        <div class="mel-event-card__location">{{ row.location }}</div>
+                      {% endif %}
+                    </div>
+
+                    {# ─── CTA per event row ───────────────────────────────── #}
+                    {% if row.url and row.ticket_type is defined %}
+                      <div class="event-card__cta">
+                        {% set ticket_type = row.ticket_type|lower %}
+                        {% if ticket_type == 'rsvp' %}
+                          <a href="{{ row.url }}" class="btn btn-yellow">RSVP Now</a>
+                        {% elseif ticket_type == 'free' %}
+                          <a href="{{ row.url }}" class="btn btn-outline">Free</a>
+                        {% else %}
+                          <a href="{{ row.url }}" class="btn btn-yellow">Buy Tickets</a>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+
+        {# ─── CTA BLOCK AFTER ALL CATEGORIES ───────────────────── #}
+        {% if cta %}
+          <div class="my-categories-cta-wrapper">
+            {{ cta|raw }}
+          </div>
+        {% endif %}
+
+      {% else %}
+        <p>No followed categories found.</p>
+      {% endif %}
+    </div>
+
+    {# ─── FOOTER ─────────────────────────────────────────────────── #}
+    {% include '@myeventlane_theme/partials/footer.html.twig' %}
+
+  </div>
+</div>

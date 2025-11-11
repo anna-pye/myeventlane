@@ -1,0 +1,59 @@
+
+@use "../settings/variables" as vars;
+
+// Reusable actions row for cards, panels, etc.
+.card-actions {
+  margin-top: vars.$spacing-md;
+  display: flex;
+  flex-wrap: wrap;
+  gap: vars.$spacing-sm;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-sm;
+    padding: vars.$spacing-sm vars.$spacing-lg;
+    border-radius: vars.$radius-pill;
+    border: none;
+    cursor: pointer;
+    font-weight: vars.$font-weight-semibold;
+    text-decoration: none;
+    line-height: 1.1;
+
+    &:focus-visible {
+      outline: 2px solid vars.$color-outline-focus;
+      outline-offset: 2px;
+    }
+  }
+
+  .btn-secondary {
+    font-size: vars.$font-size-small;
+    padding: vars.$spacing-sm vars.$spacing-md;
+    border: 1px solid vars.$color-accent;
+    color: vars.$color-accent;
+    background: #fff;
+    border-radius: vars.$radius-pill;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      background: vars.$color-accent;
+      color: #fff;
+    }
+  }
+
+  .btn-quiet {
+    font-size: vars.$font-size-small;
+    padding: vars.$spacing-sm vars.$spacing-md;
+    border-radius: vars.$radius-pill;
+    background: transparent;
+    border: 1px solid vars.$color-bg-muted;
+    color: vars.$text-color-main;
+
+    &:hover,
+    &:focus-visible {
+      background: vars.$color-bg-offwhite;
+    }
+  }
+}

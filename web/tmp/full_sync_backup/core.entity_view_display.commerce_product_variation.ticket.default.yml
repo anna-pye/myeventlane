@@ -1,0 +1,42 @@
+uuid: fae95aa2-55e3-4028-bf58-f594d93bc73b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.ticket
+    - field.field.commerce_product_variation.ticket.attribute_ticket_type
+    - field.field.commerce_product_variation.ticket.commerce_remote_id
+    - field.field.commerce_product_variation.ticket.field_event
+    - field.field.commerce_product_variation.ticket.field_show_remaining
+  module:
+    - commerce_price
+id: commerce_product_variation.ticket.default
+targetEntityType: commerce_product_variation
+bundle: ticket
+mode: default
+content:
+  attribute_ticket_type:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  price:
+    type: commerce_price_default
+    label: inline
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  commerce_remote_id: true
+  field_event: true
+  field_show_remaining: true
+  list_price: true
+  product_id: true
+  sku: true
+  title: true

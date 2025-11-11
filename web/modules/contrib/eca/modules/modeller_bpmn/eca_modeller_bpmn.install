@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install file with update hooks for the ECA UI module.
+ */
+
+/**
+ * Replace eca_modeller_bpmn with modeler_api.
+ */
+function eca_modeller_bpmn_update_8001(): void {
+  // Install modeler_api.
+  \Drupal::service('module_installer')->install(['modeler_api']);
+  // Uninstall the deprecated eca_modeller_bpmn module.
+  \Drupal::service('module_installer')->uninstall(['eca_modeller_bpmn']);
+}

@@ -1,0 +1,21 @@
+uuid: 20a69a31-7922-4fe3-af7a-39053ed41bc8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_required
+    - paragraphs.paragraphs_type.attendee_extra_field
+id: paragraph.attendee_extra_field.field_required
+field_name: field_required
+entity_type: paragraph
+bundle: attendee_extra_field
+label: Required
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

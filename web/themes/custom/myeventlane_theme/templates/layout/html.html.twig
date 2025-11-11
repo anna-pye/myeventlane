@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  {{ attach_library('myeventlane_theme/global') }}
+  <head>
+    {# -------------------- SOCIAL META (EVENT NODES) -------------------- #}
+    {% if node is defined and node.bundle == 'event' %}
+      <meta property="og:type" content="article" />
+      <meta property="og:title" content="{{ node.label|striptags }}" />
+      <meta property="og:description" content="{{ node.body.summary ?? node.body.value|striptags|truncate(160, true, '...') }}" />
+      <meta property="og:url" content="{{ url('<current>', {}, {'absolute': true}) }}" />
+      {% if node.field_image.0.entity.uri.value is defined %}
+        <meta property="og:image" content="{{ file_url(node.field_image.0.entity.uri.value) }}" />
+      {% endif %}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="{{ node.label|striptags }}" />
+      <meta name="twitter:description" content="{{ node.body.summary ?? node.body.value|striptags|truncate(160, true, '...') }}" />
+      {% if node.field_image.0.entity.uri.value is defined %}
+        <meta name="twitter:image" content="{{ file_url(node.field_image.0.entity.uri.value) }}" />
+      {% endif %}
+    {% endif %}
+
+    <meta name="facebook-domain-verification" content="8q36rgq7ub2c1stmxul55ahqqm1xk1" />
+
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+
+    {# ------------------------------------------------------------
+       #  Load Vite assets automatically in dev, dist in production
+       # ------------------------------------------------------------ #}
+
+      {% set vite_dev_url = 'https://myeventlane.ddev.site:5173/themes/custom/myeventlane_theme' %}
+
+      {# In html.html.twig #}
+      {% if 'ddev' in app.request.host %}
+        <script type="module" src="https://myeventlane.ddev.site:5173/themes/custom/myeventlane_theme/js/main.js"></script>
+      {% else %}
+        {{ attach_library('myeventlane_theme/global') }}
+      {% endif %}
+
+  <body{{ attributes }}>
+    <a href="#main-content" class="visually-hidden focusable skip-link">
+      {{ 'Skip to main content'|t }}
+    </a>
+
+
+
+    {{ page_top }}
+    {{ page }}
+    {{ page_bottom }}
+
+    {{ attach_library('core/drupal.ajax') }}
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+
+    {# Bootstrap fallback (optional) #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+
+  </body>
+
+</html>

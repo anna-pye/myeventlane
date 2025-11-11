@@ -1,0 +1,100 @@
+@use "../settings/variables" as vars;
+
+/* ------------------------------
+   Layout wrappers
+------------------------------ */
+.mel-page {
+  background: v.$color-bg-offwhite;   /* #fef5ec */
+  padding: v.$spacing-xl;
+  display: flex;
+  justify-content: center;
+}
+
+.mel-event-card {
+  width: 100%;
+  max-width: 880px;                   /* centered card width */
+  background: #fff;
+  border-radius: v.$radius-medium;    /* 16px */
+  box-shadow: 0 6px 24px v.$color-shadow;
+  padding: v.$spacing-xl;
+}
+
+/* Hero image spans edge-to-edge inside the card with rounded top corners */
+.mel-hero.mel-hero--bleed {
+  margin: calc(-1 * #{v.$spacing-xl}) calc(-1 * #{v.$spacing-xl}) v.$spacing-md;
+  overflow: hidden;
+  border-top-left-radius: v.$radius-medium;
+  border-top-right-radius: v.$radius-medium;
+}
+.mel-hero img,
+.mel-hero picture,
+.mel-hero video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ------------------------------
+   Typography & helpers
+------------------------------ */
+.mel-title { font-size: v.$font-size-h1; color: v.$text-color-main; }
+.mel-section-title { font-size: v.$font-size-h2; }
+.mel-stack > * + * { margin-top: v.$spacing-md; }
+
+.muted { color: v.$color-muted-text; }
+.event-title { margin: v.$spacing-lg 0 v.$spacing-sm; }
+.event-subtitle { color: v.$color-muted-text; margin-bottom: v.$spacing-md; }
+.event-meta-item { margin: v.$spacing-xs 0; }
+
+/* ------------------------------
+   Buttons
+------------------------------ */
+.button--primary {
+  background: v.$color-primary;       /* #f26d5b */
+  color: #fff;
+  border-radius: v.$radius-pill;
+  padding: 12px 20px;
+  transition: transform .12s ease, box-shadow .12s ease;
+  &:hover,
+  &:focus {
+    box-shadow: 0 8px 28px v.$color-shadow;
+    transform: translateY(-1px);
+    outline: 3px solid v.$color-outline-focus;
+    outline-offset: 2px;
+  }
+}
+
+/* Sticky CTA on Book page (mobile-friendly) */
+.mel-sticky-cta {
+  position: sticky;
+  bottom: 0;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  margin-top: v.$spacing-2xl;
+}
+
+/* ------------------------------
+   Book page specifics
+------------------------------ */
+.mel-book {
+  /* Keep page bg on .mel-page; this is just inner text styles */
+  color: v.$text-color-main;
+  font-family: v.$font-family-main;
+}
+
+.ticket-product-card {
+  border-radius: v.$radius-medium;
+  box-shadow: 0 6px 24px v.$color-shadow;
+  background: #fff;
+  padding: v.$spacing-xl;
+  margin-bottom: v.$spacing-xl;
+
+  &__title { font-size: v.$font-size-h3; margin-bottom: v.$spacing-md; }
+  .ticket-line {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-lg;
+    padding: v.$spacing-sm 0;
+  }
+}

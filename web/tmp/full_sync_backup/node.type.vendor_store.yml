@@ -1,0 +1,11 @@
+uuid: 93fc6833-32ba-40bd-acb1-12b827ef5c0e
+langcode: en
+status: true
+dependencies: {  }
+name: 'Vendor Store'
+type: vendor_store
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

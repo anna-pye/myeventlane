@@ -1,0 +1,13 @@
+name: Commerce Stripe Webhook Events
+type: module
+description: 'Logs Stripe webhook events to the database.'
+package: Commerce (contrib)
+core_version_requirement: ^9.3 || ^10 || ^11
+configure: commerce_stripe.settings
+dependencies:
+  - commerce_stripe:commerce_stripe
+
+# Information added by Drupal.org packaging script on 2025-07-31
+version: '2.1.0'
+project: 'commerce_stripe'
+datestamp: 1753985049

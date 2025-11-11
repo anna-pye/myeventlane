@@ -1,0 +1,199 @@
+{# web/themes/custom/myeventlane_theme/templates/page--my-profile.html.twig #}
+{% include '@myeventlane_theme/partials/header.html.twig' %}
+
+{% block content %}
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      {% include '@myeventlane_theme/sidebar-nav.html.twig' %}
+    </aside>
+
+    <main class="dashboard-main">
+      <div class="top-bar">
+        <h1 class="dashboard-title">Welcome, {{ user.name.value }}!</h1>
+        <div class="top-avatar">
+          {% if user.user_picture.entity %}
+            <img class="avatar" src="{{ file_url(user.user_picture.entity.uri.value) }}" alt="Your Avatar">
+          {% else %}
+            <img class="avatar" src="{{ base_path ~ directory }}/assets/img/avatar-fallback.png" alt="Default Avatar">
+          {% endif %}
+        </div>
+      </div>
+
+      {# ---------------------- TICKETS ---------------------- #}
+      <section class="section-block" id="tickets">
+        <h2>Your Tickets</h2>
+        <div class="card-row">
+          {% if orders %}
+            {% for order in orders %}
+              {% for item in order.get('order_items') %}
+                {% set order_item = item.entity %}
+                {% if order_item and order_item.purchased_entity.entity %}
+                  {% set product = order_item.purchased_entity.entity %}
+                  {% set event = product.field_event.entity ?? null %}
+                  {% if event %}
+
+                    {# SAFELY get start/end as raw strings, then to timestamps #}
+                    {% set start_raw = event.field_start_date.value ?? event.field_start_date.0.value ?? null %}
+                    {% set end_raw   = event.field_end_date.value ?? event.field_end_date.0.value ?? start_raw %}
+                    {% set start_ts  = start_raw ? (start_raw|date('U')) : 0 %}
+                    {% set end_ts    = end_raw   ? (end_raw|date('U'))   : start_ts %}
+
+                    {# Display date text #}
+                    {% set display_date = start_ts ? (start_ts|format_date('custom','M d, Y')) : 'Date TBC' %}
+
+                    {# Venue / address #}
+                    {% set venue = event.field_venue.value ?? '' %}
+                    {% set address = '' %}
+                    {% if event.field_venue_address[0] is defined %}
+                      {% set addr = event.field_venue_address[0] %}
+                      {% set address_string = [
+                        addr.address_line1 ?? '',
+                        addr.locality ?? '',
+                        addr.administrative_area ?? '',
+                        addr.postal_code ?? '',
+                        addr.country_code ?? ''
+                      ]|filter(v => v)|join(', ') %}
+                      {% set address = address_string %}
+                    {% endif %}
+                    {% set location = (venue ? venue ~ ' ' : '') ~ address %}
+
+                    {# ICS/Google needs UTC-ish compact format #}
+                    {% set start_iso = start_ts ? (start_ts|format_date('custom','Ymd\\THis\\Z')) : '' %}
+                    {% set end_iso   = end_ts   ? (end_ts|format_date('custom','Ymd\\THis\\Z'))   : '' %}
+
+                    <div class="event-card">
+                      {% if event.field_image.entity %}
+                        {% set image_uri = event.field_image.entity.uri.value %}
+                        {# Keep your existing thumbnail trick as-is #}
+                        {% set image_path = file_url(image_uri)|replace({'/sites/default/files': '/styles/thumbnail/public'}) %}
+                        <img src="{{ image_path }}" alt="{{ event.label }}">
+                      {% else %}
+                        <img src="{{ base_path ~ directory }}/assets/img/sample-ticket.png" alt="Ticket image">
+                      {% endif %}
+
+                      <h3>{{ event.label }}</h3>
+                      <p>{{ display_date }}<br>{{ location }}</p>
+
+                      <div class="card-actions">
+                        <a class="btn-secondary" href="{{ path('entity.commerce_order.canonical', {'commerce_order': order.id}) }}">
+                          View Ticket
+                        </a>
+
+                        {% if event.id is defined and start_iso %}
+                          <a class="btn-secondary" href="/calendar-download/{{ event.id }}" download target="_blank">
+                            Download .ics
+                          </a>
+                          <a class="btn-secondary" href="/calendar-download/{{ event.id }}" target="_blank">
+                            Add to Apple Calendar
+                          </a>
+                          <a class="btn-secondary" href="/calendar-download/{{ event.id }}" target="_blank">
+                            Add to Outlook
+                          </a>
+                          <a class="btn-secondary"
+                             href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.label|url_encode }}&dates={{ start_iso }}/{{ end_iso }}&location={{ location|url_encode }}"
+                             target="_blank">
+                            Add to Google Calendar
+                          </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            <p>You haven’t purchased any tickets yet.</p>
+          {% endif %}
+        </div>
+      </section>
+
+      {# ---------------------- RSVPS ---------------------- #}
+      <section class="section-block" id="rsvps">
+        <h2>Your RSVPs</h2>
+        <div class="card-row">
+          {% if rsvps %}
+            {% for rsvp in rsvps %}
+              {% set event = rsvp.event ?? null %}
+              {% set title = rsvp.event_title ?? '[no title]' %}
+              {% set image = rsvp.event_image_url %}
+              {# rsvp.event_date might be a raw string, timestamp, or array. Normalize. #}
+              {% set date_raw = (rsvp.event_date is iterable) 
+                ? (rsvp.event_date.value ?? rsvp.event_date.0.value ?? null)
+                : rsvp.event_date %}
+              {% set date_text = date_raw ? (date_raw|date('U')|format_date('custom','F j, Y')) : 'Date TBC' %}
+
+              {% set venue = rsvp.event_venue ?? '' %}
+              {% set address = rsvp.event_address ?? '' %}
+              {% set location = (venue ? venue ~ ' ' : '') ~ address %}
+
+              <div class="event-card">
+                {% if image %}
+                  <img src="{{ image }}" alt="{{ title }}">
+                {% else %}
+                  <img src="{{ base_path ~ directory }}/assets/img/sample-event.png" alt="Default image">
+                {% endif %}
+
+                <h3>{{ title }}</h3>
+                <p>{{ date_text }}</p>
+
+                {% if venue %}
+                  <p class="event-venue"><strong>{{ venue }}</strong></p>
+                {% endif %}
+                <p class="event-address">{{ address ?: 'Online or TBD' }}</p>
+
+                {% if event and event.id is defined %}
+                  {# Build ICS params from the canonical event fields #}
+                  {% set s_raw = event.field_start_date.value ?? event.field_start_date.0.value ?? null %}
+                  {% set e_raw = event.field_end_date.value   ?? event.field_end_date.0.value   ?? s_raw %}
+                  {% set s_ts  = s_raw ? (s_raw|date('U')) : 0 %}
+                  {% set e_ts  = e_raw ? (e_raw|date('U')) : s_ts %}
+                  {% set s_iso = s_ts ? (s_ts|format_date('custom','Ymd\\THis\\Z')) : '' %}
+                  {% set e_iso = e_ts ? (e_ts|format_date('custom','Ymd\\THis\\Z')) : '' %}
+
+                  <div class="card-actions">
+                    <a class="btn-cancel" href="{{ rsvp.cancel_url }}" onclick="return confirm('Are you sure you want to cancel your RSVP?');" >
+                        Cancel RSVP
+                      </a>
+                    </a>
+                    <a class="btn-secondary"
+                       href="{{ path('myeventlane_rsvp.edit', {'rsvp_id': rsvp.id}) }}">
+                      Edit RSVP
+                    </a>
+                  </div>
+
+                  {% if s_iso %}
+                    <a class="btn-secondary" href="/calendar-download/{{ event.id }}" download target="_blank">
+                      Download .ics
+                    </a>
+                    <a class="btn-secondary" href="/calendar-download/{{ event.id }}" target="_blank">
+                      Add to Apple Calendar
+                    </a>
+                    <a class="btn-secondary" href="/calendar-download/{{ event.id }}" target="_blank">
+                      Add to Outlook
+                    </a>
+                    <a class="btn-secondary"
+                       href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ title|url_encode }}&dates={{ s_iso }}/{{ e_iso }}&location={{ location|url_encode }}"
+                       target="_blank">
+                      Add to Google Calendar
+                    </a>
+                  {% endif %}
+                {% else %}
+                  <p class="warning">Calendar links unavailable: Event not found.</p>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>You haven’t RSVP’d to any events yet.</p>
+          {% endif %}
+        </div>
+
+        <div class="mel-recommend">
+          <h2 class="mel-recommend__title">Recommended for you</h2>
+          {{ drupal_view('recommended_for_you', 'block_1') }}
+        </div>
+      </section>
+    </main>
+  </div>
+{% endblock %}
+
+{% include '@myeventlane_theme/partials/footer.html.twig' %}

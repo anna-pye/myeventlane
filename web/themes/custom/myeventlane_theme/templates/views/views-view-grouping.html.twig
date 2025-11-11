@@ -1,0 +1,13 @@
+{#
+  Default grouping template override.
+#}
+
+<div class="mel-category-group">
+  {% if title %}
+    <h2 class="category-title">{{ title }}</h2>
+  {% endif %}
+
+  <div class="category-events-grid">
+    {{ content }}
+  </div>
+</div>

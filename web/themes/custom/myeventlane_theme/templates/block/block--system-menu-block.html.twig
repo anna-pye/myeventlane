@@ -1,0 +1,12 @@
+{{ title_prefix }}
+{% if label %}
+  <h2 class="visually-hidden" id="{{ attributes.id }}-menu">{{ label }}</h2>
+{% endif %}
+
+<nav role="navigation" aria-labelledby="{{ attributes.id }}-menu">
+  <div class="collapse navbar-collapse">
+    {{ content }}
+  </div>
+</nav>
+
+{{ title_suffix }}

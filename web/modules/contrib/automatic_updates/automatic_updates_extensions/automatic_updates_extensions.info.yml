@@ -1,0 +1,11 @@
+name: 'Automatic Updates Extensions'
+type: module
+description: 'Allows updates to themes and modules'
+core_version_requirement: ^11.2
+dependencies:
+  - automatic_updates:automatic_updates
+
+# Information added by Drupal.org packaging script on 2025-06-11
+version: '4.0.0'
+project: 'automatic_updates'
+datestamp: 1749659467

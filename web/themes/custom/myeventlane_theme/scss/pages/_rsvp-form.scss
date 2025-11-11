@@ -1,0 +1,134 @@
+
+@use "../settings/variables" as vars;
+
+.public-rsvp-form {
+  background: vars.$color-bg-offwhite;
+  padding: vars.$spacing-2xl vars.$spacing-xl;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 2px 24px vars.$color-shadow;
+  margin: 0 auto vars.$spacing-2xl auto;
+  max-width: 440px;
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+
+  label {
+    font-weight: vars.$font-weight-semibold;
+    font-size: vars.$font-size-body;
+    color: vars.$text-color-main;
+    margin-bottom: vars.$spacing-xs;
+    display: block;
+  }
+
+  .form-item {
+    margin-bottom: vars.$spacing-lg;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  select {
+    width: 100%;
+    border: vars.$border-light;
+    border-radius: vars.$radius-small;
+    padding: vars.$spacing-md;
+    font-size: vars.$font-size-body;
+    background: vars.$color-bg-muted;
+    color: vars.$text-color-main;
+    font-family: inherit;
+    margin-bottom: vars.$spacing-sm;
+    transition: border 0.2s, background 0.2s;
+
+    &::placeholder {
+      color: vars.$color-placeholder;
+      font-size: vars.$font-size-small;
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid vars.$color-outline-focus;
+      background: #fff;
+    }
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .cta-button,
+  input[type="submit"] {
+    background: vars.$color-primary;
+    color: #fff;
+    font-size: vars.$font-size-body;
+    border: none;
+    border-radius: vars.$radius-pill;
+    padding: vars.$spacing-md vars.$spacing-2xl;
+    font-weight: vars.$font-weight-bold;
+    cursor: pointer;
+    margin-top: vars.$spacing-xs;
+    transition: background 0.18s;
+    box-shadow: 0 2px 4px vars.$color-shadow;
+
+    &:hover,
+    &:focus {
+      background:(vars.$color-primary -8%);
+    }
+  }
+
+  .form-item--error input,
+  .form-item--error textarea {
+    border-color: vars.$color-primary;
+    background: (vars.$color-primary -38%);
+  }
+
+  // Optional: Field group styling (e.g. Group: "RSVP Details")
+  .field-group {
+    border-left: 4px solid vars.$color-accent;
+    padding-left: vars.$spacing-lg;
+    margin-bottom: vars.$spacing-xl;
+
+    legend {
+      font-size: vars.$font-size-h3;
+      font-weight: vars.$font-weight-bold;
+      color: vars.$color-accent;
+      margin-bottom: vars.$spacing-md;
+    }
+  }
+
+  // Sticky CTA for mobile UX
+  .rsvp-sticky-bar {
+    position: sticky;
+    bottom: 0;
+    background: vars.$color-bg-offwhite;
+    padding: vars.$spacing-md vars.$spacing-lg;
+    border-top: vars.$border-light;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-end;
+
+    input[type="submit"],
+    .cta-button {
+      width: 100%;
+      font-size: vars.$font-size-body;
+      border-radius: vars.$radius-pill;
+    }
+  }
+
+  @media (max-width: vars.$breakpoint-sm) {
+    padding: vars.$spacing-lg vars.$spacing-md;
+    max-width: 100%;
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      font-size: vars.$font-size-small;
+    }
+
+    .cta-button,
+    input[type="submit"] {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

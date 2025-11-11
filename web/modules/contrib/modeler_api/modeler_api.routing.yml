@@ -1,0 +1,10 @@
+route_callbacks:
+  - '\Drupal\modeler_api\Routing\Routes::routes'
+
+modeler_api.settings:
+  path: '/admin/config/workflow/modeler_api'
+  defaults:
+    _title: 'Modeler API Settings'
+    _form: 'Drupal\modeler_api\Form\Settings'
+  requirements:
+    _permission: 'administer site configuration'

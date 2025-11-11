@@ -1,0 +1,29 @@
+{#
+  Wrapper around the add-to-cart display for ticket products.
+  MUST pass through {{ content.variations }} to render the form.
+#}
+<article{{ attributes.addClass('mel-product', 'mel-ticket-matrix') }}>
+  <div class="mel-ticket-matrix__form" data-mel="matrix-root">
+    <div class="mel-matrix-form-innards" data-mel="form-wrap">
+      {{- content.variations -}}
+    </div>
+  </div>
+
+  {% if mel_product_id %}
+    <div class="mel-debug" data-mel="atc">
+      <small>
+        Product ID: {{ mel_product_id }}
+        — Rendered: {{ content.variations is not empty ? 'yes' : 'no' }}
+      </small>
+    </div>
+  {% endif %}
+
+  <button type="button"
+          class="button mel-pinned-submit"
+          data-mel="pinned-submit">
+    Add to cart
+  </button>
+</article>
+
+
+

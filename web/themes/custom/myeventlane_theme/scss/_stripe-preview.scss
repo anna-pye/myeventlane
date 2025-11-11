@@ -1,0 +1,77 @@
+@use "settings/variables" as vars;
+
+
+.stripe-preview-block {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(44,50,70,0.09);
+  padding: 32px 24px;
+  .stripe-badge {
+    display: inline-block;
+    background: #6e7ef2;
+    color: #fff;
+    border-radius: 12px;
+    padding: 3px 12px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .stripe-amount {
+    color: #f26d5b;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .btn-boosted-pay {
+    background: #f26d5b;
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover { background: #d45b45; }
+    display: flex;
+    align-items: center;
+    svg { margin-right: 6px; }
+  }
+  .stripe-note {
+    color: #888;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}
+.stripe-connect-status {
+  margin-bottom: 24px;
+
+  .stripe-status-banner {
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .connected {
+    background-color: #e6fffa;
+    border: 1px solid #38b2ac;
+    color: #234e52;
+  }
+
+  .disconnected {
+    background-color: #fff5f5;
+    border: 1px solid #f56565;
+    color: #742a2a;
+  }
+
+  .button--primary, .button--secondary {
+    margin-right: 8px;
+  }
+}

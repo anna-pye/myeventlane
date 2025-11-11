@@ -1,0 +1,15 @@
+uuid: ff11ad91-5889-4a3f-b2dd-0ba89dfce60b
+langcode: en
+status: true
+dependencies:
+  config:
+    - flag.flag.followed_categories
+  module:
+    - flag
+id: flag_action.followed_categories_flag
+label: 'Flag this item'
+type: taxonomy_term
+plugin: 'flag_action:followed_categories_flag'
+configuration:
+  flag_id: followed_categories
+  flag_action: flag

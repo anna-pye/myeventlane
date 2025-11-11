@@ -1,0 +1,164 @@
+
+@use "../settings/variables" as vars;
+
+/* =========================================
+   Base Button
+   ========================================= */
+.button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: vars.$spacing-sm;
+  padding: vars.$spacing-sm vars.$spacing-xl;
+  border: 0;
+  border-radius: vars.$radius-pill;
+  background: vars.$color-bg-muted;
+  color: vars.$text-color-main;
+  font-family: vars.$font-family-main, vars.$font-family-fallback;
+  font-size: vars.$font-size-body;
+  font-weight: vars.$font-weight-semibold;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px vars.$color-shadow;
+  transition: transform .06s ease, box-shadow .12s ease, background-color .12s ease;
+
+/*  &:hover { transform: translateY(-1px); box-shadow: 0 3px 10px vars.$color-shadow; }
+  &:active { transform: translateY(0);   box-shadow: 0 1px 2px  vars.$color-shadow; }
+
+  &:focus-visible {
+    outline: 3px solid vars.$color-outline-focus;
+    outline-offset: 2px;
+  }*/
+
+  &:disabled,
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: .6;
+    box-shadow: none;
+  }
+
+  &__icon { width: 1.1em; height: 1.1em; display: inline-block; }
+}
+
+/* =========================================
+   Variants
+   ========================================= */
+$primary-hover:  color.adjust(vars.$color-primary, $lightness: -6%);
+$primary-active: color.adjust(vars.$color-primary, $lightness: -12%);
+
+.button--primary {
+  background: vars.$color-primary;
+  color: #fff;
+
+  &:hover  { background: $primary-hover; }
+  &:active { background: $primary-active; }
+
+  &:disabled,
+  &.is-disabled {
+    background: color.adjust(vars.$color-primary, $alpha: -0.4);
+    color: #fff;
+  }
+}
+
+$accent-hover:  color.adjust(vars.$color-accent, $lightness: -6%);
+$accent-active: color.adjust(vars.$color-accent, $lightness: -12%);
+
+.button--secondary {
+  background: vars.$color-accent;
+  color: #fff;
+
+  &:hover  { background: $accent-hover; }
+  &:active { background: $accent-active; }
+}
+
+.button--outline {
+  background: transparent;
+  color: vars.$color-primary;
+  border: 2px solid vars.$color-primary;
+
+  &:hover  { background: color.adjust(vars.$color-primary, $alpha: -0.85); }
+  &:active { background: color.adjust(vars.$color-primary, $alpha: -0.75); }
+}
+
+.button--ghost {
+  background: transparent;
+  color: vars.$text-color-main;
+
+  &:hover  { background: vars.$color-bg-muted; }
+  &:active { background: color.adjust(vars.$color-bg-muted, $lightness: -4%); }
+}
+
+.button--link {
+  background: transparent;
+  color: vars.$color-accent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+/* Sizes */
+.button--sm   { padding: vars.$spacing-xs vars.$spacing-md; font-size: vars.$font-size-small; }
+.button--lg   { padding: vars.$spacing-md vars.$spacing-2xl; font-size: 18px; }
+.button--block { width: 100%; }
+
+/* Mobile touch target */
+@media (max-width: vars.$breakpoint-md) {
+  .button { min-height: 44px; } /* WCAG touch target */
+}
+
+/* =========================================
+   Your CTA: .btn-buy-ticket
+   (built on top of the button system)
+   ========================================= */
+.btn-buy-ticket {
+  @extend .button;
+  @extend .button--primary;
+
+  display: inline-block;
+  width: 100%;
+  max-width: 340px;
+  min-height: calc(vars.$spacing-xl * 2); /* ~48px */
+  padding: vars.$spacing-md vars.$spacing-xl;
+  border: none;
+  font-weight: vars.$font-weight-bold;
+  font-size: 20px;
+  line-height: 1.3;
+  text-align: center;
+  box-shadow: 0 2px 6px vars.$color-shadow;
+  transition: background .2s, box-shadow .2s, transform .06s;
+
+  &:hover {
+    background: $primary-hover;
+    box-shadow: 0 4px 12px vars.$color-shadow;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid vars.$color-outline-focus;
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    background: vars.$color-bg-muted;
+    color: vars.$color-disabled;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+  }
+}
+
+/* Mobile tweaks for the CTA */
+@media (max-width: vars.$breakpoint-md) {
+  .btn-buy-ticket {
+    font-size: vars.$font-size-h3; /* 22px, slightly larger mobile CTA */
+    min-height: calc(vars.$spacing-xl * 2 + 4px); /* ~52px */
+    padding: vars.$spacing-lg vars.$spacing-lg;
+    width: 100%;
+  }
+}

@@ -1,0 +1,7 @@
+uuid: 4751772b-ad21-4528-a85d-b98c8286e3c4
+langcode: en
+status: true
+dependencies: {  }
+id: ticket_type
+label: 'Ticket Type'
+elementType: select

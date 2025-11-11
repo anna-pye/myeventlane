@@ -1,0 +1,30 @@
+@use "../settings/variables" as vars;
+
+.modal {
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &__content {
+    background: #fff;
+    padding: vars.$spacing-xl;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 480px;
+  }
+
+  &__close {
+    position: absolute;
+    top: vars.$spacing-md;
+    right: vars.$spacing-md;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}

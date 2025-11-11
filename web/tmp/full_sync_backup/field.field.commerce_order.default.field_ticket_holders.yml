@@ -1,0 +1,36 @@
+uuid: 118e7c56-013b-4f75-b827-665b840a4f89
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_type.default
+    - field.storage.commerce_order.field_ticket_holders
+    - paragraphs.paragraphs_type.attendee_answer
+    - paragraphs.paragraphs_type.attendee_extra_field
+  module:
+    - entity_reference_revisions
+id: commerce_order.default.field_ticket_holders
+field_name: field_ticket_holders
+entity_type: commerce_order
+bundle: default
+label: 'Ticket Holders'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      attendee_answer: attendee_answer
+      attendee_extra_field: attendee_extra_field
+    negate: 0
+    target_bundles_drag_drop:
+      attendee_answer:
+        weight: 3
+        enabled: true
+      attendee_extra_field:
+        weight: 4
+        enabled: true
+field_type: entity_reference_revisions

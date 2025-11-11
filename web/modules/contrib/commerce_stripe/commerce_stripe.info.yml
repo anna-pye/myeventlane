@@ -1,0 +1,13 @@
+name: Commerce Stripe
+type: module
+description: 'Provides Commerce integration for Stripe Payments.'
+package: Commerce (contrib)
+core_version_requirement: ^10.3 || ^11
+configure: commerce_stripe.settings
+dependencies:
+  - commerce:commerce_payment
+
+# Information added by Drupal.org packaging script on 2025-07-31
+version: '2.1.0'
+project: 'commerce_stripe'
+datestamp: 1753985049

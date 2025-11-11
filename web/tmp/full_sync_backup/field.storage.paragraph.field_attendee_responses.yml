@@ -1,0 +1,19 @@
+uuid: 2386bd80-e259-4bf6-bbc0-66ab9c3a77e5
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_attendee_responses
+field_name: field_attendee_responses
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

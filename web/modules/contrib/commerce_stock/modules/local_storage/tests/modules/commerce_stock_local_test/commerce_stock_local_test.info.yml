@@ -1,0 +1,12 @@
+name: Commerce Stock Local Test
+type: module
+description: Module for testing local stock module.
+core_version_requirement: ^10.2 || ^11
+dependencies:
+  - commerce_stock:commerce_stock_local
+  - commerce_stock:commerce_stock_field
+
+# Information added by Drupal.org packaging script on 2025-07-30
+version: '3.0.0'
+project: 'commerce_stock'
+datestamp: 1753893802

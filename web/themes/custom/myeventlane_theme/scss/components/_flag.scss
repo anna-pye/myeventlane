@@ -1,0 +1,70 @@
+@use "../settings/variables" as vars;
+
+
+
+// Flag component
+.flag.flag-followed-categories {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+
+  a {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #343a40;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+      background-color: #e2e6ea;
+      border-color: #ced4da;
+      color: #212529;
+    }
+  }
+
+  &.action-flag a::before {
+    content: '🤍';
+    margin-right: 0.4em;
+  }
+
+  &.action-unflag a::before {
+    content: '💖';
+    margin-right: 0.4em;
+  }
+}
+
+// Logged-out users' follow link
+.follow-btn--login {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background-color: #fff3cd;
+  border: 2px solid #ffeeba;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #856404;
+  text-decoration: none;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #ffe8a1;
+    color: #7c5c00;
+  }
+}
+
+// Follow count below flag
+.follow-count {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+  padding-left: 0.1rem;
+
+  &::before {
+    content: '👥 ';
+  }
+}

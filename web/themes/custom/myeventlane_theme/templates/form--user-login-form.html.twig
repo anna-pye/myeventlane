@@ -1,0 +1,48 @@
+{#
+  MyEventLane — Login Form override
+  Triggered for route /user/login (theme hook: user_login_form)
+#}
+{{ attach_library('myeventlane_theme/forms') }}
+
+<main class="auth-wrapper" role="main" aria-labelledby="login-title">
+  <section class="auth-card" role="form" aria-describedby="login-desc">
+    <div class="auth-logo">
+      <img src="web/themes/custom/myeventlane_theme/assets/branding/MyEventLane_Logo_Transparent.png" alt="MyEventLane logo" />
+    </div>
+
+    <h1 id="login-title" class="auth-title">Welcome back</h1>
+    <p id="login-desc" class="auth-subtitle">Log in to manage events, RSVPs, and tickets.</p>
+
+    {{ status_messages }}
+
+    <div class="auth-form">
+      {{ form.form_build_id }}
+      {{ form.form_token }}
+      {{ form.form_id }}
+
+      <div class="form-item">{{ form.name }}</div>
+      <div class="form-item">{{ form.pass }}</div>
+
+      <div class="auth-help-row">
+        <div class="form-item">
+          {% if form.remember_me is defined %}
+            {{ form.remember_me }}
+          {% endif %}
+        </div>
+        <a href="{{ path('user.pass') }}">Forgot password?</a>
+      </div>
+
+      <div class="form-actions auth-actions">
+        {{ form.actions }}
+      </div>
+
+      {# Render any remaining children just in case #}
+      {{ form|without('name','pass','remember_me','actions','form_build_id','form_token','form_id') }}
+    </div>
+
+    <p class="auth-footer">
+      New here?
+      <a href="{{ path('user.register') }}">Create an account</a>
+    </p>
+  </section>
+</main>

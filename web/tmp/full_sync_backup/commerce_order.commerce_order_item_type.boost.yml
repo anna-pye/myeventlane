@@ -1,0 +1,10 @@
+uuid: af92082d-0c8b-4a69-b7d5-407fa500db99
+langcode: en
+status: true
+dependencies: {  }
+id: boost
+label: Boost
+traits: {  }
+locked: false
+purchasableEntityType: commerce_product_variation
+orderType: default

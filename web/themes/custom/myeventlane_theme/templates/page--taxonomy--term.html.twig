@@ -1,0 +1,113 @@
+{{ attach_library('myeventlane_theme/global') }}
+
+{# -- Taxonomy Term View Page -- #}
+{% include '@myeventlane_theme/partials/header.html.twig' %}
+
+{% block content %}
+  <div class="taxonomy-page layout-container">
+    <main role="main" class="taxonomy-main">
+      <div class="page-inner">
+
+        {# ---------------- MINI HERO ---------------- #}
+        <section class="mini-hero">
+          <div class="mini-hero__text">
+            <h2 class="mini-hero__tagline">Your Lane to<br><span>Great Events</span></h2>
+            <p class="mini-hero__subtitle">Discover, connect, and support local creators</p>
+          </div>
+        </section>
+
+        {# ---------------- CATEGORY FILTERS ---------------- #}
+        <div class="category-filters" role="navigation" aria-label="Event Categories">
+          <a
+            href="/events"
+            class="filter-pill filter-yellow{{ term.id is not defined ? ' is-active' }}"
+            aria-label="Show all events"
+          >All Events</a>
+
+          {% for t in event_category_terms %}
+            {% set raw_name = t.name %}
+            {% set slug = raw_name|lower|replace({
+              ' ': '-',
+              '+': '',
+              '/': '',
+              '&': 'and'
+            }) %}
+             {% set class =
+                  slug matches '/music/' ? 'filter-blue' :
+                  slug matches '/arts/' ? 'filter-yellow' :
+                  slug matches '/work_shop/' ? 'filter-coral' :
+                  slug matches '/lgbtqi/' ? 'filter-purple' :
+                  slug matches '/movie/' ? 'filter-gray' :
+                  'filter-default'
+                %}
+            {% set is_active = term.id is defined and t.id == term.id %}
+            <a
+              href="{{ t.url }}"
+              class="filter-pill {{ class }}{{ is_active ? ' is-active' }}"
+              aria-label="Filter by {{ t.name }}"
+            >{{ t.name }}</a>
+          {% endfor %}
+        </div>
+
+
+        {# ---------------- SEARCH FORM ---------------- #}
+        <form class="search-form" action="/events" method="get" role="search">
+          <div class="search-form__group">
+            <input
+              type="text"
+              name="keywords"
+              class="search-form__input"
+              placeholder="Search events..."
+              aria-label="Search events"
+            />
+            <button type="submit" class="search-form__button">Search</button>
+          </div>
+        </form>
+
+        {# ---------------- CATEGORY FOLLOW BUTTON ---------------- #}
+        {% if logged_in and flag_follow_category is defined %}
+          <div class="follow-category-wrapper">
+            {{ flag_follow_category|raw }}
+          </div>
+        {% elseif not logged_in %}
+          <div class="follow-category-wrapper">
+            <a href="/user/login" class="follow-btn follow-btn--login">🤍 Follow this category</a>
+          </div>
+        {% endif %}
+
+        {# ---------------- FOLLOW COUNT ---------------- #}
+        {% if follower_count %}
+          <div class="follow-count">
+            💖 {{ follower_count }} {{ follower_count == 1 ? 'person follows' : 'people follow' }} this category
+          </div>
+        {% endif %}
+
+        {# ---------------- MAIN EVENT GRID ---------------- #}
+        {% if term_id is defined %}
+              {% set rendered = drupal_view('taxonomy_term', 'page_1', term_id) %}
+              <section class="taxonomy-events">
+
+                <div class="event-grid">
+                <h2><a href="{{ category.url }}">{{ category.name }}</a>
+                  {{ rendered }}
+                </div>
+              </section>
+
+            {% else %}
+              <section class="taxonomy-events">
+                <p class="no-events">No events found in this category.</p>
+              </section>
+            {% endif %}
+
+          </div>
+    </main>
+
+    {% if page.footer %}
+      <footer class="site-footer">
+        {{ page.footer }}
+      </footer>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% include '@myeventlane_theme/partials/footer.html.twig' %}

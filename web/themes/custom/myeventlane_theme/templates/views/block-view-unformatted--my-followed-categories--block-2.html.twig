@@ -1,0 +1,16 @@
+{#
+  Custom View template: Events grouped by followed category
+  View: my_followed_categories
+  Display: followed_categories
+#}
+
+{# views-view-grouping.html.twig #}
+{# themes/custom/myeventlane_theme/templates/views/views-view-grouping.html.twig #}
+<div class="mel-category-group">
+  {% if title %}
+    <h2 class="category-title">{{ title }}</h2>
+  {% endif %}
+
+  <div class="category-events followed-events-wrapper">
+  {{ content }}
+</div>

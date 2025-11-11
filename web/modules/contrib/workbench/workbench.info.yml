@@ -1,0 +1,16 @@
+name: Workbench
+type: module
+description: 'Provides convenient dashboards and shortcuts for editors.'
+package: Workbench
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - drupal:image
+  - drupal:node
+  - drupal:toolbar
+  - drupal:user
+  - drupal:views
+
+# Information added by Drupal.org packaging script on 2024-10-28
+version: '8.x-1.6'
+project: 'workbench'
+datestamp: 1730131324

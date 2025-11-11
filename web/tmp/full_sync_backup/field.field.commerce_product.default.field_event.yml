@@ -1,0 +1,24 @@
+uuid: 7ff808b6-6692-4ff4-b97b-2e9c745d9d8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.default
+    - field.storage.commerce_product.field_event
+    - node.type.event
+id: commerce_product.default.field_event
+field_name: field_event
+entity_type: commerce_product
+bundle: default
+label: Event
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      event: event
+field_type: entity_reference

@@ -1,0 +1,390 @@
+
+@use "settings/variables" as vars;
+
+// Ticket / Book Page
+.ticket-page {
+  background: vars.$color-bg-offwhite;
+  min-height: 100%;
+  padding: vars.$spacing-xl vars.$spacing-lg;
+
+  @media (min-width: vars.$breakpoint-lg) {
+    padding: vars.$spacing-2xl 0;
+  }
+}
+
+.ticket-header {
+  max-width: 1080px;
+  margin: 0 auto vars.$spacing-xl;
+  color: vars.$text-color-main;
+
+  h1 {
+    font-family: vars.$font-family-main, vars.$font-family-fallback;
+    font-size: vars.$font-size-h1;
+    font-weight: vars.$font-weight-bold;
+    line-height: 1.15;
+    margin: 0 0 vars.$spacing-sm;
+  }
+  p {
+    margin: 0;
+    color: vars.$color-muted-text;
+  }
+}
+
+.mel-stock-note {
+    font-weight: 400;
+    font-size: 0.875rem;
+    margin-left: 0.5em;
+    color: #aa3c3c;
+  }
+
+.ticket-products {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  gap: vars.$spacing-xl;
+
+  @media (min-width: vars.$breakpoint-md) {
+    gap: vars.$spacing-2xl;
+  }
+}
+
+// Card
+.ticket-product-card {
+  background: #fff;
+  border-radius: vars.$radius-medium;
+  box-shadow: 0 6px 24px vars.$color-shadow;
+  padding: vars.$spacing-xl;
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  &:hover {
+    box-shadow: 0 10px 32px (vars.$color-shadow -0.1);
+    transform: translateY(-1px);
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-md;
+    margin-bottom: vars.$spacing-lg;
+
+    .ticket-product-thumb {
+      width: 56px; height: 56px; border-radius: vars.$radius-small; overflow: hidden; flex: 0 0 auto;
+      img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      background: vars.$color-bg-muted;
+    }
+    .ticket-product-meta {
+      h2 {
+        font-size: vars.$font-size-h2;
+        font-weight: vars.$font-weight-semibold;
+        color: vars.$text-color-main;
+        margin: 0 0 vars.$spacing-xs;
+      }
+      .subline {
+        font-size: vars.$font-size-small;
+        color: vars.$color-muted-text;
+      }
+    }
+  }
+}
+
+// Rows container (form content should output rows inside here)
+.mel-ticket-rows {
+  display: grid;
+  gap: vars.$spacing-md;
+
+  @media (min-width: vars.$breakpoint-md) {
+    gap: vars.$spacing-lg;
+  }
+}
+
+// A single variation row
+.mel-ticket-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: vars.$spacing-md;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  border: vars.$border-light;
+  border-radius: vars.$radius-small;
+  background: #fff;
+
+  @media (max-width: vars.$breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: vars.$spacing-sm;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 10px vars.$color-shadow;
+  }
+}
+
+.mel-ticket-label {
+  display: grid;
+  gap: vars.$spacing-xs;
+
+  .name {
+    color: vars.$text-color-main;
+    font-weight: vars.$font-weight-semibold;
+  }
+  .helper {
+    color: vars.$color-muted-text;
+    font-size: vars.$font-size-small;
+  }
+}
+
+.mel-ticket-price {
+  color: vars.$color-primary;
+  font-weight: vars.$font-weight-bold;
+  font-size: vars.$font-size-h3;
+  justify-self: end;
+
+  @media (max-width: vars.$breakpoint-md) {
+    justify-self: start;
+  }
+}
+
+// Stepper
+.mel-ticket-stepper {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  justify-self: end;
+
+  @media (max-width: vars.$breakpoint-md) {
+    justify-self: start;
+  }
+}
+
+.mel-qty-btn {
+  width: 36px; height: 36px;
+  border-radius: vars.$radius-pill;
+  border: 1px solid vars.$border-light-color;
+  background: #fff;
+  color: vars.$text-color-main;
+  font-weight: vars.$font-weight-semibold;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .05s ease;
+
+  &:hover { box-shadow: 0 2px 8px vars.$color-shadow; }
+  &:active { transform: scale(.97); }
+
+  &:focus-visible {
+    outline: 2px solid vars.$color-outline-focus;
+    outline-offset: 2px;
+  }
+
+  &[disabled] {
+    color: vars.$color-disabled;
+    border-color: vars.$color-disabled;
+    cursor: not-allowed;
+    opacity: .6;
+    box-shadow: none;
+  }
+}
+
+.mel-qty-input {
+  width: 56px;
+  height: 36px;
+  border-radius: vars.$radius-small;
+  border: 1px solid vars.$border-light-color;
+  text-align: center;
+  font-weight: vars.$font-weight-semibold;
+  color: vars.$text-color-main;
+  background: #fff;
+
+  &:focus-visible {
+    outline: 2px solid vars.$color-outline-focus;
+    outline-offset: 2px;
+  }
+
+  &[readonly] { background: #fff; }
+}
+
+// Buttons
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 18px;
+  border-radius: vars.$radius-pill;
+  background: vars.$color-primary;
+  color: #fff;
+  font-weight: vars.$font-weight-bold;
+  border: 0;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .05s ease;
+
+  &:hover { box-shadow: 0 6px 24px vars.$color-shadow; }
+  &:active { transform: translateY(1px); }
+  &:focus-visible {
+    outline: 2px solid vars.$color-outline-focus;
+    outline-offset: 2px;
+  }
+  &[disabled] {
+    background: vars.$color-disabled;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+// Card footer (submit within each form)
+.ticket-card-actions {
+  margin-top: vars.$spacing-lg;
+  display: flex;
+  justify-content: flex-end;
+}
+
+// Sticky bottom CTA (mobile)
+.mel-sticky-cta {
+  position: fixed;
+  left: 0; right: 0; bottom: -120px; // hidden default
+  background: #fff;
+  border-top-left-radius: vars.$radius-medium;
+  border-top-right-radius: vars.$radius-medium;
+  box-shadow: 0 -10px 24px vars.$color-shadow;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: vars.$spacing-md;
+  align-items: center;
+  transition: bottom .2s ease;
+  z-index: 30;
+
+  .mel-ticket-summary {
+    color: vars.$text-color-main;
+    .count {
+      font-weight: vars.$font-weight-semibold;
+    }
+  }
+
+  @media (min-width: vars.$breakpoint-md) {
+    display: none;
+  }
+
+  &.is-active {
+    bottom: 0;
+  }
+}
+
+.mel-ticket-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-lg;
+
+  .mel-ticket-matrix-card {
+    border: 1px solid vars.$border-light-color;
+    border-radius: vars.$radius-medium;
+    padding: vars.$spacing-md;
+    background: vars.$color-bg-muted;
+  }
+
+  .mel-ticket-rows {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-sm;
+  }
+
+  .mel-ticket-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: vars.$spacing-sm;
+    padding: vars.$spacing-sm vars.$spacing-md;
+    background: #fff;
+    border-radius: vars.$radius-small;
+    box-shadow: 0 1px 3px vars.$color-shadow;
+
+    @media (max-width: vars.$breakpoint-md) {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .mel-ticket-label {
+      font-weight: vars.$font-weight-semibold;
+      font-size: vars.$font-size-body;
+    }
+
+    .mel-qty-input {
+      width: 50px;
+      text-align: center;
+    }
+
+    .mel-stepper-btn {
+      background: vars.$color-primary;
+      color: white;
+      border: none;
+      border-radius: vars.$radius-pill;
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      cursor: pointer;
+
+      &:hover {
+        background: (vars.$color-primary -5%);
+      }
+    }
+  }
+
+.mel-ticket-sticky-cta {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  padding: vars.$spacing-md;
+  box-shadow: 0 -1px 5px vars.$color-shadow;
+  z-index: 20;
+}
+
+.mel-ticket-row.mel-sold-out {
+  opacity: 0.5;
+  pointer-events: none;
+  background: vars.$color-disabled;
+  font-style: italic;
+}
+
+.mel-group-subtotal {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+  margin-top: 0.5rem;
+  color: #333;
+  opacity: 0.85;
+
+
+ .mel-subtotal-wrap {
+    display: none;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #eee;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: all 0.3s ease;
+    color: #333;
+
+    &.mel-subtotal-visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  .mel-error {
+    color: vars.$color-primary;
+    font-weight: vars.$font-weight-bold;
+    padding: vars.$spacing-sm;
+    }
+  }
+
+}
+
+
+// Reduce motion
+@media (prefers-reduced-motion: reduce) {
+  .ticket-product-card,
+  .mel-qty-btn,
+  .btn-primary,
+  .mel-sticky-cta {
+    transition: none !important;
+    }
+  }
+}

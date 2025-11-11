@@ -1,0 +1,339 @@
+@use "../settings/variables" as vars;
+
+// ------------------------------------------------------------
+// MyEventLane Homepage Visuals
+// ------------------------------------------------------------
+
+.homepage {
+  background-color: vars.$color-bg-offwhite;
+  color: vars.$text-color-main;
+  font-family: vars.$font-family-main;
+
+  .page-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: vars.$spacing-3xl vars.$spacing-xl vars.$spacing-3xl;
+  }
+
+  // ---------------- HERO ----------------
+  .hero {
+    text-align: left;
+    max-width: 1240px;
+    margin: 0 auto 20px auto;
+    padding: 20px 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: vars.$spacing-2xl;
+    flex-wrap: wrap;
+
+    // left text area
+    &__text {
+      flex: 1 1 620px;
+      min-width: 340px;
+    }
+
+    &__tagline {
+      font-size: clamp(42px, 6vw, 64px);
+      font-weight: 800;
+      color: vars.$color-navy;
+      line-height: 1.1;
+      margin-bottom: vars.$spacing-sm;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease-out forwards;
+      animation-delay: 0.2s;
+
+      span {
+        color: vars.$color-primary;
+        display: inline;
+      }
+    }
+
+    &__subtitle {
+      font-size: 20px;
+      color: #5c6783;
+      font-weight: 500;
+      margin-top: 8px;
+      margin-bottom: vars.$spacing-xl;
+    }
+
+    // Responsive fix for hero padding on mobile
+    @media (max-width: vars.$breakpoint-md) {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  // Keyframes must be defined *outside* selectors
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // LOGO SECTION
+  .hero__logo {
+    position: relative;
+    flex: 0 0 280px;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    img {
+      position: absolute;
+      bottom: 0.2em;
+      right: 50px;
+      width: 100%;
+      max-width: 20em;
+      height: auto;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.05));
+    }
+  }
+
+  /*// CATEGORY FILTERS
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 14px;
+    margin: 32px 0;
+
+    .filter-pill {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: vars.$radius-pill;
+      text-decoration: none;
+      display: inline-block;
+      background-color: #ccc;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, filter 0.2s ease;
+
+      &.filter-yellow { background-color: vars.$color-highlight; }
+      &.filter-purple { background-color: vars.$color-accent; }
+      &.filter-coral  { background-color: vars.$color-primary; }
+      &.filter-blue   { background-color: #8e9cff; }
+      &.filter-gray   { background-color: #9aa0b2; }
+      &.filter-default { background-color: #ccc; }
+
+      &.is-active {
+        box-shadow: 0 0 0 3px rgba(41, 50, 65, 0.2);
+        transform: translateY(-1px);
+        background-color: color.adjust(vars.$color-accent, $lightness: -10%);
+        color: white;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.92);
+      }
+    }
+  }*/
+
+  /*// EVENT TAG CHIPS
+  .event-card__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+
+    .category-chip {
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+      padding: 6px 12px;
+      border-radius: vars.$radius-pill;
+      line-height: 1;
+      text-decoration: none;
+      transition: 0.2s ease;
+      display: inline-block;
+
+      &.filter-yellow { background-color: #f5c04c; }
+      &.filter-purple { background-color: #9a6ef2; }
+      &.filter-coral  { background-color: #f26d5b; }
+      &.filter-blue   { background-color: #8e9cff; }
+      &.filter-gray   { background-color: #9aa0b2 !important; }
+      &.filter-default { background-color: #9aa0b2; }
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.92);
+      }
+    }
+  }*/
+
+  // SEARCH
+  .hero__search {
+    max-width: 700px;
+    display: flex;
+    justify-content: left;
+    gap: vars.$spacing-sm;
+
+    input[type="text"] {
+      flex: 1 1 auto;
+      padding: 14px 22px;
+      border-radius: vars.$radius-pill 0 0 vars.$radius-pill;
+      border: none;
+      font-size: vars.$font-size-body;
+      background: white;
+      box-shadow: 0 2px 6px vars.$color-shadow;
+
+      &::placeholder {
+        color: vars.$color-placeholder;
+      }
+
+      &:focus {
+        outline: 2px solid vars.$color-outline-focus;
+      }
+    }
+
+    .search-button {
+      background-color: vars.$color-primary;
+      border: none;
+      color: white;
+      border-radius: 0 vars.$radius-pill vars.$radius-pill 0;
+      padding: 14px 24px;
+      font-weight: vars.$font-weight-semibold;
+      font-size: vars.$font-size-body;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px vars.$color-shadow;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        transform: translateY(-1px);
+        filter: brightness(0.92);
+      }
+    }
+  }
+
+  // FEATURED EVENTS
+  .featured-events {
+    margin-top: vars.$spacing-3xl;
+    padding: 0 20px;
+
+    .featured-events-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: vars.$spacing-lg;
+      flex-wrap: wrap;
+      gap: vars.$spacing-md;
+
+      .section-title {
+        font-size: vars.$font-size-h2;
+        font-weight: vars.$font-weight-bold;
+        color: vars.$color-navy;
+      }
+
+      .btn-primary {
+        background-color: vars.$color-primary;
+        color: white;
+        border-radius: vars.$radius-pill;
+        padding: 12px 28px;
+        text-decoration: none;
+        font-weight: vars.$font-weight-semibold;
+        font-size: vars.$font-size-body;
+        transition: 0.2s ease;
+        box-shadow: 0 2px 4px vars.$color-shadow;
+
+        &:hover {
+          filter: brightness(0.92);
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: vars.$spacing-lg;
+      margin-bottom: vars.$spacing-3xl;
+    }
+  }
+
+
+  // ---------------- RESPONSIVE ----------------
+  @media (max-width: vars.$breakpoint-md) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    padding-top: vars.$spacing-xl;
+
+    // Push tagline below logo
+    &__tagline {
+      font-size: 36px;
+      margin-top: vars.$spacing-md;
+    }
+
+    .hero__logo {
+      order: -1;
+      align-self: flex-start;
+      position: static;
+      margin-bottom: vars.$spacing-md;
+
+      img {
+        max-width: 180px;
+        height: auto;
+        margin: 0;
+        display: block;
+      }
+    }
+
+    // Stack filters with clean space
+    .category-filters {
+      margin-top: vars.$spacing-md;
+      margin-bottom: vars.$spacing-lg;
+    }
+
+    // Search group refinement
+    &__search {
+      flex-direction: column;
+      gap: vars.$spacing-sm;
+      margin-bottom: vars.$spacing-xl;
+
+      input[type="text"],
+      .search-button {
+        width: 100%;
+        display: block;
+      }
+
+      .search-button {
+        margin-top: vars.$spacing-sm;
+        padding: 14px 24px;
+        justify-content: center;
+      }
+
+      button:focus,
+        a:focus,
+        .filter-pill:focus {
+          outline: 2px solid vars.$color-outline-focus;
+          outline-offset: 2px;
+        }
+    }
+  }
+
+  // Fix double logo on scroll
+  .homepage .featured-events {
+    margin-top: vars.$spacing-2xl;
+    padding-top: vars.$spacing-xl;
+  }
+
+  .featured-events-header {
+    padding-top: 0;
+    }
+  }
+
+}

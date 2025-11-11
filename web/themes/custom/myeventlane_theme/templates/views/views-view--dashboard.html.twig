@@ -1,0 +1,25 @@
+{#
+  Vendor Dashboard Master Layout
+  This layout holds tabs for Events / Boost / Analytics / Attendees.
+#}
+
+<div class="mel-dashboard-wrapper">
+  <div class="mel-dashboard-header">
+    <h1 class="mel-dashboard-title">🎛️ My Vendor Dashboard</h1>
+  </div>
+
+  <nav class="mel-dashboard-tabs">
+    <a href="/dashboard/events" class="tab {% if current_path == '/dashboard/events' %}active{% endif %}">Events</a>
+    <a href="/dashboard/boost" class="tab {% if current_path == '/dashboard/boost' %}active{% endif %}">Boost</a>
+    <a href="/dashboard/analytics" class="tab {% if current_path == '/dashboard/analytics' %}active{% endif %}">Analytics</a>
+    <a href="/dashboard/attendees" class="tab {% if current_path == '/dashboard/attendees' %}active{% endif %}">Attendees</a>
+  </nav>
+
+  <div class="mel-dashboard-content">
+    {% if rows %}
+      {{ rows }}
+    {% elseif empty %}
+      <p class="mel-empty">No data available for this section.</p>
+    {% endif %}
+  </div>
+</div>

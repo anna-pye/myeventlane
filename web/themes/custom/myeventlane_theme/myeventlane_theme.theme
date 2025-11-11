@@ -1,0 +1,651 @@
+<?php
+
+use Drupal\commerce_product\Entity\ProductInterface;
+use Drupal\commerce_store\Entity\StoreInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Template\Attribute;
+use Drupal\node\NodeInterface;
+use Drupal\views\ViewExecutable;
+use Twig\TwigFunction;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\Url;
+use Drupal\flag\Entity\Flagging;
+
+/**
+ * Preprocess node for event content type.
+ */
+function myeventlane_theme_preprocess_node(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'event') {
+    return;
+  }
+
+  // 1️⃣ Inject Boost variables
+  $is_boosted = FALSE;
+  $expires = NULL;
+  $days_left = NULL;
+
+  if ($node->hasField('field_boost_expiry') && !$node->get('field_boost_expiry')->isEmpty()) {
+    $expiry_raw = strtotime($node->get('field_boost_expiry')->value);
+    $now = \Drupal::time()->getRequestTime();
+
+    if ($expiry_raw > $now) {
+      $is_boosted = TRUE;
+      $expires = $expiry_raw;
+      $days_left = ceil(($expiry_raw - $now) / 86400);
+    }
+  }
+
+  $variables['mel_is_boosted'] = $is_boosted;
+  $variables['mel_boost_expires'] = $expires ? \Drupal::service('date.formatter')->format($expires, 'custom', 'Y-m-d\TH:i:s') : NULL;
+  $variables['mel_boost_days_left'] = $days_left;
+  $variables['mel_can_boost'] = \Drupal::currentUser()->id() == $node->getOwnerId() || \Drupal::currentUser()->hasPermission('administer nodes');
+
+  // 2️⃣ Inject TicketMatrixForm if this is a paid event
+  $mode = $node->get('field_ticket_type')->value ?? '';
+  if (strtolower($mode) === 'paid') {
+    if ($node->hasField('field_product_target') && !$node->get('field_product_target')->isEmpty()) {
+      $products = array_filter(
+        $node->get('field_product_target')->referencedEntities(),
+        fn($p) => $p instanceof ProductInterface
+      );
+
+      if (!empty($products)) {
+        $form = \Drupal::formBuilder()->getForm(
+          '\Drupal\myeventlane_tickets\Form\TicketMatrixForm',
+          $products
+        );
+        $variables['ticket_matrix'] = [
+          '#type' => 'container',
+          'form' => $form,
+        ];
+
+        $variables['#cache'] = $variables['#cache'] ?? [];
+        $variables['#cache']['contexts'][] = 'user.roles:authenticated';
+        $variables['#cache']['tags'][] = 'ticket_matrix_form';
+        $variables['#cache']['max_age'] = 0;
+      }
+    }
+  }
+
+  /**
+ * Implements hook_page_attachments().
+ *
+ * Automatically attach hashed Vite CSS/JS from manifest.json.
+ */
+function myeventlane_theme_page_attachments(array &$attachments) {
+  $manifest_path = DRUPAL_ROOT . '/themes/custom/myeventlane_theme/dist/.vite/manifest.json';
+
+  if (!file_exists($manifest_path)) {
+    return;
+  }
+
+  $manifest = json_decode(file_get_contents($manifest_path), TRUE);
+  if (isset($manifest['js/main.js'])) {
+    $entry = $manifest['js/main.js'];
+    $css_file = $entry['css'][0] ?? NULL;
+    $js_file = $entry['file'] ?? NULL;
+
+    if ($css_file) {
+      $attachments['#attached']['html_head'][] = [
+        [ '#tag' => 'link', '#attributes' => [
+          'rel' => 'stylesheet',
+          'href' => base_path() . 'themes/custom/myeventlane_theme/dist/' . $css_file,
+        ]],
+        'vite-css',
+      ];
+    }
+
+    if ($js_file) {
+      $attachments['#attached']['html_head'][] = [
+        [ '#tag' => 'script', '#attributes' => [
+          'type' => 'module',
+          'src' => base_path() . 'themes/custom/myeventlane_theme/dist/' . $js_file,
+        ]],
+        'vite-js',
+      ];
+    }
+  }
+}
+}
+
+/**
+ * Implements hook_theme().
+ */
+function myeventlane_theme_theme(array $existing, $type, $theme, $path) {
+  return [
+    'myeventlane_event_book' => [
+      'template' => 'myeventlane-event-book',
+      'variables' => [
+        'title' => NULL,
+        'node_id' => NULL,
+        'event_subtitle' => NULL,
+        'hero_image' => NULL,
+        'forms_container' => NULL,
+        'matrix_forms' => [],
+        'debug_mel_book' => [],
+      ],
+    ],
+    'node__event' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Twig function extension.
+ */
+function myeventlane_theme_twig_extension() {
+  return [
+    new TwigFunction('create_dump_file', function ($title, $mode, $count) {
+      $msg = "🧪 Twig test: $title | mode: $mode | products: $count\n";
+      file_put_contents('/tmp/_twig_node_debug.txt', $msg, FILE_APPEND);
+      return new Markup('', 'utf-8');
+    }),
+  ];
+}
+
+/**
+ * Commerce product preprocess.
+ */
+function myeventlane_theme_preprocess_commerce_product(array &$variables): void {
+  if (!empty($variables['elements']['#commerce_product']) && $variables['elements']['#commerce_product']->id()) {
+    $variables['mel_product_id'] = (int) $variables['elements']['#commerce_product']->id();
+  }
+  $variables['#attached']['library'][] = 'myeventlane_tickets/ticket_matrix';
+}
+
+/**
+ * Page alter: hide system messages on event nodes.
+ */
+function myeventlane_theme_page_alter(array &$page): void {
+  if (\Drupal::state()->get('mel_disable_preprocess', FALSE)) {
+    return;
+  }
+
+  $route_match = \Drupal::routeMatch();
+  $node = $route_match->getParameter('node');
+
+  if ($node instanceof NodeInterface && $node->bundle() === 'event') {
+    $strip = function (&$elements) use (&$strip) {
+      if (!is_array($elements)) {
+        return;
+      }
+      foreach ($elements as $k => &$child) {
+        if (is_array($child)) {
+          $plugin_id = $child['#plugin_id'] ?? ($child['content']['#plugin_id'] ?? null);
+          if ($plugin_id === 'system_messages_block') {
+            unset($elements[$k]);
+            continue;
+          }
+          $strip($child);
+        }
+      }
+    };
+    $strip($page);
+  }
+
+  _myeventlane_theme_sanitize_cache_recursive($page, ['page']);
+}
+
+/**
+ * HTML preprocess.
+ */
+function myeventlane_theme_preprocess_html(&$variables) {
+  $variables['#attached']['library'][] = 'myeventlane_theme/global-styling';
+
+  foreach (['max_age', 'contexts', 'tags'] as $illegal) {
+    if (isset($variables[$illegal])) {
+      unset($variables[$illegal]);
+    }
+  }
+
+  if (isset($variables['attributes']) && $variables['attributes'] instanceof Attribute) {
+    $route = (string) \Drupal::routeMatch()->getRouteName();
+    if (in_array($route, ['myeventlane_boost.boost_page', 'user.login', 'commerce_cart.page', 'commerce_checkout.form'], TRUE)) {
+      $variables['attributes']->addClass('my-custom-class');
+    }
+  }
+}
+
+/**
+ * Page template suggestions.
+ */
+function myeventlane_theme_theme_suggestions_page_alter(array &$suggestions, array $variables): void {
+  $map = [
+    'user.login'    => 'page__user__login',
+    'user.register' => 'page__user__register',
+    'user.pass'     => 'page__user__password',
+  ];
+  $route = \Drupal::routeMatch()->getRouteName();
+  if (isset($map[$route])) {
+    $suggestions[] = $map[$route];
+  }
+
+  $path = \Drupal::service('path.current')->getPath();
+  $segments = explode('/', trim($path, '/'));
+
+  if (!empty($segments[0])) {
+    $safe_segment = str_replace('-', '_', $segments[0]);
+    $suggestions[] = 'page__' . $safe_segment;
+
+    if (!empty($segments[1])) {
+      $safe_second = str_replace('-', '_', $segments[1]);
+      $suggestions[] = 'page__' . $safe_segment . '__' . $safe_second;
+    }
+  }
+}
+
+/**
+ * Entity view preprocess.
+ */
+function myeventlane_theme_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode): void {
+  if ($entity instanceof \Drupal\node\NodeInterface) {
+    file_put_contents('/tmp/_mel_entity_view.log', "✅ " . $entity->label() . " | bundle: " . $entity->bundle() . " | view_mode: $view_mode\n", FILE_APPEND);
+  }
+}
+
+/**
+ * Preprocess block.
+ */
+function myeventlane_theme_preprocess_block(array &$variables): void {
+  if (\Drupal::state()->get('mel_disable_preprocess', FALSE)) {
+    return;
+  }
+
+  $route_match = \Drupal::routeMatch();
+  $node = $route_match->getParameter('node');
+  if (!($node instanceof NodeInterface) || $node->bundle() !== 'event') {
+    return;
+  }
+  $plugin_id = $variables['plugin_id'] ?? '';
+  if ($plugin_id === 'system_messages_block' && isset($variables['elements'])) {
+    $variables['elements']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Commerce order item preprocess.
+ */
+function myeventlane_theme_preprocess_commerce_order_item(&$vars): void {
+  $item = $vars['elements']['#commerce_order_item'] ?? NULL;
+  if ($item && $item->hasField('field_attendee_data') && !$item->get('field_attendee_data')->isEmpty()) {
+    $vars['attendees'] = [];
+  }
+}
+
+/**
+ * Views form preprocess (cart).
+ */
+function myeventlane_theme_preprocess_views_view_form(array &$variables): void {
+  if (\Drupal::state()->get('mel_disable_preprocess', FALSE)) {
+    return;
+  }
+  $view = $variables['view'] ?? NULL;
+  $display_id = $variables['display_id'] ?? NULL;
+
+  if ($view && $view->id() === 'commerce_cart_form' && $display_id === 'commerce_cart_form') {
+    if (!empty($variables['form']) && is_array($variables['form'])) {
+      _myeventlane_theme_sanitize_attributes_recursive($variables['form'], ['views_view_form', 'form']);
+    }
+  }
+}
+
+/**
+ * Views preprocess.
+ */
+function myeventlane_theme_preprocess_views_view(array &$variables): void {
+  if (\Drupal::state()->get('mel_disable_preprocess', FALSE)) {
+    return;
+  }
+
+  $view = $variables['view'] ?? NULL;
+  $display_id = $variables['display_id'] ?? NULL;
+  if ($view && $view->id() === 'commerce_cart_form' && $display_id === 'commerce_cart_form') {
+    if (!empty($variables['rows']) && is_array($variables['rows'])) {
+      _myeventlane_theme_sanitize_attributes_recursive($variables['rows'], ['views_view', 'rows']);
+    }
+  }
+}
+
+/**
+ * Vendor dashboard rows preprocess.
+ */
+function myeventlane_theme_preprocess_views_view_rows(array &$variables) {
+  if ($variables['view']->id() === 'vendor_dashboard' && $variables['view']->current_display === 'page_1') {
+    foreach ($variables['rows'] as $index => &$row) {
+      $node = $row['#row'];
+      if ($node instanceof Node && $node->bundle() === 'event') {
+        $boost_expiry_raw = $node->get('field_boost_expiry')->value;
+        $boost_expiry = $boost_expiry_raw ? strtotime($boost_expiry_raw) : 0;
+        $row['#row']->boost_expiry = $boost_expiry;
+      }
+    }
+  }
+}
+
+/**
+ * Page preprocess (global + taxonomy logic + menu).
+ */
+function myeventlane_theme_preprocess_page(array &$variables): void {
+  $route_match = \Drupal::routeMatch();
+  $current_route = $route_match->getRouteName();
+  $is_front = $current_route === '<front>' || \Drupal::service('path.matcher')->isFrontPage();
+
+  $class_map = [
+    'music' => 'filter-blue',
+    'arts' => 'filter-yellow',
+    'workshops' => 'filter-coral',
+    'work-shops' => 'filter-coral',
+    'work_shops' => 'filter-coral',
+    'lgbtqi' => 'filter-purple',
+    'movie' => 'filter-gray',
+  ];
+
+  // TERM PAGE LOGIC
+  if (in_array($current_route, [
+    'entity.taxonomy_term.canonical',
+    'view.event_category.page_1',
+    'view.event_category_grid.page_1',
+  ], true)) {
+
+    $term = $route_match->getParameter('taxonomy_term');
+
+    if (!$term) {
+      $alias = trim(\Drupal::request()->getPathInfo(), '/');
+      $system_path = \Drupal::service('path_alias.manager')->getPathByAlias("/$alias");
+
+      if (preg_match('/^\/taxonomy\/term\/(\d+)$/', $system_path, $matches)) {
+        $term = Term::load($matches[1]);
+      }
+    }
+
+    if ($term instanceof \Drupal\taxonomy\Entity\Term) {
+      $flag_id = 'follow_category';
+      $term_id = $term->id();
+      $storage = \Drupal::entityTypeManager()->getStorage('flagging');
+
+      $flagging_ids = $storage->getQuery()
+        ->condition('flag_id', $flag_id)
+        ->condition('entity_type', 'taxonomy_term')
+        ->condition('entity_id', $term_id)
+        ->condition('uid', 0, '>')
+        ->accessCheck(FALSE)
+        ->execute();
+
+      $variables['current_term_flag_count'] = count($flagging_ids);
+      $variables['term_id'] = $term->id();
+      $variables['term_name'] = $term->label();
+      $variables['term_description'] = $term->getDescription();
+
+      $alias_slug = strtolower(str_replace('_', '-', trim($term->toUrl()->toString(), '/')));
+      $variables['category_class'] = $class_map[$alias_slug] ?? 'theme-default';
+
+      $category_terms = [];
+      $all_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('event_category');
+      foreach ($all_terms as $tree_item) {
+        $loaded_term = Term::load($tree_item->tid);
+        if (!$loaded_term) {
+          continue;
+        }
+        $alias = $loaded_term->toUrl()->toString();
+        $slug = str_replace('_', '-', trim($alias, '/'));
+        $category_terms[] = [
+          'id' => $loaded_term->id(),
+          'name' => $loaded_term->getName(),
+          'url' => $alias,
+          'class' => $class_map[strtolower($slug)] ?? 'filter-default',
+        ];
+      }
+      $variables['event_category_terms'] = $category_terms;
+    }
+  }
+
+  // FRONT PAGE
+  if ($is_front) {
+    $variables['term_slug'] = '';
+    try {
+      $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+      $terms = $storage->loadTree('event_category', 0, NULL, TRUE);
+
+      $variables['event_category_terms'] = [];
+      foreach ($terms as $term) {
+        if (method_exists($term, 'isPublished') && !$term->isPublished()) {
+          continue;
+        }
+
+        $alias = $term->toUrl()->toString();
+        $alias_slug = str_replace('_', '-', trim($alias, '/'));
+        $variables['event_category_terms'][] = [
+          'id' => $term->id(),
+          'name' => $term->label(),
+          'url' => $alias,
+          'class' => $class_map[$alias_slug] ?? 'filter-default',
+        ];
+      }
+    }
+    catch (\Throwable $e) {
+      \Drupal::logger('myeventlane_theme')->error('Failed to load event categories: @msg', [
+        '@msg' => $e->getMessage(),
+      ]);
+    }
+  }
+
+  // HEADER NAV LINKS
+  $current_user = \Drupal::currentUser();
+  $roles = $current_user->getRoles();
+  $items = [];
+
+  $items[] = ['title' => 'Home', 'url' => Url::fromRoute('<front>')->toString()];
+  $items[] = ['title' => 'Browse Events', 'url' => Url::fromUserInput('/events')->toString()];
+
+  if ($current_user->isAuthenticated()) {
+    if (in_array('vendor', $roles)) {
+      $items[] = ['title' => 'Dashboard', 'url' => Url::fromUserInput('/dashboard')->toString()];
+      $items[] = ['title' => 'Create Event', 'url' => Url::fromUserInput('/node/add/event')->toString()];
+      $items[] = ['title' => 'My Events', 'url' => Url::fromUserInput('/my-events')->toString()];
+    }
+
+    if (in_array('authenticated', $roles)) {
+      $items[] = ['title' => 'My Tickets', 'url' => Url::fromUserInput('/my-profile')->toString()];
+      $items[] = ['title' => 'My Categories', 'url' => Url::fromUserInput('/my-categories')->toString()];
+    }
+
+    if (in_array('administrator', $roles)) {
+      $items[] = ['title' => 'Admin', 'url' => Url::fromUserInput('/admin')->toString()];
+    }
+
+    $items[] = ['title' => 'Logout', 'url' => Url::fromUserInput('/user/logout')->toString()];
+  }
+  else {
+    $items[] = ['title' => 'Login', 'url' => Url::fromUserInput('/user/login')->toString()];
+    $items[] = ['title' => 'Sign Up', 'url' => Url::fromUserInput('/user/register')->toString()];
+  }
+
+  $variables['header_nav_links'] = $items;
+}
+
+function myeventlane_theme_preprocess_taxonomy_term(&$variables) {
+  $term = $variables['term'];
+
+  if ($term->bundle() === 'event_category') {
+    $flaggings = \Drupal::entityTypeManager()
+      ->getStorage('flagging')
+      ->getQuery()
+      ->condition('flag_id', 'follow_category')
+      ->condition('entity_id', $term->id())
+      ->accessCheck(TRUE)
+      ->count()
+      ->execute();
+
+    $variables['follower_count'] = $flaggings;
+  }
+}
+
+/**
+ * Preprocess for views-view-grouping.html.twig.
+ */
+function myeventlane_theme_preprocess_views_view_grouping(array &$variables): void {
+  $view = $variables['view'] ?? NULL;
+  if (!$view instanceof ViewExecutable) {
+    return;
+  }
+  if ($view->id() !== 'commerce_cart_form' || $view->current_display !== 'commerce_cart_form') {
+    return;
+  }
+
+  $group_title = trim(strip_tags((string) $variables['title']));
+  foreach ($view->result as $row) {
+    $event = $row->_relationship_entities['field_event'] ?? NULL;
+    if (!$event || $event->label() !== $group_title) {
+      continue;
+    }
+    if ($event->hasField('field_image') && !$event->get('field_image')->isEmpty()) {
+      $file = $event->get('field_image')->entity ?? NULL;
+      if ($file) {
+        $build = [
+          '#theme' => 'image_style',
+          '#style_name' => '1_1_square_small',
+          '#uri' => $file->getFileUri(),
+          '#attributes' => ['class' => ['mel-group-image']],
+        ];
+        // Using renderPlain so it doesn’t introduce new render context complications
+        $variables['image'] = \Drupal::service('renderer')->renderPlain($build);
+      }
+    }
+    break;
+  }
+}
+
+
+/* -----------------------------------------------------------------------------
+ * Sanitizers
+ * -------------------------------------------------------------------------- */
+
+/**
+ * Recursively remove invalid non-# 'attributes' keys.
+ */
+function _myeventlane_theme_sanitize_attributes_recursive(array &$element, array $path = []): void {
+  foreach ($element as $k => &$v) {
+    $nextPath = [...$path, (string) $k];
+    if ($k === 'attributes' && !is_array($v)) {
+      \Drupal::logger('myeventlane_theme')->warning(
+        'Removed invalid render array key "attributes" of type @type at path: @path',
+        [
+          '@type' => is_object($v) ? get_class($v) : gettype($v),
+          '@path' => implode(' > ', $nextPath),
+        ]
+      );
+      unset($element[$k]);
+      continue;
+    }
+    if (is_array($v)) {
+      _myeventlane_theme_sanitize_attributes_recursive($v, $nextPath);
+    }
+  }
+}
+
+/**
+ * Recursively normalize cache metadata (#cache / max_age / contexts / tags).
+ */
+function _myeventlane_theme_sanitize_cache_recursive(array &$a, array $path = [], int $depth = 0, int $budget = 50000): void {
+  if (!is_array($a) || $depth > 50) {
+    return;
+  }
+
+  // 1) Move any top-level keys into #cache.
+  foreach (['max_age', 'contexts', 'tags'] as $k) {
+    if (array_key_exists($k, $a)) {
+      $a['#cache'] = isset($a['#cache']) && is_array($a['#cache']) ? $a['#cache'] : [];
+      if ($k === 'max_age') {
+        $a['#cache']['max_age'] = (int) $a[$k];
+      }
+      elseif ($k === 'contexts') {
+        $a['#cache']['contexts'] = _myeventlane_theme_unique_list(array_merge((array) ($a['#cache']['contexts'] ?? []), (array) $a[$k]));
+      }
+      elseif ($k === 'tags') {
+        $a['#cache']['tags'] = _myeventlane_theme_unique_list(array_merge((array) ($a['#cache']['tags'] ?? []), (array) $a[$k]));
+      }
+      unset($a[$k]);
+    }
+  }
+
+  // 2) Flatten nested '#cache' => ['#cache' => …].
+  if (isset($a['#cache']) && is_array($a['#cache']) && isset($a['#cache']['#cache']) && is_array($a['#cache']['#cache'])) {
+    _myeventlane_theme_merge_cache_arrays($a['#cache'], $a['#cache']['#cache']);
+    unset($a['#cache']['#cache']);
+  }
+
+  // 3) Coerce types inside #cache if needed.
+  if (isset($a['#cache']) && is_array($a['#cache'])) {
+    if (isset($a['#cache']['max_age'])) {
+      $a['#cache']['max_age'] = (int) $a['#cache']['max_age'];
+    }
+    foreach (['contexts', 'tags'] as $listKey) {
+      if (isset($a['#cache'][$listKey])) {
+        $a['#cache'][$listKey] = _myeventlane_theme_unique_list((array) $a['#cache'][$listKey]);
+      }
+    }
+  }
+
+  // 4) Recurse into non-# children only
+  foreach ($a as $key => &$child) {
+    if ($key !== '#cache' && is_array($child) && !str_starts_with((string) $key, '#')) {
+      _myeventlane_theme_sanitize_cache_recursive($child, [...$path, (string) $key], $depth + 1, $budget);
+    }
+  }
+  unset($child);
+}
+
+/**
+ * Merge two #cache metadata arrays (min() for max_age; unique merge for contexts/tags).
+ */
+function _myeventlane_theme_merge_cache_arrays(array &$dst, array $src): void {
+  if (array_key_exists('max_age', $src)) {
+    $dst['max_age'] = isset($dst['max_age'])
+      ? min((int) $dst['max_age'], (int) $src['max_age'])
+      : (int) $src['max_age'];
+  }
+  foreach (['contexts','tags'] as $listKey) {
+    if (isset($src[$listKey])) {
+      $dst[$listKey] = _myeventlane_theme_unique_list(array_merge((array) ($dst[$listKey] ?? []), (array) $src[$listKey]));
+    }
+  }
+}
+
+/**
+ * Deduplicate + normalize list of scalars to strings.
+ */
+function _myeventlane_theme_unique_list(array $list): array {
+  $out = [];
+  foreach ($list as $v) {
+    if (is_scalar($v)) {
+      $s = trim((string) $v);
+      if ($s !== '') {
+        $out[$s] = TRUE;
+      }
+    }
+  }
+  return array_keys($out);
+}
+
+function myeventlane_theme_suggestions_flag_alter(array &$suggestions, array $variables) {
+  /** @var \Drupal\flag\Entity\Flag $flag */
+  $flag = $variables['elements']['#flag'];
+
+  if ($flag->id() === 'followed_categories') {
+    $route_match = \Drupal::routeMatch();
+    $view_id = $route_match->getParameter('view_id');
+    $display_id = $route_match->getParameter('display_id');
+
+    // For the taxonomy_term view, display page_1
+    if ($view_id === 'taxonomy_term' && $display_id === 'page_1') {
+      $suggestions[] = 'flag__followed_categories__taxonomy_term__page_1';
+    }
+  }
+}

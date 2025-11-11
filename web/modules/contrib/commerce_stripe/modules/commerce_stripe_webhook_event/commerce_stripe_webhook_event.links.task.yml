@@ -1,0 +1,8 @@
+commerce_stripe_webhook_event.view_webhook_event:
+  title: 'View events'
+  route_name: commerce_stripe_webhook_event.overview
+  base_route: commerce_stripe_webhook_event.overview
+commerce_stripe_webhook_event.purge:
+  title: 'Purge'
+  route_name: commerce_stripe_webhook_event.confirm
+  base_route: commerce_stripe_webhook_event.overview

@@ -1,0 +1,14 @@
+name: Commerce Stock Field
+type: module
+description: Provides a stock level field for Commerce Stock.
+package: Commerce Stock
+dependencies:
+  - commerce:commerce_product
+  - commerce_stock:commerce_stock
+  - commerce_stock:commerce_stock_local
+core_version_requirement: ^10.2 || ^11
+
+# Information added by Drupal.org packaging script on 2025-07-30
+version: '3.0.0'
+project: 'commerce_stock'
+datestamp: 1753893802

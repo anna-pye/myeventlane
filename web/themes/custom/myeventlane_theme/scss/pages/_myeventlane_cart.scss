@@ -1,0 +1,112 @@
+@use "../settings/variables" as vars;
+
+/* Scope to the cart view by machine name */
+.view-commerce-cart-form {
+  .views-row {
+    background: #fff;
+    border-radius: vars.$radius-medium;
+    box-shadow: 0 2px 10px vars.$color-shadow;
+    padding: vars.$spacing-lg;
+    margin: vars.$spacing-lg 0;
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: vars.$spacing-lg;
+    align-items: center;
+  }
+
+  /* image / purchased entity image (if present) */
+  .views-field-field-image img {
+    width: 72px; height: 72px; object-fit: cover;
+    border-radius: 12px; background: vars.$color-bg-muted;
+    display: block;
+  }
+
+  /* title */
+  .views-field-title, .views-field-title-1 {
+    font-weight: vars.$font-weight-bold;
+    font-size: 18px;
+    color: vars.$text-color-main;
+    margin-bottom: 4px;
+  }
+  .views-field-purchased-entity,
+  .views-field-variation-title {
+    font-size: vars.$font-size-small;
+    color: vars.$color-muted-text;
+    margin-top: 2px;
+  }
+
+  /* quantity + remove + totals line */
+  .views-field-edit-quantity,
+  .views-field-remove-button,
+  .views-field-total-price__number,
+  .views-field-unit-price__number {
+    /* normalize inline field spacing */
+    margin: 0;
+  }
+
+  /* center the controls row */
+  .views-field-edit-quantity {
+    display: inline-flex;
+    align-items: center;
+    gap: vars.$spacing-sm;
+  }
+
+  /* make the native number/select look decent inside a pill */
+  .views-field-edit-quantity input[type="number"],
+  .views-field-edit-quantity select {
+    width: 56px;
+    text-align: center;
+    border: 1px solid vars.$border-light-color;
+    border-radius: vars.$radius-pill;
+    padding: 6px 8px;
+    background: #fff;
+  }
+
+  /* unit price (right column, bold) */
+  .views-field-unit-price__number {
+    justify-self: end;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+  }
+
+  /* total price line under controls (if the view shows it) */
+  .views-field-total-price__number {
+    justify-self: end;
+    font-weight: vars.$font-weight-bold;
+    color: vars.$text-color-main;
+  }
+
+  /* remove button ghost style */
+  .views-field-remove-button a,
+  .views-field-remove-button input[type="submit"] {
+    display: inline-flex; align-items: center;
+    height: 36px; padding: 0 vars.$spacing-md;
+    border-radius: vars.$radius-pill;
+    border: 1px solid vars.$border-light-color;
+    background: #fff; text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* form actions (Update cart / Checkout) — style but don't move them */
+  .form-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: vars.$spacing-md; margin-top: vars.$spacing-xl;
+  }
+  .form-actions input[name$="[submit]"] {
+    background: #fff; border: 1px solid vars.$border-light-color;
+    border-radius: vars.$radius-pill; padding: 10px 16px; cursor: pointer;
+  }
+  .form-actions input[name$="[checkout]"] {
+    background: vars.$color-primary; color: #fff; border: 0;
+    border-radius: vars.$radius-pill; padding: 14px 24px;
+    font-weight: vars.$font-weight-semibold;
+    box-shadow: 0 8px 18px vars.$color-shadow;
+  }
+
+  /* mobile */
+  @media (max-width: vars.$breakpoint-md) {
+    .views-row { grid-template-columns: 56px 1fr; }
+    .form-actions { flex-direction: column; align-items: stretch; }
+    .form-actions input[name$="[checkout]"] { width: 100%; padding: 16px 28px; font-size: 18px; }
+  }
+}

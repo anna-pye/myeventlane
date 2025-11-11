@@ -1,0 +1,13 @@
+services:
+  myeventlane_theme.twig_extension:
+    class: Drupal\myeventlane_theme\Twig\Extension\MELThemeExtension
+    tags:
+      - { name: twig.extension }
+      
+  myeventlane.ai_client:
+    class: Drupal\myeventlane\Service\AiClient
+    arguments: ['@http_client', '%myeventlane.ai_base_url%', '%myeventlane.ai_api_key%']
+
+  myeventlane_checkout_paragraph.attendee_renderer:
+    class: Drupal\myeventlane_checkout_paragraph\Service\TicketAttendeeRenderer
+    arguments: ['@renderer']

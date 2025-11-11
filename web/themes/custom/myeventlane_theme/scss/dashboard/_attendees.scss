@@ -1,0 +1,210 @@
+@use "../settings/variables" as vars;
+
+/* ==========================================================================
+   MyEventLane – Vendor Dashboard / Attendees
+   ========================================================================== */
+
+.mel-dashboard-section {
+  background: #fdfaf7;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.mel-section-header,
+.mel-attendee-answers-header {
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 1080px;
+  margin-bottom: 2.5rem;
+  padding-left: 0.5rem;
+
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #293241;
+  }
+
+  small,
+  .mel-sub {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #666;
+    margin-top: 0.25rem;
+  }
+}
+
+.mel-summary {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem auto 2rem;
+  max-width: 600px;
+
+  .mel-summary-stat {
+    background: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #f0e8e2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    strong {
+      display: block;
+      font-size: 1.6rem;
+      color: #f26d5b;
+      line-height: 1.2;
+    }
+
+    span {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  }
+}
+
+.mel-attendee-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.mel-event-card,
+.mel-ticket-block {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0e8e2;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.mel-event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #fdf6f4;
+  border-bottom: 1px solid #f0e8e2;
+
+  .mel-event-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #293241;
+
+      a {
+        color: #293241;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .mel-event-tools {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .mel-event-count {
+      font-size: 0.9rem;
+      color: #6e7ef2;
+    }
+
+    .mel-csv-btn {
+      background: #f26d5b;
+      color: #fff;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: 0.2s ease;
+
+      &:hover {
+        background: (#f26d5b -5%);
+      }
+    }
+  }
+}
+
+.mel-event-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #f0e8e2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.mel-ticket-block__ticket {
+  padding: 1.25rem 0;
+
+  .mel-ticket-title {
+    color: #6e7ef2;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .emoji {
+      font-size: 1.05rem;
+      display: inline-block;
+      transform: translateY(-1px);
+      margin-right: 0.35rem;
+    }
+  }
+}
+
+.mel-table,
+.mel-attendee-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background: #faf7f4;
+    color: #555;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem;
+  }
+
+  td {
+    border-top: 1px solid #f0e8e2;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    color: #293241;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background: #fdfaf7;
+  }
+}
+
+.emoji {
+  display: inline-block;
+  transform: translateY(-1px);
+  margin-right: 0.35rem;
+  font-size: 1rem;
+}

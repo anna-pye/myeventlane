@@ -1,0 +1,66 @@
+@use "../settings/variables" as vars;
+
+// ------------------------------------------------------------
+// MyEventLane – Responsive Menu Styles
+// ------------------------------------------------------------
+.region-primary-menu {
+  .main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: vars.$spacing-lg;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      a {
+        font-family: vars.$font-family-main;
+        color: vars.$text-color-main;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease-in-out;
+
+        &:hover,
+        &:focus {
+          color: vars.$color-primary;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // Mobile menu (Responsive Menu module)
+  .responsive-menu-toggle {
+    display: none;
+    button {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: vars.$color-primary;
+    }
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    .main-menu {
+      flex-direction: column;
+      align-items: flex-start;
+      background: vars.$color-bg-offwhite;
+      padding: vars.$spacing-md;
+      border-radius: vars.$radius-medium;
+      box-shadow: vars.$color-shadow;
+      display: none; // hidden until toggled
+
+      &.responsive-menu-open {
+        display: flex !important;
+      }
+    }
+
+    .responsive-menu-toggle {
+      display: block;
+    }
+  }
+}

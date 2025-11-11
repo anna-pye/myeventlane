@@ -1,0 +1,52 @@
+uuid: 0ff037c8-f6f9-478d-80b0-418087060ed3
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.boost_duration
+    - field.field.commerce_product_variation.boost_duration.commerce_remote_id
+    - field.field.commerce_product_variation.boost_duration.field_boost_days
+    - field.field.commerce_product_variation.boost_duration.field_target_event
+  module:
+    - commerce_price
+id: commerce_product_variation.boost_duration.default
+targetEntityType: commerce_product_variation
+bundle: boost_duration
+mode: default
+content:
+  field_boost_days:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_target_event:
+    type: entity_reference_entity_id
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  price:
+    type: commerce_price_plain
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  commerce_remote_id: true
+  list_price: true
+  product_id: true
+  sku: true

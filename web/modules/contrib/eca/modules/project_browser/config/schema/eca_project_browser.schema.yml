@@ -1,0 +1,27 @@
+eca.event.plugin.project_browser:source_info_alter:
+  type: eca.event.plugin
+  label: 'Alter source plugin info'
+
+action.configuration.eca_project_browser_source_plugin_info_alter:
+  type: mapping
+  label: 'Configuration for the "Project Browser Source Plugin Info Alter" action'
+  mapping:
+    plugin_id:
+      type: string
+      label: 'Plugin'
+      constraints:
+        PluginExists:
+          manager: Drupal\project_browser\Plugin\ProjectBrowserSourceManager
+          interface: '\Drupal\project_browser\Plugin\ProjectBrowserSourceInterface'
+    label:
+      type: string
+      label: 'Label'
+    description:
+      type: string
+      label: 'Description'
+    local_task_title:
+      type: string
+      label: 'Local task: title'
+    local_task_weight:
+      type: weight
+      label: 'Local task: weight'

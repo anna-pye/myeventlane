@@ -1,0 +1,12 @@
+name: 'ECA BPMN'
+type: module
+description: 'Deprecated and being removed in ECA 3.1.0.'
+core_version_requirement: ^11.2
+package: ECA
+lifecycle: deprecated
+lifecycle_link: 'https://www.drupal.org/project/eca/issues/3517784'
+
+# Information added by Drupal.org packaging script on 2025-10-24
+version: '3.0.6'
+project: 'eca'
+datestamp: 1761318915

@@ -1,0 +1,28 @@
+{# themes/custom/myeventlane_theme/templates/region/region--primary-menu.html.twig #}
+
+{% if content %}
+  <nav class="region-primary-menu site-nav navbar navbar-expand-lg bg-body-tertiary" role="navigation" aria-label="Main menu">
+    <div class="container-fluid">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainOffcanvasMenu" aria-controls="mainOffcanvasMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="mainOffcanvasMenu" aria-labelledby="mainOffcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mainOffcanvasLabel">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+          <ul class="navbar-nav">
+            {{ page.primary_menu }}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+{% else %}
+  <p class="debug-msg">⚠️ No menu block found in primary_menu region.</p>
+{% endif %}

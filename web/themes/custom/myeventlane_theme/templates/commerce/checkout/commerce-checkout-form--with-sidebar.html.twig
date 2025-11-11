@@ -1,0 +1,92 @@
+{#
+  MyEventLane Custom Commerce Checkout with Sidebar
+  Template: commerce-checkout-form--with-sidebar.html.twig
+#}
+
+{{ attach_library('core/drupal.dialog') }}
+{{ attach_library('myeventlane_theme/global-scripts') }}
+{{ attach_library('myeventlane_theme/checkout') }}
+{{ checkout_panes.order_summary }}
+
+
+<div class="mel-checkout-layout">
+
+  <div class="mel-checkout-main">
+    {# Payment Info Section #}
+    {% if form.payment_information is defined %}
+      <section class="mel-checkout-section mel-payment-info">
+        <h2 class="mel-section-heading">{{ 'Payment Information'|t }}</h2>
+        {{ form.payment_information }}
+      </section>
+    {% endif %}
+
+    {# Ticket Holder Info Section (everything except excluded keys) #}
+    {{ attach_library('myeventlane_theme/checkout') }}
+
+    <section class="mel-checkout-section mel-ticket-info">
+      <h2 class="mel-section-heading">{{ 'Enter Your Details'|t }}</h2>
+      <p class="mel-section-intro">{{ 'Please fill in your information below.'|t }}</p>
+
+      {% set exclude_keys = [
+        'form_build_id',
+        'form_token',
+        'form_id',
+        'actions',
+        'sidebar',
+        'payment_information'
+      ] %}
+
+      <div class="checkout-step">
+        {% for key, item in form %}
+          {% if key starts with '#' or key in exclude_keys %}
+            {# Skip internal or rendered keys #}
+          {% else %}
+            <div class="checkout-step__field-wrapper">
+              {{ item }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    {# Render hidden fields required for form submission #}
+    {{ form.form_build_id }}
+    {{ form.form_token }}
+    {{ form.form_id }}
+
+    {# Actions Button Row #}
+    {% if form.actions is defined %}
+      <div class="checkout-actions">
+        {{ form.actions }}
+      </div>
+    {% endif %}
+  </div>
+
+  <aside class="mel-checkout-sidebar">
+    <div class="mel-sidebar-box">
+      <div class="mel-sidebar-header">
+        📦 <strong>{{ 'Order Summary'|t }}</strong>
+      </div>
+
+      <div class="mel-sidebar-body">
+        {% if form.sidebar.grouped_order_summary is defined %}
+          {{ form.sidebar.grouped_order_summary }}
+        {% elseif form.sidebar.order_summary is defined %}
+          {{ form.sidebar.order_summary }}
+        {% else %}
+          <p>{{ 'Order summary not found.'|t }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+{% if is_admin %}
+  <div class="twig-debug">
+    <details>
+      <summary>🧪 Twig Debug: Form Keys</summary>
+      <pre>{{ form|keys|join(', ') }}</pre>
+    </details>
+  </div>
+{% endif %}

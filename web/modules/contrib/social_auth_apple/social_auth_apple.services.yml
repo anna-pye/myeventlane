@@ -1,0 +1,4 @@
+services:
+  social_auth_apple.manager:
+    class: Drupal\social_auth_apple\AppleAuthManager
+    arguments: [ '@config.factory', '@logger.factory', '@request_stack' ]

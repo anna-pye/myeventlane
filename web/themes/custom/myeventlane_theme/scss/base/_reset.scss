@@ -1,0 +1,18 @@
+
+@use "../settings/variables" as vars;
+
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: vars.$font-family-main;
+  font-size: vars.$font-size-body;
+  color: vars.$text-color-main;
+  background-color: vars.$color-bg-offwhite;
+}

@@ -1,0 +1,27 @@
+uuid: ac404e40-ee87-4334-b49f-53bc1eefbb4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.footer
+  module:
+    - system
+  theme:
+    - bootstrap5_admin
+_core:
+  default_config_hash: 4Kyeu6B8GdwjgxTWnNoHlRFb3V7Rt2mBrt_gySYmbSk
+id: bootstrap5_admin_footer
+theme: bootstrap5_admin
+region: footer
+weight: -6
+provider: null
+plugin: 'system_menu_block:footer'
+settings:
+  id: 'system_menu_block:footer'
+  label: Footer
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

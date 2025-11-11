@@ -1,0 +1,18 @@
+uuid: f961c6e1-ca5c-4f74-95c6-27c7a4cc810a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_boost_reminder_sent
+field_name: field_boost_reminder_sent
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,25 @@
+uuid: 5fb702c9-6864-4081-9168-e443a275f733
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  enforced:
+    module:
+      - node
+id: node.event.field_event_capacity
+field_name: field_event_capacity
+entity_type: node
+bundle: event
+label: 'Venue capacity (hard cap)'
+description: 'Max total attendees across all ticket types. Leave empty for no cap.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

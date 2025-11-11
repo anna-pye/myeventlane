@@ -1,0 +1,9 @@
+{#
+  Checkout wrapper
+  themes/custom/myeventlane_theme/templates/commerce/commerce-checkout.html.twig
+#}
+{{ attach_library('myeventlane_theme/cart') }}
+<div class="mel-checkout">
+  <h1 class="mel-page-title">{{ 'Checkout'|t }}</h1>
+  {{ form }}
+</div>

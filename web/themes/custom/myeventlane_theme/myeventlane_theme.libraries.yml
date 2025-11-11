@@ -1,0 +1,122 @@
+global:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {}
+  js:
+      js/main.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
+bootstrap:
+  css:
+    theme:
+      https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css: { type: external }
+  js:
+    https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js: { type: external, minified: true }
+
+vendor_dashboard:
+  js:
+    js/theme.js: {}
+  dependencies:
+    - core/jquery
+
+ticket_inline:
+  js:
+    js/ticket-toggle.js: {}
+  dependencies:
+    - core/jquery
+
+event_form_toggle:
+  js:
+    js/ticket-type-toggle.js: {}
+  dependencies:
+    - core/jquery
+
+vendor_analytics_chart:
+  js:
+    js/build/assets/vendor_analytics.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
+forms:
+  css:
+    theme:
+      css/style.css: {}
+
+auth:
+  css:
+    theme:
+      css/style.css: {}
+
+mel_tickets:
+  js:
+    js/mel_tickets.js: {}
+  css:
+    theme:
+      css/components/ticket-card.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+event_display:
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/mel-messages.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/once
+
+ticket_matrix:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/ticket-matrix.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+cart:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/cart-actions.js: {}
+    js/mel-qty.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/once
+
+checkout:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    dist/js/main.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/once
+
+dashboard_analytics:
+  js:
+    https://cdn.jsdelivr.net/npm/chart.js: { type: external, minified: true }
+    js/mel-analytics.js: {}
+  dependencies:
+    - core/jquery

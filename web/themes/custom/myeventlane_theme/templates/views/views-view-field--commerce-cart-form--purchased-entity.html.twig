@@ -1,0 +1,68 @@
+{#
+  Cart rows -> Card layout
+  Works with the default Commerce Cart Form view.
+#}
+
+{{ attach_library('myeventlane_theme/cart') }}
+
+<div class="mel-cart-list">
+  {% for row in rows %}
+    {% set cols = row.columns %}
+
+    {# Safe helpers (avoid notices if a column is missing) #}
+    {% set ev_title   = (cols.title_1 is defined) ? cols.title_1.content : '' %}
+    {% set ev_image   = (cols.field_image is defined) ? cols.field_image.content : '' %}
+    {% set var_title  = (cols.variation_title is defined) ? cols.variation_title.content : '' %}
+    {% set unit       = (cols.unit_price__number is defined) ? cols.unit_price__number.content : '' %}
+    {% set qty        = (cols.edit_quantity is defined) ? cols.edit_quantity.content : '' %}
+    {% set total      = (cols.total_price__number is defined) ? cols.total_price__number.content : '' %}
+    {% set remove     = (cols.remove_button is defined) ? cols.remove_button.content : '' %}
+
+    <article class="mel-cart-card">
+      <div class="mel-cart-card__main">
+
+        <header class="mel-cart-card__head">
+          {% if ev_image %}
+            <div class="mel-cart-card__media">
+              {{ ev_image }}
+            </div>
+          {% endif %}
+
+          <div class="mel-cart-card__titles">
+            {% if ev_title %}
+              <h3 class="mel-cart-card__event">{{ ev_title|render }}</h3>
+            {% endif %}
+            {% if var_title %}
+              <div class="mel-cart-card__variation">
+                🎟️ {{ var_title|render }}
+              </div>
+            {% endif %}
+          </div>
+        </header>
+
+        <div class="mel-cart-card__controls">
+          {% if qty %}
+            <div class="mel-qty" data-mel-qty>
+              {{ qty }}
+            </div>
+          {% endif %}
+
+          {% if unit %}
+            <div class="mel-cart-card__unit"><span>Unit:</span> {{ unit }}</div>
+          {% endif %}
+
+          {% if total %}
+            <div class="mel-cart-card__total"><span>Total:</span> {{ total }}</div>
+          {% endif %}
+
+          {% if remove %}
+            <div class="mel-cart-card__remove">{{ remove }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+</div>
+
+{# Order totals (subtotal/total) render outside the loop; Views adds them after rows #}
+{{ footer }}

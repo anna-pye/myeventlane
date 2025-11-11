@@ -1,0 +1,30 @@
+uuid: 80469a75-944e-4270-9014-43ea391586ff
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - profile
+id: profile.field_profile_image
+field_name: field_profile_image
+entity_type: profile
+type: image
+settings:
+  target_type: file
+  display_field: false
+  display_default: true
+  uri_scheme: public
+  default_image:
+    uuid: e9be6f20-82bc-4726-a76d-e60d244db64e
+    alt: 'Vendor Image'
+    title: 'Vendor Image'
+    width: 128
+    height: 128
+module: image
+locked: false
+cardinality: 2
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

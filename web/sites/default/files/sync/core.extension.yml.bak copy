@@ -1,0 +1,7 @@
+---
+module:
+  system: 0
+  user: 0
+
+theme:
+  claro: 0

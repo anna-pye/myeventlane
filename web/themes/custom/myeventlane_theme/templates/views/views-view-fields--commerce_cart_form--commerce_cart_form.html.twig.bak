@@ -1,0 +1,76 @@
+{#
+  Cart cards built from a Views "Table" style.
+  Relies on field labels set to: Image, Event, Ticket, Quantity, Unit, Total, Remove.
+#}
+
+{% set last_event = '' %}
+
+<div class="mel-cart-list">
+  {% for row in rows %}
+    {# Build a map of label -> column so we can safely fetch values regardless of machine names #}
+    {% set cols = {} %}
+    {% for key, column in row.columns %}
+      {% set h = header[key] is defined ? header[key] : {} %}
+      {% set raw = h.content is defined ? h.content : (h.label ?? '') %}
+      {% set label = (raw|render)|striptags|trim|lower %}
+      {% set cols = cols|merge({ (label): column }) %}
+    {% endfor %}
+
+    {# Extract rendered contents (guard with ?? to avoid errors) #}
+    {% set image   = (cols['image'].content  ?? '') %}
+    {% set event   = (cols['event'].content  ?? '') %}
+    {% set ticket  = (cols['ticket'].content ?? '') %}
+    {% set qty     = (cols['quantity'].content ?? '') %}
+    {% set unit    = (cols['unit'].content   ?? '') %}
+    {% set total   = (cols['total'].content  ?? '') %}
+    {% set remove  = (cols['remove'].content ?? '') %}
+
+    <article class="mel-cart-card">
+      <div class="mel-cart-card__main">
+       {# Example inside your rows loop #}
+        {% set has_event_title = row.columns.event_title is defined and row.columns.event_title.content is not empty %}
+        {% set has_event_image = row.columns.event_image is defined and row.columns.event_image.content is not empty %}
+        {% set has_variation   = row.columns.variation_title is defined and row.columns.variation_title.content is not empty %}
+
+        <header class="mel-cart-card__head">
+          <div class="mel-cart-card__media">
+            {% if has_event_image %}
+              {{ row.columns.event_image.content }}
+            {% endif %}
+          </div>
+
+          <div class="mel-cart-card__titles">
+            {% if has_event_title %}
+              <h3 class="mel-cart-card__event">{{ row.columns.event_title.content }}</h3>
+            {% endif %}
+
+            {# Ticket type / variation (e.g., Full Price, Child) #}
+            {% if has_variation %}
+              <div class="mel-cart-card__variation">{{ row.columns.variation_title.content }}</div>
+            {% endif %}
+          </div>
+        </header>
+
+        <div class="mel-cart-card__controls">
+          <div class="mel-qty" data-mel-qty data-mel-bound="1">
+            <button type="button" class="mel-qty__btn mel-qty__btn--minus">−</button>
+            {{ qty }}
+            <button type="button" class="mel-qty__btn mel-qty__btn--plus">+</button>
+          </div>
+
+          <div class="mel-cart-card__unit">
+            <span>Unit:</span> {{ unit }}
+          </div>
+
+          <div class="mel-cart-card__total">
+            <span>Total:</span> {{ total }}
+          </div>
+
+          <div class="mel-cart-card__remove">
+            {{ remove }}
+          </div>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+</div>

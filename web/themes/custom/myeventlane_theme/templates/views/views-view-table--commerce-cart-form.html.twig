@@ -1,0 +1,120 @@
+{#
+  MyEventLane — Cart grouped by Event
+  - Event title:      c['title']
+  - Variation title:  c['title_1']
+  - Image:            c['field_image']
+  - Start date:       c['field_start_date']
+  - Venue name:       c['field_venue']
+  - Suburb:           c['field_venue_address_dependent_locality']
+  - Qty, Unit, Total, Remove
+#}
+
+
+
+{{ attach_library('myeventlane_theme/cart') }}
+
+{# templates/views-view-fields--my-view.html.twig #}
+
+
+<div class="mel-cart">
+  {% set current_group = '' %}
+  {% set card_open = false %}
+
+  <div class="mel-cart-list">
+    {% for row in rows %}
+      {% set c = row.columns %}
+
+      {# ---- normalize (render → strings where needed) ---- #}
+      {% set ev_title  = c['title'] is defined ? (c['title'].content|render|striptags|trim) : '' %}
+      {% set ev_image  = c['field_image'] is defined ? c['field_image'].content : '' %}
+      {% set ev_date   = c['field_start_date'] is defined ? c['field_start_date'].content : '' %}
+      {% set ev_venue  = c['field_venue'] is defined ? (c['field_venue'].content|render|striptags|trim) : '' %}
+      {% set ev_suburb = c['field_venue_address_dependent_locality'] is defined ? (c['field_venue_address_dependent_locality'].content|render|striptags|trim) : '' %}
+
+      {% set var_title = c['title_1'] is defined ? (c['title_1'].content|render|striptags|trim) : '' %}
+      {% set qty       = c['edit_quantity'] is defined ? c['edit_quantity'].content : '' %}
+      {% set unit      = c['unit_price__number'] is defined ? c['unit_price__number'].content : '' %}
+      {% set total     = c['total_price__number'] is defined ? c['total_price__number'].content : '' %}
+      {% set remove    = c['remove_button'] is defined ? c['remove_button'].content : '' %}
+
+      {# ---- open a new card when group (event title) changes ---- #}
+      {% set group_key = ev_title %}
+      {% if group_key != current_group %}
+        {% if card_open %}
+              </div>  {# .mel-cart-card__body #}
+            </div>    {# .mel-cart-card__main #}
+          </article>
+        {% endif %}
+
+        <article class="mel-cart-card">
+          <div class="mel-cart-card__main">
+            <header class="mel-cart-card__head">
+              {% if ev_image %}
+                <div class="mel-cart-card__media">{{ ev_image }}</div>
+              {% endif %}
+              <div class="mel-cart-card__titles">
+                {% if ev_title %}
+                  <h3 class="mel-cart-card__event">{{ ev_title }}</h3>
+                {% endif %}
+                <div class="mel-cart-card__meta">
+                  {% if ev_date %}
+                    <span class="mel-cart-card__date">{{ ev_date }}</span>
+                  {% endif %}
+                  {% if ev_venue or ev_suburb %}
+                    <span class="mel-cart-card__venue">
+                      {{ ev_venue }}{% if ev_venue and ev_suburb %}, {% endif %}{{ ev_suburb }}
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+            </header>
+            <div class="mel-cart-card__body">
+        {% set current_group = group_key %}
+        {% set card_open = true %}
+      {% endif %}
+
+      {# ---- variation line ---- #}
+      <div class="mel-cart-line">
+        <div class="mel-cart-line__info">
+          {% if var_title %}
+            <div class="mel-cart-card__variation">🎟️ {{ var_title }}</div>
+          {% endif %}
+          {% if unit %}
+            <div class="mel-cart-card__unit"><span>Unit:</span> {{ unit }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mel-cart-line__controls">
+          {% if qty %}
+            <div class="mel-qty" data-mel-stepper data-mel-qty>
+              <button type="button" class="mel-step" data-step="-1" aria-label="Decrease">−</button>
+              {{ qty }}
+              <button type="button" class="mel-step" data-step="1" aria-label="Increase">+</button>
+            </div>
+          {% endif %}
+          {% if total %}
+            <div class="mel-cart-card__total"><span>Total:</span> {{ total }}</div>
+          {% endif %}
+          {% if remove %}
+            <div class="mel-cart-card__remove">{{ remove }}</div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+
+    {# ---- close last open card ---- #}
+    {% if card_open %}
+          </div>
+        </div>
+      </article>
+    {% endif %}
+  </div>
+
+  {{ footer }}
+
+  <div class="mel-cart-actions mel-cart-actions--bottom">
+     <a href="/" class="button button--secondary mel-continue-btn" data-mel-continue>
+        Continue browsing events
+      </a>
+  </div>
+</div>

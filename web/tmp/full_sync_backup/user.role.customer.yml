@@ -1,0 +1,16 @@
+uuid: ff9ef4d2-14bc-4396-8a89-ca7dcb810c0b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.rsvp_submission
+  module:
+    - node
+    - system
+id: customer
+label: Customer
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'create rsvp_submission content'

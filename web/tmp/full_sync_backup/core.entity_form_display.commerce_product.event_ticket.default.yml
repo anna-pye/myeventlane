@@ -1,0 +1,54 @@
+uuid: 2a3e2488-f8de-4669-a52d-7ca8be38937e
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.event_ticket
+  module:
+    - commerce
+    - tagify
+id: commerce_product.event_ticket.default
+targetEntityType: commerce_product
+bundle: event_ticket
+mode: default
+content:
+  stores:
+    type: commerce_entity_select
+    weight: 2
+    region: content
+    settings:
+      hide_single_entity: true
+      autocomplete_threshold: 7
+      autocomplete_size: 60
+      autocomplete_placeholder: ''
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  variations:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  publish_on: true
+  publish_state: true
+  status: true
+  uid: true
+  unpublish_on: true
+  unpublish_state: true
