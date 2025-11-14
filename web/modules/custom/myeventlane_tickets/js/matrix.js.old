@@ -1,0 +1,33 @@
+(function (Drupal, once, drupalSettings) {
+  'use strict';
+  Drupal.behaviors.melTicketsMatrix = {
+    attach(context) {
+      // Minimal behavior to pin one submit and (optionally) print prices.
+      const root = once('melTicketsMatrix', '.mel-ticket-matrix__form', context);
+      root.forEach((el) => {
+        const settings = (drupalSettings.melTicketMatrixForm || {});
+        // Example: display prices next to radios (if desired).
+        const radios = el.querySelectorAll('input[type=radio]');
+        radios.forEach((r) => {
+          const id = r.value;
+          const label = el.querySelector('label[for="' + r.id + '"]');
+          if (label && settings.prices && settings.prices[id] && !label.querySelector('.mel-price')) {
+            const span = document.createElement('span');
+            span.className = 'mel-price';
+            span.textContent = ' ' + settings.prices[id];
+            label.appendChild(span);
+          }
+        });
+        const pinned = el.closest('.mel-ticket-matrix').querySelector('.mel-pinned-submit');
+        if (pinned) {
+          pinned.addEventListener('click', () => {
+            const real = el.querySelector('input[type=submit], button[type=submit]');
+            if (real) {
+              real.click();
+            }
+          });
+        }
+      });
+    }
+  };
+})(Drupal, once, drupalSettings);

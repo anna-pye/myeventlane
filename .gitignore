@@ -1,0 +1,10 @@
+/vendor/
+node_modules/
+/web/sites/default/files/
+/web/sites/default/settings.php
+/web/sites/default/settings.local.php
+/web/sites/default/services.yml
+/.ddev/import-db/
+/config/sync/*.bak.yml
+/.idea/
+/.DS_Store

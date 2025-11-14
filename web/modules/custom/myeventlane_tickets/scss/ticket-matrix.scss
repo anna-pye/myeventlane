@@ -1,0 +1,164 @@
+@use "sass:color";
+@use "variables" as vars;
+
+/* ===== Ticket Matrix Wrapper ===== */
+.mel-ticket-matrix {
+  background: vars.$color-bg-offwhite;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: grid;
+  gap: vars.$spacing-md;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: vars.$color-navy;
+  }
+}
+
+/* ===== Ticket Row ===== */
+.mel-ticket-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  border-bottom: 1px solid vars.$border-light-color;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$text-color-main;
+
+    .mel-price-sub {
+      font-size: vars.$font-size-small;
+      color: vars.$color-muted-text;
+      margin-top: 2px;
+    }
+  }
+}
+
+/* ===== Stepper (Quantity) ===== */
+.mel-stepper {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  background: vars.$color-bg-muted;
+  border-radius: 999px;
+  padding: 4px;
+
+  .mel-qty-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid vars.$border-light-color;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s ease;
+
+    &:hover,
+    &:focus {
+      background: vars.$color-primary;
+      color: #fff;
+      outline: 2px solid vars.$color-outline-focus;
+    }
+  }
+
+  .mel-stepper__input {
+    min-width: 32px;
+    text-align: center;
+    font-weight: 600;
+  }
+}
+
+/* ===== Pinned Submit (Add to Cart) ===== */
+.mel-pinned-submit {
+  margin-top: vars.$spacing-md;
+  width: 100%;
+  border-radius: 999px;
+  background: vars.$color-primary;
+  color: #fff;
+  font-weight: 600;
+  padding: 14px;
+  text-align: center;
+  transition: transform 0.08s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    box-shadow: 0 8px 28px vars.$color-shadow;
+    transform: translateY(-1px);
+  }
+}
+
+/* ===== Ticket Info Row (Overrides?) ===== */
+.mel-ticket-row {
+  padding: 16px;
+  background: #f4f4f4;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+
+.mel-ticket-type {
+  font-size: 16px;
+  font-weight: 600;
+  color: vars.$color-navy;
+}
+
+.mel-price {
+  font-size: 14px;
+  color: vars.$color-accent;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: vars.$breakpoint-md) {
+  .mel-ticket-row {
+    padding: vars.$spacing-md;
+  }
+
+  .mel-pinned-submit {
+    font-size: 16px;
+    height: 52px;
+  }
+}
+.mel-ticket-matrix { background:#fef5ec; border-radius:16px; padding:24px; margin-bottom:24px; }
+.mel-ticket-matrix__form { display:grid; gap:16px; }
+.mel-ticket-row { display:grid; grid-template-columns:1fr auto; align-items:center; gap:16px; padding:16px 20px; border:1px solid #f2f2f2; border-radius:12px; background:#fff; box-shadow:0 1px 0 rgba(0,0,0,.04);}
+.mel-ticket-row__left .mel-ticket-type { font-weight:600; font-size:16px; color:#293241; }
+.mel-ticket-row__left .mel-ticket-price { font-size:14px; color:#6e7ef2; }
+.mel-qty-dock { display:inline-flex; align-items:center; gap:8px; }
+.mel-qty-btn { border:1px solid #eee; border-radius:999px; padding:6px 12px; background:#fff; cursor:pointer; font-weight:700; line-height:1; }
+.mel-stepper__input { width:56px; text-align:center; font-weight:600; padding:6px 8px; border:1px solid #eee; border-radius:8px; }
+.mel-ticket-matrix__actions .button, .mel-pinned-submit { width:100%; border-radius:999px; background:#f26d5b; color:#fff; padding:12px 18px; border:0; box-shadow:0 8px 22px rgba(0,0,0,.08); }
+@media (max-width:768px){ .mel-ticket-row { grid-template-columns:1fr 120px; } .mel-qty-btn{ width:40px; height:40px; padding:0; } }
+.visually-hidden{ position:absolute !important; width:1px !important; height:1px !important; margin:-1px !important; padding:0 !important; border:0 !important; clip:rect(0 0 0 0) !important; overflow:hidden !important; }
+.mel-stepper--shake { animation: melShake 0.3s ease; }
+@keyframes melShake { 0%,100%{ transform:translateX(0);} 25%{ transform:translateX(-4px);} 75%{ transform:translateX(4px);} }
+
+.mel-ticket-matrix{display:block}
+.mel-ticket-matrix-card{background:#fff;border-radius:12px;padding:16px;margin:12px 0;box-shadow:0 6px 20px rgba(27,39,51,.08)}
+.mel-ticket-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:10px 12px;border:1px solid #f0f0f0;border-radius:12px;margin:8px 0;background:#fff}
+.mel-ticket-label{font-weight:600}
+.mel-qty-input{width:64px;text-align:center;padding:6px 8px;border:1px solid #e6e6e6;border-radius:10px}
+.mel-ticket-row::after{content:"";display:none}
+.mel-ticket-row .mel-qty-input{margin-left:6px}
+.mel-error{color:#b00020;margin:8px 0}
+.visually-hidden{position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;overflow:hidden}
+
+/* +/- buttons (no extra HTML required if you prefer; but easiest is to place small buttons next to inputs) */
+.mel-ticket-row .mel-qty-input{vertical-align:middle}
+.mel-ticket-row .mel-qty-input::before,
+.mel-ticket-row .mel-qty-input::after{display:none}
+
+/* If you want visible buttons, add these small elements in twig via attributes or JS.
+   Simpler: let the theme add two buttons right of each input using generated content. */
+.mel-ticket-row .mel-qty-input + .mel-stepper-btn{margin-left:6px}
+.mel-stepper-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid #e6e6e6;border-radius:999px;background:#fafafa;cursor:pointer;font-weight:700}
+@media (max-width:768px){
+  .mel-ticket-row{grid-template-columns:1fr auto}
+}

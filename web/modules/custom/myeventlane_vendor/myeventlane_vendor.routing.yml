@@ -1,0 +1,7 @@
+myeventlane_vendor_dashboard.connect_stripe:
+  path: '/connect-stripe'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\StripeConnectController::placeholder'
+    _title: 'Stripe Connect (Coming Soon)'
+  requirements:
+    _permission: 'access content'

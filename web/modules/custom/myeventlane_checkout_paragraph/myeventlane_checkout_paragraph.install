@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Adds field_event to commerce_product if it does not exist.
+ */
+function myeventlane_checkout_paragraph_update_9001() {
+  $field_name = 'field_event';
+  $bundle = 'default';
+  $entity_type = 'commerce_product';
+
+  if (\Drupal::entityTypeManager()->getStorage('field_storage_config')->load("$entity_type.$field_name")) {
+    \Drupal::logger('myeventlane')->notice('⚠️ field_event already exists on commerce_product.');
+    return;
+  }
+
+  // Create field storage.
+  $field_storage = \Drupal\field\Entity\FieldStorageConfig::create([
+    'field_name' => $field_name,
+    'entity_type' => $entity_type,
+    'type' => 'entity_reference',
+    'settings' => [
+      'target_type' => 'node',
+    ],
+    'cardinality' => 1,
+  ]);
+  $field_storage->save();
+
+  // Create field instance on the 'default' product type.
+  $field_instance = \Drupal\field\Entity\FieldConfig::create([
+    'field_name' => $field_name,
+    'entity_type' => $entity_type,
+    'bundle' => $bundle,
+    'label' => 'Event',
+    'settings' => [
+      'handler' => 'default',
+      'handler_settings' => [
+        'target_bundles' => ['event' => 'event'],
+      ],
+    ],
+    'required' => FALSE,
+  ]);
+  $field_instance->save();
+
+  \Drupal::service('entity_display.repository')
+    ->getFormDisplay($entity_type, $bundle, 'default')
+    ->setComponent($field_name, ['type' => 'entity_reference_autocomplete'])
+    ->save();
+
+  \Drupal::service('entity_display.repository')
+    ->getViewDisplay($entity_type, $bundle, 'default')
+    ->setComponent($field_name, ['type' => 'entity_reference_label'])
+    ->save();
+
+  \Drupal::logger('myeventlane')->notice('✅ field_event added to commerce_product.');
+}

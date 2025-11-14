@@ -1,0 +1,11 @@
+uuid: bfecad8d-6ab1-4678-98db-3ded287b0c55
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_auth
+id: social_auth.token
+label: Token
+description: null
+targetEntityType: social_auth
+cache: true

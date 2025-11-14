@@ -1,0 +1,10 @@
+myeventlane_profile.account_link:
+  title: 'My Profile'
+  description: 'View your RSVPs, tickets, and settings'
+  route_name: myeventlane_profile.dashboard
+  menu_name: account
+  weight: 5
+  options:
+    attributes:
+      class:
+        - 'menu-item--my-profile'

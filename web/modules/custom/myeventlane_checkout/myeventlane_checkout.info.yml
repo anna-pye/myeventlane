@@ -1,0 +1,9 @@
+name: 'MyEventLane Checkout'
+type: module
+description: 'Checkout pane for capturing ticket holder information per ticket.'
+core_version_requirement: ^11
+package: 'MyEventLane'
+dependencies:
+  - commerce_checkout
+  - paragraphs
+  - entity

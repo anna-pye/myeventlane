@@ -1,0 +1,9 @@
+boost_ui:
+  version: 1.x
+  css:
+    component:
+      css/styles.css: {}
+  js:
+    js/boost-ui.js: {}
+  dependencies:
+    - core/drupal

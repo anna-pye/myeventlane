@@ -1,0 +1,99 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Install hooks for myeventlane_rsvp.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function myeventlane_rsvp_schema() {
+  $schema['myeventlane_rsvp'] = [
+    'description' => 'Stores RSVP submissions for events.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'event_nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Related event node id.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'User id of submitter (if logged in).',
+      ],
+      'first_name' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+      ],
+      'last_name' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 190,
+        'not null' => TRUE,
+      ],
+      'comments' => [
+        'type' => 'varchar',
+        'length' => 512,
+        'not null' => FALSE,
+      ],
+      'status' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => 'active',
+      ],
+      'cancel_reason' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'cancelled_by' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'langcode' => [
+        'type' => 'varchar',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => 'en',
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'changed' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'event_nid' => ['event_nid'],
+      'uid' => ['uid'],
+      'email' => ['email'],
+      'status' => ['status'],
+      'changed' => ['changed'],
+    ],
+  ];
+
+  return $schema;
+}

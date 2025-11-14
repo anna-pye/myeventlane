@@ -1,0 +1,20 @@
+ticket_matrix:
+  version: 1.x
+  css:
+    theme:
+      css/ticket-matrix.css: {}
+  js:
+    js/ticket-matrix.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+
+event_display:
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/mel-messages.js: {}
+  dependencies:
+    - core/drupal

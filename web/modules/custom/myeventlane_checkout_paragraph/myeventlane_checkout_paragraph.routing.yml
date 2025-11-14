@@ -1,0 +1,37 @@
+myeventlane_checkout_paragraph.vendor_attendees:
+  path: '/vendor/orders/{commerce_order}/attendees'
+  defaults:
+    _controller: '\Drupal\myeventlane_checkout_paragraph\Controller\VendorOrderController::attendees'
+    _title: 'Attendee Details'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      commerce_order:
+        type: entity:commerce_order
+
+myeventlane_checkout_paragraph.export_csv:
+  path: '/vendor/export-attendees/{event}/download'
+  defaults:
+    _controller: '\Drupal\myeventlane_checkout_paragraph\Controller\AttendeeExportController::export'
+    _title: 'Export Attendees CSV'
+  requirements:
+    _permission: 'access content'
+    # optional: event: \d+
+  options:
+    parameters:
+      event:
+        type: entity:node
+
+myeventlane_checkout_paragraph.export_csv_queue:
+  path: '/vendor/export-attendees/{event}/request'
+  defaults:
+    _controller: '\Drupal\myeventlane_checkout_paragraph\Controller\AttendeeExportController::queueExport'
+    _title: 'Request CSV Export'
+  requirements:
+    _permission: 'access content'
+    # optional: event: \d+
+  options:
+    parameters:
+      event:
+        type: entity:node

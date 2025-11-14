@@ -1,0 +1,11 @@
+name: 'MyEventLane Vendor'
+type: module
+description: 'Provides vendor store integration for MyEventLane including automatic store creation, Stripe Connect, and vendor profiles.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - commerce
+  - profile
+  - address
+  - media
+  - entity_reference_revisions

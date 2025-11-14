@@ -1,0 +1,8 @@
+name: 'MyEventLane Cart'
+type: module
+description: 'Custom cart logic for per-ticket attendee details.'
+core_version_requirement: ^11
+package: 'MyEventLane'
+dependencies:
+  - commerce_cart
+  - paragraphs

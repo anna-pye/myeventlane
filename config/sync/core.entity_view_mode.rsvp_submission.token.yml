@@ -1,0 +1,11 @@
+uuid: 20f991c8-98f7-4416-8236-d6a3eac38989
+langcode: en
+status: true
+dependencies:
+  module:
+    - myeventlane_rsvp
+id: rsvp_submission.token
+label: Token
+description: null
+targetEntityType: rsvp_submission
+cache: true

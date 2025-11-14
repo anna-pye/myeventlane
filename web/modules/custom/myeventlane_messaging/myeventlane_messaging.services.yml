@@ -1,0 +1,50 @@
+services:
+  logger.channel.myeventlane_messaging:
+    parent: logger.channel_base
+    arguments: ['myeventlane_messaging']
+
+  myeventlane_messaging.message_renderer:
+    class: Drupal\myeventlane_messaging\Service\MessageRenderer
+    arguments:
+      - '@twig'
+      - '@renderer'
+
+  myeventlane_messaging.manager:
+    class: Drupal\myeventlane_messaging\Service\MessagingManager
+    arguments:
+      - '@config.factory'
+      - '@plugin.manager.mail'
+      - '@language_manager'
+      - '@queue'
+      - '@logger.channel.myeventlane_messaging'
+      - '@myeventlane_messaging.message_renderer'
+
+  myeventlane_messaging.scheduler.boost:
+    class: Drupal\myeventlane_messaging\Scheduler\BoostReminderScheduler
+    arguments:
+      - '@logger.channel.myeventlane_messaging'
+      - '@datetime.time'
+      - '@entity_type.manager'
+      - '@queue'
+      - '@date.formatter'
+
+  myeventlane_messaging.scheduler.cart:
+    class: Drupal\myeventlane_messaging\Scheduler\CartAbandonedScheduler
+    arguments:
+      - '@logger.channel.myeventlane_messaging'
+      - '@datetime.time'
+      - '@entity_type.manager'
+      - '@queue'
+      - '@state'
+      - '@myeventlane_messaging.manager'
+
+  myeventlane_messaging.scheduler.event:
+    class: Drupal\myeventlane_messaging\Scheduler\EventReminderScheduler
+    arguments:
+      - '@logger.channel.myeventlane_messaging'
+      - '@datetime.time'
+      - '@entity_type.manager'
+      - '@queue'
+      - '@state'
+      - '@myeventlane_messaging.manager'
+      - '@date.formatter'

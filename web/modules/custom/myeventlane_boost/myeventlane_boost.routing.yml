@@ -1,0 +1,17 @@
+myeventlane_boost.purchase:
+  path: '/event/{node}/boost'
+  defaults:
+    _controller: '\Drupal\myeventlane_boost\Controller\BoostController::build'
+    _title_callback: '\Drupal\myeventlane_boost\Controller\BoostController::title'
+  requirements:
+    _custom_access: '\Drupal\myeventlane_boost\Controller\BoostController::access'
+    node: \d+
+
+myeventlane_boost.bridge_add_to_cart:
+  path: '/boost/bridge/{node}'
+  defaults:
+    _controller: '\Drupal\myeventlane_boost\Controller\BoostController::bridgeAddToCart'
+    _title: 'Add Boost to Cart'
+  requirements:
+    _permission: 'access content'
+    node: \d+

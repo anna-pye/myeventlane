@@ -1,0 +1,52 @@
+// scss/_variables.scss — MyEventLane Design Tokens
+// -----------------------------
+// ⚠️ NOTE (2025-07-30): Sass 3.x color functions update
+// If you use `darken()` or `lighten()` in other files, use the new color.adjust() function.
+// Add `@use "sass:color";` at the top of any file that uses color functions.
+// -----------------------------
+
+$font-family-main: 'Nunito', sans-serif;
+$font-family-fallback: sans-serif;
+
+$font-size-h1: 36px;
+$font-size-h2: 28px;
+$font-size-h3: 22px;
+$font-size-body: 16px;
+$font-size-small: 14px;
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$text-color-main: #293241;
+
+$color-primary: #f26d5b; // Coral
+$color-accent: #6e7ef2; // Purple
+$color-highlight: #f5c04c; // Yellow
+$color-bg-offwhite: #fef5ec; // Off-white
+$color-navy: #2c3e50; 
+$color-bg-muted: #f4f4f4;
+$color-muted-text: #888;
+$color-disabled: #ccc;
+$color-placeholder: #888;
+$color-outline-focus: #f26d5b;
+$color-shadow: rgba(0, 0, 0, 0.06);
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
+$spacing-2xl: 40px;
+$spacing-3xl: 48px;
+
+$radius-pill: 999px;
+$radius-medium: 16px;
+$radius-small: 12px;
+$border-light-width: 1px;
+$border-light-style: solid;
+$border-light-color: #f4f4f4;
+$border-light: 1px solid #f4f4f4;
+
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1200px;

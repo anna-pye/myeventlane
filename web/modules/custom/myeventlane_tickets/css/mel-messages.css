@@ -1,0 +1,46 @@
+/* Host area just above the Tickets form */
+.mel-messages-host {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 12px 0;
+}
+
+/* Base message card */
+.mel-message-upgraded,
+.mel-toast {
+  border-radius: 14px;
+  padding: 12px 14px;
+  line-height: 1.35;
+  box-shadow: 0 8px 28px rgba(20,20,20,.08);
+  border: 1px solid #f3ece7;
+  background: #fff7f3;       /* soft coral wash */
+  color: #293241;            /* navy text */
+  font-weight: 500;
+}
+
+/* Map core message types to MEL accents */
+.mel-message-upgraded.status,
+.mel-toast.status   { border-color: #e7f5ef; background: #f2fbf7; }
+.mel-message-upgraded.warning,
+.mel-toast.warning  { border-color: #fff1cc; background: #fff8e0; }
+.mel-message-upgraded.error,
+.mel-toast.error    { border-color: #ffd7d7; background: #fff0f0; }
+
+/* Toast animation */
+.mel-toast {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease, max-height .3s ease;
+}
+.mel-toast--show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mel-toast--hide {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* Optional: icon bullets inside messages */
+.mel-message-upgraded ul { margin: .25rem 0 0 1rem; }
+.mel-message-upgraded a  { color: #f26d5b; text-underline-offset: 2px; }

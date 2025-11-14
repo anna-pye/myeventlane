@@ -1,0 +1,45 @@
+<div class="mel-card-wrapper">
+  <div class="mel-event-card">
+
+    {# 🖼 Event Image #}
+    {% if image %}
+      <div class="mel-event-image">{{ image }}</div>
+    {% else %}
+      <div class="mel-event-image placeholder">
+        <img src="/themes/custom/myeventlane_theme/assets/img/placeholder.svg" alt="No image" />
+      </div>
+    {% endif %}
+
+    <div class="mel-event-content">
+      <h2 class="mel-event-title">{{ title }}</h2>
+
+      <div class="mel-event-meta">
+        <strong>Type:</strong> {{ type }}<br>
+        {% if venue %}<strong>Venue:</strong> {{ venue }}<br>{% endif %}
+        {% if ticket_limit %}<strong>Ticket limit:</strong> {{ ticket_limit }}<br>{% endif %}
+
+        {# 🎟 Ticket or RSVP count #}
+
+        {% if count is not null and count is defined %}
+          {% if type == 'RSVP' %}
+            <strong>RSVPs:</strong> {{ count }}
+          {% elseif type == 'Paid' %}
+            <strong>Tickets sold:</strong> {{ count }}
+          {% else %}
+            <strong>Total:</strong> {{ count }}
+          {% endif %}
+
+        {% else %}
+          <div class="mel-ticket-count mel-muted">No bookings yet</div>
+        {% endif %}
+      </div>
+
+      <div class="mel-event-buttons">
+        {% if rsvp_link %}{{ rsvp_link }}{% endif %}
+        {% if csv_link %}{{ csv_link }}{% endif %}
+        {% if analytics %}{{ analytics }}{% endif %}
+      </div>
+      
+    </div>
+  </div>
+</div>

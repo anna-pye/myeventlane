@@ -1,0 +1,64 @@
+/**
+ * @file
+ * Stripe review pane styles for the Commerce Stripe module.
+ */
+
+/*
+ * Hide the form actions if the form will autosubmit.
+ */
+.form-actions.stripe-review-autosubmit {
+  display: none;
+}
+
+/*
+ * Style the loading overlay and spinner for form autosubmit.
+ */
+.stripe-review-autosubmit-loader {
+  position: fixed;
+  z-index: 98;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(255, 255, 255, 0.8);
+}
+.stripe-review-autosubmit-loader::after {
+  position: fixed;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  margin: -3.3rem 0 0 -3.3rem;
+  content: "";
+  transform: translate(-50%, -50%);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+  border-top: 12px solid rgb(0, 0, 0, 0.15);
+  border-right: 12px solid rgb(0, 0, 0, 0.15);
+  border-bottom: 12px solid rgb(0, 0, 0, 0.15);
+  border-left: 12px solid rgb(0, 0, 0, 0.4);
+  border-radius: 50%;
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,38 @@
+<?php
+
+use Drupal\commerce_store\Entity\Store;
+use Drupal\node\NodeInterface;
+use Drupal\user\Entity\User;
+
+// function myeventlane_vendor_node_presave(NodeInterface $node) {
+//   if ($node->bundle() === 'event') {
+//     $account = \Drupal::currentUser();
+//     $uid = $account->id();
+
+//     // Only run for ticketed events
+//     if ($node->get('field_ticket_type')->value === 'paid') {
+//       // Check if store already exists
+//       $stores = \Drupal::entityTypeManager()
+//         ->getStorage('commerce_store')
+//         ->loadByProperties(['uid' => $uid]);
+
+//       if (empty($stores)) {
+//         // Create new store for vendor
+//         $store = Store::create([
+//           'type' => 'default',
+//           'uid' => $uid,
+//           'name' => $account->getDisplayName() . "'s Store",
+//           'email' => $account->getEmail(),
+//           'default' => FALSE,
+//           'timezone' => date_default_timezone_get(),
+//         ]);
+//         $store->save();
+//       } else {
+//         $store = reset($stores);
+//       }
+
+//       // Attach store to event
+//       $node->set('field_store', $store->id());
+//     }
+//   }
+// }

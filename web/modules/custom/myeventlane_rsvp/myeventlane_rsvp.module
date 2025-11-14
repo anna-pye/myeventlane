@@ -1,0 +1,346 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+
+/**
+ * Sends a confirmation email when a new RSVP is submitted (optional).
+ *
+ * Implements hook_entity_insert().
+ */
+function myeventlane_rsvp_entity_insert(EntityInterface $entity): void {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'rsvp_submission') {
+    \Drupal::service('myeventlane_rsvp.email_service')->sendConfirmation($entity);
+  }
+}
+
+/**
+ * Injects "Create RSVP" inline panel on Event form and wires an entity builder.
+ *
+ * Implements hook_form_alter().
+ */
+function myeventlane_rsvp_form_alter(array &$form, FormStateInterface $form_state, $form_id): void {
+  // Only node add/edit forms (avoid delete and others).
+  if (strpos($form_id, 'node_') !== 0 || str_ends_with($form_id, '_delete_form')) {
+    return;
+  }
+
+  $form_object = $form_state->getFormObject();
+    $entity = NULL;
+
+    if (method_exists($form_object, 'getEntity')) {
+      $entity = $form_object->getEntity();
+    }
+
+    if (!$entity instanceof NodeInterface || !in_array($entity->bundle(), ['event', 'rsvp_submission'])) {
+      return;
+    }
+
+  // Keep ECA from touching this form if eca_form is enabled.
+  $form['#eca_skip'] = TRUE;
+
+  // Ticket type & has existing RSVP?
+  $ticket_type = '';
+  if ($entity->hasField('field_ticket_type')) {
+    $ticket_type = strtolower(trim((string) $entity->get('field_ticket_type')->value));
+  }
+  $has_rsvp = $entity->hasField('field_rsvp_target') && !$entity->get('field_rsvp_target')->isEmpty();
+
+  if ($ticket_type === 'rsvp' && !$has_rsvp) {
+    $form['#tree'] = TRUE;
+
+    $weight = isset($form['field_ticket_type']['#weight'])
+      ? ((int) $form['field_ticket_type']['#weight'] + 1)
+      : 50;
+
+    $default_title = $entity->label() ? ($entity->label() . ' RSVP') : 'RSVP';
+
+    $form['inline_rsvp'] = [
+      '#type' => 'details',
+      '#title' => t('Create RSVP Submission'),
+      '#open' => TRUE,
+      '#weight' => $weight,
+    ];
+    $form['inline_rsvp']['title'] = [
+      '#type' => 'textfield',
+      '#title' => t('RSVP Title'),
+      '#default_value' => $default_title,
+      '#maxlength' => 255,
+      '#required' => TRUE,
+    ];
+    $form['inline_rsvp']['rsvp_create'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Create RSVP submission on save'),
+      '#default_value' => 1,
+    ];
+
+    // Ensure creation/linking occurs BEFORE save via entity builder.
+    if (empty($form['#entity_builders']) || !in_array('myeventlane_rsvp_inline_event_entity_builder', $form['#entity_builders'], TRUE)) {
+      $form['#entity_builders'][] = 'myeventlane_rsvp_inline_event_entity_builder';
+    }
+  }
+}
+
+/**
+ * Creates and links an RSVP node to the Event BEFORE the Event is saved.
+ *
+ * @param string $entity_type_id
+ * @param \Drupal\node\NodeInterface $entity
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function myeventlane_rsvp_inline_event_entity_builder(
+  string $entity_type_id,
+  NodeInterface $entity,
+  array &$form,
+  FormStateInterface $form_state
+): void {
+  // Only Event nodes.
+  if ($entity->bundle() !== 'event') {
+    return;
+  }
+  // Needs the forward reference field.
+  if (!$entity->hasField('field_rsvp_target')) {
+    return;
+  }
+  // Only if none exists yet.
+  if (!$entity->get('field_rsvp_target')->isEmpty()) {
+    return;
+  }
+  // Only when UI requested creation.
+  $inline = (array) $form_state->getValue('inline_rsvp', []);
+  if (empty($inline['rsvp_create'])) {
+    return;
+  }
+
+  $title = trim((string) ($inline['title'] ?? ''));
+  if ($title === '') {
+    $title = $entity->label() ? ($entity->label() . ' RSVP') : 'RSVP';
+  }
+
+  // Create RSVP node (adjust bundle if yours differs).
+  $rsvp = Node::create([
+    'type'   => 'rsvp_submission',
+    'title'  => $title,
+    'uid'    => $entity->getOwnerId(),
+    'status' => 1,
+  ]);
+
+  // Optional reverse link (if RSVP has field_event).
+  if ($rsvp->hasField('field_event')) {
+    $rsvp->set('field_event', $entity);
+  }
+
+  $rsvp->save();
+
+  // Link back to Event.
+  $entity->set('field_rsvp_target', ['target_id' => $rsvp->id()]);
+  \Drupal::messenger()->addStatus(t('RSVP submission was created and linked to this event.'));
+}
+
+/**
+ * Placeholder preprocess for RSVP Submission nodes.
+ */
+function myeventlane_rsvp_preprocess_node__rsvp_submission(array &$variables): void {
+  // Add RSVP-specific preprocess here when needed.
+}
+
+/**
+ * Theme hooks for this module.
+ */
+function myeventlane_rsvp_theme($existing, $type, $theme, $path): array {
+  $module_path = \Drupal::service('extension.path.resolver')->getPath('module', 'myeventlane_rsvp');
+
+  return [
+    'myeventlane_rsvp_submission' => [
+      'variables' => [
+        'rsvp'  => NULL,
+        'event' => NULL,
+      ],
+      'template' => 'rsvp-submission',
+      'path' => $module_path . '/templates',
+    ],
+    'myeventlane_rsvp_thankyou' => [
+      'variables' => [
+        'event'        => NULL,  // NodeInterface|null
+        'actions'      => [],    // Link render arrays
+        'recommended'  => NULL,  // View block render array or NULL
+      ],
+      'template' => 'myeventlane-rsvp-thankyou',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Preprocess for the RSVP Thank You template.
+ */
+function myeventlane_rsvp_preprocess_myeventlane_rsvp_thankyou(array &$variables): void {
+  /** @var \Drupal\node\NodeInterface|null $event */
+  $event = $variables['event'] ?? NULL;
+
+  // Ensure actions exists.
+  $variables['actions'] = $variables['actions'] ?? [];
+
+  // Only show "View Event" if we have a published event.
+  if (!empty($variables['actions']['event'])) {
+    if (!$event instanceof NodeInterface || !$event->isPublished()) {
+      unset($variables['actions']['event']);
+    }
+  }
+
+  // Date range formatting: field_start_date / field_end_date.
+  if ($event instanceof NodeInterface) {
+    $df = \Drupal::service('date.formatter');
+    $start = NULL;
+    $end = NULL;
+
+    if ($event->hasField('field_start_date') && !$event->get('field_start_date')->isEmpty()) {
+      $start = strtotime((string) $event->get('field_start_date')->value);
+    }
+    if ($event->hasField('field_end_date') && !$event->get('field_end_date')->isEmpty()) {
+      $end = strtotime((string) $event->get('field_end_date')->value);
+    }
+
+    if ($start && $end && $end > $start) {
+      $variables['event_date_formatted'] =
+        $df->format($start, 'custom', 'D j M Y, g:ia') . '–' . $df->format($end, 'custom', 'g:ia');
+    }
+    elseif ($start) {
+      $variables['event_date_formatted'] = $df->format($start, 'custom', 'D j M Y, g:ia');
+    }
+
+    // Location: field_venue + field_address.
+    $loc_parts = [];
+    if ($event->hasField('field_venue') && !$event->get('field_venue')->isEmpty()) {
+      $loc_parts[] = (string) $event->get('field_venue')->value;
+    }
+    if ($event->hasField('field_address') && !$event->get('field_address')->isEmpty()) {
+      $addr = $event->get('field_address')->first();
+      // These magic props are fine for Address field items.
+      $line1 = $addr->address_line1 ?? NULL;
+      $locality = $addr->locality ?? NULL;
+      $admin = $addr->administrative_area ?? NULL;
+      $parts = array_filter([$line1, $locality, $admin]);
+      if ($parts) {
+        $loc_parts[] = implode(', ', $parts);
+      }
+    }
+    if ($loc_parts) {
+      $variables['event_location_formatted'] = implode(' — ', $loc_parts);
+    }
+
+    // Responsive event image (field_image) using "event_hero" style.
+    if ($event->hasField('field_image') && !$event->get('field_image')->isEmpty()) {
+      $image_item = $event->get('field_image')->entity;
+      if ($image_item) {
+        $variables['event_image'] = [
+          '#theme' => 'responsive_image',
+          '#responsive_image_style_id' => 'event_hero',
+          '#uri' => $image_item->getFileUri(),
+          '#attributes' => [
+            'alt' => $event->label(),
+            'class' => ['mel-eventcard__img'],
+          ],
+        ];
+      }
+    }
+  }
+
+  // Ensure "Find More Events" link exists.
+  if (empty($variables['actions']['home'])) {
+    $variables['actions']['home'] = [
+      '#type' => 'link',
+      '#title' => t('Find More Events'),
+      '#url' => Url::fromUri('internal:/events'),
+      '#attributes' => ['class' => ['mel-link-home']],
+    ];
+  }
+
+  // Append UTM to all known CTAs.
+  $utm = [
+    'utm_source' => 'thankyou',
+    'utm_medium' => 'onsite',
+    'utm_campaign' => 'rsvp_flow',
+  ];
+  foreach (['event', 'ics', 'home'] as $key) {
+    if (!empty($variables['actions'][$key]['#url']) && $variables['actions'][$key]['#url'] instanceof Url) {
+      $url = $variables['actions'][$key]['#url'];
+      $query = $url->getOption('query') ?? [];
+      $url->setOption('query', $query + $utm);
+      $variables['actions'][$key]['#url'] = $url;
+    }
+  }
+
+  // Pass UTM to recommended block if present.
+  if (!empty($variables['recommended']) && is_array($variables['recommended'])) {
+    $variables['recommended']['#attached']['drupalSettings']['myeventlane_rsvp']['utm'] = $utm;
+  }
+
+  // Cache contexts/tags if rendering event + personalized recommendations.
+  if (!empty($variables['recommended'])) {
+    $variables['#cache']['contexts'][] = 'user';
+    if ($event instanceof NodeInterface) {
+      $variables['#cache']['tags'][] = 'node:' . $event->id();
+    }
+  }
+}
+
+/**
+ * Build an absolute cancel URL for a given RSVP row id.
+ */
+function myeventlane_rsvp_build_cancel_url(int $id): string {
+  /** @var \Drupal\Core\Access\CsrfTokenGenerator $csrf */
+  $csrf = \Drupal::service('csrf_token');
+  $token = $csrf->get('myeventlane_rsvp:cancel:' . $id);
+
+  $url = Url::fromRoute('myeventlane_rsvp.cancel_form', ['id' => $id], [
+    'query' => ['token' => $token],
+    'absolute' => TRUE,
+  ]);
+  return $url->toString();
+}
+
+/**
+ * Example: expose a cancel URL on rsvp_submission nodes for Twig.
+ */
+function myeventlane_rsvp_preprocess_node(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+  if (!$node || $node->bundle() !== 'rsvp_submission') {
+    return;
+  }
+
+  $id = (int) $node->id();
+  if ($id > 0) {
+    $variables['rsvp_cancel_url'] = myeventlane_rsvp_build_cancel_url($id);
+  }
+}
+
+/**
+ * Add cancel URLs on the my-profile page variant (if you render RSVPs there).
+ */
+function myeventlane_rsvp_preprocess_page(array &$variables): void {
+  if (!isset($variables['theme_hook_original']) || $variables['theme_hook_original'] !== 'page') {
+    return;
+  }
+  if (empty($variables['theme_hook_suggestions']) || !in_array('page__my_profile', $variables['theme_hook_suggestions'], TRUE)) {
+    return;
+  }
+
+  /** @var \Drupal\myeventlane_rsvp\Service\RsvpLinkBuilder $builder */
+  $builder = \Drupal::service('myeventlane_rsvp.link_builder');
+
+  if (!empty($variables['rsvps']) && is_array($variables['rsvps'])) {
+    foreach ($variables['rsvps'] as &$r) {
+      if (!empty($r['id'])) {
+        $r['cancel_url'] = $builder->cancelLinkString((int) $r['id'], TRUE);
+      }
+    }
+    unset($r);
+  }
+}

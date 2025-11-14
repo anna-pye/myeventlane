@@ -1,0 +1,10 @@
+name: 'MyEventLane Checkout (Paragraph-based)'
+type: module
+description: 'Checkout pane that renders one Paragraph per ticket using field_ticket_holders.'
+core_version_requirement: ^11
+package: 'MyEventLane'
+dependencies:
+  - commerce_checkout
+  - paragraphs
+  - entity
+  - commerce

@@ -1,0 +1,29 @@
+# myeventlane_commerce.routing.yml
+myeventlane_commerce.event_book:
+  path: '/event/{node}/book'
+  defaults:
+    _controller: '\Drupal\myeventlane_commerce\Controller\BookController::book'
+    _title: 'Book tickets'
+  requirements:
+    _permission: 'access content'
+    node: '\d+'
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+myeventlane_commerce.attendee_info.edit:
+  path: '/cart/attendee-info/{order_item}'
+  defaults:
+    _controller: '\Drupal\myeventlane_commerce\Controller\AttendeeInfoController::edit'
+    _title: 'Edit Ticket Info'
+  requirements:
+    _permission: 'access checkout'
+
+myeventlane_commerce.attendee:
+  path: '/attendee'
+  defaults:
+    _title: 'Attendee'
+    _controller: '\Drupal\myeventlane_commerce\Controller\AttendeeInfoController::build'
+  requirements:
+    _permission: 'access content'

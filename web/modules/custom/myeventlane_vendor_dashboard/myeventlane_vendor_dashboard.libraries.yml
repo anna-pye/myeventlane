@@ -1,0 +1,16 @@
+dashboard_analytics:
+  version: 1.x
+  js:
+    js/mel-analytics.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/jquery.once
+    - core/drupal.ajax
+
+dashboard:
+  js:
+    js/dashboard-tabs.js: {}
+  dependencies:
+    - core/drupal

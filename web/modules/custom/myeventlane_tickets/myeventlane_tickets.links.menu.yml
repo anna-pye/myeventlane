@@ -1,0 +1,7 @@
+myeventlane_tickets.product_menu:
+  title: 'Ticket matrix (demo)'
+  description: 'Preview the ticket matrix for a product'
+  route_name: myeventlane_tickets.product
+  parent: system.admin_content
+  menu_name: admin
+  weight: 99

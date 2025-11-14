@@ -1,0 +1,12 @@
+_core:
+  default_config_hash: JRkRdQH7SAscFtkWAPJITRFFgTx0bt2ktGVhL37YIqg
+thank_you:
+  use_event_field: true
+  event_field: field_thank_you_path
+  default_path: /thanks
+  keep_message: true
+  utm:
+    enabled: true
+    source: myeventlane
+    medium: rsvp
+    campaign: 'event_{nid}'

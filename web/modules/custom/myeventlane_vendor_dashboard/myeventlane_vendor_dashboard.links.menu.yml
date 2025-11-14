@@ -1,0 +1,13 @@
+myeventlane_vendor_dashboard.dashboard:
+  title: 'Vendor Dashboard'
+  description: 'Manage your events and store.'
+  route_name: myeventlane_vendor_dashboard.dashboard
+  parent: system.main
+  menu_name: main
+  weight: -10
+  options:
+    attributes:
+      class:
+        - 'menu-item--dashboard'
+  access_arguments:
+    - 'access content'

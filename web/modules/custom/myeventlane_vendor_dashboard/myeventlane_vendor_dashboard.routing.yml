@@ -1,0 +1,77 @@
+myeventlane_vendor_dashboard.dashboard:
+  path: '/dashboard'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\DashboardController::dashboard'
+    _title: 'My Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: FALSE
+
+myeventlane_vendor_dashboard.connect_stripe:
+  path: '/connect-stripe'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\StripeConnectController::redirectToStripe'
+    _title: 'Connect to Stripe'
+  requirements:
+    _permission: 'access content'
+
+myeventlane_vendor_dashboard.settings:
+  path: '/admin/config/myeventlane/stripe-settings'
+  defaults:
+    _form: '\Drupal\myeventlane_vendor_dashboard\Form\StripeSettingsForm'
+    _title: 'Stripe Connect Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+myeventlane_vendor_dashboard.stripe_callback:
+  path: '/stripe/callback'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\StripeCallbackController::handleCallback'
+    _title: 'Stripe Connect Callback'
+  requirements:
+    _permission: 'access content'
+
+myeventlane_vendor_dashboard.become_vendor:
+  path: '/become-a-vendor'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\VendorUpgradeController::becomeVendor'
+    _title: 'Become a Vendor'
+  requirements:
+    _permission: 'access content'
+
+myeventlane_vendor_dashboard.analytics_data:
+  path: '/dashboard/analytics/{event}'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\AnalyticsDataController::getAnalytics'
+    _title: 'Event Analytics'
+  requirements:
+    _permission: 'access content'
+    event: '\d+'
+
+myeventlane.export_csv:
+  path: '/dashboard/export/{node}'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\CsvExportController::export'
+    _title: 'Export CSV'
+  requirements:
+    _permission: 'access content'
+    node: \d+
+
+myeventlane.export_csv_paid:
+  path: '/dashboard/csv/paid/{node}'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\CsvExportController::exportPaid'
+    _title: 'Export Paid Tickets'
+  requirements:
+    _permission: 'access content'
+    node: \d+
+
+myeventlane.analytics:
+  path: '/dashboard/analytics/{node}'
+  defaults:
+    _controller: '\Drupal\myeventlane_vendor_dashboard\Controller\AnalyticsController::view'
+    _title: 'Event Analytics'
+  requirements:
+    _permission: 'access content'
+    node: \d+

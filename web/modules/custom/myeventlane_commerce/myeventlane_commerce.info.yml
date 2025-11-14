@@ -1,0 +1,13 @@
+name: 'MyEventLane Commerce'
+type: module
+description: 'Event booking page that lists Commerce product add-to-cart forms.'
+core_version_requirement: ^10 || ^11
+package: 'Custom'
+dependencies:
+  - drupal:commerce
+  - drupal:commerce_product
+  - drupal:commerce_cart
+  - drupal:paragraphs
+  - drupal:commerce_checkout
+  - drupal:commerce_order
+  - drupal:paragraphs

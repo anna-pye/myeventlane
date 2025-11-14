@@ -1,0 +1,12 @@
+name: 'MyEventLane Views'
+type: module
+description: 'Attendee CSV export logic for MyEventLane.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - views
+
+# Required for autoloading the Controller
+autoload:
+  psr-4:
+    Drupal\myeventlane_views\: src/

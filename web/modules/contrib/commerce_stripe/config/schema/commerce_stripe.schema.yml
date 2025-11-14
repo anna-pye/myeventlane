@@ -1,0 +1,104 @@
+commerce_payment.commerce_payment_gateway.plugin.stripe:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    authentication_method:
+      type: string
+      label: 'The authentication method'
+    access_token:
+      type: string
+      label: 'OAuth access token'
+    stripe_user_id:
+      type: string
+      label: 'Stripe User ID'
+    publishable_key:
+      type: string
+      label: 'Publishable key'
+    secret_key:
+      type: string
+      label: 'Secret key'
+    enable_credit_card_icons:
+      type: boolean
+      label: 'Enable credit card icons'
+
+commerce_payment.commerce_payment_gateway.plugin.stripe_payment_element:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    api_version:
+      type: string
+      label: 'API version'
+    authentication_method:
+      type: string
+      label: 'The authentication method'
+    access_token:
+      type: string
+      label: 'OAuth access token'
+    stripe_user_id:
+      type: string
+      label: 'Stripe User ID'
+    publishable_key:
+      type: string
+      label: 'Publishable key'
+    secret_key:
+      type: string
+      label: 'Secret key'
+    webhook_signing_secret:
+      type: string
+      label: 'Webhook signing secret'
+    payment_method_usage:
+      type: string
+      label: 'Payment method usage'
+    capture_method:
+      type: string
+      label: 'Capture method'
+    style:
+      type: mapping
+      label: 'Style'
+      mapping:
+        theme:
+          type: string
+          label: 'Theme'
+        layout:
+          type: string
+          label: 'Layout'
+    checkout_form_display_label:
+      type: mapping
+      label: 'Checkout form display label'
+      mapping:
+        custom_label:
+          type: label
+          label: 'Custom display label'
+        show_payment_method_logos:
+          type: string
+          label: 'Show payment method logos?'
+        include_logos:
+          type: sequence
+          label: 'Logos to include'
+          sequence:
+            type: string
+
+commerce_stripe.settings:
+  type: config_object
+  label: 'Commerce Stripe settings'
+  mapping:
+    load_on_every_page:
+      type: boolean
+      label: 'Load the Stripe script on every page'
+    collect_user_fraud_signals:
+      type: boolean
+      label: 'Collect user interaction signals required for advanced fraud detection'
+    link_payments_remote_id:
+      type: boolean
+      label: "Link a Stripe payment's Remote ID in the order payments tab to the related payment in the Stripe dashboard"
+
+commerce_checkout.commerce_checkout_pane.stripe_review:
+  type: commerce_checkout_pane_configuration
+  mapping:
+    button_id:
+      type: string
+      label: 'Button HTML ID'
+    auto_submit_review_form:
+      type: boolean
+      label: 'Automatically submit the review form'
+    setup_future_usage:
+      type: string
+      label: 'Setup future usage'

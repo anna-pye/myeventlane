@@ -1,0 +1,4 @@
+administer rsvp submissions:
+  title: 'Administer RSVP submissions'
+  description: 'Manage all RSVP submissions.'
+  restrict access: true

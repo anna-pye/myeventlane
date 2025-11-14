@@ -1,0 +1,9 @@
+name: 'MyEventLane RSVP'
+type: module
+description: 'Handles RSVP submissions and email confirmations.'
+core_version_requirement: ^11 || ^12
+package: Custom
+dependencies:
+  - node
+  - user
+  - mailsystem

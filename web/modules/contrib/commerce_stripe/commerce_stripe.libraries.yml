@@ -1,0 +1,64 @@
+messages:
+  js:
+    js/commerce_stripe.messages.js:
+      attributes:
+        defer: true
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+form:
+  css:
+    theme:
+      css/commerce_stripe.form.css: {}
+  js:
+    js/commerce_stripe.form.js:
+      attributes:
+        defer: true
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+    - commerce_stripe/messages
+    - commerce_stripe/stripe
+
+checkout_review:
+  css:
+    theme:
+      css/commerce_stripe.review.css: {}
+  js:
+    js/commerce_stripe.review.js:
+      attributes:
+        defer: true
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+    - commerce_stripe/messages
+    - commerce_stripe/stripe
+
+payment_element:
+  css:
+    theme:
+      css/commerce_stripe.form.css: { }
+  js:
+    js/commerce_stripe.payment_element.js:
+      attributes:
+        defer: true
+  dependencies:
+    - core/drupal
+    - core/once
+    - commerce_stripe/messages
+    - commerce_stripe/stripe
+
+credit_card_icons:
+  css:
+    theme:
+      css/commerce_stripe.credit_card_icons.css: {}
+  dependencies:
+    - commerce_payment/payment_method_icons
+
+connect_buttons:
+  css:
+    theme:
+      css/commerce_stripe.connect_buttons.css: {}

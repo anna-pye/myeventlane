@@ -1,0 +1,6 @@
+# services:
+#   Drupal\myeventlane_vendor_dashboard\EventSubscriber\StripeCommissionSubscriber:
+#     class: Drupal\myeventlane_vendor_dashboard\EventSubscriber\StripeCommissionSubscriber
+#     tags:
+#       - { name: event_subscriber }
+#     condition: "module:commerce_payment"

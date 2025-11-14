@@ -1,0 +1,185 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\commerce_product\Entity\ProductInterface;
+use Drupal\commerce_product\Entity\ProductVariationInterface;
+
+/**
+ * Try to get the Event node title that references a product.
+ */
+function _myeventlane_tickets_guess_event_title_from_product(ProductInterface $product): string {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $nids = $storage->getQuery()
+    ->condition('type', 'event')
+    ->condition('field_product_target', $product->id())
+    ->accessCheck(FALSE)
+    ->range(0, 1)
+    ->execute();
+
+  if ($nids) {
+    $node = $storage->load(reset($nids));
+    if ($node && $node->label()) {
+      return (string) $node->label();
+    }
+  }
+  return 'Tickets';
+}
+
+/**
+ * Build a friendly variation title from parent product + attribute values.
+ * e.g. "My Event - Full Price" or "My Event - Child".
+ */
+function _myeventlane_tickets_build_variation_title(ProductVariationInterface $variation): string {
+  $product = $variation->getProduct();
+  $base = ($product && $product->label() !== '') ? (string) $product->label() : 'Ticket';
+
+  $parts = [];
+  if (method_exists($variation, 'getAttributeValues')) {
+    foreach ($variation->getAttributeValues() as $av) {
+      $parts[] = $av->label();
+    }
+  }
+  $suffix = $parts ? (' - ' . implode(' / ', $parts)) : ' - General Admission';
+  return $base . $suffix;
+}
+
+/**
+ * Generate a base SKU like: EV{ProductID}-VAR{VID|NEW}-{5char}.
+ */
+function _myeventlane_tickets_generate_sku(ProductVariationInterface $variation): string {
+  $product = $variation->getProduct();
+  $pid = ($product && $product->id()) ? $product->id() : 'X';
+  $vid = $variation->id() ?: 'NEW';
+  $rand = substr(str_replace(['+','/','='], '', base64_encode(random_bytes(4))), 0, 5);
+  return sprintf('EV%s-VAR%s-%s', $pid, $vid, strtolower($rand));
+}
+
+/**
+ * Ensure SKU is unique across variations.
+ */
+function _myeventlane_tickets_ensure_unique_sku(string $base, ProductVariationInterface $current): string {
+  $query = \Drupal::entityQuery('commerce_product_variation')
+    ->accessCheck(FALSE)
+    ->condition('sku', $base);
+  if ($current->id()) {
+    $query->condition('variation_id', $current->id(), '<>');
+  }
+  $ids = $query->range(0, 1)->execute();
+  if (empty($ids)) {
+    return $base;
+  }
+
+  // Append -2, -3, ... until no collision.
+  $i = 2;
+  do {
+    $candidate = $base . '-' . $i;
+    $q = \Drupal::entityQuery('commerce_product_variation')
+      ->accessCheck(FALSE)
+      ->condition('sku', $candidate);
+    if ($current->id()) {
+      $q->condition('variation_id', $current->id(), '<>');
+    }
+    $ids = $q->range(0, 1)->execute();
+    if (empty($ids)) {
+      return $candidate;
+    }
+    $i++;
+  } while (TRUE);
+}
+
+/**
+ * Normalize Products/Variations on save.
+ *
+ * - Product: title + at least one Store.
+ * - Variation: title + unique SKU + published (never sets price).
+ * - Defensive UUID guard: if a NEW variation is saved with a colliding UUID,
+ *   generate a fresh one (don’t touch existing healthy UUIDs).
+ */
+function myeventlane_tickets_entity_presave(EntityInterface $entity): void {
+  // ----- Product normalization -----
+  if ($entity instanceof ProductInterface) {
+    // Title fallback: prefer event title, else "Tickets".
+    $label = trim((string) $entity->label());
+    if ($label === '') {
+      $entity->setTitle(_myeventlane_tickets_guess_event_title_from_product($entity));
+    }
+
+    // Ensure a store is attached.
+    if (count($entity->getStores()) === 0) {
+      $default = \Drupal::entityTypeManager()->getStorage('commerce_store')->loadDefault();
+      if (!$default) {
+        $all = \Drupal::entityTypeManager()->getStorage('commerce_store')->loadMultiple();
+        $default = $all ? reset($all) : NULL;
+      }
+      if ($default) {
+        $entity->setStores([$default]);
+      }
+    }
+  }
+
+  // ----- Variation normalization -----
+  if ($entity instanceof ProductVariationInterface) {
+    // UUID guard for new variations (only if the incoming UUID collides).
+    if ($entity->isNew()) {
+      $incoming_uuid = (string) ($entity->get('uuid')->value ?? '');
+      if ($incoming_uuid !== '') {
+        $exists = \Drupal::entityQuery('commerce_product_variation')
+          ->accessCheck(FALSE)
+          ->condition('uuid', $incoming_uuid)
+          ->range(0, 1)
+          ->execute();
+        if (!empty($exists)) {
+          $entity->set('uuid', \Drupal::service('uuid')->generate());
+        }
+      }
+    }
+
+    // Title default.
+    $title = trim((string) $entity->label());
+    if ($title === '') {
+      $entity->setTitle(_myeventlane_tickets_build_variation_title($entity));
+    }
+
+    // SKU default + de-duplication.
+    $sku = trim((string) $entity->getSku());
+    if ($sku === '') {
+      $sku = _myeventlane_tickets_generate_sku($entity);
+    }
+    $sku = _myeventlane_tickets_ensure_unique_sku($sku, $entity);
+    $entity->setSku($sku);
+
+    // Publish by default (don’t unpublish existing).
+    if (method_exists($entity, 'setPublished') && !$entity->isPublished()) {
+      $entity->setPublished(TRUE);
+    }
+    // NOTE: Do NOT touch price here.
+  }
+}
+
+/**
+ * Change "Add another item" to "Add another Ticket" (Event + Product forms).
+ */
+function myeventlane_tickets_form_alter(array &$form, FormStateInterface $form_state, $form_id): void {
+  // Node add/edit for Event: product reference uses Inline Entity Form.
+  if ($form_id === 'node_event_form' && isset($form['field_product_target']['widget'])) {
+    if (isset($form['field_product_target']['widget']['add_more']['#value'])) {
+      $form['field_product_target']['widget']['add_more']['#value'] = t('Add another Ticket');
+    }
+    if (isset($form['field_product_target']['widget']['actions']['add_more']['#value'])) {
+      $form['field_product_target']['widget']['actions']['add_more']['#value'] = t('Add another Ticket');
+    }
+  }
+
+  // Commerce Product edit form (when editing a Ticket product directly).
+  if ($form_id === 'commerce_product_ticket_form' && isset($form['variations']['widget'])) {
+    if (isset($form['variations']['widget']['add_more']['#value'])) {
+      $form['variations']['widget']['add_more']['#value'] = t('Add another Ticket');
+    }
+    if (isset($form['variations']['widget']['actions']['add_more']['#value'])) {
+      $form['variations']['widget']['actions']['add_more']['#value'] = t('Add another Ticket');
+    }
+  }
+}

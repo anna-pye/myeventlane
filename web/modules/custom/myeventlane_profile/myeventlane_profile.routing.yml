@@ -1,0 +1,35 @@
+myeventlane_profile.dashboard:
+  path: '/my-profile'
+  defaults:
+    _controller: '\Drupal\myeventlane_profile\Controller\MyProfileController::dashboard'
+    _title: 'My Profile'
+  requirements:
+    _permission: 'access my profile dashboard'
+    _user_is_logged_in: 'TRUE'
+
+myeventlane_profile.rsvps:
+  path: '/my-profile/rsvps'
+  defaults:
+    _controller: '\Drupal\myeventlane_profile\Controller\MyProfileController::rsvps'
+    _title: 'My RSVPs'
+  requirements:
+    _permission: 'access my profile dashboard'
+    _user_is_logged_in: 'TRUE'
+
+myeventlane_profile.tickets:
+  path: '/my-profile/tickets'
+  defaults:
+    _controller: '\Drupal\myeventlane_profile\Controller\MyProfileController::tickets'
+    _title: 'My Tickets'
+  requirements:
+    _permission: 'access my profile dashboard'
+    _user_is_logged_in: 'TRUE'
+
+myeventlane_profile.settings:
+  path: '/my-profile/settings'
+  defaults:
+    _controller: '\Drupal\myeventlane_profile\Controller\MyProfileController::settings'
+    _title: 'Account Settings'
+  requirements:
+    _permission: 'access my profile dashboard'
+    _user_is_logged_in: 'TRUE'

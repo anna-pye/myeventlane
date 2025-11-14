@@ -1,0 +1,49 @@
+<?php
+
+use Drupal\commerce_order\Entity\OrderInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_commerce_order_insert().
+ */
+function myeventlane_boost_commerce_order_insert(OrderInterface $order) {
+  foreach ($order->getItems() as $order_item) {
+    $purchased_entity = $order_item->getPurchasedEntity();
+    if (!$purchased_entity) {
+      continue;
+    }
+
+    // Match your Boost product by SKU (or product ID if needed)
+    if ($purchased_entity->getSku() === 'boost-3day') {
+      $event_id = \Drupal::request()->query->get('event_id');
+
+      if ($event_id && $event = Node::load($event_id)) {
+        if ($event->bundle() === 'event') {
+          // Set boost expiry 3 days from now
+          $expiry = strtotime('+3 days');
+          $event->set('field_boost_expiry', date('Y-m-d\TH:i:s', $expiry));
+          $event->save();
+
+          \Drupal::logger('myeventlane_boost')->info('Boost applied to event @id until @time', [
+            '@id' => $event->id(),
+            '@time' => date('Y-m-d H:i', $expiry),
+          ]);
+        }
+      }
+    }
+  }
+}
+/**
+ * Implements hook_mail().
+ */
+function myeventlane_boost_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'boost_expired':
+      $node = $params['node'];
+      $message['subject'] = t('Your event boost has expired');
+      $message['body'][] = t('Hi @name,', ['@name' => $params['vendor_name']]);
+      $message['body'][] = t('The promotion for your event "@title" has now expired.', ['@title' => $node->label()]);
+      $message['body'][] = t('You can boost it again here: @link', ['@link' => $node->toUrl('canonical', ['absolute' => TRUE])->toString()]);
+      break;
+  }
+}

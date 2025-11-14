@@ -1,0 +1,73 @@
+{{ attach_library('myeventlane_theme/dashboard-tabs') }}
+
+<section class="mel-dashboard-wrapper">
+  {% set cards = cards ?? [] %}
+
+   <header class="vendor-hero">
+      <h1 class="vendor-hero__tagline">
+        Run Your <span>Show</span>
+      </h1>
+      <p class="vendor-hero__subtitle">Create, manage, and promote your events effortlessly</p>
+    </header>
+
+  <section class="mel-dashboard-intro">
+    <h1 class="mel-dashboard-heading">Welcome to your Vendor Dashboard</h1>
+
+
+    <div class="mel-dashboard-tabs">
+      <div class="mel-dashboard-tab-buttons">
+        <a href="#" class="mel-tab-button is-active" data-tab="ticketed">Ticketed Events</a>
+        <a href="#" class="mel-tab-button" data-tab="rsvps">RSVP Events</a>
+        <a href="#" class="mel-tab-button" data-tab="drafts">Drafts</a>
+        <a href="#" class="mel-tab-button" data-tab="analytics">Analytics</a>
+      </div>
+
+      <div class="mel-dashboard-create">
+        <a href="/node/add/event" class="mel-button mel-button--primary">+ Create New Event</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="ticketed" class="mel-dashboard-tab is-active">
+    {% set ticketed = cards|filter(c => c['#type'] == 'Paid') %}
+    {% if ticketed|length %}
+      {% for card in ticketed %}
+        {{ card|render }}
+      {% endfor %}
+    {% else %}
+      <p>No ticketed events available.</p>
+    {% endif %}
+  </section>
+
+  <section id="rsvps" class="mel-dashboard-tab">
+    {% set rsvps = cards|filter(c => c['#type'] == 'RSVP') %}
+    {% if rsvps|length %}
+      {% for card in rsvps %}
+        {{ card|render }}
+      {% endfor %}
+    {% else %}
+      <p>No RSVP events available.</p>
+    {% endif %}
+  </section>
+
+  <section id="drafts" class="mel-dashboard-tab">
+    {% set drafts = drafts ?? [] %}
+    {% if drafts|length %}
+      {% for card in drafts %}
+        {{ card|render }}
+      {% endfor %}
+    {% else %}
+      <p>No draft event logic implemented yet.</p>
+    {% endif %}
+  </section>
+
+  <section id="analytics" class="mel-dashboard-tab">
+    <p>Analytics will display when buttons are toggled on event cards.</p>
+  </section>
+
+  <div class="mel-create-event-bottom">
+    <a href="/node/add/event" class="mel-button mel-button--primary">
+      <span class="icon">➕</span> Create New Event
+    </a>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+myeventlane_tickets.product:
+  path: '/tickets/product/{commerce_product}'
+  defaults:
+    _controller: '\Drupal\myeventlane_tickets\Controller\TicketMatrixController::product'
+    _title: 'Choose your tickets'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      commerce_product:
+        type: entity:commerce_product
+
+myeventlane_tickets.export_csv:
+  path: '/tickets/export/{event}'
+  defaults:
+    _controller: '\Drupal\myeventlane_tickets\Controller\TicketExportController::exportCsv'
+    _title: 'Export Ticket CSV'
+  requirements:
+    _permission: 'access content'
+    event: \d+

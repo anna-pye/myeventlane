@@ -1,0 +1,9 @@
+ticket_matrix:
+  version: 1.x
+  js:
+    js/ticket_matrix.js: {}
+  css:
+    theme:
+      css/ticket_matrix.css: {}
+  dependencies:
+    - core/drupal

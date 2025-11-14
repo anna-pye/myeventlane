@@ -1,0 +1,97 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * @file
+ * myeventlane_checkout_paragraph.module
+ *
+ * Attaches checkout paragraph functionality.
+ * Now delegates sanitation to the theme’s recursive sanitizer.
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function myeventlane_checkout_paragraph_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id): void {
+  if (isset($form['#id']) && str_contains($form['#id'], 'commerce-checkout')) {
+    if (function_exists('_myeventlane_theme_sanitize_recursive')) {
+      _myeventlane_theme_sanitize_recursive($form, ['checkout_paragraph', 'form_alter']);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_after_build().
+ */
+function myeventlane_checkout_paragraph_after_build_normalize($form, \Drupal\Core\Form\FormStateInterface $form_state): array {
+  if (function_exists('_myeventlane_theme_sanitize_recursive')) {
+    _myeventlane_theme_sanitize_recursive($form, ['checkout_paragraph', 'after_build']);
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_entity_access().
+ */
+function myeventlane_checkout_paragraph_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  $logger = \Drupal::logger('myeventlane_checkout_paragraph');
+
+  // Admins always allowed.
+  if ($account->hasPermission('administer paragraphs')) {
+    $logger->notice('🛡️ Admin access granted for @bundle @id by user @uid', [
+      '@bundle' => $entity->bundle(),
+      '@id' => $entity->id(),
+      '@uid' => $account->id(),
+    ]);
+    return AccessResult::allowed()->cachePerPermissions();
+  }
+
+  // Restrict attendee_answer (used during checkout).
+  if ($entity->getEntityTypeId() === 'paragraph' && $entity->bundle() === 'attendee_answer') {
+    $parent = $entity->getParentEntity();
+    if ($parent && $parent->getEntityTypeId() === 'commerce_order_item') {
+      $event = $parent->get('field_event')->entity ?? NULL;
+      if ($event && $event->getOwnerId() === $account->id()) {
+        $logger->notice('✅ Vendor access to attendee_answer @id by user @uid (owns event @event)', [
+          '@id' => $entity->id(),
+          '@uid' => $account->id(),
+          '@event' => $event->id(),
+        ]);
+        return AccessResult::allowed()->cachePerUser();
+      }
+    }
+
+    $logger->warning('⛔ DENIED attendee_answer @id to user @uid (not admin or owner)', [
+      '@id' => $entity->id(),
+      '@uid' => $account->id(),
+    ]);
+    return AccessResult::forbidden()->cachePerUser();
+  }
+
+  // Restrict attendee_extra_field (defined on Event).
+  if ($entity->getEntityTypeId() === 'paragraph' && $entity->bundle() === 'attendee_extra_field') {
+    $parent = $entity->getParentEntity();
+    if ($parent && $parent->getEntityTypeId() === 'node' && $parent->bundle() === 'event') {
+      if ($parent->getOwnerId() === $account->id()) {
+        $logger->notice('✅ Vendor access to attendee_extra_field @id by user @uid (owns event @event)', [
+          '@id' => $entity->id(),
+          '@uid' => $account->id(),
+          '@event' => $parent->id(),
+        ]);
+        return AccessResult::allowed()->cachePerUser();
+      }
+    }
+
+    $logger->warning('⛔ DENIED attendee_extra_field @id to user @uid (not admin or owner)', [
+      '@id' => $entity->id(),
+      '@uid' => $account->id(),
+    ]);
+    return AccessResult::forbidden()->cachePerUser();
+  }
+
+  // Everything else → neutral
+  return AccessResult::neutral();
+}

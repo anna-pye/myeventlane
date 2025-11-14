@@ -1,0 +1,61 @@
+services:
+  logger.channel.myeventlane_boost:
+    parent: logger.channel_base
+    arguments: ['myeventlane_boost']
+
+  myeventlane_boost.manager:
+    class: Drupal\myeventlane_boost\BoostManager
+    arguments:
+      - '@entity_type.manager'
+      - '@datetime.time'
+      - '@logger.channel.myeventlane_boost'
+
+  myeventlane_boost.order_subscriber:
+    class: Drupal\myeventlane_boost\EventSubscriber\BoostOrderSubscriber
+    arguments:
+      - '@myeventlane_boost.manager'
+      - '@logger.channel.myeventlane_boost'
+      - '@request_stack'
+    tags:
+      - { name: event_subscriber }
+
+  myeventlane_boost.expiry_cron:
+    class: Drupal\myeventlane_boost\Cron\BoostExpiryCron
+    arguments:
+      - '@entity_type.manager'
+      - '@datetime.time'
+      - '@logger.channel.myeventlane_boost'
+    tags:
+      - { name: drupal.cron }
+
+  myeventlane_boost.cart_compare_subscriber:
+    class: Drupal\myeventlane_boost\EventSubscriber\CartComparisonSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  myeventlane_boost.refund_subscriber:
+    class: Drupal\myeventlane_boost\EventSubscriber\BoostRefundSubscriber
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.channel.myeventlane_boost'
+    tags:
+      - { name: event_subscriber }
+
+  myeventlane_boost.expiry_reminder_cron:
+    class: Drupal\myeventlane_boost\Cron\BoostExpiryReminderCron
+    arguments:
+      - '@entity_type.manager'
+      - '@datetime.time'
+      - '@logger.channel.myeventlane_boost'
+      - '@plugin.manager.mail'
+    tags:
+      - { name: drupal.cron }
+
+  myeventlane_boost.expire_cron:
+    class: Drupal\myeventlane_boost\Cron\BoostExpireCron
+    arguments:
+      - '@entity_type.manager'
+      - '@datetime.time'
+      - '@logger.channel.myeventlane_boost'
+    tags:
+      - { name: drupal.cron }

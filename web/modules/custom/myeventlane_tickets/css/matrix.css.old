@@ -1,0 +1,2 @@
+.mel-ticket-matrix .mel-pinned-submit { position: sticky; bottom: 0; width: 100%; }
+.mel-price { opacity: .75; font-weight: 600; margin-left: .25rem; }

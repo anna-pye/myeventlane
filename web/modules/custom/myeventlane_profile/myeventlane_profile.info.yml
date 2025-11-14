@@ -1,0 +1,8 @@
+name: MyEventLane Profile
+type: module
+description: Customer dashboard pages (RSVPs, Tickets, Settings).
+core_version_requirement: ^11
+package: MyEventLane
+dependencies:
+  - drupal:user
+  - drupal:views

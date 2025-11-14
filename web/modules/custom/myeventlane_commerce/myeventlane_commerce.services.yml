@@ -1,0 +1,8 @@
+services:
+  myeventlane_commerce.paragraph_question_mapper:
+    class: Drupal\myeventlane_commerce\Service\ParagraphQuestionMapper
+
+  myeventlane_commerce.order_lock_subscriber:
+    class: Drupal\myeventlane_commerce\EventSubscriber\LockAttendeeOnOrderPlaced
+    tags:
+      - { name: event_subscriber }

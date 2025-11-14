@@ -1,0 +1,10 @@
+name: 'MyEventLane Tickets'
+type: module
+description: 'Ticket matrix form that aggregates variations across referenced products.'
+core_version_requirement: ^10 || ^11
+package: 'MyEventLane'
+dependencies:
+  - drupal:commerce
+  - drupal:commerce_cart
+  - drupal:commerce_product
+  - drupal:commerce_price

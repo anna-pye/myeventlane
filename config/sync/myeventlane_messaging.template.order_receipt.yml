@@ -1,0 +1,13 @@
+_core:
+  default_config_hash: 2Nbw8Cz5ickZqwVMXyHISuT21EeL7ZAOfNJb-Qate-s
+enabled: true
+subject: 'Thanks for your purchase — Order #{{ order_number }}'
+body: |
+  <p>Hi {{ first_name }}, thanks for your order.</p>
+  <p>We’ve attached your tickets and receipt. You can also view your order online: <a href="{{ order_url }}">Order #{{ order_number }}</a>.</p>
+utm:
+  enable: true
+  params:
+    utm_source: email
+    utm_medium: transactional
+    utm_campaign: receipt

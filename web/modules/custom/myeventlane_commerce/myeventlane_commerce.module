@@ -1,0 +1,202 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\commerce_price\Price;
+use Drupal\commerce_product\Entity\ProductInterface;
+use Drupal\commerce_product\Entity\ProductVariationInterface;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Helper: find the quantity number element in ATC form (various widget shapes).
+ */
+function &_myeventlane_commerce_get_qty_ref(array &$form) {
+  if (isset($form['quantity'][0]['value']) && is_array($form['quantity'][0]['value'])) {
+    return $form['quantity'][0]['value'];
+  }
+  if (isset($form['quantity']['widget'][0]['value']) && is_array($form['quantity']['widget'][0]['value'])) {
+    return $form['quantity']['widget'][0]['value'];
+  }
+  foreach ($form as &$child) {
+    if (is_array($child) && (($child['#type'] ?? '') === 'number')) {
+      $name = $child['#name'] ?? '';
+      $parents = implode('.', $child['#parents'] ?? []);
+      if (stripos($name, 'quantity') !== FALSE || stripos($parents, 'quantity') !== FALSE) {
+        return $child;
+      }
+    }
+  }
+  $null = NULL;
+  return $null;
+}
+
+/* ==========================================================================
+ * 🧩 AUTO-LINK EVENT FIELD BETWEEN PRODUCT AND VARIATIONS
+ * ========================================================================== */
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Auto-link the product's field_event to all its variations.
+ */
+function myeventlane_commerce_entity_presave(EntityInterface $entity): void {
+  // Only act on Commerce Products.
+  if ($entity instanceof ProductInterface && $entity->hasField('field_event')) {
+
+    // Ensure product has an event reference.
+    if (!$entity->get('field_event')->isEmpty()) {
+      $event_target = $entity->get('field_event')->target_id;
+
+      // Loop through each variation.
+      foreach ($entity->getVariations() as $variation) {
+        if ($variation->hasField('field_event')) {
+          $current = $variation->get('field_event')->target_id ?? NULL;
+
+          // Only update if empty or mismatched.
+          if (empty($current) || $current != $event_target) {
+            $variation->set('field_event', ['target_id' => $event_target]);
+            $variation->save();
+
+            \Drupal::logger('myeventlane_commerce')->notice('🔗 Auto-linked variation @var → event @event', [
+              '@var' => $variation->label(),
+              '@event' => $event_target,
+            ]);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_insert() and hook_entity_update() for Event nodes.
+ *
+ * Ensures variations are updated if the Event node changes.
+ */
+function myeventlane_commerce_entity_insert(EntityInterface $entity): void {
+  _myeventlane_commerce_sync_event_variations($entity);
+}
+function myeventlane_commerce_entity_update(EntityInterface $entity): void {
+  _myeventlane_commerce_sync_event_variations($entity);
+}
+
+/**
+ * Syncs Event → Product → Variations (reverse link).
+ */
+function _myeventlane_commerce_sync_event_variations(EntityInterface $entity): void {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'event') {
+    $event_id = $entity->id();
+
+    // Load all products referencing this event.
+    $products = \Drupal::entityTypeManager()
+      ->getStorage('commerce_product')
+      ->loadByProperties(['field_event' => $event_id]);
+
+    if (empty($products)) {
+      \Drupal::logger('myeventlane_commerce')->notice('No products found for Event @id', ['@id' => $event_id]);
+      return;
+    }
+
+    foreach ($products as $product) {
+      foreach ($product->getVariations() as $variation) {
+        if (
+          $variation->hasField('field_event') &&
+          $variation->get('field_event')->target_id != $event_id
+        ) {
+          $variation->set('field_event', ['target_id' => $event_id]);
+          $variation->save();
+
+          \Drupal::logger('myeventlane_commerce')->notice('✅ Synced variation @var → Event @event', [
+            '@var' => $variation->label(),
+            '@event' => $entity->label(),
+          ]);
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+ * 🛒 ADD-TO-CART FORM CUSTOMIZATION
+ * ========================================================================== */
+
+/**
+ * Alter Commerce add-to-cart forms (labels, validation, drupalSettings).
+ */
+function myeventlane_commerce_form_commerce_order_item_add_to_cart_form_alter(array &$form, FormStateInterface $form_state, $form_id): void {
+  // Attach JS/CSS.
+  $form['#attached']['library'][] = 'myeventlane_theme/ticket_matrix';
+
+  // Stable unique ID.
+  if (empty($form['#attributes']['id'])) {
+    $form['#attributes']['id'] = 'mel-atc-' . \Drupal::service('uuid')->generate();
+  }
+  $form['#attributes']['class'][] = 'mel-atc-form';
+
+  // Friendly labels + hide unit price override.
+  if (isset($form['purchased_entity'])) { $form['purchased_entity']['#title'] = t('Ticket Type'); }
+  if (isset($form['quantity']))        { $form['quantity']['#title']        = t('Quantity'); }
+  if (isset($form['unit_price']))      { $form['unit_price']['#access']     = FALSE; }
+
+  // Force quantity constraints + default to 0.
+  if ($qty =& _myeventlane_commerce_get_qty_ref($form)) {
+    $qty['#min'] = 0;
+    $qty['#step'] = 1;
+    $qty['#default_value'] = 0;
+  }
+
+  // Validation: block qty = 0.
+  $form['#validate'] = array_merge(
+    ['myeventlane_commerce_atc_validate_qty'],
+    $form['#validate'] ?? []
+  );
+
+  // Expose variation prices for the JS decorator.
+  $prices = [];
+  $single_option = FALSE;
+  $var_el = $form['purchased_entity']['widget'][0]['variation'] ?? NULL;
+
+  if (is_array($var_el) && !empty($var_el['#options__entities'])) {
+    $single_option = (count($var_el['#options__entities']) === 1);
+    foreach ($var_el['#options__entities'] as $id => $variation) {
+      if ($variation instanceof ProductVariationInterface) {
+        $p = $variation->getPrice();
+        if ($p instanceof Price) {
+          $prices[(string) $id] = \Drupal::service('commerce_price.currency_formatter')
+            ->format($p->getNumber(), $p->getCurrencyCode());
+        }
+      }
+    }
+  }
+
+  $form_id_html = $form['#attributes']['id'];
+  $form['#attached']['drupalSettings']['melTicketMatrix'][$form_id_html] = [
+    'prices'       => $prices,
+    'singleOption' => $single_option,
+  ];
+}
+
+/**
+ * Validation: prevent adding to cart with 0 quantity.
+ */
+function myeventlane_commerce_atc_validate_qty(array &$form, FormStateInterface $form_state): void {
+  $qty = (int) ($form_state->getValue(['quantity', 0, 'value'])
+    ?? $form_state->getValue('quantity')
+    ?? 0);
+  if ($qty === 0) {
+    $form_state->setErrorByName('quantity][0][value', t('Please choose at least one ticket.'));
+  }
+}
+
+/**
+ * Ensure theme templates under /templates/commerce are discovered.
+ */
+function myeventlane_commerce_theme_registry_alter(array &$registry): void {
+  if (isset($registry['commerce_product'])) {
+    $theme = \Drupal::theme()->getActiveTheme()->getName();
+    $theme_path = \Drupal::service('extension.list.theme')->getPath($theme);
+    $registry['commerce_product']['path'] = $theme_path . '/templates/commerce';
+  }
+}

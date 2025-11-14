@@ -1,0 +1,32 @@
+<?php
+
+// /**
+//  * Implements hook_theme().
+//  */
+// function myeventlane_vendor_dashboard_theme($existing, $type, $theme, $path) {
+//   return [
+//     'myeventlane_vendor_dashboard' => [
+//       'template' => 'myeventlane-vendor-dashboard',
+//       'variables' => ['cards' => []],
+//       'path' => $path . '/templates',
+//       'render element' => FALSE, // ✅ recommended for clarity
+//     ],
+//  'myeventlane_vendor_dashboard_card' => [
+//    'template' => 'myeventlane-vendor-dashboard-card',
+//    'variables' => [
+//      'title' => NULL,
+//      'type' => NULL,
+//      'image' => NULL,
+//      'venue' => NULL,
+//      'ticket_limit' => NULL,
+//      'count' => NULL,
+//      'nid' => NULL,
+//      'rsvp_link' => NULL,
+//      'csv_link' => NULL,
+//      'analytics' => NULL,
+//    ],
+//    'path' => $path . '/templates',
+//       'render element' => FALSE, // ✅ needed to ensure variables pass correctly
+//     ],
+//   ];
+// }

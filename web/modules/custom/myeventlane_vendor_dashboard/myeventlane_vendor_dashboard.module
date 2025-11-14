@@ -1,0 +1,147 @@
+<?php
+
+use Drupal\profile\Entity\Profile;
+use Drupal\commerce_store\Entity\Store;
+use Drupal\user\Entity\User;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\commerce_store\Entity\StoreInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function myeventlane_vendor_dashboard_form_node_event_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (!\Drupal::currentUser()->hasPermission('administer nodes')) {
+    $form['field_store']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for dashboard data.
+ */
+function myeventlane_vendor_dashboard_preprocess_myeventlane_vendor_dashboard(&$variables) {
+  $account = \Drupal::currentUser();
+  $uid = $account->id();
+
+  $profile_storage = \Drupal::entityTypeManager()->getStorage('profile');
+  $profiles = $profile_storage->loadByProperties([
+    'uid' => $uid,
+    'type' => 'vendor_profile',
+  ]);
+  $profile = reset($profiles);
+
+  if ($profile) {
+    $variables['vendor_description'] = $profile->get('field_vendor_description')->value ?? '';
+
+    if (!$profile->get('field_profile_image')->isEmpty()) {
+      $variables['vendor_logo_url'] = $profile->get('field_profile_image')->entity->url();
+    }
+
+    $stripe_id = $profile->get('field_stripe_account_id')->value ?? '';
+    $variables['stripe_account_id'] = $stripe_id;
+    $variables['stripe_connected'] = !empty($stripe_id);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function myeventlane_vendor_dashboard_theme($existing, $type, $theme, $path) {
+  return [
+      'myeventlane_vendor_dashboard' => [
+      'template' => 'myeventlane-vendor-dashboard',
+      'variables' => [
+        'cards' => NULL,
+      ],
+    ],
+   'myeventlane_vendor_dashboard_card' => [
+      'template' => 'myeventlane-vendor-dashboard-card',
+      'variables' => [
+        'title' => NULL,
+        'type' => NULL,
+        'image' => NULL,
+        'venue' => NULL,
+        'ticket_limit' => NULL,
+        'count' => NULL,
+        'nid' => NULL,
+        'rsvp_link' => NULL,
+        'csv_link' => NULL,
+        'analytics' => NULL,
+      ],
+      'path' => $path . '/templates',
+    ],
+  ];
+}
+/**
+ * Auto-assign store to events if none is set.
+ */
+function myeventlane_vendor_dashboard_node_presave(NodeInterface $node) {
+  if ($node->bundle() === 'event' && $node->get('field_store')->isEmpty()) {
+    $current_user = \Drupal::currentUser();
+
+    $stores = \Drupal::entityTypeManager()
+      ->getStorage('commerce_store')
+      ->loadByProperties(['uid' => $current_user->id()]);
+
+    if (!empty($stores)) {
+      $store = reset($stores);
+      $node->set('field_store', $store->id());
+    }
+  }
+}
+
+/**
+ * Enforce Stripe check and auto-store creation for paid events.
+ */
+function myeventlane_vendor_node_presave(NodeInterface $node) {
+  if ($node->bundle() !== 'event') {
+    return;
+  }
+
+  if (!$node->hasField('field_ticket_type')) {
+    return;
+  }
+
+  $ticket_type = $node->get('field_ticket_type')->value;
+
+  if ($ticket_type === 'paid') {
+    $account = \Drupal::currentUser();
+    $uid = $account->id();
+
+    if ($uid == 0) {
+      throw new EntityStorageException('You must be logged in to create a paid event.');
+    }
+
+    $storeStorage = \Drupal::entityTypeManager()->getStorage('commerce_store');
+    $stores = $storeStorage->loadByProperties(['uid' => $uid]);
+
+    if (empty($stores)) {
+      $store = Store::create([
+        'type' => 'default',
+        'uid' => $uid,
+        'name' => $account->getDisplayName() . "'s Store",
+        'email' => $account->getEmail(),
+        'default' => FALSE,
+        'timezone' => date_default_timezone_get(),
+      ]);
+      $store->save();
+    }
+    else {
+      $store = reset($stores);
+    }
+
+    if (!$store->get('field_stripe_connected')->value) {
+      $url = Url::fromRoute('myeventlane_vendor_dashboard.stripe_connect')->toString();
+      \Drupal::messenger()->addError(t('You must connect your Stripe account before publishing paid events.'));
+      throw new EntityStorageException('Stripe connection required. <a href="' . $url . '">Connect Stripe</a>');
+    }
+
+    if ($node->hasField('field_store')) {
+      $node->set('field_store', $store->id());
+    }
+  }
+}

@@ -1,0 +1,36 @@
+myeventlane_rsvp.settings:
+  type: config_object
+  label: 'MyEventLane RSVP settings'
+  mapping:
+    thank_you:
+      type: mapping
+      label: 'Thank You redirect'
+      mapping:
+        use_event_field:
+          type: boolean
+          label: 'Use event field if present'
+        event_field:
+          type: string
+          label: 'Event field machine name'
+        default_path:
+          type: string
+          label: 'Default path/URL'
+        keep_message:
+          type: boolean
+          label: 'Keep success message after redirect'
+        utm:
+          type: mapping
+          label: 'UTM tagging'
+          mapping:
+            enabled:
+              type: boolean
+              label: 'Enable UTM params'
+            source:
+              type: string
+              label: 'utm_source'
+            medium:
+              type: string
+              label: 'utm_medium'
+            campaign:
+              type: string
+              label: 'utm_campaign (supports {nid})'

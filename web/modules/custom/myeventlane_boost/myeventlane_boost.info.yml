@@ -1,0 +1,11 @@
+name: 'MyEventLane Boost'
+type: module
+description: 'Vendor-purchased Boost/Featured events via Commerce/Stripe. Assigns badges, expiry, and homepage placement.'
+core_version_requirement: '^11 || ^12'
+package: Custom
+dependencies:
+  - drupal:commerce
+  - drupal:commerce_product
+  - drupal:commerce_order
+  - drupal:commerce_cart
+

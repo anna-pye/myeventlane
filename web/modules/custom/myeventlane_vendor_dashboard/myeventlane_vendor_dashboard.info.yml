@@ -1,0 +1,9 @@
+name: MyEventLane Vendor Dashboard
+type: module
+description: 'Vendor analytics and sales dashboard for MyEventLane.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - node
+  - user
+  - paragraphs

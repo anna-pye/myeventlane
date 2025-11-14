@@ -1,0 +1,14 @@
+name: 'Commerce Stock API'
+description: 'Provides a stock management framework based on rules to manage stock levels of commerce products.'
+package: 'Commerce Stock'
+dependencies:
+  - commerce:commerce_product
+  - commerce:commerce_order
+core_version_requirement: ^10.2 || ^11
+type: module
+configure: commerce_stock.stock_config
+
+# Information added by Drupal.org packaging script on 2025-07-30
+version: '3.0.0'
+project: 'commerce_stock'
+datestamp: 1753893802

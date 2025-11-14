@@ -1,0 +1,38 @@
+<?php
+
+namespace Drupal\myeventlane_tickets\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\commerce_product\Entity\ProductInterface;
+
+/**
+ * Tickets page controller.
+ */
+class TicketsController extends ControllerBase {
+
+  /**
+   * Page title callback.
+   */
+  public function title(ProductInterface $commerce_product) {
+    return $this->t('Choose your tickets');
+  }
+
+  /**
+   * Product tickets page.
+   */
+  public function product(ProductInterface $commerce_product) {
+    $form = $this->formBuilder()->getForm('\Drupal\myeventlane_tickets\Form\TicketMatrixForm', $commerce_product);
+
+    return [
+      '#theme' => 'myeventlane_tickets_product',
+      '#product' => $commerce_product,
+      '#form' => $form,
+      '#attached' => [
+        'library' => [
+          'myeventlane_tickets/matrix',
+        ],
+      ],
+    ];
+  }
+
+}

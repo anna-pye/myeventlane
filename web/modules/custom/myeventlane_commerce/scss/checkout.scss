@@ -1,0 +1,29 @@
+@use "sass:color";
+@use "variables" as *;
+
+.mel-page-title { font-size: $font-size-h2; color: $text-color-main; margin: $spacing-xl 0 $spacing-lg; }
+
+.mel-btn { border: 0; padding: $spacing-sm $spacing-lg; border-radius: $radius-pill; font-weight: $font-weight-bold; cursor: pointer;
+  &--primary { background: $color-primary; color: #fff; }
+}
+
+.mel-card { background: #fff; border-radius: $radius-medium; box-shadow: 0 2px 8px $color-shadow; padding: $spacing-lg; }
+
+.mel-attendee-pane { display: grid; gap: $spacing-lg; }
+.mel-ticket-card { @extend .mel-card; }
+.mel-order-item { display: grid; gap: $spacing-md; }
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-small;
+  border: $border-light;
+  &:focus { outline: 2px solid $color-outline-focus; }
+}
+
+@media (max-width: $breakpoint-md) {
+  .mel-btn--primary { position: sticky; bottom: 0; width: 100%; }
+}
